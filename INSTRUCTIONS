@@ -1,0 +1,14 @@
+Upon starting the Application, you will see a view which list all the games. Select TIC and then press start. 
+
+You will be prompted with another window, which will display "TIC" in bold. Start the button to star game.
+
+The game support restart of the game by pressing the space bar. The geam supports randomly changing the color of the
+grid  tiles of the game by pressing "ENTER". 
+
+The game also displays the current player and the amount of points each players has.
+
+When you hover over one of the grid tiles, the tile which you are over will change color. You shouldn't have to click on 
+the button itself to see the color change.  
+
+The game also support show which tiles have been selected by drawing the X's and O's for each player. The grid panels 
+were implemented by making a NxN button matrix. 
