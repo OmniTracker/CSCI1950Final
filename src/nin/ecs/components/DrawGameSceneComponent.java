@@ -20,11 +20,19 @@ public class DrawGameSceneComponent  extends Components {
 		this.setApp(app);
 		this.setGameWorld(gameWorld);
 	}
+	
 	public void onDraw(GraphicsContext g) {
+		if (this.getBackground() == null) {
+			this.setBackground(this.getGameWorld()
+					.getNINDelegateContainer()
+					.getNINGameObjectDelagate()
+					.getNINXMLParser()
+					.readXMLParserBackgroundImage());
+		}
+
 
 		this.drawBackground(g);
 	}
-
 	private void drawBackground (GraphicsContext g) {		
 		Vec2d origin = this.getApp().getAspectRatioHandler().calculateUpdatedOrigin();
 		Vec2d screenSize = this.getApp().getAspectRatioHandler().calculateUpdatedScreenSize();
@@ -33,12 +41,10 @@ public class DrawGameSceneComponent  extends Components {
 		g.drawImage(this.getBackground(), 0, 0, 2100,1220, origin.x + 10,origin.y + 50 ,screenSize.x - 20 ,screenSize.y - 60);	
 
 	}
-
 	public void onShutdown() {
 	}
 	public void onStartup() {
-		this.setNINGameObjectDelagate(this.getGameWorld().getNINDelegateContainer().getNINGameObjectDelagate());
-		this.setBackground(this.getNINGameObjectDelagate().getBackground());
+
 	}	
 	private NinGameWorld getGameWorld() {
 		return _gameWorld;

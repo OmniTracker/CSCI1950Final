@@ -67,7 +67,6 @@ public class NinViewport extends ViewportHandler {
 			this.getGameWorld().onStartup();
 		}
 	}
-
 	
 	private NINMenuBar getMenuBar() {
 		return _menuBar;
