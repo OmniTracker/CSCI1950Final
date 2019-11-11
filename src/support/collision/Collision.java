@@ -11,12 +11,12 @@ public class Collision  {
 	}
 
 	static public boolean isColliding(AABShape s1, AABShape s2) {
-		double s1_x = s1.topLeft.x;
-		double s1_y = s1.topLeft.y; 
+		double s1_x = s1.getTopLeft().x;
+		double s1_y = s1.getTopLeft().y; 
 		double s1_w = s1.size.x; 
 		double s1_h = s1.size.y; 
-		double s2_x = s2.topLeft.x;
-		double s2_y = s2.topLeft.y;
+		double s2_x = s2.getTopLeft().x;
+		double s2_y = s2.getTopLeft().y;
 		double s2_w = s2.size.x;
 		double s2_h = s2.size.y; 
 		return ABB_AABCollider(s1_x,s1_y,s1_w,s1_h,s2_x,s2_y,s2_w,s2_h); 
@@ -32,8 +32,8 @@ public class Collision  {
 	}
 
 	static public boolean isColliding(AABShape s1, CircleShape s2) {
-		double aab_origin_x =  s1.topLeft.x; 
-		double aab_origin_y = s1.topLeft.y;
+		double aab_origin_x =  s1.getTopLeft().x; 
+		double aab_origin_y = s1.getTopLeft().y;
 		double aab_width = s1.size.x; 
 		double aab_height = s1.size.y; 
 		double circle_x = s2.getCenter().x; 
@@ -75,7 +75,7 @@ public class Collision  {
 	}
 
 	static public boolean isColliding(AABShape s1, Vec2d s2) {
-		return pointRect(s2.x,s2.y, s1.topLeft.x,  s1.topLeft.y, s1.size.x, s1.size.y); 
+		return pointRect(s2.x,s2.y, s1.getTopLeft().x,  s1.getTopLeft().y, s1.size.x, s1.size.y); 
 	}
 
 	static boolean pointRect(double px, double py, double rx, double ry, double rw, double rh) {

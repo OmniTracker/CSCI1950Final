@@ -1,5 +1,7 @@
 package support;
 
+import java.net.MalformedURLException;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -144,7 +146,12 @@ public abstract class FXFrontEnd extends CS1971FrontEnd {
 	private final void callAllResize(Vec2d size) {
 		canvas.resize(size);
 		onResize(size);
-		canvas.draw();
+		try {
+			canvas.draw();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	// Helper function to ready a new tick, update the title, invoke a tick call, then invoke a draw call
@@ -155,7 +162,12 @@ public abstract class FXFrontEnd extends CS1971FrontEnd {
 		timeOfLastTick = time;
 
 		updateTitle();
-		canvas.draw();
+		try {
+			canvas.draw();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		timer.stop();
 		timer.play();
 	}
@@ -261,7 +273,7 @@ public abstract class FXFrontEnd extends CS1971FrontEnd {
 			canvas.setHeight(size.y);
 		}
 		
-		public void draw() {
+		public void draw() throws MalformedURLException {
 			GraphicsContext g = canvas.getGraphicsContext2D();
 			g.clearRect(0, 0, currentStageSize.x, currentStageSize.y);
 			onDraw(g);

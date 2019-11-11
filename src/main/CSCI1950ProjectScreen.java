@@ -8,9 +8,11 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import support.Vec2d;
 import support.collision.AABShape;
 import engine.Application;
+import engine.Screen;
 import engine.ui.*;
 import engine.utility.AspectRatioHandler;
 
@@ -42,20 +44,18 @@ public class CSCI1950ProjectScreen extends Screen {
 		this.getArrayListButton().add(new Button("Final",new Vec2d(0,index += this.getButtonSize().y),this.getButtonSize(),Color.PINK));
 		this.setBorderColor(Color.WHITE);
 	}
-	
-	
-	private void updateScreenButtons() {
+	private void updateScreenButtons()
+	{
 		double projectNumber = 5.0;
 		Vec2d newScreenSize = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize();
 		Vec2d newScreenOrigin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin();
-
 		double x =  newScreenOrigin.x + 30;
 		double yFactor = ((newScreenSize.y - 300) / projectNumber);
 		double y = newScreenOrigin.y + 130;
 		this.getStartButton().setOrigin(new Vec2d(x, y - 20));
 		this.getStartButton().setShape(new AABShape(this.getStartButton().getOrigin(),this.getStartButton().getSize()));
-
-		for (Button button : this.getArrayListButton()) {
+		for (Button button : this.getArrayListButton()) 
+		{
 			Vec2d newOrigin = new Vec2d(x, (y +=  yFactor));
 			AABShape shape = new AABShape(newOrigin, button.getSize()); 
 			button.setOrigin(newOrigin);			
@@ -63,12 +63,10 @@ public class CSCI1950ProjectScreen extends Screen {
 		}
 	}
 	private void drawBackground(GraphicsContext g) {
-
 		if (this.getGameEnginePlayableScreen() == null) {
 			try {
 				this.setGameEnginePlayableScreen(this.getApplication().getFactory().generateGameEngineIntroScreen());
 			} catch (MalformedURLException e) {
-
 				System.out.print("Failed to  get the image ");	
 				e.printStackTrace();
 			}
@@ -81,17 +79,17 @@ public class CSCI1950ProjectScreen extends Screen {
 	@SuppressWarnings("static-access")
 	private void courseName(GraphicsContext g) {
 		g.setFill(this.getBorderColor());
-		Vec2d newScreenOrigin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin();		
+		
+		Vec2d screenSize = this.getApplication().getAspectRatioHandler().getCurrentScreenSize();		
+		
 		g.setFont(Font.font(this.getFontNames().getAlc() , 40));
-
-		g.fillText("CSCI 1950: 2D Game Engines", newScreenOrigin.x + 600 , newScreenOrigin.y + 50 + fadeInY);
+		g.setTextAlign(TextAlignment.CENTER);
+		g.fillText("CSCI 1950: 2D Game Engines", (screenSize.x / 2) , (screenSize.y / 2) - 300  + fadeInY);
 	}
-	
-	public void onMouseClicked(MouseEvent e) {
+	public void onMouseClicked(MouseEvent e) throws MalformedURLException {
 		checkButtonClick(e);	
 	}
-	
-	private void checkButtonClick(MouseEvent e) {
+	private void checkButtonClick(MouseEvent e) throws MalformedURLException {
 		for (Button button : this.getArrayListButton()) {	
 			if ( button.clicked(e) ) {
 				selectGame(button); 
@@ -102,9 +100,7 @@ public class CSCI1950ProjectScreen extends Screen {
 			loadGame ();
 		}
 	}
-	private void loadGame () {		
-		System.out.print( this.getStartButton().getText() + " \n");
-		System.out.print(this.getApplication().getFactory().getWizGameStats());
+	private void loadGame () throws MalformedURLException {		
 		_gameLoading = true;
 		this.getApplication().loadGame(this.getSelectedGame());
 	}
@@ -120,22 +116,29 @@ public class CSCI1950ProjectScreen extends Screen {
 		g.fillRect(newOrigin.x + 20, (newOrigin.y + 80), 320, (aspect.calculateUpdatedScreenSize().y - 160));
 		g.setGlobalAlpha(1.0);
 	}
-	
 	private void selectGame(Button button) {
 		this.setBorderColor(button.getColor());
-		if (button.getText() == "Tic") {
+		if (button.getText() == "Tic")
+		{
 			this.setSelectedGame(this.getApplication().TIC);
-		} else if (button.getText() == "Alc") {
+		} 
+		else if (button.getText() == "Alc") 
+		{
 			this.setSelectedGame(this.getApplication().ALC);
-		}  else if (button.getText() == "Wiz") {
+		} 
+		else if (button.getText() == "Wiz") 
+		{
 			this.setSelectedGame(this.getApplication().WIZ);
-		}  else if (button.getText() == "Nin") {
+		} 
+		else if (button.getText() == "Nin") 
+		{
 			this.setSelectedGame(this.getApplication().NIN);
-		}  else if (button.getText() == "Final") {
+		}  
+		else if (button.getText() == "Final") 
+		{
 			this.setSelectedGame(this.getApplication().FINAL);	
 		} 
 	}
-	
 	private void transitionOut(GraphicsContext g) {
 		Vec2d screenSize = this.getApplication().getAspectRatioHandler().getCurrentScreenSize(); 
 		if (_gameLoading == true) {
@@ -152,11 +155,9 @@ public class CSCI1950ProjectScreen extends Screen {
 			g.setGlobalAlpha(1.0);
 		}
 	}
-	
 	public void onTick(long nanosSincePreviousTick) {
 		updateScreenButtons();
 	}
-	
 	public void onDraw(GraphicsContext g)  {
 		this.drawBackground(g);
 		this.borders(g);
@@ -166,7 +167,6 @@ public class CSCI1950ProjectScreen extends Screen {
 		}	
 		this.transitionOut(g);
 		this.courseName(g);
-
 	}
 	ArrayList<Button> getArrayListButton() {
 		return _arrayListButton;

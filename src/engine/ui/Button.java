@@ -1,5 +1,6 @@
 package engine.ui;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -8,8 +9,14 @@ import support.Vec2d;
 import support.collision.AABShape;
 
 public class Button extends  UIElement {
+	
+	private String _fontName = ""; 
+	private Image _buttonImage = null; 
 	private AABShape _shape;
 	Font _font; 
+	
+	
+	public Button() {  }
 	
 	public Button(String text, Vec2d origin, Vec2d size,  Color color) {
 		this.setText(text);
@@ -23,9 +30,26 @@ public class Button extends  UIElement {
 		g.fillRect(this.getOrigin().x, this.getOrigin().y, this.getSize().x , this.getSize().y);
 		g.setFill(Color.BLACK);	
 		g.setFont(Font.font(this.getEngineFont().getFontString(this.getText()), 30 ));
+		this.setShape(new AABShape(this.getOrigin(), this.getSize()));
 		g.setTextAlign(TextAlignment.CENTER);
 		Vec2d textOrigin = new Vec2d( (this.getOrigin().x + (this.getSize().x / 2)), ( this.getOrigin().y + ( this.getSize().y / 2 ) ) + 10 );
 		g.fillText(this.getText(), textOrigin.x, textOrigin.y);
+	}
+	
+	public void drawRounded(GraphicsContext g) {
+		// Fill the button
+		g.setFill(this.getColor());
+		g.fillRoundRect(this.getOrigin().x, this.getOrigin().y, this.getSize().x , this.getSize().y,10,10);
+		g.setFill(Color.BLACK);	
+		// Reset the collision boxes
+		this.setShape(new AABShape(this.getOrigin(), this.getSize()));
+		if (!this.getFontName().isEmpty()) {
+			// Set the 
+			g.setFont(Font.font(this.getFontName()));
+			g.setTextAlign(TextAlignment.CENTER);
+			Vec2d textOrigin = new Vec2d( (this.getOrigin().x + (this.getSize().x / 2)), ( this.getOrigin().y + ( this.getSize().y / 2 ) ) + 5 );
+			g.fillText(this.getText(), textOrigin.x, textOrigin.y);
+		}
 	}
 	
 	public boolean clicked (MouseEvent e) {
@@ -53,5 +77,22 @@ public class Button extends  UIElement {
 	
 	public void setShape(AABShape _shape) {
 		this._shape = _shape;
+	}
+	
+	public void setOrigin(Vec2d _origin) {
+		this._origin = _origin;
+		this.setShape(new AABShape(this.getOrigin(), this.getSize())); 
+	}
+	private String getFontName() {
+		return _fontName;
+	}
+	public void setFontName(String _fontName) {
+		this._fontName = _fontName;
+	}
+	public Image getButtonImage() {
+		return _buttonImage;
+	}
+	public void setButtonImage(Image _buttonImage) {
+		this._buttonImage = _buttonImage;
 	}
 }

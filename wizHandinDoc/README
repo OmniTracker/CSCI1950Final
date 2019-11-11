@@ -1,0 +1,355 @@
+This README will go into detail of Wiz 1, Wiz 2, and Wiz buff. I found it to be easier
+to document all the requirement satisfied by all three levels. 
+
+
+Premise of the game: 
+
+Your name is Luke. You don't have any powers, but you are good at navigating around a new area with a map and general intuition. You broke your phone while going on one of your ridiculous Interplanetary adventures. You usually go on when you parent are on travel, so no one knows where you are. You can't be traced since you only go on these adventure with your fake passport and you planets money. You like to think you are living on the edge.
+
+You're family is well-known for their outer space oil mining, so you are always looking out for people who wants to rob you. You usually wear a disguise, but some random kid ran off with your disguise while staying in a hostile. You're essentially a sitting duck. Each time you runs into a thief, they either take a percentage of your money, or a set amount. It all depends on if they take money out your left or right pocket. most of your money is in your shoe, so you replenish these funds after each in counter. You always want to have money in your pockets because it makes you feel safe. At least you can give someone cash when they try to rob you. You don't want to be in a robbery situation no money.
+
+If you're robbed blind, you will be forced to live on this weird planet until you find someone who is willing to help you out. Everyone wants your money, so its hard to tell who won't just kidnap you and hold your for ransom. You will be forced to work under an alias  with a bald head for a underground cross-breed of McDonald, Chipotle, and Bajas. a few weeks would be enough to buy a prepaid phone. That is, if you're not robbed for your work money.
+
+Good Luck!
+
+#########################################################################################################################################################################################
+Feature Implement between all games: 
+#########################################################################################################################################################################################
+
+	- I was able to complete the following 6. I also provided a fun back story of how all the features have relevance in the game.
+----------------------------------------------------------------------------------------------------------------------------------
+
+• Allow your engine to support achievements and implement at least one in your game. (Complete)
+
+	- The game will have a tab at the bottom of the game which will hold information which will let the player know how much you have. This tab will also display all the keys found on the level.b The last game will get you to the Elon Musks Uber service.
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+• Add a staircase or other exit that generates a new map when the player reaches it. (Complete) 
+	– Have difficulty increase each time a new map is generated, resetting when the player loses.
+	
+	- Each time you are robbed, you pass out and find yourself at your original starting place. You don't know if the thief dragged you back or if you've slept walked your way. It doesn't really matter. You're back at square one.
+	
+----------------------------------------------------------------------------------------------------------------------------------
+	
+• Add a floating minimap UI element. [x2] (Complete)
+	– If fog of war is enabled, only show terrain on the minimap that was at some point within range of the player-controlled unit.
+	
+	- You have a futuristic map that connects to Googles maps. Yes, Google literally owns all map data. You are able to view any movement in a space in realtime because the idea of privacy has been eliminated. This allows you to see anyone who is coming your way. This also allows others to look for you if they are actively looking for you. Most of your enemies are living their best lives and random walking around. You wish the map had a messaging service, but you decided to get the base model.
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+• Create at least three different enemy units with different abilities and AI. (Complete)
+
+	- You have a mixed bag of robbers you need to worry about. Don't worry. You are pretty smart and at least know these guys exist.
+
+	  Some of the robbers know your exactly where you've been and can find you. The only error with their maps are a weird latency in their information updates.  They can figure out where you are during at specific times but are not able to find you if you decide to move around a lot.  You need to always move around to avoid these guys. I would suggest using narrow paths to avoid these characters. If you decide to go down a similar path as before, you will most likely be robbed. 
+
+	  You also have robbers who are just so quick you could never out run them. The only thing saving you is the fact they haven't updated their Google maps in months.  They never get correct locations. If they find you, it's most likely because the bad path is on the same path as you. This could be more dangerous because you can't predict where they are going and why that location seemed like a good idea.  (The robbers have a functioning A* algorithm, but they're usually sent to a random location. My A* isn't broken, I just wanted to add something different to my game. I basically find a random location on the board and send the robbers there. If you look at the console while playing the game, you should be able to see when the robber has decided to update their path. You are also able to see how many steps the path has. I hope Luke finds this information useful.) 
+
+	  You also have some magical robbers with the ability to disappear when they are going up and down a column or left and right while on a row. They can still get you while they're invisible. Thank God you have the update physical Google map. You are able to see where were before they disappeared. You won't be able to see where they are until they decide to go the opposite paths they have the ability to traverse.
+
+	  There is a mixed back on of  abilities, so good luck navigating around these super humans.
+	
+#########################################################################################################################################################################################
+Behaviour Tree Conditions and Actions
+#########################################################################################################################################################################################
+
+	- This is a good time to go into detail about the conditions and actions. In order for a sequence to send a stop process signal to selector, a false return needs to be return from one of the sequences. The only other way to end a process of a selector is to finish all the sequences. sequence ----------------------------------------------------------------------------------------------------------------------------------
+
+
+Dynamically Spawned Character (Sequence 1) ----------------------------------------------------------------------------------------------------------------------------------
+** The Dynamically generated thieve are the only ones who are in hiding until all the keys are collected.
+
+(Condition) 1: Were all the keys collected? If not, end the selectors process.
+
+(Action)    2:Allow thief to activate. This essentially means the thief can now hunt you down. 
+
+
+Path Planning (Sequence 2) ----------------------------------------------------------------------------------------------------------------------------------
+
+(Condition) 3: Does the thief have a valid sequence of tiles loaded for getting to where it's trying to go?
+
+	* This is the only condition which will have nested actions based on receiving an answer of false.
+
+
+(Action) 	4: Generate directed map
+
+(Action) 	5: Generate random map
+
+	* Both of these will return a false at the end of the map generation.
+	
+Visibility (Sequence 3) ----------------------------------------------------------------------------------------------------------------------------------
+
+** This section will always return true. There is no need to stop the selectors process just because the user is visible or not
+
+(Action)	6: Turn invisible if going up or down a column.
+
+(Action)	7: Turn invisible if going left or right a row.
+
+Collision (Sequence 4) ----------------------------------------------------------------------------------------------------------------------------------
+
+(Condition) 8: Is the thief colliding with main character?
+
+* You need to use a combination of (9 or 10) and (11 or 12) 
+
+------------------------------ Monies
+(Action) 	9: Take flat rate of cash from main character.
+
+(Action) 	10: Take percentage of main characters cash. 
+
+------------------------------ Reset Character
+
+(Action) 	11: Send back to the last place spawned.
+
+(Action)	12: Send character to a random location on the map.
+
+Character break down  ----------------------------------------------------------------------------------------------------------------------------------
+
+Ezra  - You. Teleport or hide depending on location on the map.
+
+
+*********** Level 0 *********** 
+Archy  
+Path Planning (Sequence 2) 					- (3,4)
+Collision (Sequence 4) 						- (8, 9, 11)
+
+
+Calorie *****************
+Path Planning (Sequence 2) 					- (3,5)
+Visibility (Sequence 3) 					- (7)
+Collision (Sequence 4) 						- (8, 9, 12)
+
+
+Lyla: 
+Dynamically Spawned Character (Sequence 1)
+Path Planning (Sequence 2) 					- (3,4)
+Collision (Sequence 4) 						- (8, 10, 11)
+
+
+*********** Level 1 *********** 
+Vulture
+
+Path Planning (Sequence 2)  				- (3,5)
+Collision (Sequence 4) 						- (8, 10, 12)
+
+Zelch: 
+Path Planning (Sequence 2)					- (3,5)
+Visibility (Sequence 3) 					- (7)
+Collision (Sequence 4) 						- (8, 10, 12)
+
+
+Zero: 
+(Dynamically Spawned Character (Sequence 1)
+Path Planning (Sequence 2) 					- (3,5)
+Visibility (Sequence 3) 					- (6)
+Collision (Sequence 4) 						- (8, 10, 11)
+
+
+
+** All this may be hard to follow. If I have the time, I might add this information to a panel within the game.
+
+----------------------------------------------------------------------------------------------------------------------------------
+• Create at least two more tile characteristics besides passability (destructible, movement cost, defensive value, etc...), and make at least three tiles with different variations of these characteristics. (Complete)
+
+
+	- You have decided to travel to a place filled with magicians and physically superior humans. There is literally something in the water, and the humans forced to live here doesn't export their water. It's literally the only thing they have to keep other from literally taking over their planet.
+
+	  Your only have two powers (Thanks to your grandmother). You can teleport and you have can turn invisible. The only thing about these two talents is that you don't have much control them yet, so you have to wait for the perfect conditions in a specific map location. Good thing Google can be used to help you figure that out. The physical Google Map lets you know where you can teleport from and the final location would be. You can't go the other direction be the final location conditions are not good enough.  It also allows you to see where your invisibly would work. This will make it hard for enemies to take your money.
+
+      There are also places  where you can get free money, but those tiles are not easily found.
+----------------------------------------------------------------------------------------------------------------------------------
+• Have enemy units spawn dynamically. (Complete)
+
+	- The word has gotten out that you are in the area and you have all three keys to move on to the next level. Everyone is too busy to go after you, (This world requires everyone to work 70 hours a week and there are only 122 hours in a week. Ain't no body got time to look for you and get fired in the process.) There is one really sketchy guy that make all his money from robbing rich tourist. They are usually the ones that come after you get all the keys. 
+		
+#########################################################################################################################################################################################
+Grading Rubrics:
+#########################################################################################################################################################################################
+
+	-	This section will just go into detail of how I complete all of the requirements. I may have to use one of my global retries, so I would rather have this document ready for either project.
+
+**************************************************************************************************************************
+WIZ 1 
+**************************************************************************************************************************
+
+[ ] - Playtesting
+[ ] - Primary
+[ ] - Secondary
+Total: -/4
+
+Retries used: NONE STANDARD EXTRA (2 extra retries remaining)
+
+[ ] - Attended a design check
+[ ] - Completed playtesting
+
+========================================
+
+Playtesting Requirements
+========================================
+[ ] - Handin meets all global requirements
+[ ] - Handin only crashes on edge cases
+[ ] - Your game should have a map with at least two visually distinct tile types.
+[ ] - The TA debugger should correctly show MTVs for circle-circle and AAB-AAB collisions.
+[ ] - Your game should have a unit that the player can move freely.
+
+Primary Engine Requirements
+========================================
+[ ] - Your engine must be able to calculate MTVs in addition to normal collision calculations.
+
+Primary Game Requirements
+========================================
+[ ] - Handin meets all playtesting requirements.
+[ ] - The TA debugger should be extended to display the respective MTVs for all collision pairs. TAs should quickly be able to verify that the correct MTV is being calculated.
+	(Hope this worked out for the grader.)
+[ ] - One of the tile types should be passable.  One should be impassable
+	(Level 0 has lava for impassable tiles and a brick path passable. level 1 has color platform for passable and color shifting space for impassable.) 
+[ ] - The player-controlled unit should not be able to enter the impassable tiles. The unit should be able to enter passable tiles.
+	(Level 0 has lava for impassable tiles and a brick path passable. level 1 has color platform for passable and color shifting space for impassable. MTV is used to push the main player back so you are not able to enter this location. I did have issues where the enemies would throw the main character of the board, but I removed this flow by reducing the MTV values. I set the MTV to be double of what is was originally calculated to be.)
+[ ] - Your game never crashes.
+	(I've never ran into a situation where the game crashes. I run into situations where the player is stuck in a tile forever, but that should be ironed out before handing this assignment in.)
+
+Secondary Engine Requirements
+=======================================
+[ ] - Handin meets all primary engine requirements
+	(I hope so)
+[ ] - Your engine must implement a procedural map generation algorithm (space partitioning or
+similar complexity) OR support level loading from a text file.
+	(The map information is stored in a hidden directory. The directory path is resources/.wiz. You will see folders for level0 and level1)
+[ ] - Your engine must correctly support an animation behavior.
+	(The main character and the all enemies have animation)
+
+Secondary Game Requirements
+======================================
+[ ] - Handin meets all primary game requirements
+	(I hope so)
+[ ] - Your game must use a procedurally generated map OR a map loaded from a level file.
+	(The map information is stored in a hidden directory. The directory path is resources/.wiz. You will see folders for level0 and level1)
+[ ] - Your game must include a sprite animation.
+	(The main character and the all enemies have animation)
+[ ] - Your game must meet at least two of the extra game requirements (see the wiz extras doc for a list of ideas)
+
+    *** Buff goes into detail on how everything is implemented. ***
+    WIZ 1:
+    	• Add a staircase or other exit that generates a new map when the player reaches it. (Complete)
+    	• Create at least three different enemy units with different abilities and AI. (Complete)
+
+
+
+	
+**************************************************************************************************************************
+WIZ 2
+**************************************************************************************************************************
+
+[ ] - Playtesting
+[ ] - Primary
+[ ] - Secondary
+Total: -/4
+
+Retries used: NONE (2 extra retries remaining)
+
+[ ] - Attended a design check
+[ ] - Completed playtesting
+
+========================================
+
+Playtesting Requirements
+========================================
+[ ] - Your game should have a map containing passable and impassable tiles
+	(On both levels, you should see a combination of the previously mentioned tiles. For level one, you will see a brick path (passable) and lava (impassable) )
+[ ] - Your game must have a unit that can be controlled by the player
+	(You can control the user by using the up, down, left, right arrow keys located on the right side of the board. You don't have any real abilities you can activate without being in a particular location)
+[ ] - Your game must have an enemy unit that moves deterministically
+	(All of the characters use the A* Algorithm. Some of the characters use the algorithm to attack the player. Some of the players use the Algorithm to obtain a random path. The random paths can cross the path of the player, so I would be careful)
+[ ] - There must be a visible reaction when the player and enemy collide
+	(The player will lose money and go back to the beginning to the stage. I think this physical enough to get points for this)
+[ ] - Your game must have a stationary item on the ground
+	(The player moves back whenever it hit the impassable tils. I also placed a rock on each level. This rock cannot be passed by the main character, but can be passed by the AI enemies.)	
+[ ] - There must be a (different) visible reaction when the player and item collide
+	(The rock will cause the player to be used back a lot. The screen will turn red whenever this happens)
+
+
+Primary Engine Requirements
+========================================
+[ ] - Your engine must support A* pathfinding
+	(The AI will)
+[ ] - Your engine must implement an AI library
+
+    [ ] - If  using behavior trees, you must implement the following:
+        [ ] - Behavior Tree class
+			
+        [ ] - Selector class
+        	
+        [ ] - Sequence class
+        
+        [ ] - Action interface
+        	
+        [ ] - Condition interface
+Primary Game Requirements
+========================================
+[ ] - The enemy unit should use your engine's AI framework.
+    [ ] - All AI tools included in the engine requirements should be used
+    (Used for all the enemies. The main difference between the characters is that some of the characters aim for the main characters, and others go after an arbitray location in the map.)
+    [ ] - At least two distinct behaviors must be used and visible during gameplay
+    (Generating a new path is pretty obvious. Also whether a character is visible or invisible while traveling down a particular path)
+[ ] - It must be possible to start a new game without restarting the program
+	(A restart button was placed on the game play tab a the bottom of the screen)
+
+Secondary Engine Requirements
+=======================================
+[ ] - Handin meets all primary engine requirements
+
+Secondary Game Requirements
+======================================
+[ ] - Handin meets all primary game requirements
+[ ] - The enemy unit must move according to a path generated using A*
+	(The characters move on a directed A* path or an indirected A* path. These are both actions in my behavior tree)
+	
+[ ] - The game must meet at least two of the extra game requirements that weren't used last week
+    [ ] - List all four game requirements in your README and specify which ones are for Wiz 1 and which are Wiz 2
+    
+    *** Buff goes into detail on how everything is implemented. ***
+    WIZ 1:
+    	• Add a staircase or other exit that generates a new map when the player reaches it. (Complete)
+    	• Create at least three different enemy units with different abilities and AI. (Complete)
+    WIZ 2:
+    	• Have enemy units spawn dynamically. (Complete)
+		• Allow your engine to support achievements and implement at least one in your game. (Complete)
+**************************************************************************************************************************
+WIZ Buff
+**************************************************************************************************************************
+Added the following Extras:
+    WIZ 1:
+    	• Add a staircase or other exit that generates a new map when the player reaches it. (Complete)
+    		- 	Transition between both levels.
+    	• Create at least three different enemy units with different abilities and AI. (Complete)
+    		- 	Each board starts with 2 players. A third on is dynamically generated when the player has collected all three keys to move on to the next level. 
+    WIZ 2:
+    	• Have enemy units spawn dynamically. (Complete)
+    		-	A new player is dynamically generated once the player is able to collect all three keys to move onto the next level.
+		• Allow your engine to support achievements and implement at least one in your game. (Complete)
+			- 	The player acheiment for this game is visible once the character is able to collect all the keys in order to move to next level.
+		
+	WIZ Buff:
+		• Add a floating minimap UI element. [x2] (Complete)
+			-	An mini UI board is visible whenever it is activated. The only thing about using this is that you lose money every time you decided to use it. There is a time limit for how long you will  be able to use it.
+		• Create at least two more tile characteristics besides passability (destructible, movement cost, defensive value, etc...), and make at least three tiles with different variations of these characteristics. (Complete)
+			- 	There is a transport from tile, transport to tile, and a hide from enemy tile.
+		
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

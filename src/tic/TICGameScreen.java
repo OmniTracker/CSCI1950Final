@@ -10,8 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import engine.Application;
+import engine.Screen;
 import engine.ui.Button;
-import engine.ui.Screen;
 import engine.utility.AspectRatioHandler;
 
 public class TICGameScreen extends Screen {	
@@ -32,17 +32,14 @@ public class TICGameScreen extends Screen {
 
 	private double _timeoutFactor = 0.0;
 
-	public TICGameScreen(Application app)
-	{
+	public TICGameScreen(Application app){
 		super(app);
 		this.setGameLogic( new TICGameLogic(_dimension));
 		this.setAspect(this.getApplication().getAspectRatioHandler());
 		this.setButtonGrid(new Button[_dimension][_dimension]);
 		this._gameGrid = new Integer[_dimension][_dimension]; 
-		for (Integer x = 0; x < this._dimension; x++) 
-		{
-			for (Integer y = 0; y < this._dimension; y++) 
-			{
+		for (Integer x = 0; x < this._dimension; x++) {
+			for (Integer y = 0; y < this._dimension; y++) {
 				this._gameGrid[x][y] = 0;
 			}
 		}	
@@ -56,21 +53,18 @@ public class TICGameScreen extends Screen {
 		this.setCurrentDimension(new Button("", new Vec2d(0,0),new Vec2d(0,0), Color.AQUAMARINE));
 	}
 
-	private void drawBorder(GraphicsContext g) 
-	{
+	private void drawBorder(GraphicsContext g) {
 		this.getApplication().borders(g, Color.BLACK);
 	}
 
-	private void drawBackGround (GraphicsContext g)
-	{
+	private void drawBackGround (GraphicsContext g){
 		g.setFill(Color.DARKBLUE);
 		g.fillRect(0.0,0.0, 
 				this.getAspect().getCurrentScreenSize().x,
 				this.getAspect().getCurrentScreenSize().y);
 	}
 
-	private void drawGamePanel (GraphicsContext g) 
-	{
+	private void drawGamePanel (GraphicsContext g) {
 		Vec2d origin = this.getAspect().calculateUpdatedOrigin();
 		Vec2d screen = this.getAspect().calculateUpdatedScreenSize();
 		double boxSize = screen.y - 100;
@@ -80,12 +74,9 @@ public class TICGameScreen extends Screen {
 		g.fillRect(xOrigin,yOrigin,boxSize, boxSize);
 	}
 
-	private void drawGrid (GraphicsContext g) 
-	{
-		for (int x = 0; x < this.getDimension(); x++) 
-		{
-			for (int y = 0; y < this.getDimension(); y++) 
-			{	
+	private void drawGrid (GraphicsContext g) {
+		for (int x = 0; x < this.getDimension(); x++) {
+			for (int y = 0; y < this.getDimension(); y++) {	
 				this.getButtonGrid()[x][y].draw(g);
 			}
 		}
@@ -101,10 +92,8 @@ public class TICGameScreen extends Screen {
 		Integer xMulti = 0; 
 		Integer yMulti = 0; 
 
-		for (int x = 0; x < this.getDimension(); x++) 
-		{
-			for (int y = 0; y < this.getDimension(); y++)
-			{	
+		for (int x = 0; x < this.getDimension(); x++) {
+			for (int y = 0; y < this.getDimension(); y++){	
 				double ox = ( xOrigin + ((boxSize + 10) * xMulti)) + 3;
 				double oy = ( yOrigin + ((boxSize + 10) * yMulti)) + 3; 
 				this.getButtonGrid()[x][y] = new Button("", 
@@ -123,8 +112,7 @@ public class TICGameScreen extends Screen {
 		this.drawBorder(g);
 		this.drawGamePanel(g);
 		this.drawGrid(g);	
-		if (this.getFocus() != null) 
-		{
+		if (this.getFocus() != null) {
 			this.getFocus().setColor(Color.WHEAT);	
 			this.getFocus().draw(g);
 		}	
@@ -133,8 +121,7 @@ public class TICGameScreen extends Screen {
 		this.drawPlayerScores(g);
 	}	
 
-	public void drawPlayerScores (GraphicsContext g) 
-	{		
+	public void drawPlayerScores (GraphicsContext g) {		
 		Vec2d origin = this.getAspect().calculateUpdatedOrigin();
 		Vec2d screen = this.getAspect().calculateUpdatedScreenSize();
 		double boxSize = screen.x / 18;
@@ -159,18 +146,13 @@ public class TICGameScreen extends Screen {
 		g.setFill(Color.BLACK);	
 		g.setFont(Font.font(this.getEngineFont().getFontString("Alc"),boxSize / 6));
 		g.setTextAlign(TextAlignment.CENTER); 
-		
-		
 		String more = ""; 
 		String more1 = ""; 
-		
-		if (this.getGameLogic().getCurrentPlayer() == this.getGameLogic().PLAYER_1) 
-		{
+		if (this.getGameLogic().getCurrentPlayer() == this.getGameLogic().PLAYER_1) {
 			more += "GO"; 
 		} else if (this.getGameLogic().getCurrentPlayer() == this.getGameLogic().PLAYER_2) {
 			more1 += "GO"; 
 		}
-
 		// Still need to populate the data
 		g.fillText(more1 + " Player 1 Score: " + this.getGameLogic().getPlayer1WinCount(), origin.x + boxSize * 2,origin.y + (boxSize + 20));
 		g.fillText( more + " Player 2 Score: " + + this.getGameLogic().getPlayer2WinCount(), origin.x + boxSize * 2,origin.y + (boxSize * 2) + 20);
@@ -180,25 +162,17 @@ public class TICGameScreen extends Screen {
 		g.fillText("restart game    ", origin.x + boxSize * 2,origin.y + (boxSize * 6) + 20);
 	}
 
-	public void timerTimeOut (GraphicsContext g)
-	{
+	public void timerTimeOut (GraphicsContext g){
 		Vec2d screen = this.getAspect().calculateUpdatedScreenSize();
 		Vec2d origin = this.getAspect().calculateUpdatedOrigin();
 		double size = screen.x * this._timeoutFactor;
-		if(this._timeoutFactor <= 0.20) 
-		{
+		if(this._timeoutFactor <= 0.20) {
 			g.setFill(Color.WHITE);
-		} 
-		else if ((0.20 <  this._timeoutFactor) && (this._timeoutFactor <= 0.40)) 
-		{
+		} else if ((0.20 <  this._timeoutFactor) && (this._timeoutFactor <= 0.40)) {
 			g.setFill(Color.GREEN);
-		} 
-		else if ((0.40 <  this._timeoutFactor) && (this._timeoutFactor <= 0.60))
-		{
+		} else if ((0.40 <  this._timeoutFactor) && (this._timeoutFactor <= 0.60)){
 			g.setFill(Color.GOLD);
-		} 
-		else if ((0.60 <  this._timeoutFactor) && (this._timeoutFactor <= 0.80)) 
-		{
+		} else if ((0.60 <  this._timeoutFactor) && (this._timeoutFactor <= 0.80)) {
 			g.setFill(Color.RED);
 		} else {
 			g.setFill(Color.DARKRED);
@@ -206,15 +180,10 @@ public class TICGameScreen extends Screen {
 		g.fillRect(origin.x, + origin.y + (screen.y * 0.95), size , (screen.y * 0.05));
 	}
 
-
-	public void markFilled (GraphicsContext g) 
-	{
-		for (Integer x = 0; x < this._dimension; x++) 
-		{
-			for (Integer y = 0; y < this._dimension; y++) 
-			{
-				if (this.getGameLogic().getGameGrid()[x][y] != 0) 
-				{
+	public void markFilled (GraphicsContext g) {
+		for (Integer x = 0; x < this._dimension; x++) {
+			for (Integer y = 0; y < this._dimension; y++) {
+				if (this.getGameLogic().getGameGrid()[x][y] != 0) {
 					g.setFill(Color.BLACK);	
 					Vec2d origin = this.getButtonGrid()[x][y].getOrigin(); 
 					Vec2d size   = this.getButtonGrid()[x][y].getSize();
@@ -233,32 +202,22 @@ public class TICGameScreen extends Screen {
 		}
 	}
 
-
 	public void onTick(long nanosSincePreviousTick) {
 		this.updateGrid();	
 		this._timeoutFactor += 0.003;
-		if(this._timeoutFactor > 1.0) 
-		{
+		if(this._timeoutFactor > 1.0) {
 			this._timeoutFactor = 0.0;
 			this.getGameLogic().switchPlayer();
 		}
-
 		this.getGameLogic().checkWin(); 
-
 		this.getGameLogic().checkFilled();
-
 	}	
 
-	private void tryGridSelect (MouseEvent e) 
-	{
-		for (Integer x = 0; x < this._dimension; x++) 
-		{
-			for (Integer y = 0; y < this._dimension; y++) 
-			{
-				if (this.getGameLogic().getGameGrid()[x][y] == 0) 
-				{
-					if ( this.getButtonGrid()[x][y].clicked(e)) 
-					{	
+	private void tryGridSelect (MouseEvent e) {
+		for (Integer x = 0; x < this._dimension; x++) {
+			for (Integer y = 0; y < this._dimension; y++) {
+				if (this.getGameLogic().getGameGrid()[x][y] == 0) {
+					if ( this.getButtonGrid()[x][y].clicked(e)) {	
 						this.getGameLogic().getGameGrid()[x][y] = 
 								this.getGameLogic().getCurrentPlayer();
 						this._timeoutFactor = 0.0;
@@ -269,15 +228,11 @@ public class TICGameScreen extends Screen {
 		}
 	}
 
-	private Button checkButton (MouseEvent e)
-	{
+	private Button checkButton (MouseEvent e){
 		Button focus = null;
-		for (Integer x = 0; x < this._dimension; x++) 
-		{
-			for (Integer y = 0; y < this._dimension; y++) 
-			{
-				if ( this.getButtonGrid()[x][y].clicked(e) )
-				{
+		for (Integer x = 0; x < this._dimension; x++) {
+			for (Integer y = 0; y < this._dimension; y++) {
+				if ( this.getButtonGrid()[x][y].clicked(e) ){
 					focus = this.getButtonGrid()[x][y]; 
 				}
 			}
@@ -295,45 +250,27 @@ public class TICGameScreen extends Screen {
 
 	@Override
 	public void onKeyPressed(KeyEvent e) {
-
 		System.out.print(e.getCode().toString());
-
 		if (e.getCode().toString() == "SPACE" ) {
-
 			_timeoutFactor = 0; 
 			this.getGameLogic().resetG();
 		}
-
-		if (e.getCode().toString() == "ENTER" )
-		{
+		if (e.getCode().toString() == "ENTER" ){
 			Random r = new Random();
 			Integer pick =  r.nextInt(4 + 1);
-
-
 			System.out.print(e.getCode().toString() + pick);
-
 			if (pick == 0) {
-
 				this._gridColor = Color.WHEAT;
 			} 
-
-
-			if  (pick == 1) 
-			{
+			if  (pick == 1) {
 				this._gridColor = Color.AQUA;
-
 			}
-
-			if (pick == 2) 
-			{
+			if (pick == 2) {
 				this._gridColor = Color.GOLD;
-
 			} 
-
 			if (pick == 3){
 				this._gridColor = Color.CYAN;
 			}
-
 		}		
 	}
 

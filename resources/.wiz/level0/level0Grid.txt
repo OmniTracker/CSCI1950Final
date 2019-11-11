@@ -1,0 +1,13 @@
+x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x
+x	x	x	x	x	x	F	S	S	S	S	G	x	F	S	I	x	F	S	S	S	S	G	x	x	x
+x	x	x	x	x	x	L	x	x	x	x	L	x	L	x	x	x	L	x	x	x	x	L	x	x	x
+x	x	F	S	S	S	K	S	S	S	S	K	S	K	S	S	S	K	S	S	I	x	L	x	x	x
+x	x	L	x	x	x	L	x	x	x	x	L	x	L	x	x	x	L	x	x	x	x	L	x	x	x
+x	x	L	x	x	x	L	x	F	I	x	L	x	E	S	I	x	E	S	S	G	x	L	x	x	x
+x	x	L	x	x	x	L	x	L	x	x	E	I	x	x	x	x	x	x	x	L	x	L	x	x	x
+x	J	K	S	S	S	K	S	K	S	I	x	x	F	S	S	S	S	I	x	L	x	L	x	x	x
+x	x	L	x	x	x	L	x	L	x	x	F	S	H	x	x	x	x	x	F	N	S	K	I	x	x
+x	x	L	x	x	x	L	x	L	x	x	L	x	x	x	x	x	x	x	L	x	x	L	x	x	x
+x	x	L	x	x	x	L	x	L	x	x	L	x	x	x	x	x	x	x	L	x	x	L	x	x	x
+x	x	E	S	S	S	H	x	E	S	S	N	S	S	S	S	S	S	S	H	x	x	E	I	x	x
+x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x

@@ -4,7 +4,7 @@ import support.Vec2d;
 
 public class CircleShape extends Shape {
 	
-	private Vec2d center;
+	Vec2d center;
 	public double radius;
 	
 	public CircleShape(Vec2d center, double radius) {

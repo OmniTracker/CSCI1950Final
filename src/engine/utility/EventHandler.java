@@ -1,5 +1,7 @@
 package engine.utility;
 
+import java.net.MalformedURLException;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -8,11 +10,11 @@ import support.Vec2d;
 
 public interface EventHandler {
 	public void onTick(long nanosSincePreviousTick);
-	public void onDraw(GraphicsContext g); 
+	public void onDraw(GraphicsContext g) throws MalformedURLException; 
 	public void onKeyTyped(KeyEvent e);
 	public void onKeyPressed(KeyEvent e); 
 	public void onKeyReleased(KeyEvent e);
-	public void onMouseClicked(MouseEvent e); 
+	public void onMouseClicked(MouseEvent e) throws MalformedURLException; 
 	public void onMousePressed(MouseEvent e); 
 	public void onMouseReleased(MouseEvent e); 
 	public void onMouseDragged(MouseEvent e); 

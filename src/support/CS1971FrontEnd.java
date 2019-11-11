@@ -1,5 +1,7 @@
 package support;
 
+import java.net.MalformedURLException;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -113,8 +115,9 @@ public abstract class CS1971FrontEnd {
 	 * {@link #onResize} is guaranteed to be called before the first invocation of onDraw.
 	 * 
 	 * @param g		a {@link GraphicsContext} object used for drawing.
+	 * @throws MalformedURLException 
 	 */
-	protected abstract void onDraw(GraphicsContext g);
+	protected abstract void onDraw(GraphicsContext g) throws MalformedURLException;
 	
 	/**
 	 * @param e		an FX {@link KeyEvent} representing the input event.

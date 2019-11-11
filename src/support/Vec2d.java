@@ -132,8 +132,8 @@ public final class Vec2d implements Serializable {
 	/**
 	 * Primitive version of {@link #pmult(Vec2d)}.
 	 */
-	public final Vec2d pmult(float x, float y) {
-		return new Vec2d(this.x * x, this.y * y);
+	public final Vec2d pmult(double d, double e) {
+		return new Vec2d(this.x * d, this.y * e);
 	}
 
 	/**
@@ -163,8 +163,8 @@ public final class Vec2d implements Serializable {
 	/**
 	 * Primitive version of {@link #pdiv(Vec2d)}.
 	 */
-	public final Vec2d pdiv(float x, float y) {
-		return new Vec2d(this.x / x, this.y / y);
+	public final Vec2d pdiv(double d, double e) {
+		return new Vec2d(this.x / d, this.y / e);
 	}
 
 	/**

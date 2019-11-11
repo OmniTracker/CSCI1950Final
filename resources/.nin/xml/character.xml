@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Game>
+	<Map w="5" h="5">0101000000110111000000101</Map>
+		
+		<Object id="player" x="42" y="17">
+
+			<SpriteBehavior image="player.png"/>
+			
+			<CollisionBehavior shape="AAB" w="10" h="25"/>
+			
+			<!-- more behaviors -->
+		</Object>
+
+
+		<Object>
+			<!-- more behaviors -->
+		</Object>
+
+
+		<!-- more objects -->
+</Game>

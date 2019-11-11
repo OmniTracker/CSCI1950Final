@@ -3,70 +3,71 @@
 [ ] - Secondary
 Total: -/4
 
-Retries used: NONE STANDARD EXTRA (2 extra retries remaining)
+Retries used: NONE (2 extra retries remaining)
 
 [ ] - Attended a design check
 [ ] - Completed playtesting
 
-Don't edit above this line!
 ========================================
 
 Playtesting Requirements
 ========================================
-[ ] - Handin meets all global requirements
-[ ] - Handin only crashes on edge cases
-[ ] - A 3x3 square board appears
-[ ] - An X or O appears on a box when clicked
+[ ] - Your handin meets all Nin1 primary requirements.
+[ ] - The player must be able to fire projectiles.
+
 
 Primary Engine Requirements
 ========================================
-[ ] - Separate application and screen classes
-[ ] - Application can change screens
-[ ] - Draws current screen on draw events
-[ ] - Updates current screen on tick events
-[ ] - Supports mouse events
-[ ] - Supports keyboard events
-[ ] - Supports resizing windows and appropriately updates internal state
-[ ] - Can draw text
-[ ] - Can draw rectangles
-[ ] - Can draw buttons; buttons execute generic code when clicked
+[ ] - Your engine must correctly implement saving and loading through serialization.
+[ ] - Your engine must correctly support raycasting for polygons and AABs.
 
 Primary Game Requirements
 ========================================
-[ ] - Handin meets all playtesting requirements
-[ ] - Handin correctly implements rules of Tic-Tac-Toe
-[ ] - Two screens used
-[ ] - Game state displayed (including current turn/winner)
-[ ] - Game scales with window size
-[ ] - Board is always square
-[ ] - Makes use of keyboard events
-[ ] - Handin never crashes
+[ ] - Your game must load from a txt file.
+[ ] - You must have at least one txt file for us to load (unless your game loads from our default level file)
+[ ] - Player must be able to
+	[ ] - save game state
+	[ ] - restart the game
+	[ ] - load their saved state
+[ ] - The player must always be in view
+[ ] - The TA debugger must be completed to demonstrate correct raycasting for polygons and AABs.
+[ ] - It must be possible to start a new game without restarting the program
 
 Secondary Engine Requirements
 =======================================
 [ ] - Handin meets all primary engine requirements
-[ ] - Buttons change when hovered
+[ ] - Your engine must support raycasting for circles
 
 Secondary Game Requirements
 ======================================
 [ ] - Handin meets all primary game requirements
-[ ] - Each player has a time limit displayed in the UI
-[ ] - Can start a new game without restarting the program
+[ ] - The TA debugger must be completed to demonstrate correct raycasting for circles.
+[ ] - Raycasting must be implemented in your game as follows:
+	[ ] - player can fire bullets which travel instantly
+	[ ] - bullets must apply an impulse to whatever they hit in the direction of the ray
+[ ] - Your game meets at least two of the Nin extra requirements (please list which ones you chose!)
 
-Global Requirements (you don't need to show how to verify these)
+
+Global Playtesting Requirements (you don't need to show how to verify these)
 ======================================
 [ ] - Eclipse project or ant build file
+[ ] - No external dependencies
+[ ] - Handin runs on department machines
+[ ] - Handin runs 20+ UPS
+[ ] - Handin only crashes on edge cases
+
+Global Primary Requirements (you don't need to show how to verify these)
+======================================
 [ ] - README
     [ ] - has a copy of the rubric
     [ ] - shows how to verify non-global requirements
     [ ] - documents known bugs
     [ ] - approximate hours to complete checkpoint
 [ ] - INSTRUCTIONS file included
-[ ] - No external dependencies
 [ ] - Engine and game in separate packages
 [ ] - Engine and game logically separated
-[ ] - Engine code isn't horribly designed
-[ ] - Game code isn't horribly designed
-[ ] - Handin runs on department machines
+[ ] - Engine code is well designed
+[ ] - Game code is reasonably designed
 [ ] - Handin isn't permanent fixed size
-[ ] - Handin runs 20+ UPS
+[ ] - Handin never crashes
+[ ] - Handin meets all playtesting requirements

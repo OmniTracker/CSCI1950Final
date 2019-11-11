@@ -1,0 +1,70 @@
+WIZ 1 - Retry
+WIZ 2 - Retry
+WIZ Buff - First Handin 
+
+
+Since there is a chance I will need to turn this project more than once, I've decided to just put all the game instructions in the same place. 
+
+
+Really simple game. 
+
+- Use the arrow keys to move the player.
+
+- There are two level. Flames and StarLord.
+
+- You need to collect all the three keys in order to move on to the next level.
+
+- Each level has two startup characters and one dynamically generated characters. The dynamically character is generated when you collect all the keys. 
+	* Please refer to the README to check the conditions and actions for each character.
+	
+- You have to collect three keys on each level in order to move on to the next level. 
+
+- If a player hits you, you will lose some of your money (either percentage or set amount).
+
+- If a enemy hits you, you will respawn at a random location of the board, on where you began the game. If you get cornered, you will lose all you money and the game will end.  
+
+The enemy breakdown is as follows. 
+
+** Please refer to the README to get a better understanding of all the sequences and the associated conditions and actions.
+
+*********** Level 0 *********** 
+Archy  
+Path Planning (Sequence 2) 					- (3,4)
+Collision (Sequence 4) 						- (8, 9, 11)
+
+
+Calorie 
+Path Planning (Sequence 2) 					- (3,5)
+Visibility (Sequence 3) 					- (7)
+Collision (Sequence 4) 						- (8, 9, 12)
+
+
+Lyla: 
+Dynamically Spawned Character (Sequence 1)
+Path Planning (Sequence 2) 					- (3,4)
+Collision (Sequence 4) 						- (8, 10, 11)
+
+
+*********** Level 1 *********** 
+Vulture
+
+Path Planning (Sequence 2)  				- (3,5)
+Collision (Sequence 4) 						- (8, 10, 12)
+
+Zelch: 
+Path Planning (Sequence 2)					- (3,5)
+Visibility (Sequence 3) 					- (7)
+Collision (Sequence 4) 						- (8, 10, 12)
+
+
+Zero: 
+(Dynamically Spawned Character (Sequence 1)
+Path Planning (Sequence 2) 					- (3,5)
+Visibility (Sequence 3) 					- (6)
+Collision (Sequence 4) 						- (8, 10, 11)
+
+====================================================================================================
+
+
+Good luck if you decide to play the game!
+

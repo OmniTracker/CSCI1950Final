@@ -2,7 +2,7 @@ package engine.gameobject;
 
 import java.util.ArrayList;
 
-import engine.systems.Component;
+import engine.systems.Components;
 import support.Vec2d;
 import support.collision.CircleShape;
 import javafx.scene.canvas.GraphicsContext;
@@ -17,7 +17,7 @@ public class AlchemyGem {
 	private Integer _gemIndex; 
 	private Vec2d _location;
 	private CircleShape _circleShape; 
-	private ArrayList<Component> _component;
+	private ArrayList<Components> _component;
 	private static final double RADIUS1 = 120;
 	private static final double RADIUS2 = 100;
 	private static final double CIRCLE_RADIUS = RADIUS2 - 30;
@@ -36,7 +36,7 @@ public class AlchemyGem {
 		this.setImage(image);
 		this.setLocation(location);
 		this.setCircleShape(new CircleShape(location,CIRCLE_RADIUS));
-		this.setComponents(new ArrayList<Component>());
+		this.setComponents(new ArrayList<Components>());
 
 		if (tag == "Forest") 
 		{
@@ -161,20 +161,20 @@ public class AlchemyGem {
 	}
 
 	
-	public void addComponent(Component c) { 
+	public void addComponent(Components c) { 
 		this.getComponents().add(c);
 
 	}
 	
-	public void removeComponent(Component c) {	
+	public void removeComponent(Components c) {	
 		this.getComponents().remove(c);
 	}
 	
-	ArrayList<Component> getComponents() {
+	ArrayList<Components> getComponents() {
 		return _component;
 	}
 	
-	private void setComponents(ArrayList<Component> c) {
+	private void setComponents(ArrayList<Components> c) {
 		this._component = c;
 	}
 }

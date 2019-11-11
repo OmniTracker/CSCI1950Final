@@ -7,7 +7,7 @@ public class EngineFonts {
 	private static final String TIC   = "Biohazard Participants"; 
 	private static final String NIN   = "Quicksand Medium"; 
 	private static final String FINAL = "AR PL KaitiM GB"; 
-	EngineFonts () {
+	public EngineFonts () {
 
 	}
 	@SuppressWarnings("static-access")

@@ -8,8 +8,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import engine.Application;
+import engine.Screen;
 import engine.ui.Button;
-import engine.ui.Screen;
 import engine.utility.AspectRatioHandler;
 
 public class TICStart extends Screen {

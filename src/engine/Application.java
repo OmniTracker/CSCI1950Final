@@ -1,16 +1,20 @@
 package engine;
 
+import java.net.MalformedURLException;
 import java.util.HashMap;
 
 import engine.utility.AspectRatioHandler;
 import engine.utility.Factory;
 import finalgame.*;
+import finalgame.level0.Final;
 import support.*;
 import wizard.*;
-import wizard.level0.Level0;
+import wizard.level0.WizLevel0;
 import tic.*;
 import nin.*;
+import nin.level0.Nin;
 import alchemy.*;
+import alchemy.level0.ALCGameScreen;
 import engine.ui.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -19,22 +23,22 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 
 public class Application extends FXFrontEnd {	
-	
+
 	public final Integer TIC   = 1; 
 	public final Integer ALC   = 2; 
 	public final Integer WIZ   = 3; 
 	public final Integer NIN   = 4; 
 	public final Integer FINAL = 5; 
-	
-	private AspectRatioHandler _aspectRatioHandler; 
-	private HashMap<Integer,Screen> _levelMapping;
-	private Factory _factory;
-	private Screen _currentLevel;
-	private ColorPallet _colorPallet; 
-	
+	private AspectRatioHandler _aspectRatioHandler = null; 
+	private HashMap<Integer,Screen> _levelMapping = null;
+	private Factory _factory = null;
+	private Screen _currentLevel = null;
+	private ColorPallet _colorPallet = null;  
+
 	private static final Vec2d DEFAULT_STAGE_SIZE = new Vec2d(1154,700);
 
-	public void loadGame (Integer game) {
+	public void loadGame (Integer game) throws MalformedURLException {
+		
 		if (game == GameMask.TIC) 
 		{
 			// All Tic Levels can be added no. Nothing special going on here
@@ -50,22 +54,25 @@ public class Application extends FXFrontEnd {
 		else if (game == GameMask.WIZ) 
 		{
 			this.addLevel(game,new WIZStart(this));
-			this.addLevel(game += 1, new Level0(this));
+			this.addLevel(game += 1, new WizLevel0(this));
 		} 
 		else if (game == GameMask.NIN) 
 		{
 			this.addLevel(game, new NINStart(this));
+			this.addLevel(game += 1, new Nin(this));
+
 		} 
 		else if (game == GameMask.FINAL) 
 		{
 			this.addLevel(game, new FinalStart(this));
+			this.addLevel(game += 1, new Final(this));
 		} 
 		else 
 		{
 			System.out.print("Valid game not loaded\n");
 		}
 	}
-	
+
 	public Application(String title) {
 		super(title);
 		this.setLevelMapping(new HashMap<Integer,Screen>()); 
@@ -73,7 +80,7 @@ public class Application extends FXFrontEnd {
 		this.setAspectRatioHandler( new AspectRatioHandler(DEFAULT_STAGE_SIZE));
 		this.setFactory(new Factory());
 	}
-	
+
 	public void borders(GraphicsContext g, Color color) {
 		g.setFill(color);
 		AspectRatioHandler aspect = this.getAspectRatioHandler();
@@ -83,7 +90,7 @@ public class Application extends FXFrontEnd {
 		g.fillRect(0.0,0.0, aspect.getCurrentScreenSize().x, newOrigin.y);
 		g.fillRect(0.0, aspect.getCurrentScreenSize().y - newOrigin.y, aspect.getCurrentScreenSize().x, newOrigin.y);
 	}
-	
+
 	public void addLevel(Integer i ,Screen s) {
 		this.getLevelMapping().put(i, s);
 	}
@@ -92,14 +99,16 @@ public class Application extends FXFrontEnd {
 	protected void onTick(long nanosSincePreviousTick) {
 		if (this.getCurrentLevel() != null) {
 			this.getCurrentLevel().onTick(nanosSincePreviousTick);
+		} else {
+			this.setCurrentLevel(new Final(this));
 		}
 	}
 
 	@Override
-	protected void onDraw(GraphicsContext g) {
+	protected void onDraw(GraphicsContext g) throws MalformedURLException {
 		if (this.getCurrentLevel() != null) {
 			this.getCurrentLevel().onDraw(g);
-		}
+		} 
 	}
 
 	@Override
@@ -126,7 +135,12 @@ public class Application extends FXFrontEnd {
 	@Override
 	protected void onMouseClicked(MouseEvent e) {
 		if (this.getCurrentLevel() != null) {
-			this.getCurrentLevel().onMouseClicked(e);
+			try {
+				this.getCurrentLevel().onMouseClicked(e);
+			} catch (MalformedURLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}	
 	}
 
@@ -175,7 +189,7 @@ public class Application extends FXFrontEnd {
 	@Override
 	protected void onResize(Vec2d newSize) {
 		this.getAspectRatioHandler().setCurrentScreenSize(newSize);
-		
+
 		if (this.getCurrentLevel() != null)
 		{
 			this.getCurrentLevel().onResize(newSize);
@@ -205,18 +219,14 @@ public class Application extends FXFrontEnd {
 	public void setLevel(Integer level) {
 		this.setCurrentLevel(this.getLevelMapping().get(level));
 	}
-
 	@Override
 	protected void onShutdown() {
-		// Do Nothing
-		
+		// Do Nothing	
 	}
-
 	@Override
 	protected void onStartup() {
 		// Do Nothing		
 	}
-
 	private void setLevelMapping(HashMap<Integer,Screen> _levelMapping) {
 		this._levelMapping = _levelMapping;
 	}

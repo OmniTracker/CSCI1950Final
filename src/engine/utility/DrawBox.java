@@ -1,5 +1,6 @@
 package engine.utility;
 
+import javafx.scene.image.Image;
 import engine.gameobject.GameObject;
 import support.Vec2d;
 import support.collision.AABShape;
@@ -8,18 +9,16 @@ public class DrawBox extends GameObject {
 	private Vec2d _origin; 
 	private Vec2d _size;
 	private AABShape _box;
+	private Image _img;
 	
 	public DrawBox () {
-		super(); 
-		
+		super(); 	
 	}
-	
 	public DrawBox ( Vec2d origin, Vec2d size) {
 		this.setOrigin(origin);
 		this.setSize(size);
 		this.setBox( new AABShape(origin,size));
 	}
-	
 	public AABShape getBox() {
 		return _box;
 	}
@@ -37,5 +36,11 @@ public class DrawBox extends GameObject {
 	}
 	public void setSize(Vec2d _size) {
 		this._size = _size;
+	}
+	public Image getImg() {
+		return _img;
+	}
+	public void setImg(Image _img) {
+		this._img = _img;
 	}
 }

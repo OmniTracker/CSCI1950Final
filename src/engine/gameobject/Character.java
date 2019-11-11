@@ -17,10 +17,7 @@ public class Character extends GameObject {
 	private String _characterMiniImagePath = "";
 	private AABShape _bigBoundingBox;
 	private AABShape _smallBoundingBox;
-
-	
 	public Character() { }
-	
 	/**
 	 * @brief Draw subsection of image.
 	 *  
@@ -38,43 +35,30 @@ public class Character extends GameObject {
 								   double sw, double sh, double dx, 
 								   double dy, double dw,  double dh) {		
 	}	
-	
-	public void drawElement()
-	{
+	public void drawElement() {
 		if (getCharacterMini() == null) {
 			return;
 		} else if (true) {
 			return;
 		}
 	}
-	
-	public void smallCharacterDraw (GraphicsContext g, String direction) 
-	{
+	public void smallCharacterDraw (GraphicsContext g, String direction) {
+		@SuppressWarnings("unused")
 		double yImage = 0;
-		double size = 48;
-		
-		if (direction == "UP") 
-		{			
+		double size = 48;	
+		if (direction == "UP") {			
 			yImage += size * 3;
 		} 
-		else if (direction == "DOWN")
-		{
+		else if (direction == "DOWN") {
 			yImage += size * 0;	
 		} 
-		else if (direction == "LEFT") 
-		{
+		else if (direction == "LEFT") {
 			yImage += size * 1;
 		} 
-		else if (direction == "RIGHT") 
-		{
+		else if (direction == "RIGHT") {
 			yImage += size * 2;
 		}
-		
-		g.drawImage(this.getCharacterMini(), size * this.getStep(), yImage, size, size, 
-					this.getPosition().x, 
-				    this.getPosition().y , 50, 50);
-		
-		this.setSize(new Vec2d(50,50));
+		this.getData().setSize(new Vec2d(50,50));
 	}
 	public void draw(GraphicsContext g) {}
 	private void setCharacterLarge(Image _characterLarge) {
@@ -143,15 +127,12 @@ public class Character extends GameObject {
 	public AABShape getBigBoundingBox() {
 		return _bigBoundingBox;
 	}
-
 	public void setBigBoundingBox(AABShape _bigBoundingBox) {
 		this._bigBoundingBox = _bigBoundingBox;
 	}
-
 	public AABShape getSmallBoundingBox() {
 		return _smallBoundingBox;
 	}
-
 	public void setSmallBoundingBox(AABShape _smallBoundingBox) {
 		this._smallBoundingBox = _smallBoundingBox;
 	}
