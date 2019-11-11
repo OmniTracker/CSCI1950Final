@@ -5,6 +5,7 @@ import nin.level0.NinGameWorld;
 import nin.utils.NINGameObjectDelagate;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import engine.Application;
 import engine.systems.Components;
 
@@ -27,10 +28,9 @@ public class DrawGameSceneComponent  extends Components {
 	private void drawBackground (GraphicsContext g) {		
 		Vec2d origin = this.getApp().getAspectRatioHandler().calculateUpdatedOrigin();
 		Vec2d screenSize = this.getApp().getAspectRatioHandler().calculateUpdatedScreenSize();
-
-		
-		
-		g.drawImage(this.getBackground(), 0, 0, 2100,1220, origin.x,origin.y,screenSize.x ,screenSize.y);	
+		g.setFill(Color.DARKBLUE);
+		g.fillRect(origin.x,origin.y,screenSize.x ,screenSize.y);
+		g.drawImage(this.getBackground(), 0, 0, 2100,1220, origin.x + 10,origin.y + 50 ,screenSize.x - 20 ,screenSize.y - 60);	
 
 	}
 

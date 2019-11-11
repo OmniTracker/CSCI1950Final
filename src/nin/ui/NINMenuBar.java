@@ -35,7 +35,7 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 		// Instructions panel
 		InstructionPanel intructionsPanel = new InstructionPanel( this.getAspectRatio() );
 		intructionsPanel.setColor(Color.DARKGRAY);
-		intructionsPanel.setSecondaryColor(Color.DARKGREEN);
+		intructionsPanel.setSecondaryColor(Color.DARKBLUE);
 		intructionsPanel.setSize( new Vec2d(600,300));
 		intructionsPanel.setOrigin(new Vec2d(0,0));
 		intructionsPanel.setBoarderSize(10);
@@ -43,7 +43,7 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 		// Control Panel
 		ControlsPanel controlsPanel = new ControlsPanel( this.getAspectRatio()); 
 		controlsPanel.setColor(Color.DARKGRAY);
-		controlsPanel.setSecondaryColor(Color.DARKGREEN);
+		controlsPanel.setSecondaryColor(Color.DARKBLUE);
 		controlsPanel.setSize( new Vec2d(600,400));	
 		controlsPanel.setOrigin(new Vec2d(0,0));
 		controlsPanel.setBoarderSize(10);

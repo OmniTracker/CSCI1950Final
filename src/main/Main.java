@@ -15,7 +15,7 @@ public class Main
 
 	public static void main (String[] arg) throws MalformedURLException 
 	{
-		Integer _debugGame = 5; 
+		Integer _debugGame = 0; 
 		Application app = new Application("Project Screen");
 		if (_debugGame == 0) 
 		{
