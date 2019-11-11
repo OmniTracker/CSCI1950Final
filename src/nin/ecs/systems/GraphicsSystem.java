@@ -22,8 +22,13 @@ public class GraphicsSystem extends Systems {
 	public void onDraw(GraphicsContext g) {
 		this.getDrawGameSceneComponent().onDraw(g);
 		this.getNINDrawComponent().onDraw(g);
+	}	
+	public void onShutdown() {
+		this.getDrawGameSceneComponent().onShutdown();
 	}
-
+	public void onStartup() {
+		this.getDrawGameSceneComponent().onStartup();
+	}	
 	private DrawGameSceneComponent getDrawGameSceneComponent() {
 		return _drawGameSceneComponent;
 	}

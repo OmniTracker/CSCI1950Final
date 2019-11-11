@@ -38,7 +38,7 @@ public class Application extends FXFrontEnd {
 	private static final Vec2d DEFAULT_STAGE_SIZE = new Vec2d(1154,700);
 
 	public void loadGame (Integer game) throws MalformedURLException {
-		
+
 		if (game == GameMask.TIC) 
 		{
 			// All Tic Levels can be added no. Nothing special going on here
@@ -195,6 +195,17 @@ public class Application extends FXFrontEnd {
 			this.getCurrentLevel().onResize(newSize);
 		}
 	}
+	@Override
+	protected void onShutdown() {
+		if (this.getCurrentLevel() != null) {
+			this.getCurrentLevel().onShutdown();
+		}	}
+	@Override
+	protected void onStartup() {
+		if (this.getCurrentLevel() != null) {
+			this.getCurrentLevel().onStartup();
+		}	
+	}
 
 	public AspectRatioHandler getAspectRatioHandler() {
 		return _aspectRatioHandler;
@@ -218,14 +229,6 @@ public class Application extends FXFrontEnd {
 
 	public void setLevel(Integer level) {
 		this.setCurrentLevel(this.getLevelMapping().get(level));
-	}
-	@Override
-	protected void onShutdown() {
-		// Do Nothing	
-	}
-	@Override
-	protected void onStartup() {
-		// Do Nothing		
 	}
 	private void setLevelMapping(HashMap<Integer,Screen> _levelMapping) {
 		this._levelMapping = _levelMapping;

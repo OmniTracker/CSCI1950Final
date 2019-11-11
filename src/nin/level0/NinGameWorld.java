@@ -27,6 +27,14 @@ public class NinGameWorld  extends GameWorld {
 	}	
 	public void onKeyPressed(KeyEvent e)  {
 	}
+	public void onShutdown() {
+		this.getGraphicsSystem().onShutdown();
+
+	}
+	public void onStartup() {
+		this.getGraphicsSystem().onStartup();
+
+	}	
 	private GraphicsSystem getGraphicsSystem() {
 		return _graphicsSystem;
 	}

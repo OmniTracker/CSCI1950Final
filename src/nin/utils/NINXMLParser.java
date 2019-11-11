@@ -1,8 +1,11 @@
 package nin.utils;
 
+import engine.gameobject.GameObject;
 import engine.utility.Factory;
+import javafx.scene.image.Image;
 
 import javax.xml.parsers.*;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -10,73 +13,167 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import java.io.*;
+import java.util.HashMap;
 
 public class NINXMLParser extends Factory {
-	
+
+	private  boolean DEBUG = true;
+
 	NINXMLParser() {
-		
+
 	}
 
-	/*
-	 * 	Useful Classes: 
-	 * 	
-	 *		
-	 *		DocumentBuilder
-	 *		Document (org.w3c.dom NOT javax/swing)
-	 *		Element
-	 *		Node & NodeList
-	 */
-
-	public void readXMLParser ( ) {
+	public HashMap <Integer,GameObject> readXMLParserPlatform ( ) {
 		// Setup the parser
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = null;
 		Document document = null;
-		try 
-		{
+		HashMap <Integer,GameObject> objs = new HashMap <Integer,GameObject>();
+		try  {
 			builder = factory.newDocumentBuilder();
-		} 
-		catch (ParserConfigurationException e1) 
-		{
+		}  catch (ParserConfigurationException e1) {
 			e1.printStackTrace();
-			return;
-		}
-		try 
-		{
-			document = builder.parse("resources/xmlResources/charles.xml");
-		} 
-		catch (SAXException | IOException e ) 
-		{
+			return null;
+		} try  {
+			document = builder.parse("resources/xmlResources/gameInput.xml");
+		} catch (SAXException | IOException e ) {
 			e.printStackTrace();
-			return;
+			return null;
 		}
-		//Normalize the XML Structure; It's just too important !!
 		document.getDocumentElement().normalize();
-		//Here comes the root node
 		Element root = document.getDocumentElement();
-		System.out.println(root.getNodeName());
-		//Get all employees
-		NodeList nList = document.getElementsByTagName("employee");
-		System.out.println("============================");
-		
-		for (int temp = 0; temp < nList.getLength(); temp++)
-		{
-			Node node = nList.item(temp);
-		
-			System.out.println("");    //Just a separator
-			if (node.getNodeType() == Node.ELEMENT_NODE)
-			{
-				//Print each employee's detail
-				Element eElement = (Element) node;
-				System.out.println("Employee id : "    + eElement.getAttribute("id"));
-				System.out.println("First Name : "  + eElement.getElementsByTagName("firstName").item(0).getTextContent());
-				System.out.println("Last Name : "   + eElement.getElementsByTagName("lastName").item(0).getTextContent());
-				System.out.println("Location : "    + eElement.getElementsByTagName("location").item(0).getTextContent());
+		System.out.println("Node Name: " + root.getNodeName() + "\n");	
+		NodeList platformNodeList = document.getElementsByTagName("platform");
+
+
+		if (DEBUG == true) { 
+			for (int temp = 0; temp < platformNodeList.getLength(); temp++) {
+				Node node = platformNodeList.item(temp);
+				System.out.println("");    //Just a separator
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					Element eElement = (Element) node;
+					System.out.println("Platform  id : "    + eElement.getAttribute("id"));
+					System.out.println("Stationary : "      + eElement.getElementsByTagName("stationary").item(0).getTextContent());
+					System.out.println("File Name : "       + eElement.getElementsByTagName("fileName").item(0).getTextContent());
+					System.out.println("Image File Start: " + eElement.getElementsByTagName("imageFileStart").item(0).getTextContent());
+					System.out.println("Image File End  : " + eElement.getElementsByTagName("imageFileEnd").item(0).getTextContent());
+					System.out.println("Movement Speed  : " + eElement.getElementsByTagName("movementSpeed").item(0).getTextContent());
+					System.out.println("Direction  : " 		+ eElement.getElementsByTagName("direction").item(0).getTextContent());
+				}
 			}
 		}
+
+		for (int temp = 0; temp < platformNodeList.getLength(); temp++)
+		{
+			Node node = platformNodeList.item(temp);
+			GameObject obj = new GameObject(); 
+
+			if (node.getNodeType() == Node.ELEMENT_NODE) 
+			{
+				Element eElement = (Element) node;
+
+				// Set the ID first
+				obj.setID(Integer.parseInt(eElement.getAttribute("id")));
+				obj.getData().setImage(this.getGenericImage(eElement.getElementsByTagName("fileName").item(0).getTextContent()));
+
+
+				System.out.println("Stationary : "      + eElement.getElementsByTagName("stationary").item(0).getTextContent());
+				System.out.println("Image File Start: " + eElement.getElementsByTagName("imageFileStart").item(0).getTextContent());
+				System.out.println("Image File End  : " + eElement.getElementsByTagName("imageFileEnd").item(0).getTextContent());
+				System.out.println("Movement Speed  : " + eElement.getElementsByTagName("movementSpeed").item(0).getTextContent());
+				System.out.println("Direction  : " 		+ eElement.getElementsByTagName("direction").item(0).getTextContent());
+			}
+			objs.put(obj.getID(), obj);
+		}
+		return objs; 
 	}
 
-	public void writeXMLParser ( ) {
+
+	public GameObject readXMLParserCharacter ( ) {
+		// Setup the parser
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = null;
+		Document document = null;
+		GameObject obj = new GameObject();
+
+		try  {
+			builder = factory.newDocumentBuilder();
+		}  catch (ParserConfigurationException e1) {
+			e1.printStackTrace();
+			return null;
+		} try  {
+			document = builder.parse("resources/xmlResources/gameInput.xml");
+		} catch (SAXException | IOException e ) {
+			e.printStackTrace();
+			return null;
+		}
+		document.getDocumentElement().normalize();
+		NodeList characterNodeList = document.getElementsByTagName("character");
+
+		if (DEBUG == true) 
+		{
+			for (int temp = 0; temp < characterNodeList.getLength(); temp++){
+				Node node = characterNodeList.item(temp);
+				System.out.println("");    //Just a separator
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					//Print each employee's detail
+					Element eElement = (Element) node;
+					System.out.println("Character id : "    + eElement.getAttribute("id"));
+					System.out.println("File Name : "       + eElement.getElementsByTagName("fileName").item(0).getTextContent());
+					System.out.println("Projectile File Name : "       + eElement.getElementsByTagName("projectTileFileName").item(0).getTextContent());
+				}
+			}			
+		}
+
+
+
+		for (int temp = 0; temp < characterNodeList.getLength(); temp++){
+			Node node = characterNodeList.item(temp);
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+				//Print each employee's detail
+				Element eElement = (Element) node;
+				obj.setID(Integer.parseInt(eElement.getAttribute("id")));
+				obj.getData().setImage(this.getGenericImage(eElement.getElementsByTagName("fileName").item(0).getTextContent()));
+
+
+				// System.out.println("File Name : "       + eElement.getElementsByTagName("fileName").item(0).getTextContent());
+				// System.out.println("Projectile File Name : "       + eElement.getElementsByTagName("projectTileFileName").item(0).getTextContent());
+			}
+		}	
+
+
+		return obj; 
+	}
+
+
+	public Image readXMLParserBackgroundImage ( ) {
+		// Setup the parser
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = null;
+		Document document = null;
+		Image background = null;
+		try  {
+			builder = factory.newDocumentBuilder();
+		}  catch (ParserConfigurationException e1) {
+			e1.printStackTrace();
+			return null;
+		} try  {
+			document = builder.parse("resources/xmlResources/gameInput.xml");
+		} catch (SAXException | IOException e ) {
+			e.printStackTrace();
+			return null;
+		}
+		document.getDocumentElement().normalize();
+		NodeList characterNodeList = document.getElementsByTagName("sky");
+		Node node = characterNodeList.item(0);
+		Element eElement = (Element) node;			
+		background = this.getGenericImage(eElement.getElementsByTagName("path").item(0).getTextContent());
+		return background; 
+	}
+	////////////////////////////////////// Test Below ////////////////////////////////////////////////	
+
+
+	public void writeXMLParserTest ( ) {
 
 		// Setup the parser
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -99,9 +196,5 @@ public class NINXMLParser extends Factory {
 		player.setAttribute("Health","100");
 		Element sword = doc.createElement("Sword");
 		// Add child elements to other elements, and top element to the doc.
-
-
 	}
-
-
 }

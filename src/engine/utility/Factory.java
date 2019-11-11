@@ -366,22 +366,13 @@ public class Factory {
 		} 
 		return null;
 	}	
-	
-	public void xmlReader (String path) throws ParserConfigurationException, SAXException, IOException {
-		// Setup the parser
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder docBuilder = factory.newDocumentBuilder();
-		Document doc = docBuilder.parse(path);
-		doc.getDocumentElement().normalize();
-		
-	}
-	
-	public void xmlWriter () throws ParserConfigurationException {
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder docBuilder = factory.newDocumentBuilder();
-		Document doc = docBuilder.newDocument();
-		
-
-		
+	public Image getGenericImage (String path) {
+		try {
+			return new Image(new File(path).toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

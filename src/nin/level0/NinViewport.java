@@ -1,6 +1,7 @@
 package nin.level0;
 
 import nin.ui.NINMenuBar;
+import nin.utils.NINDelegateContainer;
 import support.Vec2d;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -19,37 +20,54 @@ public class NinViewport extends ViewportHandler {
 	}
 	
 	public void onDraw(GraphicsContext g) {		
-		this.getMenuBar().onDraw(g);
 		this.getGameWorld().onDraw(g);
+		this.getMenuBar().onDraw(g);
 	}
 	
 	public void onMouseClicked(MouseEvent e) {
-		this.getMenuBar().onMouseClicked(e);
 		if ( this.getMenuBar().isMenuActivated() == false ) {
 			this.getGameWorld().onMouseClicked(e);
 		}
+		this.getMenuBar().onMouseClicked(e);
+
 	}
 
 	public void onTick(long nanosSincePreviousTick) {
-		this.getMenuBar().onTick(nanosSincePreviousTick);
 		if ( this.getMenuBar().isMenuActivated() == false ) {
 			this.getGameWorld().onTick(nanosSincePreviousTick);			
 		}
+		this.getMenuBar().onTick(nanosSincePreviousTick);
+
 	}
 	
 	public void onKeyPressed(KeyEvent e)  {
-		this.getMenuBar().onKeyPressed(e);
 		if ( this.getMenuBar().isMenuActivated() == false ) {
 			this.getGameWorld().onKeyPressed(e);
 		}		
+		this.getMenuBar().onKeyPressed(e);
 	}
 	
 	public void onMouseDragged(MouseEvent e) {
-		this.getGameWorld().onMouseDragged(e);
 		if ( this.getMenuBar().isMenuActivated() == false ) {
 			this.getGameWorld().onMouseDragged(e);
 		}
+		this.getGameWorld().onMouseDragged(e);
 	}
+	
+	public void onShutdown() {
+		this.getGameWorld().onShutdown();
+		if ( this.getMenuBar().isMenuActivated() == false ) {
+			this.getGameWorld().onShutdown();
+		}
+	}
+
+	public void onStartup() {
+		this.getGameWorld().onStartup();
+		if ( this.getMenuBar().isMenuActivated() == false ) {
+			this.getGameWorld().onStartup();
+		}
+	}
+
 	
 	private NINMenuBar getMenuBar() {
 		return _menuBar;
@@ -58,4 +76,6 @@ public class NinViewport extends ViewportHandler {
 	public void setMenuBar(NINMenuBar _menuBar) {
 		this._menuBar = _menuBar;
 	}
+	
+	
 }

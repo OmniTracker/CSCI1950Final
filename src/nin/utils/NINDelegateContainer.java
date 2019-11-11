@@ -4,16 +4,13 @@ import engine.Application;
 import engine.gameobject.GameObjectDelegate;
 
 public class NINDelegateContainer extends GameObjectDelegate {
-	private NINXMLParser _ninXMLParser = null;
-	private NinMapDelegate _ninMapDelegate = null; 
-	private NINFactory _ninFactory = null; 
+	private NinMapDelegate _ninMapDelegate               = null; 
+	private NINGameObjectDelagate _ninGameObjectDelagate = null;
 	
 	public NINDelegateContainer(Application app) {
 		super(app);
-		this.setNINXMLParser( new NINXMLParser());
-		this.setNINFactory( new NINFactory());
 		this.setNINMapDelegate(new NinMapDelegate(app));
-		this.getNINMapDelegate().setNINFactory(getNINFactory());
+		this.setNINGameObjectDelagate( new NINGameObjectDelagate(app));
 	}
 	public NinMapDelegate getNINMapDelegate() {
 		return _ninMapDelegate;
@@ -21,16 +18,10 @@ public class NINDelegateContainer extends GameObjectDelegate {
 	private void setNINMapDelegate(NinMapDelegate _ninMapDelegate) {
 		this._ninMapDelegate = _ninMapDelegate;
 	}
-	public NINXMLParser getNINXMLParser() {
-		return _ninXMLParser;
+	public NINGameObjectDelagate getNINGameObjectDelagate() {
+		return _ninGameObjectDelagate;
 	}
-	private void setNINXMLParser(NINXMLParser _ninXMLParser) {
-		this._ninXMLParser = _ninXMLParser;
-	}
-	private NINFactory getNINFactory() {
-		return _ninFactory;
-	}
-	private void setNINFactory(NINFactory _ninFactory) {
-		this._ninFactory = _ninFactory;
+	private void setNINGameObjectDelagate(NINGameObjectDelagate _ninGameObjectDelagate) {
+		this._ninGameObjectDelagate = _ninGameObjectDelagate;
 	}
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ninGameInput>
+
+	<platform id="1">
+		<stationary>Yes</stationary>
+		<fileName>resources/terrain/ninMainGround.png</fileName>
+		<imageFileStart>0,0</imageFileStart>
+		<imageFileEnd>0,0</imageFileEnd>
+		<movementSpeed>0</movementSpeed>
+		<direction>N/A</direction></platform>
+
+	<platform id="2">
+		<stationary>Yes</stationary>
+		<fileName>resources/terrain/ninMovingPlatforms.png</fileName>
+		<imageFileStart>0,0</imageFileStart>
+		<imageFileEnd>0,0</imageFileEnd>
+		<movementSpeed>5</movementSpeed>
+		<direction>vertical</direction>
+	</platform>
+
+	<platform id="3">
+		<stationary>Yes</stationary>
+		<fileName>resources/terrain/ninMovingPlatforms.png</fileName>
+		<imageFileStart>0,0</imageFileStart>
+		<imageFileEnd>0,0</imageFileEnd>
+		<movementSpeed>5</movementSpeed>
+		<direction>vertical</direction>
+	</platform>
+
+	<platform id="4">
+		<stationary>Yes</stationary>
+		<fileName>resources/terrain/ninMovingPlatforms.png</fileName>
+		<imageFileStart>0,0</imageFileStart>
+		<imageFileEnd>0,0</imageFileEnd>
+		<movementSpeed>5</movementSpeed>
+		<direction>horizontal</direction>
+	</platform>
+
+	<platform id="5">
+		<stationary>Yes</stationary>
+		<fileName>resources/terrain/ninMovingPlatforms.png</fileName>
+		<imageFileStart>0,0</imageFileStart>
+		<imageFileEnd>0,0</imageFileEnd>
+		<movementSpeed>5</movementSpeed>
+		<direction>horizontal</direction>
+	</platform>
+	<character id="6">
+		<fileName>resources/characters/lucas/ninLucasSprite.png</fileName>
+		<projectTileFileName>resources/characters/lucas/lucasProjectile.png</projectTileFileName></character>
+	<sky>
+		<path>resources/terrain/sky.jpg</path></sky></ninGameInput>

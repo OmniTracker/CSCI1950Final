@@ -16,9 +16,10 @@ public class GameObject {
 	private GameObjectData _data = new GameObjectData();
 	private boolean DEBUG = false; 
 	private Integer _gameLevel = -1;
-	private Integer _AIStepCount = 0
-			;
-	private Integer _arrayIndex = 0;  
+	private Integer _AIStepCount = 0;
+	private Integer _arrayIndex = 0; 
+	private Integer _ID;
+	
 	public boolean _invisble = false;
 	private ArrayList<Stack<Vec2i>> _foundPathList = null; 
 
@@ -199,5 +200,11 @@ public class GameObject {
 	}
 	public void setCollisionOffset(Vec2d _collisionOffset) {
 		this._collisionOffset = _collisionOffset;
+	}
+	public Integer getID() {
+		return _ID;
+	}
+	public void setID(Integer _ID) {
+		this._ID = _ID;
 	}
 }
