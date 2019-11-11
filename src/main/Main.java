@@ -15,7 +15,7 @@ public class Main
 
 	public static void main (String[] arg) throws MalformedURLException 
 	{
-		Integer _debugGame = 0; 
+		Integer _debugGame = 5; 
 		Application app = new Application("Project Screen");
 		if (_debugGame == 0) 
 		{
@@ -33,6 +33,7 @@ public class Main
 		{
 			app.addLevel(GameMask.CSCI1950ProjectScreenIndex, new WizLevel1(app));
 		}
+		
 		else if (_debugGame == 5 )
 		{
 			app.addLevel(GameMask.CSCI1950ProjectScreenIndex, new Nin(app));
@@ -41,6 +42,8 @@ public class Main
 		{
 			app.addLevel(GameMask.CSCI1950ProjectScreenIndex, new Final(app));
 		}
+		
+		
 		app.setLevel(CSCI1950ProjectScreenIndex);
 		app.start();
 	}

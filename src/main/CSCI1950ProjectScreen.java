@@ -80,11 +80,13 @@ public class CSCI1950ProjectScreen extends Screen {
 	private void courseName(GraphicsContext g) {
 		g.setFill(this.getBorderColor());
 		
-		Vec2d screenSize = this.getApplication().getAspectRatioHandler().getCurrentScreenSize();		
+		Vec2d screenSize = this.getApplication().getAspectRatioHandler().getCurrentScreenSize();	
+		
+		Vec2d screneOrigin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin();
 		
 		g.setFont(Font.font(this.getFontNames().getAlc() , 40));
 		g.setTextAlign(TextAlignment.CENTER);
-		g.fillText("CSCI 1950: 2D Game Engines", (screenSize.x / 2) , (screenSize.y / 2) - 300  + fadeInY);
+		g.fillText("CSCI 1950: 2D Game Engines", (screenSize.x / 2) , (screneOrigin.y / 2) + 50  + fadeInY);
 	}
 	public void onMouseClicked(MouseEvent e) throws MalformedURLException {
 		checkButtonClick(e);	
