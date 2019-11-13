@@ -2,6 +2,7 @@ package wizard.behaviortree;
 
 import java.util.ArrayList;
 
+import wizard.behaviortree.selector.WIZSelector;
 import wizard.behaviortree.sequenceNodes.WIZBehaviorSequence;
 import engine.GameWorld;
 import engine.ai.behaviortree.BehaviorTree;
@@ -14,26 +15,28 @@ public class WIZBehaviorTree extends BehaviorTree
 {	
 	// Each Sequence has two behaviors. The first is a condition and the
 	// second is the Action.
-	private ArrayList<ArrayList<WIZBehaviorSequence>> _sequence; 
+	private WIZSelector _wizSelector =  null;
+	
 	private boolean DEBUG = false; 
+	
 	public WIZBehaviorTree () 
 	{
-		this.setSequence( new ArrayList<ArrayList<WIZBehaviorSequence>>() );
+		this.setWIZSelector(new WIZSelector(null));			
 	}
-	
+
 	public void runTree(GameWorld gameWorld) 
 	{
-		if (this.getSequence().size() == 0)
+		if (this.getWIZSelector().getSequence().size() == 0)
 		{
 			return;
 		}
 		// Get each sequence Array. The logic within the Array should be
 		// Properly handled in the for loop
-		
-		
-		for ( int idx0 = 0; idx0 < this.getSequence().size(); idx0++ ) 
+		for ( int idx0 = 0; idx0 < this.getWIZSelector().getSequence().size(); idx0++ ) 
 		{
-			ArrayList<WIZBehaviorSequence> subSequence = this.getSequence().get(idx0);
+			
+			// Get sequence from the selector Array.
+			ArrayList<WIZBehaviorSequence> subSequence = this.getWIZSelector().getSequence().get(idx0);
 			
 			if (DEBUG == true) 
 			{
@@ -76,10 +79,10 @@ public class WIZBehaviorTree extends BehaviorTree
 	public boolean runSequence () {
 		return false; 
 	}
-	public ArrayList<ArrayList<WIZBehaviorSequence>> getSequence() {
-		return _sequence;
+	public WIZSelector getWIZSelector() {
+		return _wizSelector;
 	}
-	public void setSequence(ArrayList<ArrayList<WIZBehaviorSequence>> _sequence) {
-		this._sequence = _sequence;
+	public void setWIZSelector(WIZSelector _wizSelector) {
+		this._wizSelector = _wizSelector;
 	}
 }

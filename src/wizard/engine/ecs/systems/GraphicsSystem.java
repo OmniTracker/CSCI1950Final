@@ -45,8 +45,8 @@ public class GraphicsSystem extends Systems  {
 		g.save();
 		g.scale(0.15, 0.15);
 		
-		g.translate(this.getApp().getAspectRatioHandler().calculateUpdatedOrigin().x - 500, 
-				this.getApp().getAspectRatioHandler().calculateUpdatedOrigin().y + 400);
+		g.translate(this.getApp().getAspectRatioHandler().calculateUpdatedOrigin().x + 300, 
+				this.getApp().getAspectRatioHandler().calculateUpdatedOrigin().y + 3500);
 		
 		this.getGameBoardComponent().onDraw(g);
 		this.getGraphicsComponent().onDraw(g);

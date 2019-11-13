@@ -12,40 +12,48 @@ Retries used: NONE (2 extra retries remaining)
 
 Playtesting Requirements
 ========================================
-[ ] - Your handin meets all Nin1 primary requirements.
-[ ] - The player must be able to fire projectiles.
+[ ] - Your game should have a map containing passable and impassable tiles
+[ ] - Your game must have a unit that can be controlled by the player
+[ ] - Your game must have an enemy unit that moves deterministically
+[ ] - There must be a visible reaction when the player and enemy collide
+[ ] - Your game must have a stationary item on the ground
+[ ] - There must be a (different) visible reaction when the player and item collide
 
 
 Primary Engine Requirements
 ========================================
-[ ] - Your engine must correctly implement saving and loading through serialization.
-[ ] - Your engine must correctly support raycasting for polygons and AABs.
+[ ] - Your engine must support A* pathfinding
+[ ] - Your engine must implement an AI library
+    [ ] - If  using behavior trees, you must implement the following:
+        [ ] - Behavior Tree class
+        [ ] - Selector class
+        [ ] - Sequence class
+        [ ] - Action interface
+        [ ] - Condition interface
+    [ ] - If using GOAP, you must implement the following:
+        [ ] - Game State class
+        [ ] - Action class/interface
+        [ ] - Condition class/interface
+        [ ] - You should be able to search over the Action set using a starting Game State and a goal Condition using your engine's A* implementation (can use a heuristic of 0, or allow the game to define its own)
 
 Primary Game Requirements
 ========================================
-[ ] - Your game must load from a txt file.
-[ ] - You must have at least one txt file for us to load (unless your game loads from our default level file)
-[ ] - Player must be able to
-	[ ] - save game state
-	[ ] - restart the game
-	[ ] - load their saved state
-[ ] - The player must always be in view
-[ ] - The TA debugger must be completed to demonstrate correct raycasting for polygons and AABs.
+[ ] - The enemy unit should use your engine's AI framework.
+    [ ] - All AI tools included in the engine requirements should be used
+    [ ] - At least two distinct behaviors must be used and visible during gameplay
 [ ] - It must be possible to start a new game without restarting the program
+
 
 Secondary Engine Requirements
 =======================================
 [ ] - Handin meets all primary engine requirements
-[ ] - Your engine must support raycasting for circles
 
 Secondary Game Requirements
 ======================================
 [ ] - Handin meets all primary game requirements
-[ ] - The TA debugger must be completed to demonstrate correct raycasting for circles.
-[ ] - Raycasting must be implemented in your game as follows:
-	[ ] - player can fire bullets which travel instantly
-	[ ] - bullets must apply an impulse to whatever they hit in the direction of the ray
-[ ] - Your game meets at least two of the Nin extra requirements (please list which ones you chose!)
+[ ] - The enemy unit must move according to a path generated using A*
+[ ] - The game must meet at least two of the extra game requirements that weren't used last week
+    [ ] - List all four game requirements in your README and specify which ones are for tac3 and which are tac4
 
 
 Global Playtesting Requirements (you don't need to show how to verify these)

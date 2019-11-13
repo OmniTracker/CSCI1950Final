@@ -18,6 +18,30 @@ public class CollisionComponent  extends Components  {
 	private Application _app;
 	private GameWorld _gameWorld;	
 	private ArrayList <AABShape> _boxList; 
+	
+	
+	private boolean DEBUG = false;
+	
+	/**
+	 * Level 0
+	 */
+	protected final Integer LEVEL_0_RED_C 	= 18;
+	protected final Integer LEVEL_0_RED_R 	= 7;
+	protected final Integer LEVEL_0_GREEN_C = 23;
+	protected final Integer LEVEL_0_GREEN_R = 11;
+	protected final Integer LEVEL_0_BLUE_C 	= 9;
+	protected final Integer LEVEL_0_BLUE_R 	= 5;
+	/**
+	 * Level 1
+	 */
+	protected final Integer LEVEL_1_RED_C = 19;
+	protected final Integer LEVEL_1_RED_R = 3;
+	protected final Integer LEVEL_1_GREEN_C = 19;
+	protected final Integer LEVEL_1_GREEN_R = 19;
+	protected final Integer LEVEL_1_BLUE_C = 13;
+	protected final Integer LEVEL_1_BLUE_R = 17;
+	
+	
 	public CollisionComponent (Application app, GameWorld gameWorld) {
 		this.setApp(app);
 		this.setGameWorld(gameWorld);
@@ -27,7 +51,125 @@ public class CollisionComponent  extends Components  {
 		this.createBoundingBoxes();	
 		this.checkCollision();
 		this.main_VS_enemy();
+		
+		/*
+		if (this.getGameWorld().getLevel() == 0) {
+			this.checkKey0Collision();
+		} else if (this.getGameWorld().getLevel() == 1) {
+			this.checkKey0Collision();
+		}
+		*/
 	}
+	
+	private void checkKey0Collision () {
+		@SuppressWarnings("unused")
+		double sizeX = 0; 
+		@SuppressWarnings("unused")
+		double sizeY = 0; 
+		Vec2i location;
+		GameObject main = this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevelO().get("Main");
+
+		int r = 0;
+		for (String map : this.getGameWorld().getWIZDelegateContainer().getWIZMapDelegate().getLevel0Map()) {
+			String[] section = map.split(","); 	
+			int size = section.length;
+			for (int c = 0; c < size - 1; c++) 
+			{
+				int x = (100 * (r)) + (int) this.getGameWorld().getOrigin().x + (int) ( this.getApp().getAspectRatioHandler().getCurrentScreenSize().y / 2); 
+				int y = (100 * (c)) + (int) this.getGameWorld().getOrigin().y + (int) ( this.getApp().getAspectRatioHandler().getCurrentScreenSize().x / 2); 
+				location = new Vec2i(y,x);
+
+				// Draw the Red
+				if ( (r == LEVEL_0_RED_R)  && ( c == LEVEL_0_RED_C )  ) {
+					AABShape box = new AABShape(new Vec2d( location ), new Vec2d(100,100));  
+
+					if ( Collision.isColliding(box, main.getData().getBox()) == true) 
+					{
+						main.getData()._level0RedKeyFound = true;
+						if (DEBUG) 
+						{
+							System.out.print("RED Collision \n" );
+						}						
+					}
+				}
+				// Draw the blue
+				if ( ( r ==  LEVEL_0_BLUE_R)  && ( c == LEVEL_0_BLUE_C)  ) {						
+					AABShape box = new AABShape(new Vec2d( location ), new Vec2d(100,100));  
+					if ( Collision.isColliding(box, main.getData().getBox()) == true) 
+					{
+						main.getData()._level0BlueKeyFound = true;
+						if (DEBUG) 
+						{
+							System.out.print("BLUE Collision \n" );
+						}
+					}
+				}
+				// Draw the green
+				if ( ( r == LEVEL_0_GREEN_R )  && ( c == LEVEL_0_GREEN_C )  ) {	
+					AABShape box = new AABShape(new Vec2d( location ), new Vec2d(100,100));  
+					if ( Collision.isColliding(box, main.getData().getBox()) == true) 
+					{
+						main.getData()._level0GreenKeyFound = true;
+						if (DEBUG) 
+						{
+							System.out.print("GREEN Collision \n" );
+						}
+					}
+				}
+				sizeX = c * 100; 
+			}
+			r++;
+			sizeY = r * 100; 
+		}
+	}
+	private void checkKey1Collision () {		
+		@SuppressWarnings("unused")
+		double sizeX = 0; 
+		@SuppressWarnings("unused")
+		double sizeY = 0; 
+		@SuppressWarnings("unused")
+		Vec2i location;
+		GameObject main = this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevelO().get("Main");		
+		int r = 0;
+		for (String map : this.getGameWorld().getWIZDelegateContainer().getWIZMapDelegate().getLevel1Map() ) {
+			String[] section = map.split(","); 	
+			int size = section.length;
+			for (int c = 0; c < size - 1; c++) 
+			{
+				int x = (100 * (r)) + (int) this.getGameWorld().getOrigin().x + (int) ( this.getApp().getAspectRatioHandler().getCurrentScreenSize().y / 2); 
+				int y = (100 * (c)) + (int) this.getGameWorld().getOrigin().y + (int) ( this.getApp().getAspectRatioHandler().getCurrentScreenSize().x / 2); 
+				location = new Vec2i(y,x);
+				// Draw the Red
+				if ( (r == LEVEL_1_RED_R)  && ( c == LEVEL_1_RED_C )  ) 
+				{	
+					if ((r == main.getData().getGameGridLocation().x )  && ( c == main.getData().getGameGridLocation().y) ) 
+					{
+						main.getData()._level1RedKeyFound = true;
+					}			
+				}
+				// Draw the blue
+				if ( ( r ==  LEVEL_1_BLUE_R)  && ( c == LEVEL_1_BLUE_C)  ) 
+				{						
+					if ((r == main.getData().getGameGridLocation().x )  && ( c == main.getData().getGameGridLocation().y) ) 
+					{
+						main.getData()._level1BlueKeyFound = true;	
+					}	
+				}
+				// Draw the green
+				if ( ( r == LEVEL_1_GREEN_R )  && ( c == LEVEL_1_GREEN_C )  ) 
+				{	
+					if ((r == main.getData().getGameGridLocation().x )  && ( c == main.getData().getGameGridLocation().y) ) 
+					{
+						main.getData()._level1GreenKeyFound = true;
+					}
+				}
+				sizeX = c * 100; 
+			}
+			r++;
+			sizeY = r * 100; 
+		}
+	}
+	
 	private void createBoundingBoxes () 
 	{
 		this.getBoxList().clear();
@@ -118,16 +260,7 @@ public class CollisionComponent  extends Components  {
 			{				
 				if ( Collision.isColliding(character.getValue().getData().getBox(), main.getData().getBox()) == true) 
 				{
-					this.getGameWorld().setOrigin(new Vec2d (-700, -130));
-					/* Finsh for WIZ 2 retry
-					Vec2d mtv = MTV.collision(character.getValue().getData().getBox(), main.getData().getBox()); 
-
-					if ( mtv != null ) 
-					{
-						Vec2d newOrigin = new Vec2d(this.getGameWorld().getOrigin().x + (mtv.y), this.getGameWorld().getOrigin().y + (mtv.x) );
-						this.getGameWorld().setOrigin(newOrigin);
-					}
-					 */ 
+					this.getGameWorld().setOrigin(new Vec2d (-700, -330));
 				}
 			}
 		} 

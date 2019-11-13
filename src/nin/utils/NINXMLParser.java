@@ -75,8 +75,6 @@ public class NINXMLParser extends Factory {
 				// Set the ID first
 				obj.setID(Integer.parseInt(eElement.getAttribute("id")));
 				obj.getData().setImage(this.getGenericImage(eElement.getElementsByTagName("fileName").item(0).getTextContent()));
-
-
 				System.out.println("Stationary : "      + eElement.getElementsByTagName("stationary").item(0).getTextContent());
 				System.out.println("Image File Start: " + eElement.getElementsByTagName("imageFileStart").item(0).getTextContent());
 				System.out.println("Image File End  : " + eElement.getElementsByTagName("imageFileEnd").item(0).getTextContent());
@@ -88,6 +86,8 @@ public class NINXMLParser extends Factory {
 		return objs; 
 	}
 
+	
+	
 
 	public GameObject readXMLParserCharacter ( ) {
 		// Setup the parser

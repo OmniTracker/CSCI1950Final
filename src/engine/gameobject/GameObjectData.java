@@ -33,6 +33,25 @@ public class GameObjectData {
 	public Vec2d _currentMTV                = new Vec2d(0.0,0.0); 
 	public GameObjectData() {}
 	
+	/*
+	 * level 0
+	 */
+	public boolean _level0RedKeyFound = false;
+	public boolean _level0BlueKeyFound = false;
+	public boolean _level0GreenKeyFound = false;
+	/*
+	 * level 1
+	 */
+	public boolean _level1RedKeyFound = false;
+	public boolean _level1BlueKeyFound = false;
+	public boolean _level1GreenKeyFound = false;
+	
+	public boolean _visible = true;
+	public boolean _locked = false;
+	
+	
+	
+	
 	public String getName() {
 		return _name;
 	}

@@ -4,12 +4,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import support.Vec2d;
-import wizard.level0.WizLevel0GameWorld;
 import engine.Application;
-import engine.GameWorld;
 import engine.ui.ViewportHandler;
 
 public class WizLevel1Viewport extends ViewportHandler {
+	
 	WizLevel1Viewport(Application parent, WizLevel1GameWorld gameWorld, Vec2d origin, Vec2d size) {
 		super(parent, gameWorld, origin, size);		
 	}

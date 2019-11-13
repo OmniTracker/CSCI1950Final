@@ -67,14 +67,7 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 		instructions.setFontName(EngineFonts.getNin());
 		this.insertButton(instructions.getText(),instructions);		
 
-		// Restart
-		Button restart = new Button();
-		restart.setText("Restart");
-		restart.setSize( new Vec2d(100,30));
-		restart.setColor( Color.WHITE);
-		restart.setFontName(EngineFonts.getNin());
-		this.insertButton(restart.getText(),restart);
-
+		
 		// Pause Game
 		Button pause = new Button();
 		pause.setText("Pause");
@@ -83,6 +76,23 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 		pause.setFontName(EngineFonts.getNin());
 		this.setPauseButton(pause);
 		this.insertButton(pause.getText() ,pause);
+		
+		// Restart
+		Button restart = new Button();
+		restart.setText("Restart");
+		restart.setSize( new Vec2d(100,30));
+		restart.setColor( Color.WHITE);
+		restart.setFontName(EngineFonts.getNin());
+		this.insertButton(restart.getText(),restart);
+		
+		// Options
+		Button options = new Button();
+		options.setText("Options");
+		options.setSize( new Vec2d(100,30));
+		options.setColor( Color.WHITE);
+		options.setFontName(EngineFonts.getNin());
+		this.insertButton(options.getText(),options);
+
 	}	
 	public void setMenuHeight (double height) {
 		this.setHeight(height);

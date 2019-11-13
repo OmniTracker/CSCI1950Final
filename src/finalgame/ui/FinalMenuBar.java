@@ -15,12 +15,14 @@ import engine.utility.AspectRatioHandler;
 import engine.utility.EventHandler;
 
 public class FinalMenuBar extends MenuBar implements EventHandler{
-	
+
 	private Integer _contextHolder           = -1; 
 	private  Integer RESTART                 = 0; 
 	private  Integer PAUSE                   = 1; 
 	private  Integer INSTRUCTIONS_PANEL_VIEW = 3; 
 	private  Integer CONTROL_PANEL_VIEW      = 4; 
+	private  Integer OPTIONS_PANEL_VIEW      = 8; 
+
 
 	private Button _pauseButton = null;
 
@@ -41,6 +43,16 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		intructionsPanel.setOrigin(new Vec2d(0,0));
 		intructionsPanel.setBoarderSize(10);
 		this.insertPanel(INSTRUCTIONS_PANEL_VIEW, intructionsPanel);
+
+		// Options Panel
+		OptionsPanel optionsPanel = new OptionsPanel( this.getAspectRatio()); 
+		optionsPanel.setColor(Color.DARKGRAY);
+		optionsPanel.setSecondaryColor(Color.DARKGREEN);
+		optionsPanel.setSize( new Vec2d(600,400));	
+		optionsPanel.setOrigin(new Vec2d(0,0));
+		optionsPanel.setBoarderSize(10);
+		this.insertPanel((Integer)OPTIONS_PANEL_VIEW, optionsPanel);
+
 		// Control Panel
 		ControlsPanel controlsPanel = new ControlsPanel( this.getAspectRatio()); 
 		controlsPanel.setColor(Color.DARKGRAY);
@@ -49,6 +61,8 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		controlsPanel.setOrigin(new Vec2d(0,0));
 		controlsPanel.setBoarderSize(10);
 		this.insertPanel((Integer)CONTROL_PANEL_VIEW, controlsPanel);
+
+
 	}
 
 	public void initializeMenuButtons () {
@@ -68,6 +82,15 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		instructions.setFontName(EngineFonts.getNin());
 		this.insertButton(instructions.getText(),instructions);		
 
+		// Options
+		Button options = new Button();
+		options.setText("Options");
+		options.setSize(new Vec2d(100,30));
+		options.setColor( Color.WHITE);
+		options.setFontName(EngineFonts.getNin());
+		this.setPauseButton(options);
+		this.insertButton(options.getText() ,options);
+
 		// Restart
 		Button restart = new Button();
 		restart.setText("Restart");
@@ -83,9 +106,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		pause.setColor( Color.WHITE);
 		pause.setFontName(EngineFonts.getNin());
 		this.setPauseButton(pause);
-		this.insertButton(pause.getText() ,pause);
-		
-		System.out.print("Here you go\n");
+		this.insertButton(pause.getText(),pause);
 	}	
 	public void setMenuHeight (double height) {
 		this.setHeight(height);
@@ -117,6 +138,15 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 				ControlsPanel panel = (ControlsPanel) this.getPanelViews().get(CONTROL_PANEL_VIEW);
 				panel.drawRounded(g);	
 			}
+			else if (this.getContextHolder() == OPTIONS_PANEL_VIEW) 
+			{
+				if (DEBUG == true) 
+				{
+					System.out.print("CONTROL HAS CONTEXT \n");
+				}	
+				OptionsPanel panel = (OptionsPanel) this.getPanelViews().get(OPTIONS_PANEL_VIEW);
+				panel.drawPanelWithSliders(g);
+			}
 		}
 	}
 	private void checkMenuButtonActivation(MouseEvent e) {
@@ -126,6 +156,8 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 			if (!buttonPushed.isEmpty()) 
 			{				
 				this.setMenuActivated(true);
+
+
 				// Give the contexts to right button.
 				if (buttonPushed.contains("Controls"))
 				{
@@ -134,7 +166,11 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 				else if (buttonPushed.contains("Instructions"))
 				{
 					this.setContextHolder(INSTRUCTIONS_PANEL_VIEW);
-				} 
+				}
+				else if (buttonPushed.contains("Options")) 
+				{					
+					this.setContextHolder(OPTIONS_PANEL_VIEW);
+				}
 				else if (buttonPushed.contains("Restart")) 
 				{
 					this.setContextHolder(RESTART);
@@ -188,6 +224,17 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 					this.setMenuActivated(false);
 				}
 			} 
+			else if (this.getContextHolder() == OPTIONS_PANEL_VIEW) 
+			{
+				OptionsPanel panel = (OptionsPanel) this.getPanelViews().get(OPTIONS_PANEL_VIEW);
+				panel.onMouseClicked(e);
+				// Check if the window has been closed
+				if ( panel.isShowing() == false) {
+					// Reset Context holder
+					this.setContextHolder(-1);
+					this.setMenuActivated(false);
+				}
+			} 
 			else if (this.getContextHolder() == PAUSE) 
 			{
 				if ( this.getPauseButton().clicked(e) ) 
@@ -197,28 +244,23 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 					this.setMenuActivated(false);
 				}
 			}
-
 		}
 	}
-
 	public void onMousePressed(MouseEvent e) {
 
 	}
-
 	public void onKeyTyped(KeyEvent e) {
 		if (this.isMenuActivated()) {
 			// Conduct key pressed operation if the menu has control of the 
 			// view.
 		}		
 	}
-
 	public void onKeyPressed(KeyEvent e) {	
 		if (this.isMenuActivated()) {
 			// Conduct key pressed operation if the menu has control of the 
 			// view.
 		}		
 	}
-
 	@Override
 	public void onMouseDragged(MouseEvent e) {}
 	@Override
@@ -243,13 +285,10 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 	private void setContextHolder(Integer _contextHolder) {
 		this._contextHolder = _contextHolder;
 	}
-
 	private Button getPauseButton() {
 		return _pauseButton;
 	}
-
 	private void setPauseButton(Button _pauseButton) {
 		this._pauseButton = _pauseButton;
 	}
-
 }

@@ -73,7 +73,6 @@ public class UpdateRandomTargerLocation extends WIZBehaviorSequence  implements 
 				found = true; 
 			}
 		}
-		
 		this.getObj().setSinglePathList(aStar.starSearch(me,new Vec2i(randomRow,randomCol))); 
 		if (DEBUG) {
 			System.out.print("Path Step count : " + this.getObj().getSinglePathList().size() + "\n" );		

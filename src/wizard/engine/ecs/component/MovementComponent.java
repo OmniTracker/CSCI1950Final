@@ -48,17 +48,20 @@ public class MovementComponent extends Components {
 		if (main == null) {
 			return;
 		}
+		
+		
+		
 		String direction = e.getCode().toString();
 		double x = 0; 
 		double y = 0; 
 		if (direction.contains("UP"))  {
-			x = 5;
+			x = main.getWizSpeed();;
 		} else if (direction.contains("DOWN")){
-			x = -5;
+			x = -1 * main.getWizSpeed();
 		} else if (direction.contains("LEFT")) {
-			y = 5;
+			y = main.getWizSpeed();
 		} else if (direction.contains("RIGHT")) {
-			y = -5;
+			y = -1 * main.getWizSpeed();;
 		}	
 		this.getGameWorld().setOrigin(this.getGameWorld().getOrigin().plus( new Vec2d(x,y)));
 		int xGrid = (int) (7 - Math.floor(((this.getGameWorld().getOrigin().x + 700 + 50) / 100)));

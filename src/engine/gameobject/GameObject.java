@@ -13,6 +13,9 @@ import support.Vec2i;
 import support.collision.AABShape;
 
 public class GameObject {
+	
+	
+	
 	private GameObjectData _data = new GameObjectData();
 	private boolean DEBUG = false; 
 	private Integer _gameLevel = -1;

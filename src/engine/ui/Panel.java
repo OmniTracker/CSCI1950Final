@@ -19,6 +19,8 @@ public abstract class Panel extends UIElement {
 		this.setCloseButton(new Button());
 		this.setCollisionBox( new AABShape(new Vec2d(0,0), new Vec2d(0,0)));
 	}
+	
+	
 	public void drawRounded(GraphicsContext g) {	
 		// If this is drawing, this is showing 
 		this.setShowing(true);				
@@ -46,6 +48,8 @@ public abstract class Panel extends UIElement {
 		this.getCloseButton().setText("Close");
 		this.getCloseButton().drawRounded(g);
 	}
+	
+	
 	// Will return if the close button was hit
 	public void onMouseClicked(MouseEvent e) {		
 		if (this.checkPanelCollision(e) == true) {

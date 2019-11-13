@@ -27,22 +27,41 @@ public class GraphicsComponent  extends Components  {
 		if (this.getGameWorld().getLevel() == 0) 
 		{	
 			GameObject enemy0 = this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevelO().get("Enemy0"); 
-			GameObject enemy1 = this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevelO().get("Enemy1"); 
+			GameObject enemy1 = this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevelO().get("Enemy1");
+			
+			
+			// GameObject enemy4 = this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevelO().get("Enemy4");
+			
 			if (enemy0.getData().getSystems().contains("Graphics") && enemy0.getData().getComponents().contains("Graphics")) 
 			{
 				this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevelO().get("Enemy0").AIDraw(g,worldOrigin);
 			}
 			if (enemy1.getData().getSystems().contains("Graphics") && enemy1.getData().getComponents().contains("Graphics"))
 			{
-				
 				enemy1._invisble = true;
 				this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevelO().get("Enemy1").AIDraw(g,worldOrigin);
 			}
+			
+			// Check enemy 4 has been unlocked.
+			
+			
+			/* 
+
+			if (enemy4.getData().getSystems().contains("Graphics") && enemy3.getData().getComponents().contains("Graphics"))
+			{
+				this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevel1().get("Enemy4").AIDraw(g,worldOrigin);
+			}
+
+
+			 */
+			
+			
 		}		
 		if (this.getGameWorld().getLevel() == 1)
 		{
 			GameObject enemy2 = this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevel1().get("Enemy2"); 
 			GameObject enemy3 = this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevel1().get("Enemy3"); 
+			
 			if (enemy2.getData().getSystems().contains("Graphics") && enemy2.getData().getComponents().contains("Graphics")) 
 			{
 				this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevel1().get("Enemy2").AIDraw(g,worldOrigin);
@@ -51,6 +70,19 @@ public class GraphicsComponent  extends Components  {
 			{
 				this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevel1().get("Enemy3").AIDraw(g,worldOrigin);
 			}
+			
+			// GameObject enemy5 = this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevelO().get("Enemy5");
+			
+			/* 
+
+			if (enemy5.getData().getSystems().contains("Graphics") && enemy3.getData().getComponents().contains("Graphics"))
+			{
+				this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevel1().get("Enemy5").AIDraw(g,worldOrigin);
+			}
+
+
+			 */
+			
 		}	
 		this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevel1().get("Main").draw(g); 
 	}

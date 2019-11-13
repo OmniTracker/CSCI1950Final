@@ -18,6 +18,26 @@ public class GameBoardDataComponent extends Components {
 	public double sizeY; 
 	public boolean _mini = false;
 
+	/*
+	 * Level 0
+	 */
+	protected final Integer LEVEL_0_RED_C 	= 18;
+	protected final Integer LEVEL_0_RED_R 	= 7;
+	protected final Integer LEVEL_0_GREEN_C = 23;
+	protected final Integer LEVEL_0_GREEN_R = 11;
+	protected final Integer LEVEL_0_BLUE_C 	= 9;
+	protected final Integer LEVEL_0_BLUE_R 	= 5;
+	/**
+	 * Level 1
+	 */
+	protected final Integer LEVEL_1_RED_C = 19;
+	protected final Integer LEVEL_1_RED_R = 3;
+	protected final Integer LEVEL_1_GREEN_C = 19;
+	protected final Integer LEVEL_1_GREEN_R = 19;
+	protected final Integer LEVEL_1_BLUE_C = 13;
+	protected final Integer LEVEL_1_BLUE_R = 17;
+	// I have no idea of what is going on here.
+
 	protected final Integer COL_0 = 2;
 
 	public void onDraw(GraphicsContext g)
@@ -51,26 +71,67 @@ public class GameBoardDataComponent extends Components {
 						(int) ( this.getApp().getAspectRatioHandler().getCurrentScreenSize().y / 2); 
 				int y = (100 * (c)) + (int) this.getGameWorld().getOrigin().y + 
 						(int) ( this.getApp().getAspectRatioHandler().getCurrentScreenSize().x / 2); 
-
-
 				if (_mini == true) {
 					x = (100 * (r)) + ( int ) this.getGameWorld().getApplication().getAspectRatioHandler().calculateUpdatedOrigin().x; 
 					y = (100 *(c))  + ( int )  this.getGameWorld().getApplication().getAspectRatioHandler().calculateUpdatedOrigin().y; 
 				}
-
 				location = new Vec2i(x,y);
 				if (!section[c].equals("x"))
 				{
 					g.drawImage(tron,0,0,500,500,location.y,location.x,getTileSize(),getTileSize());					
 				}
-				
-				
+				// Need tp be replaced for achievement
 				if ((r == 23) && (c == 7)) {
 					g.setFill(Color.RED);
 					g.fillRect(y, x, getTileSize(), getTileSize());
 				}
-				
-				
+
+				/* 
+				 * 
+
+if ((r == 23) && (c == 7)) {
+					if (ezra._level1RedKeyFound  && ezra._level1BlueKeyFound && ezra._level1GreenKeyFound) {	
+						Image next = this.getGameWorld().getWIZDelegateContainer().getWIZAchievementDelegate().getNextLevel(); 
+						g.drawImage(next,0,0,500,500,location.y,location.x,getTileSize(),getTileSize());			
+					}
+				}
+				if (this.getKeyObjects() != null) 
+				{		
+					Image image = null;
+					WIZGameObject obj = null;
+					if (ezra._level1RedKeyFound == false) 
+					{
+						// Draw the Red
+						if ( (r == LEVEL_1_RED_R)  && ( c == LEVEL_1_RED_C )  ) {
+							obj = this.getKeyObjects().get("Red");
+							image = obj.getImage();
+						}
+					}
+					if (ezra._level1BlueKeyFound == false) 
+					{
+						// Draw the blue
+						if ( ( r ==  LEVEL_1_BLUE_R)  && ( c == LEVEL_1_BLUE_C)  ) {						
+							obj = this.getKeyObjects().get("Blue");
+							image = obj.getImage();
+						}
+					}
+					if (ezra._level1GreenKeyFound == false) 
+					{
+						// Draw the green
+						if ( ( r == LEVEL_1_GREEN_R )  && ( c == LEVEL_1_GREEN_C )  ) {						
+							obj = this.getKeyObjects().get("Green");
+							image = obj.getImage();
+						}
+					}
+					if (image != null) {
+						g.drawImage(image,0,0,520,520, (y + 20) , (x + 20),    getTileSize() / 2,getTileSize() / 2  );
+					}
+				}
+
+
+				 */
+
+
 			}
 			r++;
 		}
@@ -96,20 +157,13 @@ public class GameBoardDataComponent extends Components {
 						(int) ( this.getApp().getAspectRatioHandler().getCurrentScreenSize().y / 2); 
 				int y = (100 * (c)) + (int) this.getGameWorld().getOrigin().y + 
 						(int) ( this.getApp().getAspectRatioHandler().getCurrentScreenSize().x / 2); 
-				
-				
 
 				if (_mini == true) {
 					x = (100 * (r)) + ( int ) this.getGameWorld().getApplication().getAspectRatioHandler().calculateUpdatedOrigin().x; 
 					y = (100 *(c))  + ( int )  this.getGameWorld().getApplication().getAspectRatioHandler().calculateUpdatedOrigin().y; 
 				}
-				
-				
-				
 				location = new Vec2i(x,y);
-
-				if (section[c].equals("x"))  
-				{
+				if (section[c].equals("x"))  {
 					g.drawImage(lava,randomStart,randomStart,randomFlame,randomFlame,location.y,location.x,getTileSize() + 10+ randomLocation,getTileSize() + randomLocation + 10);
 				}
 			}
@@ -119,26 +173,79 @@ public class GameBoardDataComponent extends Components {
 		for (String map : this.getGameWorld().getWIZDelegateContainer().getWIZMapDelegate().getLevel0Map() ) {
 			String[] section = map.split(","); 	
 			int size = section.length;
-			for (int c = 0; c < size - 1; c++) 
-			{
+			for (int c = 0; c < size - 1; c++) {
 				int x = (100 * (r)) + (int) this.getGameWorld().getOrigin().x + (int) ( this.getApp().getAspectRatioHandler().getCurrentScreenSize().y / 2); 
 				int y = (100 * (c)) + (int) this.getGameWorld().getOrigin().y + (int) ( this.getApp().getAspectRatioHandler().getCurrentScreenSize().x / 2); 
-				
+
 
 				if (_mini == true) {
 					x = (100 * (r)) + ( int ) this.getGameWorld().getApplication().getAspectRatioHandler().calculateUpdatedOrigin().x; 
 					y = (100 *(c))  + ( int )  this.getGameWorld().getApplication().getAspectRatioHandler().calculateUpdatedOrigin().y; 
 				}	
-				
-				
+
 				location = new Vec2i(x,y);
 				fillMap(g, location, section, c); 
-				
+
+
+				// Needs to be replaced for achievement
 				if ((r == 8) && (c == 23)) {
 					g.setFill(Color.BLUE);
 					g.fillRect(y, x, getTileSize(), getTileSize());
-					
 				}
+
+				/*
+				 * 
+
+				if ((r == 8) && (c == 23)) {
+					if (ezra._level0RedKeyFound  && ezra._level0BlueKeyFound && ezra._level0GreenKeyFound) {	
+						Image next = this.getGameWorld().getWIZDelegateContainer().getWIZAchievementDelegate().getNextLevel(); 
+						g.drawImage(next,0,0,500,500,location.y,location.x,getTileSize(),getTileSize());			
+					}
+				}
+
+
+				if ((r == 8) && (c == 23)) {
+					if (ezra._level0RedKeyFound  && ezra._level0BlueKeyFound && ezra._level0GreenKeyFound) {	
+						Image next = this.getGameWorld().getWIZDelegateContainer().getWIZAchievementDelegate().getNextLevel(); 
+						g.drawImage(next,0,0,500,500,location.y,location.x,getTileSize(),getTileSize());			
+					}
+				}
+				if (this.getKeyObjects() != null) 
+				{		
+					Image image = null;
+					WIZGameObject obj = null;
+
+					if (ezra._level0RedKeyFound == false) 
+					{
+						// Draw the Red
+						if ( (r == LEVEL_0_RED_R)  && ( c == LEVEL_0_RED_C )  ) {
+							obj = this.getKeyObjects().get("Red");
+							image = obj.getImage();
+						}
+					}
+					if (ezra._level0BlueKeyFound == false) 
+					{
+						// Draw the blue
+						if ( ( r ==  LEVEL_0_BLUE_R)  && ( c == LEVEL_0_BLUE_C)  ) {						
+							obj = this.getKeyObjects().get("Blue");
+							image = obj.getImage();
+						}
+					}
+					if (ezra._level0GreenKeyFound == false) 
+					{
+						// Draw the green
+						if ( ( r == LEVEL_0_GREEN_R )  && ( c == LEVEL_0_GREEN_C )  ) {						
+							obj = this.getKeyObjects().get("Green");
+							image = obj.getImage();
+						}
+					}
+					if (image != null) {
+						g.drawImage(image,0,0,520,520, (y + 20) , (x + 20),    getTileSize() / 2,getTileSize() / 2  );
+					}
+				}
+				 */ 
+
+
 				sizeX = c * 100; 
 			}
 			r++;

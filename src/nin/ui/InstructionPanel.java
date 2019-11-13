@@ -1,7 +1,5 @@
 package nin.ui;
 
-import java.net.MalformedURLException;
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -24,7 +22,7 @@ public class InstructionPanel extends Panel implements EventHandler {
 	}
 
 	@Override
-	public void onDraw(GraphicsContext g) throws MalformedURLException {
+	public void onDraw(GraphicsContext g) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -23,6 +23,12 @@ public abstract class Selector {
 		this.setSelectorName(selectorName);
 		this.setSequenceList(new ArrayList<Sequence>());
 	}
+	
+	protected Selector() {
+
+		// this.setSelectorName(selectorName);
+		this.setSequenceList(new ArrayList<Sequence>());
+	}
 
 	public boolean runSequence (GameWorld gameWorld) {
 		int sequenceListCount = this.getSequenceList().size();

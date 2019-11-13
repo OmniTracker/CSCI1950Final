@@ -87,6 +87,8 @@ public abstract class MenuBar extends UIElement {
 		Button newButton = null;
 		Vec2d  origin = this.getAspectRatio().calculateUpdatedOrigin().plus(5,5); 
 		Vec2d  updatedOrigin = origin; 
+		
+		
 		for (Entry<String, Button> mapElement : this.getButton().entrySet()) { 
 			newButton  = mapElement.getValue();
 			newButton.setOrigin(updatedOrigin);

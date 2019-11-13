@@ -14,12 +14,7 @@ public class Nin extends Screen {
 	private NinGameWorld _ninGameWorld 		= null;
 	public Nin(Application app) {
 		super(app);
-		this.setNINGameWorld(new NinGameWorld(this.getApplication()));
-		this.getNINGameWorld().setNINDelegateContainer(new NINDelegateContainer(this.getApplication()));
-		this.setNINViewport(new NinViewport(this.getApplication(), 
-				this.getNINGameWorld(),
-				new Vec2d(0,0), 
-				new Vec2d(0,0)));	
+
 	}
 	public void onTick(long nanosSincePreviousTick) {
 		this.getNINViewport().onTick(nanosSincePreviousTick);
@@ -46,6 +41,12 @@ public class Nin extends Screen {
 
 	public void onStartup() {
 		// Initialize these upon start-up
+		this.setNINGameWorld(new NinGameWorld(this.getApplication()));
+		this.getNINGameWorld().setNINDelegateContainer(new NINDelegateContainer(this.getApplication()));
+		this.setNINViewport(new NinViewport(this.getApplication(), 
+				this.getNINGameWorld(),
+				new Vec2d(0,0), 
+				new Vec2d(0,0)));	
 		this.getNINViewport().onStartup();
 	}
 
