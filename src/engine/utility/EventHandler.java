@@ -14,7 +14,7 @@ public interface EventHandler {
 	public void onKeyTyped(KeyEvent e);
 	public void onKeyPressed(KeyEvent e); 
 	public void onKeyReleased(KeyEvent e);
-	public void onMouseClicked(MouseEvent e) throws MalformedURLException; 
+	public void onMouseClicked(MouseEvent e); 
 	public void onMousePressed(MouseEvent e); 
 	public void onMouseReleased(MouseEvent e); 
 	public void onMouseDragged(MouseEvent e); 

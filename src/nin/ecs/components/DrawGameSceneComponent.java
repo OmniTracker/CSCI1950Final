@@ -20,34 +20,21 @@ public class DrawGameSceneComponent  extends Components {
 	private HashMap<Integer, GameObject> _platforms = null;
 	private GameObject _character = null;
 
-
 	public DrawGameSceneComponent(Application app, NinGameWorld gameWorld) {
 		this.setApp(app);
 		this.setGameWorld(gameWorld);
 	}
 
 	public void onDraw(GraphicsContext g) {
-		if (this.getBackground() == null) {
-			this.setBackground(this.getGameWorld()
+		// This is really janky, but I need to just work for now.
+		if (this.getNINGameObjectDelagate() == null) {
+			this.setNINGameObjectDelagate(this.getGameWorld()
 					.getNINDelegateContainer()
-					.getNINGameObjectDelagate()
-					.getNINXMLParser()
-					.readXMLParserBackgroundImage());
+					.getNINGameObjectDelagate());	
+			this.setBackground(this.getNINGameObjectDelagate().getBackground());
+			this.setCharacter(this.getNINGameObjectDelagate().getCharacter());
+			this.setPlatforms(this.getNINGameObjectDelagate().getPlatforms());
 		}
-		if (this.getPlatforms() == null) {
-			this.setPlatforms(this.getGameWorld()
-					.getNINDelegateContainer()
-					.getNINGameObjectDelagate()
-					.getNINXMLParser().readXMLParserPlatform());
-		}
-
-		if (this.getCharacter() == null) {
-			this.setCharacter(this.getGameWorld()
-					.getNINDelegateContainer()
-					.getNINGameObjectDelagate()
-					.getNINXMLParser().readXMLParserCharacter());
-		}
-
 		this.drawBackground(g);
 		this.drawStationaryPlatform(g);
 		this.drawMovingPlatform(g);
@@ -70,15 +57,21 @@ public class DrawGameSceneComponent  extends Components {
 	private void drawMovingPlatform (GraphicsContext g) {
 		Vec2d origin = this.getApp().getAspectRatioHandler().calculateUpdatedOrigin();
 		Vec2d screenSize = this.getApp().getAspectRatioHandler().calculateUpdatedScreenSize();	
+		
+	
+		
+		
 		g.drawImage(this.getPlatforms().get(2).getData().getImage(), 0, 0, 590,150, origin.x + 200,(origin.y + screenSize.y - 600) ,(590 * .7),(150 * .6 ));
 		g.drawImage(this.getPlatforms().get(3).getData().getImage(), 0, 170, 590,110, origin.x + 800,(origin.y + screenSize.y - 400) ,(590 * .7),(110 * .6));
 		g.drawImage(this.getPlatforms().get(4).getData().getImage(), 0, 325, 590,150, origin.x + 500,(origin.y + screenSize.y - 200) ,(590 * .7),(150 * .6));
 	}
 
-	private void drawCharacter ( GraphicsContext g ) {
-		Vec2d origin = this.getApp().getAspectRatioHandler().calculateUpdatedOrigin();
-		Vec2d screenSize = this.getApp().getAspectRatioHandler().calculateUpdatedScreenSize();	
-		g.drawImage(this.getCharacter().getData().getImage(), 0, 0, 600,600, 200, 200, 200,200);
+	private void drawCharacter (GraphicsContext g ) {
+		g.drawImage(this.getCharacter().getData().getImage(), 0, 0, 600,600, 
+				this.getCharacter().getData().getPosition().x, 
+				this.getCharacter().getData().getPosition().y,
+				700,
+				700);
 	}
 
 	public void onShutdown() {

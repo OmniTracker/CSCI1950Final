@@ -22,7 +22,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 	private  Integer INSTRUCTIONS_PANEL_VIEW = 3; 
 	private  Integer CONTROL_PANEL_VIEW      = 4; 
 	private  Integer OPTIONS_PANEL_VIEW      = 8; 
-
+	private  Integer KEY_BINDING_PANEL_VIEW  = 12; 
 
 	private Button _pauseButton = null;
 
@@ -61,6 +61,16 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		controlsPanel.setOrigin(new Vec2d(0,0));
 		controlsPanel.setBoarderSize(10);
 		this.insertPanel((Integer)CONTROL_PANEL_VIEW, controlsPanel);
+
+
+		// Key Binding Panel
+		KeyBindingPanel keyBindingPanel = new KeyBindingPanel( this.getAspectRatio()); 
+		keyBindingPanel.setColor(Color.DARKGRAY);
+		keyBindingPanel.setSecondaryColor(Color.DARKGREEN);
+		keyBindingPanel.setSize( new Vec2d(600,400));	
+		keyBindingPanel.setOrigin(new Vec2d(0,0));
+		keyBindingPanel.setBoarderSize(10);
+		this.insertPanel((Integer)KEY_BINDING_PANEL_VIEW, keyBindingPanel);
 
 
 	}
@@ -107,6 +117,16 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		pause.setFontName(EngineFonts.getNin());
 		this.setPauseButton(pause);
 		this.insertButton(pause.getText(),pause);
+
+
+		// Key Binding 
+		Button  keyBinding = new Button();
+		keyBinding.setText("KeyBinding");
+		keyBinding.setSize(new Vec2d(100,30));
+		keyBinding.setColor( Color.WHITE);
+		keyBinding.setFontName(EngineFonts.getNin());
+		this.setPauseButton(keyBinding);
+		this.insertButton(keyBinding.getText(),keyBinding);
 	}	
 	public void setMenuHeight (double height) {
 		this.setHeight(height);
@@ -118,6 +138,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 	}
 
 	private void drawPanelView(GraphicsContext g) {
+
 		if (this.isMenuActivated() == true)  
 		{
 			if (this.getContextHolder() == INSTRUCTIONS_PANEL_VIEW) 
@@ -147,6 +168,15 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 				OptionsPanel panel = (OptionsPanel) this.getPanelViews().get(OPTIONS_PANEL_VIEW);
 				panel.drawPanelWithSliders(g);
 			}
+			else if (this.getContextHolder() == KEY_BINDING_PANEL_VIEW) 
+			{
+				if (DEBUG == true) 
+				{
+					System.out.print("CONTROL HAS CONTEXT \n");
+				}	
+				KeyBindingPanel panel = (KeyBindingPanel) this.getPanelViews().get(KEY_BINDING_PANEL_VIEW);
+				panel.onDraw(g);
+			}
 		}
 	}
 	private void checkMenuButtonActivation(MouseEvent e) {
@@ -156,8 +186,6 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 			if (!buttonPushed.isEmpty()) 
 			{				
 				this.setMenuActivated(true);
-
-
 				// Give the contexts to right button.
 				if (buttonPushed.contains("Controls"))
 				{
@@ -180,6 +208,10 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 					this.setContextHolder(PAUSE);
 					this.getPauseButton().setText("Resume");
 				} 
+				else if (buttonPushed.contains("KeyBinding"))
+				{
+					this.setContextHolder(KEY_BINDING_PANEL_VIEW);
+				}
 				else 
 				{
 					return;
@@ -187,6 +219,12 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 			}
 		}
 	}
+
+	public void onKeyTyped(KeyEvent e) {
+
+	}
+
+
 	public void onDraw(GraphicsContext g) 
 	{		
 		this.drawPanelView(g);
@@ -235,6 +273,18 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 					this.setMenuActivated(false);
 				}
 			} 
+			else if (this.getContextHolder() == KEY_BINDING_PANEL_VIEW) 
+			{
+				KeyBindingPanel panel = (KeyBindingPanel) this.getPanelViews().get(KEY_BINDING_PANEL_VIEW);
+				panel.onMouseClicked(e);
+				// Check if the window has been closed
+				if ( panel.isShowing() == false) {
+					// Reset Context holder
+					this.setContextHolder(-1);
+					this.setMenuActivated(false);
+				}
+
+			}
 			else if (this.getContextHolder() == PAUSE) 
 			{
 				if ( this.getPauseButton().clicked(e) ) 
@@ -249,17 +299,17 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 	public void onMousePressed(MouseEvent e) {
 
 	}
-	public void onKeyTyped(KeyEvent e) {
-		if (this.isMenuActivated()) {
-			// Conduct key pressed operation if the menu has control of the 
-			// view.
-		}		
-	}
-	public void onKeyPressed(KeyEvent e) {	
-		if (this.isMenuActivated()) {
-			// Conduct key pressed operation if the menu has control of the 
-			// view.
-		}		
+
+	public void onKeyPressed(KeyEvent e) 
+	{	
+		if (this.isMenuActivated()) 
+		{
+			if (this.getContextHolder() == KEY_BINDING_PANEL_VIEW) 
+			{
+				KeyBindingPanel panel = (KeyBindingPanel) this.getPanelViews().get(KEY_BINDING_PANEL_VIEW);
+				panel.onKeyPressed(e);
+			}
+		}	
 	}
 	@Override
 	public void onMouseDragged(MouseEvent e) {}

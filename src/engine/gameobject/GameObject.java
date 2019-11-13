@@ -14,14 +14,13 @@ import support.collision.AABShape;
 
 public class GameObject {
 	
-	
-	
 	private GameObjectData _data = new GameObjectData();
 	private boolean DEBUG = false; 
 	private Integer _gameLevel = -1;
 	private Integer _AIStepCount = 0;
 	private Integer _arrayIndex = 0; 
 	private Integer _ID;
+	private Image _projectile = null;
 	
 	public boolean _invisble = false;
 	private ArrayList<Stack<Vec2i>> _foundPathList = null; 
@@ -209,5 +208,11 @@ public class GameObject {
 	}
 	public void setID(Integer _ID) {
 		this._ID = _ID;
+	}
+	public Image getProjectile() {
+		return _projectile;
+	}
+	public void setProjectile(Image _projectile) {
+		this._projectile = _projectile;
 	}
 }

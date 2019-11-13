@@ -17,7 +17,6 @@ public class Slider extends  UIElement {
 	private double _currentPercentage;
 	private double _slidingUnit;
 	private AABShape _slidingUnitCollider;
-
 	public Slider(String name, 
 			int minValue, 
 			int maxValue,
@@ -36,7 +35,6 @@ public class Slider extends  UIElement {
 		this.setCurrentPercentage(currentPercentage);
 		this.setSlidingUnitCollider( new AABShape(new Vec2d(0,0), new Vec2d(0,0)));
 	}
-
 	// The center point should be  outside. 
 	public void draw (GraphicsContext g, Vec2d centerPoint, double yOffset) {
 		Vec2d newSliderStart = new Vec2d (( centerPoint.x - (this.getWidth() / 2)),centerPoint.y + yOffset) ;  

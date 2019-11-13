@@ -12,6 +12,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
+import support.Vec2d;
+
 import java.io.*;
 import java.util.HashMap;
 
@@ -45,7 +47,6 @@ public class NINXMLParser extends Factory {
 		System.out.println("Node Name: " + root.getNodeName() + "\n");	
 		NodeList platformNodeList = document.getElementsByTagName("platform");
 
-
 		if (DEBUG == true) { 
 			for (int temp = 0; temp < platformNodeList.getLength(); temp++) {
 				Node node = platformNodeList.item(temp);
@@ -57,8 +58,6 @@ public class NINXMLParser extends Factory {
 					System.out.println("File Name : "       + eElement.getElementsByTagName("fileName").item(0).getTextContent());
 					System.out.println("Image File Start: " + eElement.getElementsByTagName("imageFileStart").item(0).getTextContent());
 					System.out.println("Image File End  : " + eElement.getElementsByTagName("imageFileEnd").item(0).getTextContent());
-					System.out.println("Movement Speed  : " + eElement.getElementsByTagName("movementSpeed").item(0).getTextContent());
-					System.out.println("Direction  : " 		+ eElement.getElementsByTagName("direction").item(0).getTextContent());
 				}
 			}
 		}
@@ -78,8 +77,6 @@ public class NINXMLParser extends Factory {
 				System.out.println("Stationary : "      + eElement.getElementsByTagName("stationary").item(0).getTextContent());
 				System.out.println("Image File Start: " + eElement.getElementsByTagName("imageFileStart").item(0).getTextContent());
 				System.out.println("Image File End  : " + eElement.getElementsByTagName("imageFileEnd").item(0).getTextContent());
-				System.out.println("Movement Speed  : " + eElement.getElementsByTagName("movementSpeed").item(0).getTextContent());
-				System.out.println("Direction  : " 		+ eElement.getElementsByTagName("direction").item(0).getTextContent());
 			}
 			objs.put(obj.getID(), obj);
 		}
@@ -124,9 +121,6 @@ public class NINXMLParser extends Factory {
 				}
 			}			
 		}
-
-
-
 		for (int temp = 0; temp < characterNodeList.getLength(); temp++){
 			Node node = characterNodeList.item(temp);
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -134,17 +128,13 @@ public class NINXMLParser extends Factory {
 				Element eElement = (Element) node;
 				obj.setID(Integer.parseInt(eElement.getAttribute("id")));
 				obj.getData().setImage(this.getGenericImage(eElement.getElementsByTagName("fileName").item(0).getTextContent()));
-
-
-				// System.out.println("File Name : "       + eElement.getElementsByTagName("fileName").item(0).getTextContent());
-				// System.out.println("Projectile File Name : "       + eElement.getElementsByTagName("projectTileFileName").item(0).getTextContent());
+				obj.setProjectile(this.getGenericImage(eElement.getElementsByTagName("projectTileFileName").item(0).getTextContent()));	
 			}
 		}	
-
-
+		
+		obj.getData().setPosition(new Vec2d(200,200));
 		return obj; 
 	}
-
 
 	public Image readXMLParserBackgroundImage ( ) {
 		// Setup the parser

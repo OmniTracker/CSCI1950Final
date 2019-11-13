@@ -84,14 +84,6 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 		restart.setColor( Color.WHITE);
 		restart.setFontName(EngineFonts.getNin());
 		this.insertButton(restart.getText(),restart);
-		
-		// Options
-		Button options = new Button();
-		options.setText("Options");
-		options.setSize( new Vec2d(100,30));
-		options.setColor( Color.WHITE);
-		options.setFontName(EngineFonts.getNin());
-		this.insertButton(options.getText(),options);
 
 	}	
 	public void setMenuHeight (double height) {

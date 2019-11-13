@@ -5,42 +5,28 @@
 		<stationary>Yes</stationary>
 		<fileName>resources/terrain/ninMainGround.png</fileName>
 		<imageFileStart>0,0</imageFileStart>
-		<imageFileEnd>0,0</imageFileEnd>
-		<movementSpeed>0</movementSpeed>
+		<imageFileEnd>900,100</imageFileEnd>
 		<direction>N/A</direction></platform>
 
 	<platform id="2">
 		<stationary>Yes</stationary>
 		<fileName>resources/terrain/ninMovingPlatforms.png</fileName>
-		<imageFileStart>0,0</imageFileStart>
-		<imageFileEnd>0,0</imageFileEnd>
-		<movementSpeed>5</movementSpeed>
-		<direction>vertical</direction>
+		<imageFileStart> 0, 0</imageFileStart>
+		<imageFileEnd>590,150</imageFileEnd>
 	</platform>
 
 	<platform id="3">
 		<stationary>Yes</stationary>
 		<fileName>resources/terrain/ninMovingPlatforms.png</fileName>
-		<imageFileStart>0,0</imageFileStart>
-		<imageFileEnd>0,0</imageFileEnd>
-		<movementSpeed>5</movementSpeed>
-		<direction>vertical</direction>
+		<imageFileStart> 0,170</imageFileStart>
+		<imageFileEnd>590,110</imageFileEnd>
 	</platform>
 
 	<platform id="4">
 		<stationary>Yes</stationary>
 		<fileName>resources/terrain/ninMovingPlatforms.png</fileName>
-		<imageFileStart>0,0</imageFileStart>
-		<imageFileEnd>0,0</imageFileEnd>
-		<movementSpeed>5</movementSpeed>
-		<direction>horizontal</direction>
-	</platform>
-
-	<platform id="5">
-		<stationary>Yes</stationary>
-		<fileName>resources/terrain/ninMovingPlatforms.png</fileName>
-		<imageFileStart>0,0</imageFileStart>
-		<imageFileEnd>0,0</imageFileEnd>
+		<imageFileStart> 0,325</imageFileStart>
+		<imageFileEnd>590,150</imageFileEnd>
 		<movementSpeed>5</movementSpeed>
 		<direction>horizontal</direction>
 	</platform>
