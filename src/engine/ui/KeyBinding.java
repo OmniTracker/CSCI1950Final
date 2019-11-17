@@ -57,7 +57,7 @@ public class KeyBinding extends UIElement {
 		return false;
 	}
 	public void alterCurrentKeyBinding (String input) {
-		this.setCurrentKeyBindSetting(this.getCurrentKeyBindSetting()+ input);	
+		this.setCurrentKeyBindSetting(input);
 	}
 	public  String getControlElementName() {
 		return _controlElementName;
@@ -66,7 +66,7 @@ public class KeyBinding extends UIElement {
 		this._controlElementName = _controlElementName;
 	}
 
-	private String getCurrentKeyBindSetting() {
+	public String getCurrentKeyBindSetting() {
 		return _currentKeyBindSetting;
 	}
 

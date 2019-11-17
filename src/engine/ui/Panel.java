@@ -14,9 +14,11 @@ public abstract class Panel extends UIElement {
 	private Button _closeButton;
 	private double _boarderSize = 0; 
 	private boolean _showing;
+	private Button _applyButton;
 	protected Panel (AspectRatioHandler app) {
 		this.setAspectRatio(app);
 		this.setCloseButton(new Button());
+		this.setApplyButton(new Button());
 		this.setCollisionBox( new AABShape(new Vec2d(0,0), new Vec2d(0,0)));
 	}
 	
@@ -47,6 +49,15 @@ public abstract class Panel extends UIElement {
 		this.getCloseButton().setFontName(EngineFonts.getNin());
 		this.getCloseButton().setText("Close");
 		this.getCloseButton().drawRounded(g);
+	}
+	
+	public void drawApply(GraphicsContext g) {
+		this.getApplyButton().setColor(Color.WHITE);
+		this.getApplyButton().setSize(new Vec2d(50,20));
+		this.getApplyButton().setOrigin( this.getOrigin().plus(this.getSize()).minus(140, 30));
+		this.getApplyButton().setFontName(EngineFonts.getNin());
+		this.getApplyButton().setText("Apply");
+		this.getApplyButton().drawRounded(g);
 	}
 	
 	
@@ -80,11 +91,17 @@ public abstract class Panel extends UIElement {
 	private void setAspectRatio(AspectRatioHandler _aspectRatio) {
 		this._aspectRatio = _aspectRatio;
 	}
-	private Button getCloseButton() {
+	protected Button getCloseButton() {
 		return _closeButton;
 	}
 	private void setCloseButton(Button _closeButton) {
 		this._closeButton = _closeButton;
+	}
+	protected Button getApplyButton() {
+		return _applyButton;
+	}
+	private void setApplyButton(Button _closeButton) {
+		this._applyButton = _closeButton;
 	}
 	public String getFontName() {
 		return _fontName;
@@ -107,7 +124,7 @@ public abstract class Panel extends UIElement {
 	public boolean isShowing() {
 		return _showing;
 	}
-	private void setShowing(boolean _showing) {
+	protected void setShowing(boolean _showing) {
 		this._showing = _showing;
 	}	
 }

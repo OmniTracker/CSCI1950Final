@@ -47,4 +47,8 @@ public class Final extends Screen {
 	private void setFinalViewport(FinalViewport _finalViewport) {
 		this._finalViewport = _finalViewport;
 	}
+	@Override
+	public void onShutdown() {
+		_finalGameWorld.onShutdown();
+	}
 }

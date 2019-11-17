@@ -22,7 +22,8 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 	private  Integer INSTRUCTIONS_PANEL_VIEW = 3; 
 	private  Integer CONTROL_PANEL_VIEW      = 4; 
 	private  Integer OPTIONS_PANEL_VIEW      = 8; 
-	private  Integer KEY_BINDING_PANEL_VIEW  = 12; 
+	private  Integer KEY_BINDING_PANEL_VIEW  = 12;
+	private KeyBindingPanel keyBindingPanel;
 
 	private Button _pauseButton = null;
 
@@ -64,7 +65,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 
 
 		// Key Binding Panel
-		KeyBindingPanel keyBindingPanel = new KeyBindingPanel( this.getAspectRatio()); 
+		keyBindingPanel = new KeyBindingPanel( this.getAspectRatio()); 
 		keyBindingPanel.setColor(Color.DARKGRAY);
 		keyBindingPanel.setSecondaryColor(Color.DARKGREEN);
 		keyBindingPanel.setSize( new Vec2d(600,400));	
@@ -211,6 +212,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 				else if (buttonPushed.contains("KeyBinding"))
 				{
 					this.setContextHolder(KEY_BINDING_PANEL_VIEW);
+					keyBindingPanel.initKeyBindingButtons();
 				}
 				else 
 				{
