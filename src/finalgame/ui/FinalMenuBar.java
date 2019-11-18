@@ -44,7 +44,6 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		intructionsPanel.setOrigin(new Vec2d(0,0));
 		intructionsPanel.setBoarderSize(10);
 		this.insertPanel(INSTRUCTIONS_PANEL_VIEW, intructionsPanel);
-
 		// Options Panel
 		OptionsPanel optionsPanel = new OptionsPanel( this.getAspectRatio()); 
 		optionsPanel.setColor(Color.DARKGRAY);
@@ -53,7 +52,6 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		optionsPanel.setOrigin(new Vec2d(0,0));
 		optionsPanel.setBoarderSize(10);
 		this.insertPanel((Integer)OPTIONS_PANEL_VIEW, optionsPanel);
-
 		// Control Panel
 		ControlsPanel controlsPanel = new ControlsPanel( this.getAspectRatio()); 
 		controlsPanel.setColor(Color.DARKGRAY);
@@ -62,8 +60,6 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		controlsPanel.setOrigin(new Vec2d(0,0));
 		controlsPanel.setBoarderSize(10);
 		this.insertPanel((Integer)CONTROL_PANEL_VIEW, controlsPanel);
-
-
 		// Key Binding Panel
 		keyBindingPanel = new KeyBindingPanel( this.getAspectRatio()); 
 		keyBindingPanel.setColor(Color.DARKGRAY);
@@ -72,8 +68,6 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		keyBindingPanel.setOrigin(new Vec2d(0,0));
 		keyBindingPanel.setBoarderSize(10);
 		this.insertPanel((Integer)KEY_BINDING_PANEL_VIEW, keyBindingPanel);
-
-
 	}
 
 	public void initializeMenuButtons () {
@@ -84,7 +78,6 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		controls.setColor( Color.WHITE);
 		controls.setFontName(EngineFonts.getNin());
 		this.insertButton(controls.getText(),controls);
-
 		// Instructions
 		Button instructions = new Button(); 
 		instructions.setText("Instructions");
@@ -92,7 +85,6 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		instructions.setColor( Color.WHITE);
 		instructions.setFontName(EngineFonts.getNin());
 		this.insertButton(instructions.getText(),instructions);		
-
 		// Options
 		Button options = new Button();
 		options.setText("Options");
@@ -101,7 +93,6 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		options.setFontName(EngineFonts.getNin());
 		this.setPauseButton(options);
 		this.insertButton(options.getText() ,options);
-
 		// Restart
 		Button restart = new Button();
 		restart.setText("Restart");
@@ -109,7 +100,6 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		restart.setColor( Color.WHITE);
 		restart.setFontName(EngineFonts.getNin());
 		this.insertButton(restart.getText(),restart);
-
 		// Pause Game
 		Button pause = new Button();
 		pause.setText("Pause");
@@ -118,8 +108,6 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		pause.setFontName(EngineFonts.getNin());
 		this.setPauseButton(pause);
 		this.insertButton(pause.getText(),pause);
-
-
 		// Key Binding 
 		Button  keyBinding = new Button();
 		keyBinding.setText("KeyBinding");

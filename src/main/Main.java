@@ -7,7 +7,7 @@ import wizard.level0.WizLevel0;
 import wizard.level1.WizLevel1;
 import alchemy.level0.ALCGameScreen;
 import engine.*;
-import finalgame.level0.Final;
+import finalgame.maingameloop.Final;
 
 public class Main 
 {
@@ -15,7 +15,7 @@ public class Main
 
 	public static void main (String[] arg) throws MalformedURLException 
 	{
-		Integer _debugGame =  6; 
+		Integer _debugGame =  0; 
 		Application app = new Application("Project Screen");
 		if (_debugGame == 0) 
 		{

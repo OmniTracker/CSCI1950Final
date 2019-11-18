@@ -6,7 +6,7 @@ import java.util.HashMap;
 import engine.utility.AspectRatioHandler;
 import engine.utility.Factory;
 import finalgame.*;
-import finalgame.level0.Final;
+import finalgame.maingameloop.Final;
 import support.*;
 import wizard.*;
 import wizard.level0.WizLevel0;
@@ -134,14 +134,13 @@ public class Application extends FXFrontEnd {
 
 	@Override
 	protected void onMouseClicked(MouseEvent e) {
+
 		if (this.getCurrentLevel() != null) {
-			try {
-				this.getCurrentLevel().onMouseClicked(e);
-			} catch (MalformedURLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+
+			this.getCurrentLevel().onMouseClicked(e);
+
 		}	
+
 	}
 
 	@Override

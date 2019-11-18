@@ -24,11 +24,9 @@ public class CSCI1950ProjectScreen extends Screen {
 	private final Vec2d _buttonSize = new Vec2d(300,50);
 	private Color _borderColor;
 	private Image _gameEnginePlayableScreen = null;
-
 	private boolean _gameLoading = false;
 	private double fadeInY = 0.0;
 	private double _fadeout = 0.0;
-	
 	CSCI1950ProjectScreen(Application app){
 		super(app);
 		this.initButtons();
@@ -88,8 +86,13 @@ public class CSCI1950ProjectScreen extends Screen {
 		g.setTextAlign(TextAlignment.CENTER);
 		g.fillText("CSCI 1950: 2D Game Engines", (screenSize.x / 2) , (screneOrigin.y / 2) + 50  + fadeInY);
 	}
-	public void onMouseClicked(MouseEvent e) throws MalformedURLException {
-		checkButtonClick(e);	
+	public void onMouseClicked(MouseEvent e) {
+		try {
+			checkButtonClick(e);
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}	
 	}
 	private void checkButtonClick(MouseEvent e) throws MalformedURLException {
 		for (Button button : this.getArrayListButton()) {	

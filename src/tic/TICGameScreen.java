@@ -20,7 +20,7 @@ public class TICGameScreen extends Screen {
 	private Integer [][] _gameGrid;
 	private AspectRatioHandler _aspect;
 	private Color _gridColor = Color.CRIMSON;
-	private Integer _dimension = 3;
+	private Integer _dimension = 20;
 	private Button _focus = null;
 
 	private Button _player1;

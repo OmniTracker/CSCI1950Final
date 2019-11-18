@@ -52,7 +52,7 @@ public class Screen implements EventHandler {
 	}
 
 	@Override
-	public void onMouseClicked(MouseEvent e) throws MalformedURLException {
+	public void onMouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}

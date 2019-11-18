@@ -1,4 +1,4 @@
-package finalgame.level0;
+package finalgame.maingameloop;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -39,10 +39,12 @@ public class FinalViewport extends ViewportHandler {
 		}		
 	}
 	public void onMouseDragged(MouseEvent e) {
-		this.getGameWorld().onMouseDragged(e);
 		if ( this.getMenuBar().isMenuActivated() == false ) {
 			this.getGameWorld().onMouseDragged(e);
 		}
+	}
+	public void onStartup() {
+		this.getGameWorld().onStartup();
 	}
 	public FinalMenuBar getMenuBar() {
 		return _menuBar;

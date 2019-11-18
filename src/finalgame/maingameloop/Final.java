@@ -1,4 +1,4 @@
-package finalgame.level0;
+package finalgame.maingameloop;
 
 import support.Vec2d;
 import javafx.scene.canvas.GraphicsContext;
@@ -34,6 +34,9 @@ public class Final extends Screen {
 	}
 	public void onMouseClicked(MouseEvent e) {
 		this.getFinalViewport().onMouseClicked(e);
+	}
+	public void onStartup() {
+		this.getFinalViewport().onStartup();
 	}
 	private FinalGameWorld getFinalGameWorld() {
 		return _finalGameWorld;

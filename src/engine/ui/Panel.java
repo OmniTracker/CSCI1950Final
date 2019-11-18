@@ -22,7 +22,6 @@ public abstract class Panel extends UIElement {
 		this.setCollisionBox( new AABShape(new Vec2d(0,0), new Vec2d(0,0)));
 	}
 	
-	
 	public void drawRounded(GraphicsContext g) {	
 		// If this is drawing, this is showing 
 		this.setShowing(true);				
@@ -37,10 +36,12 @@ public abstract class Panel extends UIElement {
 				this.getSize().y + (this.getBoarderSize() * 2),
 				20,
 				20);
+		
 		// Draw main panel
 		g.setFill(this.getColor());
 		g.fillRoundRect(this.getOrigin().x,this.getOrigin().y, this.getSize().x , this.getSize().y,20,20);
 		this.setCollisionBox( new AABShape(this.getOrigin(),this.getSize()));
+		
 		// Draw close button. I will assume the close button will always be to the right
 		// bottom of the Panel View.		
 		this.getCloseButton().setColor(Color.WHITE);
@@ -59,8 +60,7 @@ public abstract class Panel extends UIElement {
 		this.getApplyButton().setText("Apply");
 		this.getApplyButton().drawRounded(g);
 	}
-	
-	
+
 	// Will return if the close button was hit
 	public void onMouseClicked(MouseEvent e) {		
 		if (this.checkPanelCollision(e) == true) {
@@ -124,7 +124,7 @@ public abstract class Panel extends UIElement {
 	public boolean isShowing() {
 		return _showing;
 	}
-	protected void setShowing(boolean _showing) {
+	public void setShowing(boolean _showing) {
 		this._showing = _showing;
 	}	
 }

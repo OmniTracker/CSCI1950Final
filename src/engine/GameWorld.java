@@ -13,6 +13,12 @@ public class GameWorld {
 	private Integer _level;
 	private Vec2d _gameSize;
 	private Vec2d _origin;
+	private GameWorld _parent;
+	
+	protected GameWorld(Application app, GameWorld parent) {
+		this.setApplication(app);
+		this.setParent(parent);
+	}
 	protected GameWorld(Application app) {
 		this.setApplication(app);
 	}
@@ -75,5 +81,11 @@ public class GameWorld {
 	}
 	public void setWIZDelegateContainer(WIZDelegateContainer _wizDelegateContainer) {
 		this._wizDelegateContainer = _wizDelegateContainer;
+	}
+	public GameWorld getParent() {
+		return _parent;
+	}
+	private void setParent(GameWorld _parent) {
+		this._parent = _parent;
 	}
 }
