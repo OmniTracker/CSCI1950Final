@@ -15,7 +15,6 @@ import engine.utility.AspectRatioHandler;
 import engine.utility.EventHandler;
 
 public class FinalMenuBar extends MenuBar implements EventHandler{
-
 	private Integer _contextHolder           = -1; 
 	private  Integer RESTART                 = 0; 
 	private  Integer PAUSE                   = 1; 
@@ -24,9 +23,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 	private  Integer OPTIONS_PANEL_VIEW      = 8; 
 	private  Integer KEY_BINDING_PANEL_VIEW  = 12;
 	private KeyBindingPanel keyBindingPanel;
-
 	private Button _pauseButton = null;
-
 	private boolean DEBUG = false;
 
 	public FinalMenuBar(AspectRatioHandler aspect) {
@@ -34,7 +31,6 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		this.initializeMenuButtons();
 		this.initializePanelViews(); 
 	}
-
 	public void initializePanelViews () {
 		// Instructions panel
 		InstructionPanel intructionsPanel = new InstructionPanel( this.getAspectRatio() );
@@ -69,7 +65,6 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		keyBindingPanel.setBoarderSize(10);
 		this.insertPanel((Integer)KEY_BINDING_PANEL_VIEW, keyBindingPanel);
 	}
-
 	public void initializeMenuButtons () {
 		// Controls Panel
 		Button controls = new Button(); 

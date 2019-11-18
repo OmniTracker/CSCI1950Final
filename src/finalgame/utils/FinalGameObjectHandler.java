@@ -10,6 +10,8 @@ public class FinalGameObjectHandler {
 	private Image _introImage; 
 	private Image _introBackdrop;
 	private Image _selectBackground;
+	private Image _leftArrow; 
+	private Image _rightArrow;
 	public FinalGameObjectHandler () {
 		this.setCharacterImages( new HashMap<String,HashMap<String, Image>>());		
 		this.setFinalFactory( new FinalFactory());
@@ -19,6 +21,8 @@ public class FinalGameObjectHandler {
 		this.setIntroImage( this.getFinalFactory().getMainLogo());
 		this.setIntroBackdrop( this.getFinalFactory().getMainLogoBackDrop() );
 		this.setSelectBackground( this.getFinalFactory().getMainLogoSelete());
+		this.setRightArrow( this.getFinalFactory().getRightArrow());
+		this.setLeftArrow(this.getFinalFactory().getLeftArrow());
 		/****** Ezra ******/
 		HashMap<String, Image> ezra = new HashMap<String, Image>(); 
 		ezra.put("little", this.getFinalFactory().getEzraSmallSprite()); 
@@ -73,5 +77,17 @@ public class FinalGameObjectHandler {
 	}
 	private void setSelectBackground(Image _selectBackground) {
 		this._selectBackground = _selectBackground;
+	}
+	public Image getLeftArrow() {
+		return _leftArrow;
+	}
+	private void setLeftArrow(Image _leftArrow) {
+		this._leftArrow = _leftArrow;
+	}
+	public Image getRightArrow() {
+		return _rightArrow;
+	}
+	private void setRightArrow(Image _rightArrow) {
+		this._rightArrow = _rightArrow;
 	}
 }

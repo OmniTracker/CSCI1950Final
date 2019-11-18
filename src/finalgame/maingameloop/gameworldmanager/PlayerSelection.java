@@ -35,7 +35,7 @@ public class PlayerSelection extends GameWorld {
 	private boolean _inTransition = false;
 	double transitionX = 0; 
 	Integer _currentPlayer = 3;
-	Integer _nextPlayer;
+	Integer _nextPlayer = _currentPlayer;
 	int R = 255;
 	int G = 0;
 	int B = 0;
@@ -58,6 +58,54 @@ public class PlayerSelection extends GameWorld {
 				index++; 	
 			}
 		} 
+	}
+	public void onDraw(GraphicsContext g) {
+		// Draw the left and right Arrows
+		Vec2d origin = this.getAspect().calculateUpdatedOrigin();
+		Vec2d size = this.getAspect().calculateUpdatedScreenSize();	
+		double xSize = (size.x / 3.8); 
+		double ySize = (size.y / 1.3);
+		// Draw Image
+		g.setFill(Color.BLACK);
+		g.fillRect(origin.x, origin.y, size.x, size.y);	
+		g.setGlobalAlpha(0.65); 
+		g.drawImage(this.getFinalGameWorld().getFinalGameObjectHandler().getSelectBackground(), (origin.x + xSize), (origin.y + ((size.y / 9) * 2)), (size.x - xSize * 2) , (size.y - ( (size.y / 9) * 4)));
+		g.setGlobalAlpha(0.2);
+		g.setFill(Color.rgb(R,G,B));
+		g.fillRect(origin.x, origin.y, size.x, size.y);	
+		g.setGlobalAlpha(0.6);
+		g.setFill(Color.BLACK);
+		this.setLeftFrameOrigin(  new Vec2d( (origin.x - (xSize / 2)) + transitionX               , (origin.y + (size.y / 2)) - (ySize / 2)));
+		this.setCenterFrameOrigin(new Vec2d( (origin.x - (xSize / 2)) + transitionX + (size.x / 2), (origin.y + (size.y / 2)) - (ySize / 2)));
+		this.setRightFrameOrigin (new Vec2d( (origin.x - (xSize / 2)) + transitionX +  size.x     , (origin.y + (size.y / 2)) - (ySize / 2)));
+		g.fillRoundRect( this.getCenterFrameOrigin().x, this.getCenterFrameOrigin().y, xSize, ySize, 40, 40);
+		g.fillRoundRect( this.getRightFrameOrigin().x , this.getRightFrameOrigin().y , xSize, ySize, 40, 40);
+		g.fillRoundRect( this.getLeftFrameOrigin().x  , this.getLeftFrameOrigin().y  , xSize, ySize, 40, 40);	
+		g.setGlobalAlpha(1.0);
+		g.drawImage(this.getCharacterImages().get(this.getCharacterSelector().get(_currentPlayer)).get("big"), this.getCenterFrameOrigin().x, this.getCenterFrameOrigin().y, xSize, ySize);
+		g.drawImage(this.getCharacterImages().get(this.getCharacterSelector().get((( _currentPlayer + 1 == 4)  ? 0 : _currentPlayer + 1))).get("big"), this.getRightFrameOrigin().x, this.getRightFrameOrigin().y, xSize, ySize);
+		g.drawImage(this.getCharacterImages().get(this.getCharacterSelector().get((( _currentPlayer - 1 == -1) ? 3 : _currentPlayer - 1))).get("big"), this.getLeftFrameOrigin().x, this.getLeftFrameOrigin().y, xSize, ySize);
+		g.setFill(Color.BLACK);
+		g.fillRect(origin.x, origin.y, xSize / 2, size.y);
+		g.fillRect((origin.x + size.x) - (xSize / 2),origin.y,(xSize / 2), size.y);
+		g.setGlobalAlpha(0.7);
+		g.setFill(Color.rgb(R,G,B));
+		g.fillRect(origin.x, origin.y, xSize / 2, size.y);
+		g.fillRect((origin.x + size.x) - (xSize / 2),origin.y,(xSize / 2), size.y);
+		this.getLeftButton().setShape( new AABShape( new Vec2d(origin.x, origin.y),new Vec2d(xSize / 2, size.y)));
+		this.getRightButton().setShape( new AABShape( new Vec2d((origin.x + size.x) - (xSize / 2), origin.y),new Vec2d(xSize / 2, size.y)));
+		g.setGlobalAlpha(1.0);
+		g.setFill(Color.BLACK);
+		g.fillRect(origin.x, origin.y, size.x, (size.y / 9));	
+		g.fillRect(origin.x, origin.y +  (size.y - (size.y / 9)), size.x, (size.y / 9));	
+		g.setFill(Color.rgb(R,G,B)); 
+		g.setFont(Font.font(EngineFonts.getAlc(),50));
+		g.setTextAlign(TextAlignment.CENTER);
+		Vec2d textOrigin = new Vec2d(origin.x + (size.x / 2),  origin.y +  (size.y - (size.y / 32)));
+		g.fillText(this.getCharacterSelector().get(_currentPlayer), textOrigin.x, textOrigin.y);
+		g.setGlobalAlpha(1.0);
+		g.drawImage(this.getFinalGameWorld().getFinalGameObjectHandler().getLeftArrow(),  origin.x, (origin.y + size.y / 3), (xSize / 2), (xSize / 2));
+		g.drawImage(this.getFinalGameWorld().getFinalGameObjectHandler().getRightArrow(),(origin.x + size.x) - (xSize / 2), (origin.y + size.y / 3) , (xSize / 2), (xSize / 2));
 	}
 	private void colorRotation ( ) {
 		Vec2d origin = this.getAspect().calculateUpdatedOrigin();
@@ -159,48 +207,6 @@ public class PlayerSelection extends GameWorld {
 				_inTransition = true; 
 			}
 		}
-	}
-	public void onDraw(GraphicsContext g) {
-		// Draw the left and right Arrows
-		Vec2d origin = this.getAspect().calculateUpdatedOrigin();
-		Vec2d size = this.getAspect().calculateUpdatedScreenSize();	
-		double xSize = (size.x / 3.8); 
-		double ySize = (size.y / 1.3);
-		// Draw Image
-		g.setFill(Color.BLACK);
-		g.fillRect(origin.x, origin.y, size.x, size.y);	
-		g.setGlobalAlpha(0.65); 
-		g.drawImage(this.getFinalGameWorld().getFinalGameObjectHandler().getSelectBackground(), (origin.x + xSize), (origin.y + ((size.y / 9) * 2)), (size.x - xSize * 2) , (size.y - ( (size.y / 9) * 4)));
-		g.setGlobalAlpha(0.2);
-		g.setFill(Color.rgb(R,G,B));
-		g.fillRect(origin.x, origin.y, size.x, size.y);	
-		g.setGlobalAlpha(1.0);
-		g.setFill(Color.BLACK);
-		g.fillRect(origin.x, origin.y, size.x, (size.y / 9));	
-		g.fillRect(origin.x, origin.y +  (size.y - (size.y / 9)), size.x, (size.y / 9));	
-		g.setGlobalAlpha(0.5);
-		g.setFill(Color.GRAY);
-		this.setLeftFrameOrigin(  new Vec2d( (origin.x - (xSize / 2)) + transitionX               , (origin.y + (size.y / 2)) - (ySize / 2)));
-		this.setCenterFrameOrigin(new Vec2d( (origin.x - (xSize / 2)) + transitionX + (size.x / 2), (origin.y + (size.y / 2)) - (ySize / 2)));
-		this.setRightFrameOrigin (new Vec2d( (origin.x - (xSize / 2)) + transitionX +  size.x     , (origin.y + (size.y / 2)) - (ySize / 2)));
-		g.fillRoundRect( this.getCenterFrameOrigin().x, this.getCenterFrameOrigin().y, xSize, ySize, 40, 40);
-		g.fillRoundRect( this.getRightFrameOrigin().x , this.getRightFrameOrigin().y , xSize, ySize, 40, 40);
-		g.fillRoundRect( this.getLeftFrameOrigin().x  , this.getLeftFrameOrigin().y  , xSize, ySize, 40, 40);	
-		g.setGlobalAlpha(1.0);
-		g.drawImage(this.getCharacterImages().get(this.getCharacterSelector().get(_currentPlayer)).get("big"), this.getCenterFrameOrigin().x, this.getCenterFrameOrigin().y, xSize, ySize);
-		g.drawImage(this.getCharacterImages().get(this.getCharacterSelector().get((( _currentPlayer + 1 == 4)  ? 0 : _currentPlayer + 1))).get("big"), this.getRightFrameOrigin().x, this.getRightFrameOrigin().y, xSize, ySize);
-		g.drawImage(this.getCharacterImages().get(this.getCharacterSelector().get((( _currentPlayer - 1 == -1) ? 3 : _currentPlayer - 1))).get("big"), this.getLeftFrameOrigin().x, this.getLeftFrameOrigin().y, xSize, ySize);
-		g.setFill(Color.BLACK);
-		g.fillRect(origin.x, origin.y, xSize / 2, size.y);
-		g.fillRect((origin.x + size.x) - (xSize / 2),origin.y,(xSize / 2), size.y);
-		this.getLeftButton().setShape( new AABShape( new Vec2d(origin.x, origin.y),new Vec2d(xSize / 2, size.y)));
-		this.getRightButton().setShape( new AABShape( new Vec2d((origin.x + size.x) - (xSize / 2), origin.y),new Vec2d(xSize / 2, size.y)));
-		g.setFill(Color.rgb(R,G,B)); 
-		g.setFont(Font.font(EngineFonts.getAlc(),50));
-		g.setTextAlign(TextAlignment.CENTER);
-		Vec2d textOrigin = new Vec2d(origin.x + (size.x / 2),  origin.y +  (size.y - (size.y / 32)));
-		g.fillText(this.getCharacterSelector().get(_currentPlayer), textOrigin.x, textOrigin.y);
-		g.setGlobalAlpha(1.0);
 	}
 	private FinalGameWorld getFinalGameWorld() {
 		return _finalGameWorld;
