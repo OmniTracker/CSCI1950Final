@@ -88,7 +88,10 @@ public class PlayerSelection extends GameWorld {
 		g.setFill(Color.BLACK);
 		g.fillRect(origin.x, origin.y, xSize / 2, size.y);
 		g.fillRect((origin.x + size.x) - (xSize / 2),origin.y,(xSize / 2), size.y);
-		g.setGlobalAlpha(0.7);
+		
+		g.drawImage(this.getFinalGameWorld().getFinalGameObjectHandler().getLeftArrow(),  origin.x, (origin.y + size.y / 3), (xSize / 2), (xSize / 2));
+		g.drawImage(this.getFinalGameWorld().getFinalGameObjectHandler().getRightArrow(),(origin.x + size.x) - (xSize / 2), (origin.y + size.y / 3) , (xSize / 2), (xSize / 2));
+		g.setGlobalAlpha(0.6);
 		g.setFill(Color.rgb(R,G,B));
 		g.fillRect(origin.x, origin.y, xSize / 2, size.y);
 		g.fillRect((origin.x + size.x) - (xSize / 2),origin.y,(xSize / 2), size.y);
@@ -98,14 +101,13 @@ public class PlayerSelection extends GameWorld {
 		g.setFill(Color.BLACK);
 		g.fillRect(origin.x, origin.y, size.x, (size.y / 9));	
 		g.fillRect(origin.x, origin.y +  (size.y - (size.y / 9)), size.x, (size.y / 9));	
+		
 		g.setFill(Color.rgb(R,G,B)); 
 		g.setFont(Font.font(EngineFonts.getAlc(),50));
 		g.setTextAlign(TextAlignment.CENTER);
 		Vec2d textOrigin = new Vec2d(origin.x + (size.x / 2),  origin.y +  (size.y - (size.y / 32)));
 		g.fillText(this.getCharacterSelector().get(_currentPlayer), textOrigin.x, textOrigin.y);
 		g.setGlobalAlpha(1.0);
-		g.drawImage(this.getFinalGameWorld().getFinalGameObjectHandler().getLeftArrow(),  origin.x, (origin.y + size.y / 3), (xSize / 2), (xSize / 2));
-		g.drawImage(this.getFinalGameWorld().getFinalGameObjectHandler().getRightArrow(),(origin.x + size.x) - (xSize / 2), (origin.y + size.y / 3) , (xSize / 2), (xSize / 2));
 	}
 	private void colorRotation ( ) {
 		Vec2d origin = this.getAspect().calculateUpdatedOrigin();

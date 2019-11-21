@@ -1,4 +1,4 @@
-package engine.finalai;
+package engine.ai;
 
 import engine.GameWorld;
 import java.util.ArrayList;

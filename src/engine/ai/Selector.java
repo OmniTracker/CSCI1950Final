@@ -1,4 +1,4 @@
-package engine.finalai;
+package engine.ai;
 
 public class Selector extends Composite {
 

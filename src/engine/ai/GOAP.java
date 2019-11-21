@@ -1,4 +1,4 @@
-package engine.finalai;
+package engine.ai;
 
 import java.util.ArrayList;
 import java.util.HashSet;
