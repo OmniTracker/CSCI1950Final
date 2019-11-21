@@ -13,11 +13,7 @@ public class Final extends Screen {
 	private FinalGameWorld _finalGameWorld 		= null;
 	public Final(Application app) {
 		super(app);
-		this.setFinalGameWorld( new FinalGameWorld(this.getApplication()));
-		this.setFinalViewport(new FinalViewport(this.getApplication(), 
-				this.getFinalGameWorld(),
-				new Vec2d(0,0), 
-				new Vec2d(0,0)));
+
 	}
 	public void onTick(long nanosSincePreviousTick) {
 		this.getFinalViewport().onTick(nanosSincePreviousTick);
@@ -36,6 +32,12 @@ public class Final extends Screen {
 		this.getFinalViewport().onMouseClicked(e);
 	}
 	public void onStartup() {
+		this.setFinalGameWorld( new FinalGameWorld(this.getApplication()));
+		this.setFinalViewport(new FinalViewport(this.getApplication(), 
+				this.getFinalGameWorld(),
+				new Vec2d(0,0), 
+				new Vec2d(0,0)));
+
 		this.getFinalViewport().onStartup();
 	}
 	private FinalGameWorld getFinalGameWorld() {

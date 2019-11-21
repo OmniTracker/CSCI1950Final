@@ -1,5 +1,6 @@
 package finalgame.maingameloop;
 
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -29,7 +30,7 @@ public class FinalGameWorld  extends GameWorld {
 		this.seeShowMenuBar(false);
 		this.setIntroduction(new Introduction(app, this));
 		this.setPlayerSelection(new PlayerSelection(app, this));
-		this.setPlayerDialog(new PlayerDialog(app, this));
+		this.setPlayerDialog(new PlayerDialog(app));
 		this.setMainGamePlay(new MainGamePlay(app, this));
 		this.setFinalGameObjectHandler(new FinalGameObjectHandler());
 		this.changeCurrentScreen(VisibleGameWorld.INTRODUCTION);	
@@ -67,6 +68,7 @@ public class FinalGameWorld  extends GameWorld {
 	}
 	public void onStartup() {
 		this.getFinalGameObjectHandler().initGameCharacters();
+		this.getPlayerDialog().setCharacterImages(this.getFinalGameObjectHandler().getCharacterImages());
 	}
 	public void onShutdown() {
 		// write score to file

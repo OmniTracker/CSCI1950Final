@@ -65,10 +65,12 @@ public class Introduction extends GameWorld {
 		fadeOut();
 	}
 	private void fadeOut() {
-		if (_transitionAlpha != 0.0) {
+		if (_transitionAlpha != 0.0) 
+		{
 			_transitionAlpha += .01;
 		}
-		if (_transitionAlpha > 1.0) {
+		if (_transitionAlpha > 1.0) 
+		{
 			this.getFinalGameWorld().getPlayerSelection().initScreen();
 			this.getFinalGameWorld().getVisibleGameWorldEnum();
 			this.getFinalGameWorld().changeCurrentScreen(VisibleGameWorld.PLAYERSELECTION);
@@ -105,11 +107,15 @@ public class Introduction extends GameWorld {
 		}
 	}
 	public void onMouseClicked(MouseEvent e) {
-		if ( this.getHighScorePanel().isShowing() == false) {
-			alphaIncrement = 0.0f;
-			if (this.getHighScoreButton().clicked(e)) {
+		if ( this.getHighScorePanel().isShowing() == false) 
+		{
+			alphaIncrement = 0.0f;	
+			if (this.getHighScoreButton().clicked(e)) 
+			{
 				this.getHighScorePanel().setShowing(true);
-			} else if (this.getSelectPlayerButton().clicked(e)) {
+			} 
+			else if (this.getSelectPlayerButton().clicked(e)) 
+			{
 				_transitionAlpha = 0.01; 
 			}
 		} else {	

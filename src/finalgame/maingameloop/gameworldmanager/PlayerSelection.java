@@ -17,6 +17,7 @@ import engine.ui.Button;
 import engine.ui.EngineFonts;
 import engine.utility.AspectRatioHandler;
 import finalgame.maingameloop.FinalGameWorld;
+import finalgame.maingameloop.FinalGameWorld.VisibleGameWorld;
 
 public class PlayerSelection extends GameWorld {
 	private FinalGameWorld _finalGameWorld;
@@ -25,6 +26,7 @@ public class PlayerSelection extends GameWorld {
 	private HashMap<Integer,String> _characterSelector; 
 	private Button _rightButton;
 	private Button _leftButton;  
+	private Button _nextLevelButton; 
 	private Vec2d _centerFrameOrigin = new Vec2d (0,0);
 	private Vec2d _rightFrameOrigin  = new Vec2d (0,0); 
 	private Vec2d _leftFrameOrigin = new Vec2d (0,0);
@@ -47,9 +49,11 @@ public class PlayerSelection extends GameWorld {
 	public void initScreen () {
 		this.setRightButton(new Button());
 		this.setLeftButton(new Button());
+		this.setNextLevelButton((new Button()));
 		this.setCharacterImages(this.getFinalGameWorld().getFinalGameObjectHandler().getCharacterImages());
 		this.setCharacterSelector( new HashMap<Integer,String>());
 		Integer index = 0;
+		
 		for (Entry<String, HashMap<String, Image>> mapElement : 
 			this.getCharacterImages().entrySet()) { 
 			String key = (String) mapElement.getKey();
@@ -88,7 +92,6 @@ public class PlayerSelection extends GameWorld {
 		g.setFill(Color.BLACK);
 		g.fillRect(origin.x, origin.y, xSize / 2, size.y);
 		g.fillRect((origin.x + size.x) - (xSize / 2),origin.y,(xSize / 2), size.y);
-		
 		g.drawImage(this.getFinalGameWorld().getFinalGameObjectHandler().getLeftArrow(),  origin.x, (origin.y + size.y / 3), (xSize / 2), (xSize / 2));
 		g.drawImage(this.getFinalGameWorld().getFinalGameObjectHandler().getRightArrow(),(origin.x + size.x) - (xSize / 2), (origin.y + size.y / 3) , (xSize / 2), (xSize / 2));
 		g.setGlobalAlpha(0.6);
@@ -101,7 +104,7 @@ public class PlayerSelection extends GameWorld {
 		g.setFill(Color.BLACK);
 		g.fillRect(origin.x, origin.y, size.x, (size.y / 9));	
 		g.fillRect(origin.x, origin.y +  (size.y - (size.y / 9)), size.x, (size.y / 9));	
-		
+		this.getNextLevelButton().setShape( new AABShape( new Vec2d(origin.x, origin.y +  (size.y - (size.y / 9))), new Vec2d(size.x, (size.y / 9)) ));
 		g.setFill(Color.rgb(R,G,B)); 
 		g.setFont(Font.font(EngineFonts.getAlc(),50));
 		g.setTextAlign(TextAlignment.CENTER);
@@ -154,10 +157,14 @@ public class PlayerSelection extends GameWorld {
 		}
 	}
 	public void onTick(long nanosSincePreviousTick) {
-		if (_inTransition == true) {
-			if (direction == RIGHT_DIRECTION) {
+		if (_inTransition == true) 
+		{
+			if (direction == RIGHT_DIRECTION) 
+			{
 				transitionX += 5.0;	
-			} else if (direction == LEFT_DIRECTION) {
+			} 
+			else if (direction == LEFT_DIRECTION) 
+			{
 				transitionX -= 5.0;
 			}		
 			this.colorRotation();
@@ -200,13 +207,25 @@ public class PlayerSelection extends GameWorld {
 	private void rotateCharacters(MouseEvent e) {
 		if (_inTransition == false) {
 			if (this.getRightButton().clicked(e)) {
+
+				System.out.print("Next level \n");
+
 				direction = RIGHT_DIRECTION;
 				_nextPlayer = (( _currentPlayer + 1 == 4)  ? 0 : _currentPlayer + 1); 
 				_inTransition = true; 
 			} else if (this.getLeftButton().clicked(e)) {
+				System.out.print("Next level \n");
+
 				direction = LEFT_DIRECTION;
 				_nextPlayer = (( _currentPlayer - 1 == -1) ? 3 : _currentPlayer - 1);
 				_inTransition = true; 
+			} else if (this.getNextLevelButton().clicked(e)) {
+				
+				
+				this.getFinalGameWorld().changeCurrentScreen(VisibleGameWorld.PLAYERDIALOG);
+
+				
+				System.out.print("Next level \n");
 			}
 		}
 	}
@@ -263,5 +282,11 @@ public class PlayerSelection extends GameWorld {
 	}
 	private void setCharacterSelector(HashMap<Integer,String> _characterSelector) {
 		this._characterSelector = _characterSelector;
+	}
+	private Button getNextLevelButton() {
+		return _nextLevelButton;
+	}
+	private void setNextLevelButton(Button _nextLevelButton) {
+		this._nextLevelButton = _nextLevelButton;
 	}
 }
