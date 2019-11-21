@@ -1,9 +1,11 @@
 package finalgame.maingameloop;
 
 
+import support.Vec2d;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import engine.Application;
 import engine.GameWorld;
 import finalgame.maingameloop.gameworldmanager.*;
@@ -70,8 +72,46 @@ public class FinalGameWorld  extends GameWorld {
 		this.getFinalGameObjectHandler().initGameCharacters();
 		this.getPlayerDialog().setCharacterImages(this.getFinalGameObjectHandler().getCharacterImages());
 	}
-	public void onShutdown() {
-		// write score to file
+	public void onShutdown() { 
+		if (this.getCurrentlySelectedScreen() != null) {
+			this.getCurrentlySelectedScreen().onShutdown();
+		}
+	}
+	public void onKeyReleased(KeyEvent e) {
+		if (this.getCurrentlySelectedScreen() != null) {
+
+			this.getCurrentlySelectedScreen().onKeyPressed(e);
+		}
+	}
+	public void onMousePressed(MouseEvent e) {
+		if (this.getCurrentlySelectedScreen() != null) {
+			this.getCurrentlySelectedScreen().onMousePressed(e);
+		}
+	}
+	public void onMouseReleased(MouseEvent e) {
+		if (this.getCurrentlySelectedScreen() != null) {
+			this.getCurrentlySelectedScreen().onMouseReleased(e);
+		}
+	}
+	public void onMouseMoved(MouseEvent e) {
+		if (this.getCurrentlySelectedScreen() != null) {
+			this.getCurrentlySelectedScreen().onMouseMoved(e);
+		}
+	}
+	public void onMouseWheelMoved(ScrollEvent e) {
+		if (this.getCurrentlySelectedScreen() != null) {
+			this.getCurrentlySelectedScreen().onMouseWheelMoved(e);
+		}
+	}
+	public void onFocusChanged(boolean newVal) {
+		if (this.getCurrentlySelectedScreen() != null) {
+			this.getCurrentlySelectedScreen().onFocusChanged(newVal);
+		}
+	}
+	public void onResize(Vec2d newSize) {
+		if (this.getCurrentlySelectedScreen() != null) {
+			this.getCurrentlySelectedScreen().onResize(newSize);
+		}
 	}
 	private Introduction getIntroduction() {
 		return _introduction;

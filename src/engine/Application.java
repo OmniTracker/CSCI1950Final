@@ -72,7 +72,6 @@ public class Application extends FXFrontEnd {
 			System.out.print("Valid game not loaded\n");
 		}
 	}
-
 	public Application(String title) {
 		super(title);
 		this.setLevelMapping(new HashMap<Integer,Screen>()); 
@@ -103,94 +102,76 @@ public class Application extends FXFrontEnd {
 			this.setCurrentLevel(new Final(this));
 		}
 	}
-
 	@Override
 	protected void onDraw(GraphicsContext g) throws MalformedURLException {
 		if (this.getCurrentLevel() != null) {
 			this.getCurrentLevel().onDraw(g);
 		} 
 	}
-
 	@Override
 	protected void onKeyTyped(KeyEvent e) {
 		if (this.getCurrentLevel() != null) {
 			this.getCurrentLevel().onKeyTyped(e);
 		}
 	}
-
 	@Override
 	protected void onKeyPressed(KeyEvent e) {
 		if (this.getCurrentLevel() != null) {
 			this.getCurrentLevel().onKeyPressed(e);
 		}
 	}
-
 	@Override
 	protected void onKeyReleased(KeyEvent e) {
 		if (this.getCurrentLevel() != null) {
 			this.getCurrentLevel().onKeyReleased(e);
 		}	
 	}
-
 	@Override
 	protected void onMouseClicked(MouseEvent e) {
-
 		if (this.getCurrentLevel() != null) {
-
 			this.getCurrentLevel().onMouseClicked(e);
-
 		}	
-
 	}
-
 	@Override
 	protected void onMousePressed(MouseEvent e) {
 		if (this.getCurrentLevel() != null) {
 			this.getCurrentLevel().onMousePressed(e);
 		}			
 	}
-
 	@Override
 	protected void onMouseReleased(MouseEvent e) {
 		if (this.getCurrentLevel() != null) {
 			this.getCurrentLevel().onMouseReleased(e);
 		}	
 	}
-
 	@Override
 	protected void onMouseDragged(MouseEvent e) {
 		if (this.getCurrentLevel() != null) {
 			this.getCurrentLevel().onMouseDragged(e);
 		}				
 	}
-
 	@Override
 	protected void onMouseMoved(MouseEvent e) {
 		if (this.getCurrentLevel() != null) {
 			this.getCurrentLevel().onMouseMoved(e);
 		}		
 	}
-
 	@Override
 	protected void onMouseWheelMoved(ScrollEvent e) {
 		if (this.getCurrentLevel() != null) {
 			this.getCurrentLevel().onMouseWheelMoved(e);
 		}		
 	}
-
 	@Override
 	protected void onFocusChanged(boolean newVal) {
 		if (this.getCurrentLevel() != null) {
 			this.getCurrentLevel().onFocusChanged(newVal);
 		}
 	}
-
 	@Override
 	protected void onResize(Vec2d newSize) {
 		this.getAspectRatioHandler().setCurrentScreenSize(newSize);
-
-		if (this.getCurrentLevel() != null)
-		{
+		if (this.getCurrentLevel() != null){
 			this.getCurrentLevel().onResize(newSize);
 		}
 	}
@@ -205,46 +186,36 @@ public class Application extends FXFrontEnd {
 			this.getCurrentLevel().onStartup();
 		}	
 	}
-
 	public AspectRatioHandler getAspectRatioHandler() {
 		return _aspectRatioHandler;
 	}
-
 	public void setAspectRatioHandler(AspectRatioHandler _aspectRatioHandler) {
 		this._aspectRatioHandler = _aspectRatioHandler;
 	}
-
 	public Screen getCurrentLevel() {
 		return _currentLevel;
 	}
-
 	public void setCurrentLevel(Screen _currentLevel) {
 		this._currentLevel = _currentLevel;
 	}
-
 	private HashMap<Integer,Screen> getLevelMapping() {
 		return _levelMapping;
 	}
-
 	public void setLevel(Integer level) {
 		this.setCurrentLevel(this.getLevelMapping().get(level));
 	}
 	private void setLevelMapping(HashMap<Integer,Screen> _levelMapping) {
 		this._levelMapping = _levelMapping;
 	}
-
 	public ColorPallet getColorPallet() {
 		return _colorPallet;
 	}
-
 	public void setColorPallet(ColorPallet _colorPallet) {
 		this._colorPallet = _colorPallet;
 	}
-
 	public Factory getFactory() {
 		return _factory;
 	}
-
 	public void setFactory(Factory _factory) {
 		this._factory = _factory;
 	}

@@ -3,6 +3,7 @@ package finalgame.maingameloop;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import support.Vec2d;
 import engine.Application;
 import engine.GameWorld;
@@ -42,6 +43,27 @@ public class FinalViewport extends ViewportHandler {
 		if ( this.getMenuBar().isMenuActivated() == false ) {
 			this.getGameWorld().onMouseDragged(e);
 		}
+	}
+	public void onKeyReleased(KeyEvent e) {
+		this.getGameWorld().onKeyReleased(e);	
+	}
+	public void onMousePressed(MouseEvent e) {
+		this.getGameWorld().onMousePressed(e);
+	}
+	public void onMouseReleased(MouseEvent e) {
+		this.getGameWorld().onMouseReleased(e);
+	}
+	public void onMouseMoved(MouseEvent e) {
+		this.getGameWorld().onMouseMoved(e);
+	}
+	public void onMouseWheelMoved(ScrollEvent e) {
+		this.getGameWorld().onMouseWheelMoved(e);
+	}
+	public void onFocusChanged(boolean newVal) {
+		this.getGameWorld().onFocusChanged(newVal);
+	}
+	public void onResize(Vec2d newSize) {
+		this.getGameWorld().onResize(newSize);
 	}
 	public void onStartup() {
 		this.getGameWorld().onStartup();
