@@ -49,8 +49,6 @@ public class MovementComponent extends Components {
 			return;
 		}
 		
-		
-		
 		String direction = e.getCode().toString();
 		double x = 0; 
 		double y = 0; 

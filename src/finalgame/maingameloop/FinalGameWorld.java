@@ -39,14 +39,21 @@ public class FinalGameWorld  extends GameWorld {
 		// Check at what point this is starting
 		this.getFinalGameObjectHandler().initGameCharacters();
 	}
-	public void changeCurrentScreen(VisibleGameWorld screen) {
-		if (screen == VisibleGameWorld.INTRODUCTION){
+	public void changeCurrentScreen(VisibleGameWorld screen) 
+	{
+		if (screen == VisibleGameWorld.INTRODUCTION)
+		{
 			this.setCurrentlySelectedScreen(this.getIntroduction());
-		} else if (screen == VisibleGameWorld.PLAYERSELECTION) {
+		} 
+		else if (screen == VisibleGameWorld.PLAYERSELECTION) 
+		{
 			this.setCurrentlySelectedScreen(this.getPlayerSelection());
-		} else if (screen == VisibleGameWorld.PLAYERDIALOG) {
+		} 
+		else if (screen == VisibleGameWorld.PLAYERDIALOG) 
+		{
 			this.setCurrentlySelectedScreen(this.getPlayerDialog());
-		} else if (screen == VisibleGameWorld.MAINGAMEPLAY) {
+		} 
+		else if (screen == VisibleGameWorld.MAINGAMEPLAY) {
 			this.setCurrentlySelectedScreen(this.getMainGamePlay());
 		}
 	}

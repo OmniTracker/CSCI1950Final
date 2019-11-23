@@ -73,7 +73,7 @@ public class Introduction extends GameWorld {
 		{
 			this.getFinalGameWorld().getPlayerSelection().initScreen();
 			this.getFinalGameWorld().getVisibleGameWorldEnum();
-			this.getFinalGameWorld().changeCurrentScreen(VisibleGameWorld.MAINGAMEPLAY);
+			this.getFinalGameWorld().changeCurrentScreen(VisibleGameWorld.PLAYERSELECTION);
 		}
 	}
 	public void onDraw(GraphicsContext g) {

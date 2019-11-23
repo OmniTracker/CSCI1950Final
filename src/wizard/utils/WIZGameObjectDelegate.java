@@ -3,6 +3,7 @@ package wizard.utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javafx.scene.image.Image;
 import support.Vec2d;
 import support.Vec2i;
 import support.collision.AABShape;
@@ -23,7 +24,9 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 	Application _app; 
 	private HashMap<String ,GameObject> _objslevelO = null;
 	private HashMap<String ,GameObject> _objslevel1 = null;
+	private WIZSpriteFactory _wizFactory  = null;
 	private WIZDelegateContainer _wizDelegateContainer = null; 
+	private HashMap<String,Image> _keyMap; 
 	private Vec2d _screenSize = null;
 
 	public WIZGameObjectDelegate(Application app) {
@@ -34,16 +37,20 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 		this.setApp(app);
 		this.setObjsLevelO( new HashMap<String ,GameObject> ());
 		this.setObjsLevel1( new HashMap<String ,GameObject> ());
+		this.setKeyMap( new HashMap<String,Image>() );
+		this.setWizFactory(  new WIZSpriteFactory());
 		this.loadWIZGameObjects();
 	}
 	public void loadWIZGameObjects ()  {		
+		
+		// Load all the Keys into game.
+		this.generateKeys();
 		// Load Game Map Data
 		GameObject main   = generateHero();
 		GameObject enemy0 = generateEnemy0(main);
 		GameObject enemy1 = generateEnemy1(main);
 		GameObject enemy2 = generateEnemy2(main);
 		GameObject enemy3 = generateEnemy3(main);
-		
 		// Dynamically added characters
 		// GameObject enemy4 = generateEnemy4(main);
 		// GameObject enemy5 = generateEnemy5(main);
@@ -60,8 +67,13 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 		this.getObjsLevel1().put("Main", main);
 		this.getObjsLevel1().put("Enemy2", enemy2);
 		this.getObjsLevel1().put("Enemy3", enemy3);
-		
 		// this.getObjsLevelO().put("Enemy4", enemy5);
+	}
+	
+	private void generateKeys() {
+		this.getKeyMap().put( "red", this.getWizFactory().getRedKey());
+		this.getKeyMap().put( "blue", this.getWizFactory().getBlueKey()); 
+		this.getKeyMap().put( "green", this.getWizFactory().getGreenKey()); 
 	}
 	/**
 	 * The Main Character will be visible on each of the levels in the game. 
@@ -83,7 +95,7 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 		main.getData().setBox(new AABShape(main.getData().getPosition(), new Vec2d(60,60)));
 		main.setWizSpeed(10); 
 
-		
+
 		// Systems
 		main.getData().getSystems().add("Graphics"); 
 		main.getData().getSystems().add("Behavior"); 
@@ -114,9 +126,9 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 		enemy.getData().setImageSize(new Vec2d(48,48));
 		enemy.getData().setImageStart(new Vec2d(0,0));
 		enemy.getData().setImageGameSize(new Vec2d(60,60));
-		
+
 		enemy.setWizSpeed(5);
-		
+
 		enemy.getData().setBox(new AABShape(main.getData().getPosition(), new Vec2d(60,60)));
 
 		// B Tree
@@ -124,25 +136,25 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 
 		// First Sequence
 		ArrayList<WIZBehaviorSequence> firstSequence = new ArrayList<WIZBehaviorSequence>(); 
-		
+
 		DoesEnemyHaveTracker doesEnemyHaveTracker = new DoesEnemyHaveTracker(enemy,main); 
 		doesEnemyHaveTracker.setActiveTracker(true);
 		firstSequence.add(doesEnemyHaveTracker); 
-		
+
 		NeedToUpdateStoredPathForCharacter isCharacterOnStoredPath = new NeedToUpdateStoredPathForCharacter(enemy,main);
 		firstSequence.add(isCharacterOnStoredPath); 
-		
+
 		// This will always return true
 		UpdateDirectedTargetLocation updateDirectedTargetLocation = new UpdateDirectedTargetLocation(enemy,main); 
 		firstSequence.add(updateDirectedTargetLocation); 
-		
+
 		// Second Sequence
 		ArrayList<WIZBehaviorSequence> secondSequence = new ArrayList<WIZBehaviorSequence>(); 
-		
+
 		IsAthletic isAthletic = new IsAthletic(enemy,main); 
 		isAthletic.setStatus(true);
 		secondSequence.add(isAthletic); 
-		
+
 		IncreaseSpeed increaseSpeed = new IncreaseSpeed(enemy,main);
 		// How many steps at max speed. The main character can only move max for now
 		increaseSpeed.setMaxSpeed(5);  
@@ -192,31 +204,31 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 		enemy.getData().setBox(new AABShape(main.getData().getAIposition(), new Vec2d(60,60)));
 		// Used to speed up the player in the game
 		enemy.setWizSpeed(5);
-		
+
 		// B Tree
 		enemy.getData().setWIZBehaviorTree( new WIZBehaviorTree());
 
 		// First Sequence
 		ArrayList<WIZBehaviorSequence> firstSequence = new ArrayList<WIZBehaviorSequence>(); 
-		
+
 		DoesEnemyHaveTracker doesEnemyHaveTracker = new DoesEnemyHaveTracker(enemy,main); 
 		doesEnemyHaveTracker.setActiveTracker(true);
 		firstSequence.add(doesEnemyHaveTracker); 
-		
+
 		NeedToUpdateStoredPathForCharacter isCharacterOnStoredPath = new NeedToUpdateStoredPathForCharacter(enemy,main);
 		firstSequence.add(isCharacterOnStoredPath); 
-		
+
 		// This will always return true
 		UpdateRandomTargerLocation updateRandomTargerLocation = new UpdateRandomTargerLocation(enemy,main); 
 		firstSequence.add(updateRandomTargerLocation); 
-		
+
 		// Second Sequence
 		ArrayList<WIZBehaviorSequence> secondSequence = new ArrayList<WIZBehaviorSequence>(); 
-		
+
 		IsAthletic isAthletic = new IsAthletic(enemy,main); 
 		isAthletic.setStatus(true);
 		secondSequence.add(isAthletic); 
-		
+
 		IncreaseSpeed increaseSpeed = new IncreaseSpeed(enemy,main);
 		// How many steps at max speed. The main character can only move max for now
 		increaseSpeed.setMaxSpeed(5);  
@@ -235,11 +247,8 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 		// Components 
 		enemy.getData().getComponents().add("Graphics");
 		enemy.getData().getComponents().add("Collision");
-
-		
 		return enemy;
 	}
-
 	/**
 	 * Lyla is the enemy who shall be generated in this function.
 	 * She isn't athletic, but she is smart enough to find the main
@@ -269,10 +278,10 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 		DoesEnemyHaveTracker doesEnemyHaveTracker = new DoesEnemyHaveTracker(enemy,main); 
 		doesEnemyHaveTracker.setActiveTracker(true);
 		firstSequence.add(doesEnemyHaveTracker); 
-		
+
 		NeedToUpdateStoredPathForCharacter isCharacterOnStoredPath = new NeedToUpdateStoredPathForCharacter(enemy,main);
 		firstSequence.add(isCharacterOnStoredPath); 
-		
+
 		// This will always return true
 		UpdateRandomTargerLocation updateRandomTargerLocation = new UpdateRandomTargerLocation(enemy,main); 
 		firstSequence.add(updateRandomTargerLocation); 
@@ -289,8 +298,7 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 		enemy.getData().getComponents().add("Collision");
 		return enemy;
 	}
-	
-	
+
 	/**
 	 * Zelch is the enemy who shall be generated in this function.
 	 * He left his tracker at home, so he is basically walking around 
@@ -322,26 +330,23 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 
 		// B Tree
 		enemy.getData().setWIZBehaviorTree( new WIZBehaviorTree());
-
 		// First Sequence
 		ArrayList<WIZBehaviorSequence> firstSequence = new ArrayList<WIZBehaviorSequence>(); 
 		DoesEnemyHaveTracker doesEnemyHaveTracker = new DoesEnemyHaveTracker(enemy,main); 
 		doesEnemyHaveTracker.setActiveTracker(true);
 		firstSequence.add(doesEnemyHaveTracker); 
-		
+
 		NeedToUpdateStoredPathForCharacter isCharacterOnStoredPath = new NeedToUpdateStoredPathForCharacter(enemy,main);
 		firstSequence.add(isCharacterOnStoredPath); 
-		
+
 		// This will always return true
 		UpdateRandomTargerLocation updateRandomTargerLocation = new UpdateRandomTargerLocation(enemy,main); 
 		firstSequence.add(updateRandomTargerLocation); 
 
 		// Second Sequence
-		
 		enemy.setWizSpeed(5); 
 		enemy.getData().getWIZBehaviorTree().getWIZSelector().getSequence().add(firstSequence);
 
-		
 		// Subscribe to Systems and Components
 		// Systems
 		enemy.getData().getSystems().add("Graphics"); 
@@ -352,9 +357,9 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 		enemy.getData().getComponents().add("Collision");
 		return enemy;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Zelch is the enemy who shall be generated in this function.
 	 * He left his tracker at home, so he is basically walking around 
@@ -392,26 +397,26 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 		DoesEnemyHaveTracker doesEnemyHaveTracker = new DoesEnemyHaveTracker(enemy,main); 
 		doesEnemyHaveTracker.setActiveTracker(true);
 		firstSequence.add(doesEnemyHaveTracker); 
-		
+
 		NeedToUpdateStoredPathForCharacter isCharacterOnStoredPath = new NeedToUpdateStoredPathForCharacter(enemy,main);
 		firstSequence.add(isCharacterOnStoredPath); 
-		
+
 		// This will always return true
 		UpdateRandomTargerLocation updateRandomTargerLocation = new UpdateRandomTargerLocation(enemy,main); 
 		firstSequence.add(updateRandomTargerLocation); 
 
 		// Second Sequence
-		
+
 		enemy.setWizSpeed(5); 
-		
+
 		/*
 		 Finish this for Wiz 2
 		ArrayList<WIZBehaviorSequence> secondSequence = new ArrayList<WIZBehaviorSequence>(); 
 		secondSequence.add(new IsAthletic(enemy,main)); 
 		secondSequence.add(new IncreaseSpeed(enemy,main)); 
 		enemy.getData().getWIZBehaviorTree().getSequence().add(secondSequence);
-		*/ 
-		
+		 */ 
+
 		enemy.getData().getWIZBehaviorTree().getSequence().add(firstSequence);
 		// Subscribe to Systems and Components
 		// Systems
@@ -423,8 +428,7 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 		enemy.getData().getComponents().add("Collision");
 		return enemy;
 	}
-	
-	
+
 	/**
 	 * Zelch is the enemy who shall be generated in this function.
 	 * He left his tracker at home, so he is basically walking around 
@@ -462,26 +466,26 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 		DoesEnemyHaveTracker doesEnemyHaveTracker = new DoesEnemyHaveTracker(enemy,main); 
 		doesEnemyHaveTracker.setActiveTracker(true);
 		firstSequence.add(doesEnemyHaveTracker); 
-		
+
 		NeedToUpdateStoredPathForCharacter isCharacterOnStoredPath = new NeedToUpdateStoredPathForCharacter(enemy,main);
 		firstSequence.add(isCharacterOnStoredPath); 
-		
+
 		// This will always return true
 		UpdateRandomTargerLocation updateRandomTargerLocation = new UpdateRandomTargerLocation(enemy,main); 
 		firstSequence.add(updateRandomTargerLocation); 
 
 		// Second Sequence
-		
+
 		enemy.setWizSpeed(5); 
-		
+
 		/*
 		 Finish this for Wiz 2
 		ArrayList<WIZBehaviorSequence> secondSequence = new ArrayList<WIZBehaviorSequence>(); 
 		secondSequence.add(new IsAthletic(enemy,main)); 
 		secondSequence.add(new IncreaseSpeed(enemy,main)); 
 		enemy.getData().getWIZBehaviorTree().getSequence().add(secondSequence);
-		*/ 
-		
+		 */ 
+
 		enemy.getData().getWIZBehaviorTree().getSequence().add(firstSequence);
 		// Subscribe to Systems and Components
 		// Systems
@@ -493,18 +497,7 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 		enemy.getData().getComponents().add("Collision");
 		return enemy;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public HashMap<String ,GameObject> getObjsLevelO() {
 		return _objslevelO;
 	}
@@ -528,5 +521,17 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 	}
 	public void setWIZDelegateContainer(WIZDelegateContainer _wizDelegateContainer) {
 		this._wizDelegateContainer = _wizDelegateContainer;
+	}
+	public HashMap<String,Image> getKeyMap() {
+		return _keyMap;
+	}
+	private void setKeyMap(HashMap<String,Image> _keyMap) {
+		this._keyMap = _keyMap;
+	}
+	public WIZSpriteFactory getWizFactory() {
+		return _wizFactory;
+	}
+	public void setWizFactory(WIZSpriteFactory _wizFactory) {
+		this._wizFactory = _wizFactory;
 	}
 }
