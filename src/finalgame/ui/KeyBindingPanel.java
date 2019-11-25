@@ -37,17 +37,40 @@ public class KeyBindingPanel extends Panel implements EventHandler {
 	private Integer _currentlyHoldingContext;
 	private Integer _contextFreeNumber = -1;
 	private String xmlPath = "./resources/xmlResources/KeyBinding.xml";
+	
+	
 	protected KeyBindingPanel(AspectRatioHandler app) {
 		super(app);
 		this.setKeyBindingMap(new HashMap <Integer,KeyBinding >());
 		this.setCurrentlyHoldingContext(-1);
 		this.initKeyBindingButtons();
 	}
+	
+	public void onKeyPressed(KeyEvent e) {
+		if ( this.getCurrentlyHoldingContext() != this.getContextFreeNumber()) {
+			String input = e.getText().toString(); 			
+			KeyBinding keyBinding = this.getKeyBindingMap().get(this.getCurrentlyHoldingContext()); 
+			keyBinding.alterCurrentKeyBinding(input);			
+		} 
+	}
+	
+	public void onDraw(GraphicsContext g) {		
+		this.drawRounded(g);
+		this.drawKeyBinding(g);
+		this.drawApply(g);
+	}
+	
+	///////////////////////////////////////////////////////////////////
+
+	
+	
+	
 	public void initKeyBindingButtons () {
 		double width = 150; 
 		double height = 30;
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = null;
+		
 		try {
 			docBuilder = factory.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
@@ -76,11 +99,7 @@ public class KeyBindingPanel extends Panel implements EventHandler {
 			this.getKeyBindingMap().put(x,  new KeyBinding (name, val, new Vec2d(50,10), Color.GREEN, Color.WHEAT, width,height));
 		}
 	}
-	public void onDraw(GraphicsContext g) {		
-		this.drawRounded(g);
-		this.drawKeyBinding(g);
-		this.drawApply(g);
-	}
+
 	private void drawKeyBinding (GraphicsContext g) {
 		// Need to get the frame of where the slider needs to be drawn.
 		Vec2d menuOrigin = this.getOrigin();
@@ -114,28 +133,6 @@ public class KeyBindingPanel extends Panel implements EventHandler {
 			}
 		}
 	}
-	public void onKeyPressed(KeyEvent e) {
-		if ( this.getCurrentlyHoldingContext() != this.getContextFreeNumber()) {
-			String input = e.getText().toString(); 			
-			KeyBinding keyBinding = this.getKeyBindingMap().get(this.getCurrentlyHoldingContext()); 
-			keyBinding.alterCurrentKeyBinding(input);			
-		} 
-	}
-	private HashMap<Integer,KeyBinding > getKeyBindingMap() {
-		return _keyBindingMap;
-	}
-	private void setKeyBindingMap(HashMap<Integer,KeyBinding > _keyBindingMap) {
-		this._keyBindingMap = _keyBindingMap;
-	}
-	private Integer getCurrentlyHoldingContext() {
-		return _currentlyHoldingContext;
-	}
-	private void setCurrentlyHoldingContext(Integer _currentlyHoldingContext) {
-		this._currentlyHoldingContext = _currentlyHoldingContext;
-	}
-	private Integer getContextFreeNumber() {
-		return _contextFreeNumber;
-	}
 	private void saveBindings() {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = null;
@@ -160,8 +157,6 @@ public class KeyBindingPanel extends Panel implements EventHandler {
 			root.appendChild(action);
 			action.appendChild(val);
 		}
-		
-		
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer = null;
         try {
@@ -181,6 +176,23 @@ public class KeyBindingPanel extends Panel implements EventHandler {
 		}
 		
 	}
+	
+	//// ///////////////////////////////////////////////////////////////
+	private HashMap<Integer,KeyBinding > getKeyBindingMap() {
+		return _keyBindingMap;
+	}
+	private void setKeyBindingMap(HashMap<Integer,KeyBinding > _keyBindingMap) {
+		this._keyBindingMap = _keyBindingMap;
+	}
+	private Integer getCurrentlyHoldingContext() {
+		return _currentlyHoldingContext;
+	}
+	private void setCurrentlyHoldingContext(Integer _currentlyHoldingContext) {
+		this._currentlyHoldingContext = _currentlyHoldingContext;
+	}
+	private Integer getContextFreeNumber() {
+		return _contextFreeNumber;
+	}
 	// Not using these. Moved out the way to make life a little easier
 	public void onTick(long nanosSincePreviousTick) {}
 	public void onKeyReleased(KeyEvent e) {}
@@ -193,9 +205,5 @@ public class KeyBindingPanel extends Panel implements EventHandler {
 	public void onResize(Vec2d newSize) {}
 	public void onShutdown() {}
 	public void onStartup() {}
-	@Override
-	public void onMousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void onMousePressed(MouseEvent e) {}
 }

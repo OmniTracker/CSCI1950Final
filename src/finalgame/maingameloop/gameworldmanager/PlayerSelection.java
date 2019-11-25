@@ -221,7 +221,6 @@ public class PlayerSelection extends GameWorld {
 				_inTransition = true; 
 			} else if (this.getNextLevelButton().clicked(e)) {
 				
-				
 				this.getFinalGameWorld().changeCurrentScreen(VisibleGameWorld.PLAYERDIALOG);
 
 				

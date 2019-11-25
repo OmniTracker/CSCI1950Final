@@ -41,7 +41,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		intructionsPanel.setBoarderSize(10);
 		this.insertPanel(INSTRUCTIONS_PANEL_VIEW, intructionsPanel);
 		// Options Panel
-		OptionsPanel optionsPanel = new OptionsPanel( this.getAspectRatio()); 
+		SoundsPanel optionsPanel = new SoundsPanel( this.getAspectRatio()); 
 		optionsPanel.setColor(Color.DARKGRAY);
 		optionsPanel.setSecondaryColor(Color.DARKGREEN);
 		optionsPanel.setSize( new Vec2d(600,400));	
@@ -149,7 +149,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 				{
 					System.out.print("CONTROL HAS CONTEXT \n");
 				}	
-				OptionsPanel panel = (OptionsPanel) this.getPanelViews().get(OPTIONS_PANEL_VIEW);
+				SoundsPanel panel = (SoundsPanel) this.getPanelViews().get(OPTIONS_PANEL_VIEW);
 				panel.drawPanelWithSliders(g);
 			}
 			else if (this.getContextHolder() == KEY_BINDING_PANEL_VIEW) 
@@ -249,7 +249,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 			} 
 			else if (this.getContextHolder() == OPTIONS_PANEL_VIEW) 
 			{
-				OptionsPanel panel = (OptionsPanel) this.getPanelViews().get(OPTIONS_PANEL_VIEW);
+				SoundsPanel panel = (SoundsPanel) this.getPanelViews().get(OPTIONS_PANEL_VIEW);
 				panel.onMouseClicked(e);
 				// Check if the window has been closed
 				if ( panel.isShowing() == false) {

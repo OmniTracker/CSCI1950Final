@@ -32,7 +32,7 @@ public class FinalGameWorld  extends GameWorld {
 		this.seeShowMenuBar(false);
 		this.setIntroduction(new Introduction(app, this));
 		this.setPlayerSelection(new PlayerSelection(app, this));
-		this.setPlayerDialog(new PlayerDialog(app));
+		this.setPlayerDialog(new PlayerDialog(app, this));
 		this.setMainGamePlay(new MainGamePlay(app, this));
 		this.setFinalGameObjectHandler(new FinalGameObjectHandler());
 		this.changeCurrentScreen(VisibleGameWorld.INTRODUCTION);	

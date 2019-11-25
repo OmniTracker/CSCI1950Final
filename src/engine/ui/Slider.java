@@ -91,20 +91,8 @@ public class Slider extends  UIElement {
 	private void setHeight(double _height) {
 		this._height = _height;
 	}
-	private double getCurrentPercentage() {
-		return _currentPercentage;
-	}
 	private void setCurrentPercentage(double _currentPercentage) {
 		this._currentPercentage = _currentPercentage;
-	}
-	private double getSlidingUnit() {
-		return _slidingUnit;
-	}
-	private void setSlidingUnit(double _slidingUnit) {
-		this._slidingUnit = _slidingUnit;
-	}
-	private AABShape getSlidingUnitCollider() {
-		return _slidingUnitCollider;
 	}
 	private void setSlidingUnitCollider(AABShape _slidingUnitCollider) {
 		this._slidingUnitCollider = _slidingUnitCollider;
