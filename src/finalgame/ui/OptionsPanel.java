@@ -64,7 +64,6 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		this.parseHighScores();
 	}
 	public void onKeyPressed(KeyEvent e) {
-		// System.out.print("Curr: " +  this.getCurrentlyHoldingContext() + " Free: "  + this.getContextFreeNumber() + "\n" );
 		if ( this.getCurrentlyHoldingContext() != this.getContextFreeNumber()) {
 			String input = e.getText().toString(); 			
 			KeyBinding keyBinding = this.getKeyBindingMap().get(this.getCurrentlyHoldingContext()); 
@@ -220,7 +219,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		int loop = 0;
 		g.setFont(Font.font(this.getEngineFont().getFontString(this.getText()), 20 ));
 		for (Entry<String, Pair<String, String>> entry : _playerRanking.entrySet())  {
-			g.fillText(entry.getKey()  + " Player: " + entry.getValue().getKey() + " Point: " +  entry.getValue().getValue(), 		
+			g.fillText(entry.getKey()  + ".   Player: " + entry.getValue().getKey() + "   Score: " +  entry.getValue().getValue(), 		
 					center.x + (menuSize.x * 0.25),  (center.y + (menuSize.y * (0.2 + (offset * loop)) )));
 			loop++;
 		}	
