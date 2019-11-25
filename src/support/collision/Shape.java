@@ -6,7 +6,7 @@ import java.util.Iterator;
 import javafx.scene.shape.Line;
 import support.Vec2d;
 
-public class Shape {
+public abstract class Shape {
 
 	private ArrayList<Line> _mtvs = new ArrayList<Line>();
 	
@@ -22,6 +22,9 @@ public class Shape {
 	public void clearMTVs() {
 		_mtvs.clear();
 	}
+	
+
+	public abstract Vec2d getCenter();
 	
 	public void addMTV(Line line, Vec2d mtv) {
 		/* 
