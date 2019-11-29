@@ -31,6 +31,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Pair;
 import support.Vec2d;
+import engine.ui.EngineFonts;
 import engine.ui.KeyBinding;
 import engine.ui.Panel;
 import engine.ui.Slider;
@@ -50,8 +51,10 @@ public class OptionsPanel  extends Panel implements EventHandler{
 	// High Score XML
 	private HashMap < String, Pair <String,String>> _playerRanking =  new HashMap <String,Pair <String,String> > ();
 	private String highScoreXMLPath = "./resources/xmlResources/HighScore.xml";
+	
 	public OptionsPanel(AspectRatioHandler app) {
 		super(app);
+		this.setFontName(EngineFonts.getWiz());
 		// Sound Slider
 		this.setMasterSlider(new Slider("Master" ,-19,123,Color.GREEN,Color.WHITE,400.0,20.0,50.0));
 		this.setSoundFXSlider(new Slider("Sound" ,3,345,Color.GREEN,Color.WHITE,400.0,20.0,50.0));
@@ -81,6 +84,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		this.drawApply(g);
 		this.drawHighScores(g);
 	}
+	
 	public void initKeyBindingButtons () {
 		double width = 150; 
 		double height = 30;
@@ -111,6 +115,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 			this.getKeyBindingMap().put(x,  new KeyBinding (name, val, new Vec2d(50,10), Color.GREEN, Color.WHEAT, width,height));
 		}
 	}
+	
 	private void drawKeyBinding (GraphicsContext g) {
 		Vec2d menuOrigin = this.getOrigin();
 		Vec2d menuSize  = this.getSize(); 
@@ -160,11 +165,14 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		Element root = doc.createElement("KeyBindings");
 		doc.appendChild(root);
 		int size = _keyBindingMap.size();
+	
+		
 		for (int x = 0; x < size; x++) {
 			Element action = doc.createElement("action");
 			Attr tag = doc.createAttribute("tag");
 			tag.setValue(Integer.toString(x));
 			action.setAttributeNode(tag);
+			
 			Element val = doc.createElement(_keyBindingMap.get(x).getCurrentKeyBindSetting());
 			root.appendChild(action);
 			action.appendChild(val);
@@ -187,24 +195,26 @@ public class OptionsPanel  extends Panel implements EventHandler{
 			e.printStackTrace();
 		}
 	}
+	@SuppressWarnings("static-access")
 	private void drawSounds(GraphicsContext g) {
 		Vec2d menuOrigin = this.getOrigin();
 		Vec2d menuSize  = this.getSize(); 
 		Vec2d center = menuOrigin.plus( (menuSize.x / 2), (menuSize.y * 0.1));	
-		g.setFont(Font.font(this.getEngineFont().getFontString(this.getText()), 30 ));
+		g.setFont(Font.font(this.getEngineFont().getFontString(this.getWiz()), 30 ));
 		g.fillText("Sound Control", center.x - (menuSize.x * 0.25),  (center.y + (menuSize.y * 0.08)));	
 		g.setTextAlign(TextAlignment.CENTER);
 		this.getMasterSlider().draw(g, center.plus(  -1 * (menuSize.x * 0.25), (menuSize.y / 2) ),  - 190);
 		this.getSoundFXSlider().draw(g, center.plus( -1 * (menuSize.x * 0.25), (menuSize.y / 2) ),  - 130);
 		this.getMusicSlider().draw(g, center.plus(   -1 * (menuSize.x * 0.25), (menuSize.y / 2) ),  -70);
 	}
+	@SuppressWarnings("static-access")
 	private void drawDivider(GraphicsContext g) {
 		Vec2d menuOrigin = this.getOrigin();
 		Vec2d menuSize  = this.getSize(); 
 		Vec2d center = menuOrigin.plus( (menuSize.x / 2), (menuSize.y * 0.1));	
 		g.setFill(Color.BLACK);	
 		g.fillRoundRect(center.x + (menuSize.x * 0.05), center.y + (menuSize.y * 0.01) ,  5 ,menuSize.y * 0.8, 10, 10);
-		g.setFont(Font.font(this.getEngineFont().getFontString(this.getText()), 40 ));
+		g.setFont(Font.font(this.getEngineFont().getFontString(this.getWiz()), 40 ));
 		g.fillText("Options", center.x, center.y - 20);
 	}
 	private void drawHighScores(GraphicsContext g) {
@@ -218,42 +228,56 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		double offset = 0.14;
 		int loop = 0;
 		g.setFont(Font.font(this.getEngineFont().getFontString(this.getText()), 20 ));
-		for (Entry<String, Pair<String, String>> entry : _playerRanking.entrySet())  {
+		
+		for (Entry<String, Pair<String, String>> entry : _playerRanking.entrySet())  
+		{
 			g.fillText(entry.getKey()  + ".   Player: " + entry.getValue().getKey() + "   Score: " +  entry.getValue().getValue(), 		
 					center.x + (menuSize.x * 0.25),  (center.y + (menuSize.y * (0.2 + (offset * loop)) )));
 			loop++;
 		}	
 	}
-	private void parseHighScores() {		
+	private void parseHighScores() 
+	{		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = null;
-		try {
+		try
+		{
 			builder = factory.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
+		} 
+		catch (ParserConfigurationException e) 
+		{
 			e.printStackTrace();
 		}
 		Document document = null;
-		try {
+		
+		try 
+		{
 			document = builder.parse(new File(highScoreXMLPath));
-		} catch (SAXException | IOException e) {
+		} 
+		catch (SAXException | IOException e) 
+		{
 			e.printStackTrace();
 		}
 		document.getDocumentElement().normalize();
 		Element root = document.getDocumentElement();
 		System.out.println(root.getNodeName());
-		NodeList nList = document.getElementsByTagName("HighScore");
+		NodeList nList = document.getElementsByTagName("highScore");
 		String id; 
 		String name;
 		String score;
+		
 		for (int temp = 0; temp < nList.getLength(); temp++)
 		{
 			Node node = nList.item(temp);
-			if (node.getNodeType() == Node.ELEMENT_NODE) {
+			if (node.getNodeType() == Node.ELEMENT_NODE) 
+			{
 				Element eElement = (Element) node;
 				id    = eElement.getAttribute("id");
 				name  = eElement.getElementsByTagName("firstName").item(0).getTextContent(); 
 				score = eElement.getElementsByTagName("score").item(0).getTextContent();
-				if (eElement.getAttribute("id") != "") {
+		
+				if (eElement.getAttribute("id") != "") 
+				{
 					_playerRanking.put(id, new Pair <String,String> (name, score)); 
 				}
 			}

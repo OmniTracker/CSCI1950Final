@@ -34,18 +34,17 @@ public class WizLevel0GameWorld extends GameWorld  {
 		this.setCollisionSystem(new CollisionSystem(app,this));	
 		this.setGraphicsSystem(new GraphicsSystem(app,this));
 	}
-	public void onTick(long nanosSincePreviousTick) {		
-		this.getCollisionSystem().onTick(nanosSincePreviousTick);
+	public void onTick(long nanosSincePreviousTick) {	
+		this.getCollisionSystem().onTick(0);
 		this.getBehaviorSystem().onTick(nanosSincePreviousTick);
 		this.getMovementSystem().onTick(nanosSincePreviousTick);
-		
 	}
 	public void onKeyPressed(KeyEvent e) {
 		this.getMovementSystem().onKeyPressed(e);
 	}
 	public void onDraw(GraphicsContext g)  {	
-		
 		this.getGraphicsSystem().onDraw(g);
+
 	}
 	private CollisionSystem getCollisionSystem() {
 		return _collisionSystem;

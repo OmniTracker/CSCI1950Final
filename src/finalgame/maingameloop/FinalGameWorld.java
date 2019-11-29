@@ -8,7 +8,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import engine.Application;
 import engine.GameWorld;
-import finalgame.engineAdditions.SoundSystem;
 import finalgame.maingameloop.gameworldmanager.*;
 import finalgame.utils.*;
 
@@ -22,9 +21,6 @@ public class FinalGameWorld  extends GameWorld {
 	private FinalGameObjectHandler _finalGameObjectHandler; 
 	private GameWorld _currentlySelectedScreen; 
 	private VisibleGameWorld __visibleGameWorldEnum;
-	
-	private SoundSystem _soundSystem;
-	
 	public enum VisibleGameWorld {
 		INTRODUCTION, 
 		PLAYERSELECTION, 
@@ -40,10 +36,6 @@ public class FinalGameWorld  extends GameWorld {
 		this.setMainGamePlay(new MainGamePlay(app, this));
 		this.setFinalGameObjectHandler(new FinalGameObjectHandler());
 		this.changeCurrentScreen(VisibleGameWorld.INTRODUCTION);
-		
-		//Initialize sound system for playing music which will vary based on screen and play sfx during gameplay
-		this.setupSoundSystem();
-		
 		// Check at what point this is starting
 		this.getFinalGameObjectHandler().initGameCharacters();
 	}
@@ -146,13 +138,13 @@ public class FinalGameWorld  extends GameWorld {
 	private void setPlayerDialog(PlayerDialog _playerDialog) {
 		this._playerDialog = _playerDialog;
 	}
-	private MainGamePlay getMainGamePlay() {
+	public MainGamePlay getMainGamePlay() {
 		return _mainGamePlay;
 	}
 	private void setMainGamePlay(MainGamePlay _mainGamePlay) {
 		this._mainGamePlay = _mainGamePlay;
 	}
-	private GameWorld getCurrentlySelectedScreen() {
+	public GameWorld getCurrentlySelectedScreen() {
 		return _currentlySelectedScreen;
 	}
 	private void setCurrentlySelectedScreen(GameWorld _currentlySelectedScreen) {
@@ -172,9 +164,5 @@ public class FinalGameWorld  extends GameWorld {
 	}
 	public VisibleGameWorld getVisibleGameWorldEnum() {
 		return __visibleGameWorldEnum;
-	}
-	
-	private void setupSoundSystem() {
-		_soundSystem = new SoundSystem(this);
 	}
 }

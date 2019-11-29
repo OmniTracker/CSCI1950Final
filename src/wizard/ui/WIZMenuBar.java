@@ -23,7 +23,7 @@ public class WIZMenuBar extends MenuBar implements EventHandler {
 	private Button _restartButton = null;
 	private boolean DEBUG = false;
 	private WIZRestart _restartGame = null; 
-	
+
 	public WIZMenuBar(AspectRatioHandler aspect) {
 		super(aspect,40 ,Color.WHITE);	
 		this.initializeMenuButtons();
@@ -40,7 +40,7 @@ public class WIZMenuBar extends MenuBar implements EventHandler {
 		intructionsPanel.setBoarderSize(10);
 		this.insertPanel(INSTRUCTIONS_PANEL_VIEW, intructionsPanel);
 	}
-	
+
 	private void drawPanelView(GraphicsContext g) 
 	{
 		if (this.isMenuActivated() == true)  
@@ -82,7 +82,7 @@ public class WIZMenuBar extends MenuBar implements EventHandler {
 		this.setPauseButton(pause);
 		this.insertButton(pause.getText() ,pause);
 	}	
-	
+
 	public void setMenuHeight (double height) {
 		this.setHeight(height);
 	}	
@@ -91,13 +91,13 @@ public class WIZMenuBar extends MenuBar implements EventHandler {
 		this.drawPanelView(g);
 		this.draw(g);
 	}
-	
+
 	private void checkMenuButtonActivation(MouseEvent e) 
 	{	
 		if (this.checkMenuCollision(e) == true) 
 		{	
 			String buttonPushed = this.checkButtonCollision(e);
-			
+
 			if (!buttonPushed.isEmpty()) 
 			{			
 				// Give the contexts to right button.
@@ -152,55 +152,6 @@ public class WIZMenuBar extends MenuBar implements EventHandler {
 
 		}
 	}
-
-	@Override
-	public void onKeyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-	}
-	@Override
-	public void onKeyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-	}
-	@Override
-	public void onKeyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-	}
-	@Override
-	public void onMousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-	@Override
-	public void onMouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-	@Override
-	public void onMouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-	@Override
-	public void onMouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
-	@Override
-	public void onMouseWheelMoved(ScrollEvent e) {
-		// TODO Auto-generated method stub
-	}
-	@Override
-	public void onFocusChanged(boolean newVal) {
-		// TODO Auto-generated method stub
-	}
-	@Override
-	public void onResize(Vec2d newSize) {
-		// TODO Auto-generated method stub
-	}
-	@Override
-	public void onShutdown() {
-		// TODO Auto-generated method stub
-	}
-	@Override
-	public void onStartup() {
-		// TODO Auto-generated method stub
-	}
 	private Button getPauseButton() {
 		return _pauseButton;
 	}
@@ -216,27 +167,23 @@ public class WIZMenuBar extends MenuBar implements EventHandler {
 	private void setContextHolder(Integer _contextHolder) {
 		this._contextHolder = _contextHolder;
 	}
-
-	@Override
-	public void onTick(long nanosSincePreviousTick) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private Button getRestartButton() {
-		return _restartButton;
-	}
-
-	private void setRestartButton(Button _restartButton) {
-		this._restartButton = _restartButton;
-	}
-
 	public WIZRestart getRestartGame() {
 		return _restartGame;
 	}
-
 	public void setRestartGame(WIZRestart _restartGame) {
 		this._restartGame = _restartGame;
 	}
-
+	public void onKeyTyped(KeyEvent e) {}
+	public void onKeyPressed(KeyEvent e) {}
+	public void onKeyReleased(KeyEvent e) {}
+	public void onMousePressed(MouseEvent e) {}
+	public void onMouseReleased(MouseEvent e) {}
+	public void onMouseDragged(MouseEvent e) {}
+	public void onMouseMoved(MouseEvent e) {}
+	public void onMouseWheelMoved(ScrollEvent e) {}
+	public void onFocusChanged(boolean newVal) {}
+	public void onResize(Vec2d newSize) {}
+	public void onShutdown() {}
+	public void onStartup() {}
+	public void onTick(long nanosSincePreviousTick) {}
 }

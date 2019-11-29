@@ -15,10 +15,14 @@ public abstract class Panel extends UIElement {
 	private double _boarderSize = 0; 
 	private boolean _showing;
 	private Button _applyButton;
+	private Button _okButton;
+	
 	protected Panel (AspectRatioHandler app) {
 		this.setAspectRatio(app);
 		this.setCloseButton(new Button());
 		this.setApplyButton(new Button());
+		this.setOKButton(new Button());
+		this.setFontName(EngineFonts.getWiz());
 		this.setCollisionBox( new AABShape(new Vec2d(0,0), new Vec2d(0,0)));
 	}
 	
@@ -47,24 +51,37 @@ public abstract class Panel extends UIElement {
 		this.getCloseButton().setColor(Color.WHITE);
 		this.getCloseButton().setSize(new Vec2d(50,20));
 		this.getCloseButton().setOrigin( this.getOrigin().plus(this.getSize()).minus(60, 30));
-		this.getCloseButton().setFontName(EngineFonts.getNin());
+		this.getCloseButton().setFontName(EngineFonts.getWiz());
 		this.getCloseButton().setText("Close");
 		this.getCloseButton().drawRounded(g);
 	}
-	
 	public void drawApply(GraphicsContext g) {
 		this.getApplyButton().setColor(Color.WHITE);
 		this.getApplyButton().setSize(new Vec2d(50,20));
 		this.getApplyButton().setOrigin( this.getOrigin().plus(this.getSize()).minus(140, 30));
-		this.getApplyButton().setFontName(EngineFonts.getNin());
+		this.getApplyButton().setFontName(EngineFonts.getWiz());
 		this.getApplyButton().setText("Apply");
 		this.getApplyButton().drawRounded(g);
 	}
-
-	// Will return if the close button was hit
+	public void drawYes(GraphicsContext g) {
+		this.getOKButton().setColor(Color.WHITE);
+		this.getOKButton().setSize(new Vec2d(50,20));
+		this.getOKButton().setOrigin( this.getOrigin().plus(this.getSize()).minus(140, 30));
+		this.getOKButton().setFontName(EngineFonts.getWiz());
+		this.getOKButton().setText("Yes");
+		this.getOKButton().drawRounded(g);
+	}
+	public void drawSubmit(GraphicsContext g) {
+		this.getOKButton().setColor(Color.WHITE);
+		this.getOKButton().setSize(new Vec2d(50,20));
+		this.getOKButton().setOrigin( this.getOrigin().plus(this.getSize()).minus(140, 30));
+		this.getOKButton().setFontName(EngineFonts.getWiz());
+		this.getOKButton().setText("Submit");
+		this.getOKButton().drawRounded(g);
+	}
 	public void onMouseClicked(MouseEvent e) {		
 		if (this.checkPanelCollision(e) == true) {
-			if ( this.getCloseButton().clicked(e) ) {
+			if ( this.getCloseButton().clicked(e)) {
 				this.setShowing(false);				
 			}
 		}
@@ -126,5 +143,11 @@ public abstract class Panel extends UIElement {
 	}
 	public void setShowing(boolean _showing) {
 		this._showing = _showing;
+	}
+	public Button getOKButton() {
+		return _okButton;
+	}
+	private void setOKButton(Button _okButton) {
+		this._okButton = _okButton;
 	}	
 }

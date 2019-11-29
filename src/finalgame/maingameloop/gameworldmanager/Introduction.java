@@ -10,27 +10,22 @@ import engine.Application;
 import engine.GameWorld;
 import engine.ui.Button;
 import engine.ui.EngineFonts;
-import engine.ui.KeyBinding;
 import finalgame.maingameloop.FinalGameWorld;
 import finalgame.maingameloop.FinalGameWorld.VisibleGameWorld;
 import finalgame.ui.OptionsPanel;
 
 public class Introduction extends GameWorld {
 	private OptionsPanel _optionsPanel;
-	
 	private Button _optionsButton;
 	private Button _selectPlayerButton;
-	
 	private FinalGameWorld _finalGameWorld;
 	private double _transitionAlpha = 0.0;
 	private float alphaIncrement = 0.0f;
-
 	public Introduction(Application app, GameWorld parent) {
 		super(app);
 		this.setFinalGameWorld((FinalGameWorld) parent);
 		this.setupGeneralUI();
 	}
-	
 	private void setupGeneralUI () {
 		// Options Panel
 		OptionsPanel optionsPanel = new OptionsPanel( this.getApplication().getAspectRatioHandler());
@@ -40,7 +35,6 @@ public class Introduction extends GameWorld {
 		optionsPanel.setOrigin(new Vec2d(0,0));
 		optionsPanel.setBoarderSize(10);
 		this.setOptionsPanel(optionsPanel);
-		
 		// Options Button
 		Button optionsButton = new Button(); 
 		optionsButton.setText("Options");
@@ -48,7 +42,6 @@ public class Introduction extends GameWorld {
 		optionsButton.setColor(Color.WHITE);
 		optionsButton.setFontName(EngineFonts.getAlc());
 		this.setOptionsButton(optionsButton);
-
 		// Select Player Button
 		Button selectPlayerButton = new Button(); 
 		selectPlayerButton.setText("Select Player");
@@ -67,15 +60,13 @@ public class Introduction extends GameWorld {
 
 		this.getSelectPlayerButton().setOrigin(new Vec2d(xOrigin2,yOrigin));
 		this.getOptionsButton().setOrigin(new Vec2d(xOrigin1,yOrigin));
-		
+
 		this.getSelectPlayerButton().drawRounded(g);
 		this.getOptionsButton().drawRounded(g);
 	}
-	
 	public void onTick(long nanosSincePreviousTick) {
 		fadeOut();
 	}
-	
 	private void fadeOut() {
 		if (_transitionAlpha != 0.0) 
 		{
@@ -85,10 +76,11 @@ public class Introduction extends GameWorld {
 		{
 			this.getFinalGameWorld().getPlayerSelection().initScreen();
 			this.getFinalGameWorld().getVisibleGameWorldEnum();
-			this.getFinalGameWorld().changeCurrentScreen(VisibleGameWorld.PLAYERSELECTION);
+			_transitionAlpha = 0;
+			alphaIncrement = 0.0f; 
+			this.getFinalGameWorld().changeCurrentScreen(VisibleGameWorld.MAINGAMEPLAY);
 		}
 	}
-	
 	public void onDraw(GraphicsContext g) {
 		Image intro = this.getFinalGameWorld().getFinalGameObjectHandler().getIntroImage(); 
 		Image introBackDrop = this.getFinalGameWorld().getFinalGameObjectHandler().getIntroBackdrop(); 
@@ -132,7 +124,7 @@ public class Introduction extends GameWorld {
 		{
 			alphaIncrement = 0.0f;		
 			if (this.getOptionsButton().clicked(e)) 
-			{
+			{				
 				this.getOptionsPanel().setShowing(true);
 			} 
 			else if (this.getSelectPlayerButton().clicked(e)) 

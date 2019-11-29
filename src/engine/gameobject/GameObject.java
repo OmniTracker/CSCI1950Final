@@ -13,7 +13,7 @@ import support.Vec2i;
 import support.collision.AABShape;
 
 public class GameObject {
-	
+
 	private GameObjectData _data = new GameObjectData();
 	private boolean DEBUG = false; 
 	private Integer _gameLevel = -1;
@@ -22,6 +22,9 @@ public class GameObject {
 	private Integer _ID;
 	private Image _projectile = null;
 	
+	public boolean mini = false;
+	public boolean spawn = true;
+
 	public boolean _invisble = false;
 	private ArrayList<Stack<Vec2i>> _foundPathList = null; 
 
@@ -37,6 +40,10 @@ public class GameObject {
 		this.getData().setApp(app);
 		this.setFoundPathList( new  ArrayList<Stack<Vec2i>>());
 	}
+
+	public void resetPath () {
+		this.setFoundPathList( new  ArrayList<Stack<Vec2i>>());
+	}	
 	public GameObject(String name, 
 			Image image, 
 			Vec2d imageStart, 
@@ -83,6 +90,7 @@ public class GameObject {
 				this.getData().getPosition().y, 
 				this.getData().getImageGameSize().x,
 				this.getData().getImageGameSize().y);
+		
 		if (DEBUG == true) {
 			// Used to figure out where the player collision parts are located.
 			g.setFill(Color.WHITE);
@@ -97,9 +105,10 @@ public class GameObject {
 		return  this.getData().getBox();  
 	}
 	public void AIDraw (GraphicsContext g, Vec2d worldOrigin) {	
-		if ( _invisble == true && ( this.getData().getStepY() == 3 || this.getData().getStepY()== 0)) {
 
-		} else {
+		
+		
+		if (spawn == true) {
 			g.drawImage(this.getData().getImage(),
 					this.getData().getImageStart().x + (this.getData().getImageSize().x * this.getData().getStepX()),
 					this.getData().getImageStart().y + (this.getData().getImageSize().y * this.getData().getStepY()),
@@ -110,18 +119,22 @@ public class GameObject {
 					this.getData().getImageGameSize().x,
 					this.getData().getImageGameSize().y);
 		}
-
-		this.getData().getBox().setTopLeft(new Vec2d ( this.getData().getAIposition().x + worldOrigin.y + 25, 
-				this.getData().getAIposition().y + worldOrigin.x)); 		
-		if (DEBUG == true) {
-			g.setFill(Color.WHITE);
-			g.fillRect(this.getData().getBox().getTopLeft().x,
-					this.getData().getBox().getTopLeft().y, 
-					this.getData().getBox().size.x,
-					this.getData().getBox().size.y);
+		
+		if ( mini == false ) 
+		{
+			this.getData().getBox().setTopLeft(new Vec2d ( this.getData().getAIposition().x + worldOrigin.y + 25, 
+					this.getData().getAIposition().y + worldOrigin.x)); 	
+			if (DEBUG == true) {
+				g.setFill(Color.WHITE);
+				g.fillRect(this.getData().getBox().getTopLeft().x,
+						this.getData().getBox().getTopLeft().y, 
+						this.getData().getBox().size.x,
+						this.getData().getBox().size.y);
+			}
+			Vec2i out = new Vec2i(((int) Math.floor(this.getData().getAIposition().x / 100)), ((int) Math.floor(this.getData().getAIposition().y / 100)) );
+			this.getData().setAIGridLocation(out);
 		}
-		Vec2i out = new Vec2i(((int) Math.floor(this.getData().getAIposition().x / 100)), ((int) Math.floor(this.getData().getAIposition().y / 100)) );
-		this.getData().setAIGridLocation(out);
+
 	}
 	public void characterMove(String key) {
 		Integer stepX = this.getData().getStepX();

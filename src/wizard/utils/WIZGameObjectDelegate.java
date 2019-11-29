@@ -42,34 +42,47 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 		this.loadWIZGameObjects();
 	}
 	public void loadWIZGameObjects ()  {		
-		
 		// Load all the Keys into game.
 		this.generateKeys();
 		// Load Game Map Data
 		GameObject main   = generateHero();
 		GameObject enemy0 = generateEnemy0(main);
 		GameObject enemy1 = generateEnemy1(main);
+
 		GameObject enemy2 = generateEnemy2(main);
 		GameObject enemy3 = generateEnemy3(main);
+		
 		// Dynamically added characters
-		// GameObject enemy4 = generateEnemy4(main);
-		// GameObject enemy5 = generateEnemy5(main);
+		GameObject enemy4 = generateEnemy1(main);
+		enemy4.getData().setImage( Factory.getZelchSprite());
+
+		GameObject enemy5 = generateEnemy3(main);
+		enemy5.getData().setImage(Factory.getZelchSprite());
+		
 		// Level 0
 		enemy0.setGameLevel(0); 
 		enemy1.setGameLevel(0); 
+		enemy4.setGameLevel(0); 
+
 		this.getObjsLevelO().put("Main", main);
+		this.getObjsLevelO().put("Enemy", enemy4);
 		this.getObjsLevelO().put("Enemy0", enemy0);
 		this.getObjsLevelO().put("Enemy1", enemy1);
-		// this.getObjsLevelO().put("Enemy4", enemy4);
+		
 		// Level 1
 		enemy2.setGameLevel(1); 
 		enemy3.setGameLevel(1); 
+		enemy5.setGameLevel(1); 
+
+		
 		this.getObjsLevel1().put("Main", main);
 		this.getObjsLevel1().put("Enemy2", enemy2);
 		this.getObjsLevel1().put("Enemy3", enemy3);
-		// this.getObjsLevelO().put("Enemy4", enemy5);
+		this.getObjsLevel1().put("Enemy", enemy5);
+		//this.getObjsLevel1().put("Enem", enemy6);
+		//this.getObjsLevel1().put("Ene", enemy7);
+		//this.getObjsLevel1().put("En", enemy8);
 	}
-	
 	private void generateKeys() {
 		this.getKeyMap().put( "red", this.getWizFactory().getRedKey());
 		this.getKeyMap().put( "blue", this.getWizFactory().getBlueKey()); 
@@ -210,7 +223,6 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 
 		// First Sequence
 		ArrayList<WIZBehaviorSequence> firstSequence = new ArrayList<WIZBehaviorSequence>(); 
-
 		DoesEnemyHaveTracker doesEnemyHaveTracker = new DoesEnemyHaveTracker(enemy,main); 
 		doesEnemyHaveTracker.setActiveTracker(true);
 		firstSequence.add(doesEnemyHaveTracker); 
@@ -298,7 +310,6 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 		enemy.getData().getComponents().add("Collision");
 		return enemy;
 	}
-
 	/**
 	 * Zelch is the enemy who shall be generated in this function.
 	 * He left his tracker at home, so he is basically walking around 
@@ -357,147 +368,6 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 		enemy.getData().getComponents().add("Collision");
 		return enemy;
 	}
-
-
-
-	/**
-	 * Zelch is the enemy who shall be generated in this function.
-	 * He left his tracker at home, so he is basically walking around 
-	 * blind until he find a path. He might find a path to the
-	 * character, but he can easily lose the character with on move. 
-	 * Since he works out, he speeds up just enough to make up for his poor 
-	 * path planning.
-	 *  
-	 *  - Condition 0    DoesEnemyHaveTracker()
-	 * 	- Condition 1 :  IsCharacterOnStoredPath()
-	 *  - Action 1:      UpdateRandomTargerLocation()
-	 *  
-	 *  - Condition 2 :  IsAthletic()
-	 *  - Action 2:   :  IncreaseSpeed() 
-	 * 
-	 * @return GameObject associated with Lyla
-	 */
-	/******************************** Sort of tired now. Finish this on Sunday night ****************************/ 
-	private GameObject generateEnemy4(GameObject main) {
-		// Supporting Characters
-		GameObject enemy = new GameObject(this.getApp()); 
-		this.getFactory();
-		enemy.getData().setImage( Factory.getZelchSprite());
-		enemy.getData().setAIposition(new Vec2d(1500,300));
-		enemy.getData().setImageSize(new Vec2d(48,48));
-		enemy.getData().setImageStart(new Vec2d(0,0));
-		enemy.getData().setImageGameSize(new Vec2d(60,60));
-		enemy.getData().setBox(new AABShape(enemy.getData().getPosition(), new Vec2d(60,60)));
-
-		// B Tree
-		enemy.getData().setWIZBehaviorTree( new WIZBehaviorTree());
-
-		// First Sequence
-		ArrayList<WIZBehaviorSequence> firstSequence = new ArrayList<WIZBehaviorSequence>(); 
-		DoesEnemyHaveTracker doesEnemyHaveTracker = new DoesEnemyHaveTracker(enemy,main); 
-		doesEnemyHaveTracker.setActiveTracker(true);
-		firstSequence.add(doesEnemyHaveTracker); 
-
-		NeedToUpdateStoredPathForCharacter isCharacterOnStoredPath = new NeedToUpdateStoredPathForCharacter(enemy,main);
-		firstSequence.add(isCharacterOnStoredPath); 
-
-		// This will always return true
-		UpdateRandomTargerLocation updateRandomTargerLocation = new UpdateRandomTargerLocation(enemy,main); 
-		firstSequence.add(updateRandomTargerLocation); 
-
-		// Second Sequence
-
-		enemy.setWizSpeed(5); 
-
-		/*
-		 Finish this for Wiz 2
-		ArrayList<WIZBehaviorSequence> secondSequence = new ArrayList<WIZBehaviorSequence>(); 
-		secondSequence.add(new IsAthletic(enemy,main)); 
-		secondSequence.add(new IncreaseSpeed(enemy,main)); 
-		enemy.getData().getWIZBehaviorTree().getSequence().add(secondSequence);
-		 */ 
-
-		enemy.getData().getWIZBehaviorTree().getSequence().add(firstSequence);
-		// Subscribe to Systems and Components
-		// Systems
-		enemy.getData().getSystems().add("Graphics"); 
-		enemy.getData().getSystems().add("Behavior"); 
-		enemy.getData().getSystems().add("Collision"); 
-		// Components 
-		enemy.getData().getComponents().add("Graphics");
-		enemy.getData().getComponents().add("Collision");
-		return enemy;
-	}
-
-	/**
-	 * Zelch is the enemy who shall be generated in this function.
-	 * He left his tracker at home, so he is basically walking around 
-	 * blind until he find a path. He might find a path to the
-	 * character, but he can easily lose the character with on move. 
-	 * Since he works out, he speeds up just enough to make up for his poor 
-	 * path planning.
-	 *  
-	 *  - Condition 0    DoesEnemyHaveTracker()
-	 * 	- Condition 1 :  IsCharacterOnStoredPath()
-	 *  - Action 1:      UpdateRandomTargerLocation()
-	 *  
-	 *  - Condition 2 :  IsAthletic()
-	 *  - Action 2:   :  IncreaseSpeed() 
-	 * 
-	 * @return GameObject associated with Lyla
-	 */
-	/******************************** Sort of tired now. Finish this on Sunday night ****************************/ 
-	private GameObject generateEnemy5(GameObject main) {
-		// Supporting Characters
-		GameObject enemy = new GameObject(this.getApp()); 
-		this.getFactory();
-		enemy.getData().setImage( Factory.getZelchSprite());
-		enemy.getData().setAIposition(new Vec2d(1300,1900));
-		enemy.getData().setImageSize(new Vec2d(48,48));
-		enemy.getData().setImageStart(new Vec2d(0,0));
-		enemy.getData().setImageGameSize(new Vec2d(60,60));
-		enemy.getData().setBox(new AABShape(enemy.getData().getPosition(), new Vec2d(60,60)));
-
-		// B Tree
-		enemy.getData().setWIZBehaviorTree( new WIZBehaviorTree());
-
-		// First Sequence
-		ArrayList<WIZBehaviorSequence> firstSequence = new ArrayList<WIZBehaviorSequence>(); 
-		DoesEnemyHaveTracker doesEnemyHaveTracker = new DoesEnemyHaveTracker(enemy,main); 
-		doesEnemyHaveTracker.setActiveTracker(true);
-		firstSequence.add(doesEnemyHaveTracker); 
-
-		NeedToUpdateStoredPathForCharacter isCharacterOnStoredPath = new NeedToUpdateStoredPathForCharacter(enemy,main);
-		firstSequence.add(isCharacterOnStoredPath); 
-
-		// This will always return true
-		UpdateRandomTargerLocation updateRandomTargerLocation = new UpdateRandomTargerLocation(enemy,main); 
-		firstSequence.add(updateRandomTargerLocation); 
-
-		// Second Sequence
-
-		enemy.setWizSpeed(5); 
-
-		/*
-		 Finish this for Wiz 2
-		ArrayList<WIZBehaviorSequence> secondSequence = new ArrayList<WIZBehaviorSequence>(); 
-		secondSequence.add(new IsAthletic(enemy,main)); 
-		secondSequence.add(new IncreaseSpeed(enemy,main)); 
-		enemy.getData().getWIZBehaviorTree().getSequence().add(secondSequence);
-		 */ 
-
-		enemy.getData().getWIZBehaviorTree().getSequence().add(firstSequence);
-		// Subscribe to Systems and Components
-		// Systems
-		enemy.getData().getSystems().add("Graphics"); 
-		enemy.getData().getSystems().add("Behavior"); 
-		enemy.getData().getSystems().add("Collision"); 
-		// Components 
-		enemy.getData().getComponents().add("Graphics");
-		enemy.getData().getComponents().add("Collision");
-		return enemy;
-	}
-
 	public HashMap<String ,GameObject> getObjsLevelO() {
 		return _objslevelO;
 	}

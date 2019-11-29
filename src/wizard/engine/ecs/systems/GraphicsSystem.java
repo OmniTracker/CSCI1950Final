@@ -1,5 +1,6 @@
 package wizard.engine.ecs.systems;
 
+import support.Vec2d;
 import wizard.engine.ecs.component.GameBoardDataComponent;
 import wizard.engine.ecs.component.GameBoardComponent;
 import wizard.engine.ecs.component.GraphicsComponent;
@@ -26,32 +27,41 @@ public class GraphicsSystem extends Systems  {
 		this.getGraphicsComponent().onDraw(g);
 		this.drawMiniMap(g);
 	}
-	private void drawMiniMap(GraphicsContext g) {
-		g.setGlobalAlpha(0.3);
+	private void drawMiniMap(GraphicsContext g) 
+	{
+		Vec2d temp = new Vec2d( this.getGameWorld().getOrigin());
+		this.getGameWorld().setOrigin(new Vec2d(0,0));
+		
 		g.setFill(Color.WHITE);
-		double x = this.getApp().getAspectRatioHandler().calculateUpdatedOrigin().x + this.getGameWorld().getOrigin().x; 
-		double y = this.getApp().getAspectRatioHandler().calculateUpdatedOrigin().y + this.getGameWorld().getOrigin().y;
-		double xSize = 0;  
-		double ySize = 0; 
-		if ( this.getGameWorld().getLevel() == 0) { 
-			xSize = 300;  
-			ySize = 400; 	
-		} else if (this.getGameWorld().getLevel() == 1) {
-			xSize = 300;  
-			ySize = 380; 
+		if (this.getGameWorld().getLevel() == 0) 	
+		{
+			g.setGlobalAlpha(0.75);
+			Vec2d mapFrame = this.getApp().getAspectRatioHandler().calculateUpdatedOrigin().plus(-50,this.getApp().getAspectRatioHandler().calculateUpdatedScreenSize().y - 300); 
+			g.fillRect(mapFrame.x  + (this.getGameWorld().getOrigin().y * 0.15), mapFrame.y + (this.getGameWorld().getOrigin().x * 0.15), 550, 400);
+			g.setGlobalAlpha(1);
+			g.save();
+			g.translate(mapFrame.x + 20, mapFrame.y);
 		}
-		g.fillRect(x, y, xSize, ySize);
-		g.setGlobalAlpha(1.0);
-		g.save();
+		
+		if (this.getGameWorld().getLevel() == 1) 
+		{
+			g.setGlobalAlpha(0.75);
+			Vec2d mapFrame = this.getApp().getAspectRatioHandler().calculateUpdatedOrigin().plus(-70,this.getApp().getAspectRatioHandler().calculateUpdatedScreenSize().y - 400); 
+			g.fillRect(mapFrame.x  + (this.getGameWorld().getOrigin().y * 0.15), mapFrame.y + (this.getGameWorld().getOrigin().x * 0.15), 450, 400);
+			g.setGlobalAlpha(1);
+			g.save();
+			g.translate(mapFrame.x + 10, mapFrame.y - 50);
+		}
 		g.scale(0.15, 0.15);
 		
-		g.translate(this.getApp().getAspectRatioHandler().calculateUpdatedOrigin().x + 300, 
-				this.getApp().getAspectRatioHandler().calculateUpdatedOrigin().y + 3500);
-		
 		this.getGameBoardComponent().onDraw(g);
+		
+		this.getGraphicsComponent()._mini = true;
 		this.getGraphicsComponent().onDraw(g);
-
+		this.getGraphicsComponent()._mini = false;
 		g.restore();
+		
+		this.getGameWorld().setOrigin(temp);
 	}
 	private GameBoardDataComponent getGameBoardComponent() {
 		return _gameBoardComponent;

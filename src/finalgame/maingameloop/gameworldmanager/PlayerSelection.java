@@ -53,7 +53,6 @@ public class PlayerSelection extends GameWorld {
 		this.setCharacterImages(this.getFinalGameWorld().getFinalGameObjectHandler().getCharacterImages());
 		this.setCharacterSelector( new HashMap<Integer,String>());
 		Integer index = 0;
-		
 		for (Entry<String, HashMap<String, Image>> mapElement : 
 			this.getCharacterImages().entrySet()) { 
 			String key = (String) mapElement.getKey();
@@ -207,24 +206,15 @@ public class PlayerSelection extends GameWorld {
 	private void rotateCharacters(MouseEvent e) {
 		if (_inTransition == false) {
 			if (this.getRightButton().clicked(e)) {
-
-				System.out.print("Next level \n");
-
 				direction = RIGHT_DIRECTION;
 				_nextPlayer = (( _currentPlayer + 1 == 4)  ? 0 : _currentPlayer + 1); 
 				_inTransition = true; 
 			} else if (this.getLeftButton().clicked(e)) {
-				System.out.print("Next level \n");
-
 				direction = LEFT_DIRECTION;
 				_nextPlayer = (( _currentPlayer - 1 == -1) ? 3 : _currentPlayer - 1);
 				_inTransition = true; 
 			} else if (this.getNextLevelButton().clicked(e)) {
-				
-				this.getFinalGameWorld().changeCurrentScreen(VisibleGameWorld.PLAYERDIALOG);
-
-				
-				System.out.print("Next level \n");
+				this.getFinalGameWorld().changeCurrentScreen(VisibleGameWorld.PLAYERDIALOG);	
 			}
 		}
 	}

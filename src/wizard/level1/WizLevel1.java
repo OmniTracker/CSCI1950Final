@@ -7,8 +7,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import support.Vec2d;
-import wizard.level0.WizLevel0GameWorld;
-import wizard.level0.WizLevel0Viewport;
 import wizard.utils.WIZDelegateContainer;
 import wizard.utils.WIZGameObjectDelegate;
 import wizard.utils.WIZMapDelegate;
@@ -51,13 +49,18 @@ public class WizLevel1 extends Screen {
 			this.getViewport().onKeyPressed(e);
 		}
 	}
-	private void startup() {
-		if (_startUp == false) {			
+	private void startup() 
+	{
+		if (_startUp == false) 
+		{			
 			WizLevel1GameWorld gameWorld = new WizLevel1GameWorld(this.getApplication()); 
-			try {
+			try 
+			{
 				this.getWIZDelegateContainer().setWIZMapDelegate(new WIZMapDelegate(this.getApplication()));
 				this.getWIZDelegateContainer().setWIZGameObjectDelegate(new WIZGameObjectDelegate(this.getApplication()));
-			} catch (MalformedURLException e) {
+			} 
+			catch (MalformedURLException e) 
+			{
 				e.printStackTrace();
 				System.out.print("Failed to get map information \n");
 			}		
