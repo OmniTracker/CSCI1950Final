@@ -13,6 +13,7 @@ import engine.ui.Button;
 import engine.utility.AspectRatioHandler;
 
 public class NINStart extends Screen {
+
 	private Button _startButton;
 	private AspectRatioHandler _aspect; 
 	private double _fadeOutLimit = 0.0;
@@ -24,12 +25,14 @@ public class NINStart extends Screen {
 		this.setAspect(this.getApplication().getAspectRatioHandler());
 		this.setStartButton(new Button("Start", new Vec2d(0,0),new Vec2d(300,50),Color.GREY));
 	}
+
 	private void drawBorder(GraphicsContext g) {
 		Vec2d screenSize = this.getApplication().getAspectRatioHandler().getCurrentScreenSize(); 
 		g.setFill(Color.GOLD);
 		g.fillRect(0,0, screenSize.x, screenSize.y);
 		this.getApplication().borders(g, Color.BLACK);
 	}
+
 	private void drawLogo(GraphicsContext g) {
 		g.setFill(Color.BLACK);	
 		g.setFont(Font.font(this.getEngineFont().getFontString("Nin"), 400 ));
@@ -38,6 +41,7 @@ public class NINStart extends Screen {
 		double y = (this.getApplication().getAspectRatioHandler().getCurrentScreenSize().y / 2);
 		g.fillText("Nin", x, y);
 	}
+
 	private void updateButtonsPosition() {
 		Vec2d newSize   = this.getAspect().calculateUpdatedScreenSize();
 		Vec2d newOrigin = this.getAspect().calculateUpdatedOrigin(); 
@@ -47,15 +51,17 @@ public class NINStart extends Screen {
 		AABShape newShape = new AABShape(this.getStartButton().getOrigin(),this.getStartButton().getSize());
 		this.getStartButton().setShape(newShape);
 	}
+
 	private void transitionOut() {
-		_fadeOut += 0.01;
+		_fadeOut += 0.009;
 		if (_fadeOutLimit < 300) {
 			_fadeOutLimit += 6; 				
 		}
 		if (_fadeOut > 1.2)  {
-			this.getApplication().setLevel((this.getApplication().NIN + 1));
+			this.getApplication().setLevel((this.getApplication().TIC + 1));
 		}
 	}
+
 	public void onMouseClicked(MouseEvent e) {
 		if (this.getStartButton().clicked(e)) {
 			if (this._gameLoading  == false ) {
@@ -63,6 +69,7 @@ public class NINStart extends Screen {
 			}
 		}
 	}
+
 	public void drawFadeOut (GraphicsContext g) {
 		g.setGlobalAlpha(_fadeOut);
 		g.setFill(Color.BLACK);
@@ -71,6 +78,7 @@ public class NINStart extends Screen {
 				this.getAspect().getCurrentScreenSize().y);
 		g.setGlobalAlpha(1.0);
 	}
+
 	public void onDraw(GraphicsContext g) {
 		this.drawBorder(g);
 		this.drawLogo(g);
@@ -78,21 +86,26 @@ public class NINStart extends Screen {
 		this.getStartButton().draw(g);
 		this.drawFadeOut(g);
 	}
+
 	public void onTick(long nanosSincePreviousTick) {
 		this.setAspect(this.getApplication().getAspectRatioHandler());
 		if (this._gameLoading == true) {
 			this.transitionOut();			
 		}
 	}
+
 	private Button getStartButton() {
 		return _startButton;
 	}
+
 	private void setStartButton(Button _startButton) {
 		this._startButton = _startButton;
 	}
+
 	public AspectRatioHandler getAspect() {
 		return _aspect;
 	}
+
 	public void setAspect(AspectRatioHandler _aspect) {
 		this._aspect = _aspect;
 	}

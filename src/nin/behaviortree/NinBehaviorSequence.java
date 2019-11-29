@@ -5,6 +5,7 @@ public class NinBehaviorSequence {
 	private String _behaviorType;
 	
 	protected NinBehaviorSequence() {}
+	
 	public boolean check () {
 		return false; 
 	}
