@@ -25,7 +25,9 @@ public class GraphicsSystem extends Systems  {
 	public void run(GraphicsContext g) {
 		this.getGameBoardComponent().onDraw(g);
 		this.getGraphicsComponent().onDraw(g);
-		this.drawMiniMap(g);
+		if ( this.getGameWorld().miniMap == true ) {
+			this.drawMiniMap(g);			
+		}
 	}
 	private void drawMiniMap(GraphicsContext g) 
 	{

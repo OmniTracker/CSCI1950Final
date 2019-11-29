@@ -20,6 +20,7 @@ public class WizLevel0Viewport extends ViewportHandler {
 
 	public void onDraw(GraphicsContext g) {
 		this.drawBackgroundColor(g);
+		this.getGameWorld().miniMap = this.getMenuBar().isMiniMap();
 		this.getGameWorld().onDraw(g);
 		this.getMenuBar().onDraw(g);
 	}

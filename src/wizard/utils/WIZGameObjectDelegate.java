@@ -48,40 +48,29 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 		GameObject main   = generateHero();
 		GameObject enemy0 = generateEnemy0(main);
 		GameObject enemy1 = generateEnemy1(main);
-
 		GameObject enemy2 = generateEnemy2(main);
 		GameObject enemy3 = generateEnemy3(main);
-		
 		// Dynamically added characters
 		GameObject enemy4 = generateEnemy1(main);
 		enemy4.getData().setImage( Factory.getZelchSprite());
-
 		GameObject enemy5 = generateEnemy3(main);
 		enemy5.getData().setImage(Factory.getZelchSprite());
-		
 		// Level 0
 		enemy0.setGameLevel(0); 
 		enemy1.setGameLevel(0); 
 		enemy4.setGameLevel(0); 
-
 		this.getObjsLevelO().put("Main", main);
 		this.getObjsLevelO().put("Enemy", enemy4);
 		this.getObjsLevelO().put("Enemy0", enemy0);
 		this.getObjsLevelO().put("Enemy1", enemy1);
-		
 		// Level 1
 		enemy2.setGameLevel(1); 
 		enemy3.setGameLevel(1); 
 		enemy5.setGameLevel(1); 
-
-		
 		this.getObjsLevel1().put("Main", main);
 		this.getObjsLevel1().put("Enemy2", enemy2);
 		this.getObjsLevel1().put("Enemy3", enemy3);
 		this.getObjsLevel1().put("Enemy", enemy5);
-		//this.getObjsLevel1().put("Enem", enemy6);
-		//this.getObjsLevel1().put("Ene", enemy7);
-		//this.getObjsLevel1().put("En", enemy8);
 	}
 	private void generateKeys() {
 		this.getKeyMap().put( "red", this.getWizFactory().getRedKey());
@@ -107,8 +96,6 @@ public class WIZGameObjectDelegate extends GameObjectDelegate {
 		main.getData().setImageGameSize(new Vec2d(60,60));
 		main.getData().setBox(new AABShape(main.getData().getPosition(), new Vec2d(60,60)));
 		main.setWizSpeed(10); 
-
-
 		// Systems
 		main.getData().getSystems().add("Graphics"); 
 		main.getData().getSystems().add("Behavior"); 

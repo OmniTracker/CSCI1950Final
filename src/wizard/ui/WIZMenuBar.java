@@ -1,6 +1,5 @@
 package wizard.ui;
 
-import nin.ui.InstructionPanel;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -20,27 +19,26 @@ public class WIZMenuBar extends MenuBar implements EventHandler {
 	private  Integer PAUSE                   = 1; 
 	private  Integer INSTRUCTIONS_PANEL_VIEW = 3; 
 	private Button _pauseButton = null;
-	private Button _restartButton = null;
 	private boolean DEBUG = false;
 	private WIZRestart _restartGame = null; 
-
+	private boolean miniMap = true;
 	public WIZMenuBar(AspectRatioHandler aspect) {
 		super(aspect,40 ,Color.WHITE);	
 		this.initializeMenuButtons();
 		this.initializePanelViews(); 
 	}	
-
 	public void initializePanelViews ()  {
 		// Instructions panel
-		InstructionPanel intructionsPanel = new InstructionPanel( this.getAspectRatio() );
+		WIZInstructionPanel intructionsPanel = new WIZInstructionPanel( this.getAspectRatio() );
 		intructionsPanel.setColor(Color.DARKGRAY);
 		intructionsPanel.setSecondaryColor(Color.GREEN);
 		intructionsPanel.setSize( new Vec2d(600,300));
 		intructionsPanel.setOrigin(new Vec2d(0,0));
 		intructionsPanel.setBoarderSize(10);
 		this.insertPanel(INSTRUCTIONS_PANEL_VIEW, intructionsPanel);
+		this.setMenuActivated(true);
+		this.setContextHolder(INSTRUCTIONS_PANEL_VIEW);
 	}
-
 	private void drawPanelView(GraphicsContext g) 
 	{
 		if (this.isMenuActivated() == true)  
@@ -51,12 +49,11 @@ public class WIZMenuBar extends MenuBar implements EventHandler {
 				{
 					System.out.print("INSTRUCTIONS HAS CONTEXT \n");
 				}
-				InstructionPanel panel = (InstructionPanel) this.getPanelViews().get(INSTRUCTIONS_PANEL_VIEW);
-				panel.drawRounded(g);	
+				WIZInstructionPanel panel = (WIZInstructionPanel) this.getPanelViews().get(INSTRUCTIONS_PANEL_VIEW);
+				panel.onDraw(g);
 			} 
 		}
 	}
-
 	public void initializeMenuButtons () {
 		// Instructions
 		Button instructions = new Button(); 
@@ -81,17 +78,23 @@ public class WIZMenuBar extends MenuBar implements EventHandler {
 		pause.setFontName(EngineFonts.getWiz());
 		this.setPauseButton(pause);
 		this.insertButton(pause.getText() ,pause);
+		
+		// Mini Map
+		Button minimap = new Button();
+		minimap.setText("Mini_Map");
+		minimap.setSize(new Vec2d(100,30));
+		minimap.setColor( Color.WHITE);
+		minimap.setFontName(EngineFonts.getWiz());
+		this.setPauseButton(minimap);
+		this.insertButton(minimap.getText() ,minimap);
 	}	
-
 	public void setMenuHeight (double height) {
 		this.setHeight(height);
 	}	
-
 	public void onDraw(GraphicsContext g) {
 		this.drawPanelView(g);
 		this.draw(g);
 	}
-
 	private void checkMenuButtonActivation(MouseEvent e) 
 	{	
 		if (this.checkMenuCollision(e) == true) 
@@ -115,11 +118,22 @@ public class WIZMenuBar extends MenuBar implements EventHandler {
 				else if (buttonPushed.contains("Restart"))
 				{
 					this.getRestartGame().restartLevel();
+				} 
+				else if  (buttonPushed.contains("Mini_Map")) 
+				{
+					if (this.isMiniMap() == true) 
+					{
+						this.setMiniMap(false);
+					}
+					else 
+					{
+						this.setMiniMap(true);
+					}
 				}
+				
 			}
 		}
 	}
-	@Override
 	public void onMouseClicked(MouseEvent e)
 	{
 		if (this.isMenuActivated() == false) 
@@ -130,7 +144,7 @@ public class WIZMenuBar extends MenuBar implements EventHandler {
 		{
 			if (this.getContextHolder() == INSTRUCTIONS_PANEL_VIEW) 
 			{
-				InstructionPanel panel = (InstructionPanel) this.getPanelViews().get(INSTRUCTIONS_PANEL_VIEW);
+				WIZInstructionPanel panel = (WIZInstructionPanel) this.getPanelViews().get(INSTRUCTIONS_PANEL_VIEW);
 				panel.onMouseClicked(e);				
 				// Check if the window has been closed
 				if ( panel.isShowing() == false) 
@@ -186,4 +200,10 @@ public class WIZMenuBar extends MenuBar implements EventHandler {
 	public void onShutdown() {}
 	public void onStartup() {}
 	public void onTick(long nanosSincePreviousTick) {}
+	public boolean isMiniMap() {
+		return miniMap;
+	}
+	private void setMiniMap(boolean miniMap) {
+		this.miniMap = miniMap;
+	}
 }

@@ -220,17 +220,16 @@ public class GraphicsComponent  extends Components  {
 		} 
 		else if (this.getGameWorld().getLevel() == 1) 
 		{
-
 			if (main.getData()._level1RedKeyFound  		&& 
 					main.getData()._level1BlueKeyFound 	&& 
 					main.getData()._level1GreenKeyFound ) 
 			{	
-				g.setFill(Color.GREEN);
+				g.setFill(Color.GOLD);
 				g.fillRect(origin.x, origin.y + 40, size.x, 40);
 				g.setFill(Color.WHITE);
 				g.setFont(Font.font(WIZ, 40));
 				g.setTextAlign(TextAlignment.CENTER);
-				g.fillText("NEXT LEVEL",   textOrigin.x  + (size.x * 0.45), textOrigin.y + 60);
+				g.fillText("END GAME",   textOrigin.x  + (size.x * 0.45), textOrigin.y + 60);
 			}	
 			else 
 			{	
