@@ -63,6 +63,7 @@ public class FinalGameWorld  extends GameWorld {
 		} 
 		else if (screen == VisibleGameWorld.MAINGAMEPLAY) {
 			this.setCurrentlySelectedScreen(this.getMainGamePlay());
+			this.getMainGamePlay().setCharacter(this.getCharacterSelection());
 		}
 	}
 	public void onTick(long nanosSincePreviousTick) {
@@ -81,11 +82,12 @@ public class FinalGameWorld  extends GameWorld {
 	public void onKeyPressed(KeyEvent e)  {
 		if (this.getCurrentlySelectedScreen() != null) {
 			this.getCurrentlySelectedScreen().onKeyPressed(e);
-		}	
+		}
 	}
 	public void onStartup() {
 		this.getFinalGameObjectHandler().initGameCharacters();
 		this.getPlayerDialog().setCharacterImages(this.getFinalGameObjectHandler().getCharacterImages());
+		this.getMainGamePlay().load();
 	}
 	public void onShutdown() { 
 		if (this.getCurrentlySelectedScreen() != null) {
@@ -95,7 +97,7 @@ public class FinalGameWorld  extends GameWorld {
 	public void onKeyReleased(KeyEvent e) {
 		if (this.getCurrentlySelectedScreen() != null) {
 
-			this.getCurrentlySelectedScreen().onKeyPressed(e);
+			this.getCurrentlySelectedScreen().onKeyReleased(e);
 		}
 	}
 	public void onMousePressed(MouseEvent e) {
@@ -176,5 +178,9 @@ public class FinalGameWorld  extends GameWorld {
 	
 	private void setupSoundSystem() {
 		_soundSystem = new SoundSystem(this);
+	}
+	
+	public int getCharacterSelection() {
+		return _playerSelection.getCharacterSelection();
 	}
 }

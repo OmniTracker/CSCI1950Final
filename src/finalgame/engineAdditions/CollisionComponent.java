@@ -5,11 +5,11 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.ArrayList;
 
 import support.Vec2d;
-import support.collision.AABShape;
-import support.collision.CircleShape;
-import support.collision.PolygonShape;
+import support.debugger.collisions.AABShape;
+import support.debugger.collisions.CircleShape;
+import support.debugger.collisions.PolygonShape;
 import support.Interval;
-import support.collision.Shape;
+import support.debugger.support.shapes.Shape;
 import javafx.scene.transform.Affine;
 
 public abstract class CollisionComponent extends Component{

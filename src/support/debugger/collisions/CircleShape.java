@@ -1,21 +1,21 @@
 package support.debugger.collisions;
 
-import support.debugger.support.Vec2f;
+import support.Vec2d;
 import support.debugger.support.shapes.Shape;
 
 public class CircleShape extends Shape {
 	
-	protected Vec2f center;
+	protected Vec2d center;
 	protected float radius;
 	
-	public CircleShape(Vec2f center, float radius) {
+	public CircleShape(Vec2d center, float radius) {
 		this.center = center;
 		this.radius = radius;
 	}
 	
 	/////
 	
-	public Vec2f getCenter() {
+	public Vec2d getCenter() {
 		return center;
 	}
 	
@@ -24,7 +24,7 @@ public class CircleShape extends Shape {
 	}
 
 	@Override
-	public void move(Vec2f distance) {
+	public void move(Vec2d distance) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -1,13 +1,16 @@
 package support.debugger.collisions;
 
-import support.debugger.support.Vec2f;
+
+import support.Vec2d;
 import support.debugger.support.shapes.Shape;
+import java.util.ArrayList;
+
 
 public class PolygonShape extends Shape {
 	
-	protected Vec2f[] points;
+	protected Vec2d[] points;
 	
-	public PolygonShape(Vec2f ... points) {
+	public PolygonShape(Vec2d ... points) {
 		this.points = points;
 	}
 	
@@ -15,18 +18,18 @@ public class PolygonShape extends Shape {
 		return points.length;
 	}
 	
-	public Vec2f getPoint(int i) {
+	public Vec2d getPoint(int i) {
 		return points[i];
 	}
 
 	@Override
-	public void move(Vec2f distance) {
+	public void move(Vec2d distance) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Vec2f getCenter() {
+	public Vec2d getCenter() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -59,6 +62,11 @@ public class PolygonShape extends Shape {
 	public void bindToCanvas() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public ArrayList<Vec2d> getSortedVertices() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

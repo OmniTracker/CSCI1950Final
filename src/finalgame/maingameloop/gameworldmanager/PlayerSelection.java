@@ -222,8 +222,9 @@ public class PlayerSelection extends GameWorld {
 			} else if (this.getNextLevelButton().clicked(e)) {
 				
 				
-				this.getFinalGameWorld().changeCurrentScreen(VisibleGameWorld.PLAYERDIALOG);
-
+				//this.getFinalGameWorld().changeCurrentScreen(VisibleGameWorld.PLAYERDIALOG);
+				//Temporarily change the flow to go to the main gameplay screen just for testing purposes
+				this.getFinalGameWorld().changeCurrentScreen(VisibleGameWorld.MAINGAMEPLAY);
 				
 				System.out.print("Next level \n");
 			}
@@ -288,5 +289,9 @@ public class PlayerSelection extends GameWorld {
 	}
 	private void setNextLevelButton(Button _nextLevelButton) {
 		this._nextLevelButton = _nextLevelButton;
+	}
+	
+	public int getCharacterSelection() {
+		return _currentPlayer;
 	}
 }

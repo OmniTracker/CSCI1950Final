@@ -29,17 +29,17 @@ public class PlayerInputComponent extends Component{
 			if(_input.get("UP") == 1) {
 				if(_go.hasComponent("ANIMATE")) {
 					AnimateGraphicsComponent anim = (AnimateGraphicsComponent) _go.getComponent("ANIMATE");
-					anim.setAnimate(1);
+					anim.setAnimate(4);
 				}
-				curr.move(new Vec2d(0,-5.*mult));
+				curr.move(new Vec2d(0,-3.*mult));
 				moved = true;
 			}
 			if(_input.get("DOWN") == 1) {
 				if(_go.hasComponent("ANIMATE")) {
 					AnimateGraphicsComponent anim = (AnimateGraphicsComponent) _go.getComponent("ANIMATE");
-					anim.setAnimate(3);
+					anim.setAnimate(1);
 				}
-				curr.move(new Vec2d(0,5.*mult));
+				curr.move(new Vec2d(0,3.*mult));
 				moved = true;
 			}
 			if(_input.get("LEFT") == 1) {
@@ -47,15 +47,15 @@ public class PlayerInputComponent extends Component{
 					AnimateGraphicsComponent anim = (AnimateGraphicsComponent) _go.getComponent("ANIMATE");
 					anim.setAnimate(2);
 				}
-				curr.move(new Vec2d(-5.*mult,0));
+				curr.move(new Vec2d(-3.*mult,0));
 				moved = true;
 			}
 			if(_input.get("RIGHT") == 1) {
 				if(_go.hasComponent("ANIMATE")) {
 					AnimateGraphicsComponent anim = (AnimateGraphicsComponent) _go.getComponent("ANIMATE");
-					anim.setAnimate(4);
+					anim.setAnimate(3);
 				}
-				curr.move(new Vec2d(5.*mult,0));
+				curr.move(new Vec2d(3.*mult,0));
 				moved = true;
 			}
 			if (!moved && _go.hasComponent("ANIMATE")) {

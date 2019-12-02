@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javafx.scene.shape.Line;
+import support.Vec2d;
 import support.debugger.support.Vec2f;
 
 public abstract class Shape {
 
 	private ArrayList<Line> _mtvs = new ArrayList<Line>();
 	
-	public abstract void move(Vec2f distance);
-	public abstract Vec2f getCenter();
+	public abstract void move(Vec2d distance);
+	public abstract Vec2d getCenter();
 	
 	public abstract boolean atLeftEdge();
 	public abstract boolean atTopEdge();
@@ -28,7 +29,7 @@ public abstract class Shape {
 	}
 	
 	public void addMTV(Line line, Vec2f mtv) {
-		Vec2f start = getCenter();
+		Vec2f start = new Vec2f((float)getCenter().x, (float)getCenter().y);
 		line.setStartX(start.x);
 		line.setStartY(start.y);
 		

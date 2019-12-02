@@ -1,39 +1,38 @@
 package support.debugger.support.shapes;
 
+import support.Vec2d;
 import support.debugger.collisions.AABShape;
 import support.debugger.support.Display;
-import support.debugger.support.Vec2f;
 
 public class AABShapeDefine extends AABShape {
 	
-	public AABShapeDefine(Vec2f topLeft, Vec2f bottomRight) {
+	public AABShapeDefine(Vec2d topLeft, Vec2d bottomRight) {
 		super(topLeft, bottomRight);
 	}
 
-	@Override
-	public final void move(Vec2f distance) {
+	public final void move(Vec2d distance) {
 		topLeft = topLeft.plus(distance);
 		bindToCanvas();
 	}
 	
 	@Override
-	public final Vec2f getCenter() {
+	public final Vec2d getCenter() {
 		return getTopLeft().plus(size.sdiv(2));
 	}
 	
 	@Override
 	public void bindToCanvas() {
-		Vec2f distance = new Vec2f(0);
+		Vec2d distance = new Vec2d(0);
 		if(topLeft.x < 0) {
-			distance = distance.plus(new Vec2f(-topLeft.x, 0));
+			distance = distance.plus(new Vec2d(-topLeft.x, 0));
 		} else if(topLeft.x + size.x >= Display.getStageWidth()) {
-			distance = distance.plus(new Vec2f(Display.getStageWidth() - topLeft.x - size.x, 0));
+			distance = distance.plus(new Vec2d(Display.getStageWidth() - topLeft.x - size.x, 0));
 		}
 		
 		if(topLeft.y < 0) {
-			distance = distance.plus(new Vec2f(0, -topLeft.y));
+			distance = distance.plus(new Vec2d(0, -topLeft.y));
 		} else if(topLeft.y + size.y >= Display.getStageHeight()) {
-			distance = distance.plus(new Vec2f(0, Display.getStageHeight() - topLeft.y - size.y));
+			distance = distance.plus(new Vec2d(0, Display.getStageHeight() - topLeft.y - size.y));
 		}
 		
 		topLeft = topLeft.plus(distance);

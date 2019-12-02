@@ -1,9 +1,10 @@
 package finalgame.engineAdditions;
 
+
+import support.debugger.collisions.AABShape;
 import support.Vec2d;
-import support.collision.AABShape;
-import support.collision.CircleShape;
-import support.collision.PolygonShape;
+import support.debugger.collisions.CircleShape;
+import support.debugger.collisions.PolygonShape;
 
 public class AABCollisionComponent extends CollisionComponent{
 
@@ -38,5 +39,6 @@ public class AABCollisionComponent extends CollisionComponent{
 	public Vec2d collideWithPolygon(PolygonShape s1) {
 		return this.colliding(_aab, s1);
 	}
+
 
 }
