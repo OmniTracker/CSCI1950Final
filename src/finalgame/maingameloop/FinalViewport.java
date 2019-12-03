@@ -16,10 +16,12 @@ public class FinalViewport extends ViewportHandler {
 			Vec2d size) {
 		super(parent, gameWorld, origin, size);
 		this.setMenuBar( new FinalMenuBar( this.getAspect()));
+		this.getMenuBar().setGameWorld((FinalGameWorld)gameWorld);
 	}
 	public void onDraw(GraphicsContext g) {		
-		this.getMenuBar().onDraw(g);
 		this.getGameWorld().onDraw(g);
+		
+		this.getMenuBar().onDraw(g);
 	}
 	public void onMouseClicked(MouseEvent e) {
 		this.getMenuBar().onMouseClicked(e);

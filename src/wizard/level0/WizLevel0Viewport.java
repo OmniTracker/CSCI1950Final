@@ -20,8 +20,8 @@ public class WizLevel0Viewport extends ViewportHandler {
 
 	public void onDraw(GraphicsContext g) {
 		this.drawBackgroundColor(g);
+		this.getGameWorld().miniMap = this.getMenuBar().isMiniMap();
 		this.getGameWorld().onDraw(g);
-		this.drawBorder(g);		
 		this.getMenuBar().onDraw(g);
 	}
 
@@ -48,16 +48,8 @@ public class WizLevel0Viewport extends ViewportHandler {
 		this.getMenuBar().onMouseClicked(e);
 	}
 
-	private void drawBorder(GraphicsContext g)  {
-		Vec2d screenSize = this.getAspect().calculateUpdatedScreenSize();
-		Vec2d origin = this.getAspect().calculateUpdatedOrigin();
-		g.setGlobalAlpha(0.7);
-		g.setFill(Color.DIMGRAY);
-		g.fillRect(origin.x , (origin.y + screenSize.y - 200), screenSize.x, 200);
-		g.setGlobalAlpha(1.0);
-	}
-
-	private void drawBackgroundColor(GraphicsContext g) {
+	private void drawBackgroundColor(GraphicsContext g) 
+	{
 		Vec2d size = this.getAspect().getCurrentScreenSize();
 		g.setFill(Color.DARKGREEN);
 		g.fillRect(0,0, size.x, size.y );

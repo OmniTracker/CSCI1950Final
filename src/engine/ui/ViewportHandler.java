@@ -19,7 +19,6 @@ public abstract class ViewportHandler {
 	private AspectRatioHandler _aspect;
 	protected AABShape _viewBound; 
 	protected Collision _collision;
-
 	public ViewportHandler (Application parent, 
 			GameWorld gameWorld,
 			Vec2d origin, 
@@ -32,7 +31,6 @@ public abstract class ViewportHandler {
 		this.setCollision(new Collision());
 		this.setAspect(this.getParent().getAspectRatioHandler());
 	}
-
 	protected boolean isMouseInFrame (MouseEvent e) {
 		double x = e.getSceneX(); 
 		double y = e.getSceneY(); 
@@ -45,7 +43,6 @@ public abstract class ViewportHandler {
 		this.getCollision();
 		return Collision.isColliding(this.getViewBound(),new Vec2d(x,y)); 
 	}
-	
 	public void onTick(long nanosSincePreviousTick) {
 		this.getGameWorld().onTick(nanosSincePreviousTick);
 	}

@@ -1,0 +1,33 @@
+<HighScore>
+
+    <highScore id="1">
+        <firstName>TWD</firstName>
+        <score>500</score>
+        <location>India</location>
+    </highScore>
+
+    <highScore id="2">
+        <firstName>Alex</firstName>
+        <score>400</score>
+        <location>Russia</location>
+    </highScore>
+
+    <highScore id="3">
+        <firstName>Jamie</firstName>
+        <score>300</score>
+        <location>USA</location>
+    </highScore>
+
+    <highScore id="4">
+        <firstName>Jane</firstName>
+        <score>200</score>
+        <location>USA</location>
+    </highScore>
+
+    <highScore id="5">
+        <firstName>Doe</firstName>
+        <score>100</score>
+        <location>USA</location>
+    </highScore>
+
+</HighScore>

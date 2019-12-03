@@ -1,59 +1,97 @@
 package nin.level0;
 
-import nin.ecs.systems.GraphicsSystem;
-import nin.ecs.systems.MovementSystem;
-import nin.utils.NINDelegateContainer;
+import nin.systems.*;
+import nin.utils.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import engine.Application;
 import engine.GameWorld;
+import engine.ui.Button;
 
 public class NinGameWorld  extends GameWorld {
+
+	private NinGameObjectDelegate _ninGameObjectDelegate = null;
+	private NinMapDelegate _ninMapDelegate = null;
 	private GraphicsSystem _graphicsSystem = null;
-	private MovementSystem _movementSystem = null; 
-	private NINDelegateContainer _ninDelegateContainer = null;
+	private MovementSystem _movementSystem = null;
+	
+	private Button _button = null; 
+
 	protected NinGameWorld(Application app) {
 		super(app);
-		this.initializeSystems(app);
-	}
-	private void initializeSystems (Application app)  {
-		this.setGraphicsSystem( new GraphicsSystem(app,this));
-		this.setMovementSystem( new MovementSystem(app,this) ); 
+		this.setGraphicsSystem(new GraphicsSystem(app,this));
+		this.setMovementSystem(new MovementSystem(app,this));
+		this.setNinGameObjectDelegate( new NinGameObjectDelegate(app) );
+		this.setNinMapDelegate( new NinMapDelegate(app));
 	}
 	public void onTick(long nanosSincePreviousTick) {
-		this.getMovementSystem().onTick(nanosSincePreviousTick);
+		if ( this.getNinGameObjectDelegate().getGameCharacters().size() != 0) {
+			// Run the Decision Tree. This will run on every Tick.
+			this.getNinGameObjectDelegate().getGameCharacters().get(0).getNinBehaviorTree().runTree();
+			this.getNinGameObjectDelegate().getGameCharacters().get(1).getNinBehaviorTree().runTree();
+			this.getNinGameObjectDelegate().getGameCharacters().get(2).getNinBehaviorTree().runTree();
+			this.getNinGameObjectDelegate().getGameCharacters().get(3).getNinBehaviorTree().runTree();
+		}
 	}
+	
 	public void onDraw(GraphicsContext g) {
+		if ( this.getNinGameObjectDelegate().getGameCharacters().size() == 0) {
+			this.getNinGameObjectDelegate().initCharacter();
+		}
+		if (this.getNinMapDelegate().getGameBoardPlatforms().size() == 0 ) {
+			this.getNinMapDelegate().initPlatform();
+		}
 		this.getGraphicsSystem().onDraw(g);
 	}
+	
+	
 	public void onMouseClicked(MouseEvent e) {
-	}	
+		
+
+		
+		if (_button != null) {
+			
+
+			if ( _button.clicked(e) == true) {
+				
+				this.getNinGameObjectDelegate().resetStatic();
+			}
+		}
+	}
+	
 	public void onKeyPressed(KeyEvent e)  {
+		
 		this.getMovementSystem().onKeyPressed(e);
 	}
-	public void onShutdown() {
-		this.getGraphicsSystem().onShutdown();
+	public NinMapDelegate getNinMapDelegate() {
+		return _ninMapDelegate;
 	}
-	public void onStartup() {
-		this.getGraphicsSystem().onStartup();
-	}	
+	private void setNinMapDelegate(NinMapDelegate _ninMapDelegate) {
+		this._ninMapDelegate = _ninMapDelegate;
+	}
+	public NinGameObjectDelegate getNinGameObjectDelegate() {
+		return _ninGameObjectDelegate;
+	}
+	private void setNinGameObjectDelegate(NinGameObjectDelegate _ninGameObjectDelegate) {
+		this._ninGameObjectDelegate = _ninGameObjectDelegate;
+	}
 	private GraphicsSystem getGraphicsSystem() {
 		return _graphicsSystem;
 	}
 	private void setGraphicsSystem(GraphicsSystem _graphicsSystem) {
 		this._graphicsSystem = _graphicsSystem;
 	}
-	public NINDelegateContainer getNINDelegateContainer() {
-		return _ninDelegateContainer;
-	}
-	public void setNINDelegateContainer(NINDelegateContainer _ninDelegateContainer) {
-		this._ninDelegateContainer = _ninDelegateContainer;
-	}
-	public MovementSystem getMovementSystem() {
+	private MovementSystem getMovementSystem() {
 		return _movementSystem;
 	}
-	public void setMovementSystem(MovementSystem _movementSystem) {
+	private void setMovementSystem(MovementSystem _movementSystem) {
 		this._movementSystem = _movementSystem;
+	}
+	public Button getButton() {
+		return _button;
+	}
+	public void setButton(Button _button) {
+		this._button = _button;
 	}
 }

@@ -3,6 +3,7 @@ package support.debugger.support;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import support.Vec2d;
 import support.debugger.collisions.AABShape;
 import support.debugger.collisions.CircleShape;
 import support.debugger.collisions.PolygonShape;
@@ -165,7 +166,7 @@ public class CollisionCanvas {
 				distance = new Vec2f(0, distance.y);
 			if((p.y < 0 && _selected.atTopEdge()) || (p.y > Display.getStageHeight() && _selected.atBottomEdge()))
 				distance = new Vec2f(distance.x, 0);
-			_selected.move(distance);
+			_selected.move(new Vec2d(distance.x, distance.y));
 		
 		// if there is a ray, update its direction
 		} else if(_leftMouseDown && _ray != null) {

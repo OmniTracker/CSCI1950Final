@@ -3,6 +3,7 @@ package finalgame.maingameloop.gameworldmanager;
 import support.Vec2d;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import engine.Application;
@@ -11,36 +12,36 @@ import engine.ui.Button;
 import engine.ui.EngineFonts;
 import finalgame.maingameloop.FinalGameWorld;
 import finalgame.maingameloop.FinalGameWorld.VisibleGameWorld;
-import finalgame.ui.HighScorePanel;
+import finalgame.ui.OptionsPanel;
 
 public class Introduction extends GameWorld {
-	private HighScorePanel _highScorePanel;
-	private Button _highScoreButton;
+	private OptionsPanel _optionsPanel;
+	private Button _optionsButton;
 	private Button _selectPlayerButton;
 	private FinalGameWorld _finalGameWorld;
-	private float alphaIncrement = 0.0f;
 	private double _transitionAlpha = 0.0;
+	private float alphaIncrement = 0.0f;
 	public Introduction(Application app, GameWorld parent) {
 		super(app);
 		this.setFinalGameWorld((FinalGameWorld) parent);
 		this.setupGeneralUI();
 	}
 	private void setupGeneralUI () {
-		// High Score Panel
-		HighScorePanel highScorePanel = new HighScorePanel( this.getApplication().getAspectRatioHandler());
-		highScorePanel.setColor(Color.DARKGRAY);
-		highScorePanel.setSecondaryColor(Color.DARKGREEN);
-		highScorePanel.setSize( new Vec2d(1000,500));
-		highScorePanel.setOrigin(new Vec2d(0,0));
-		highScorePanel.setBoarderSize(10);
-		this.setHighScorePanel(highScorePanel);
-		// High Score Button
-		Button highScoreButton = new Button(); 
-		highScoreButton.setText("High Scores");
-		highScoreButton.setSize( new Vec2d(250,70));
-		highScoreButton.setColor(Color.WHITE);
-		highScoreButton.setFontName(EngineFonts.getAlc());
-		this.setHighScoreButton(highScoreButton);
+		// Options Panel
+		OptionsPanel optionsPanel = new OptionsPanel( this.getApplication().getAspectRatioHandler());
+		optionsPanel.setColor(Color.DARKGRAY);
+		optionsPanel.setSecondaryColor(Color.DARKGREEN);
+		optionsPanel.setSize( new Vec2d(1000,600));
+		optionsPanel.setOrigin(new Vec2d(0,0));
+		optionsPanel.setBoarderSize(10);
+		this.setOptionsPanel(optionsPanel);
+		// Options Button
+		Button optionsButton = new Button(); 
+		optionsButton.setText("Options");
+		optionsButton.setSize( new Vec2d(250,70));
+		optionsButton.setColor(Color.WHITE);
+		optionsButton.setFontName(EngineFonts.getAlc());
+		this.setOptionsButton(optionsButton);
 		// Select Player Button
 		Button selectPlayerButton = new Button(); 
 		selectPlayerButton.setText("Select Player");
@@ -56,10 +57,12 @@ public class Introduction extends GameWorld {
 				(this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize().x * 0.1); 
 		double xOrigin2 = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin().x + 
 				(this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize().x * 0.7); 
+
 		this.getSelectPlayerButton().setOrigin(new Vec2d(xOrigin2,yOrigin));
-		this.getHighScoreButton().setOrigin(new Vec2d(xOrigin1,yOrigin));
+		this.getOptionsButton().setOrigin(new Vec2d(xOrigin1,yOrigin));
+
 		this.getSelectPlayerButton().drawRounded(g);
-		this.getHighScoreButton().drawRounded(g);
+		this.getOptionsButton().drawRounded(g);
 	}
 	public void onTick(long nanosSincePreviousTick) {
 		fadeOut();
@@ -73,6 +76,10 @@ public class Introduction extends GameWorld {
 		{
 			this.getFinalGameWorld().getPlayerSelection().initScreen();
 			this.getFinalGameWorld().getVisibleGameWorldEnum();
+			_transitionAlpha = 0;
+			alphaIncrement = 0.0f; 
+			//this.getFinalGameWorld().changeCurrentScreen(VisibleGameWorld.MAINGAMEPLAY);
+			//Temporary change of game flow
 			this.getFinalGameWorld().changeCurrentScreen(VisibleGameWorld.PLAYERSELECTION);
 		}
 	}
@@ -92,34 +99,44 @@ public class Introduction extends GameWorld {
 			g.drawImage(intro,(origin.x + xOffset),origin.y,(viewSize.x - (xOffset * 2)),viewSize.y - xOffset);
 			g.setGlobalAlpha(0.6);
 			this.drawButtons(g);
-			
-			if ( this.getHighScorePanel().isShowing() == true) {
-				if (alphaIncrement <= 0.7) {
+			if ( this.getOptionsPanel().isShowing() == true) 
+			{
+				if (alphaIncrement <= 0.7) 
+				{
 					alphaIncrement += .01;
 				}		
 				g.setGlobalAlpha(alphaIncrement);
-				this.getHighScorePanel().drawRounded(g);
-			} 
+				this.getOptionsPanel().onDraw(g);
+			} 		
 			g.setGlobalAlpha(_transitionAlpha);
 			g.setFill(Color.BLACK);
 			g.fillRect(origin.x,origin.y,viewSize.x,viewSize.y);
 			g.setGlobalAlpha(1);
 		}
 	}
-	public void onMouseClicked(MouseEvent e) {
-		if ( this.getHighScorePanel().isShowing() == false) 
+	public void onKeyPressed(KeyEvent e) 
+	{
+		if (this.getOptionsPanel().isShowing() == true)
 		{
-			alphaIncrement = 0.0f;	
-			if (this.getHighScoreButton().clicked(e)) 
-			{
-				this.getHighScorePanel().setShowing(true);
+			this.getOptionsPanel().onKeyPressed(e);
+		}
+	}
+	public void onMouseClicked(MouseEvent e) {
+		if ( this.getOptionsPanel().isShowing() == false) 
+		{
+			alphaIncrement = 0.0f;		
+			if (this.getOptionsButton().clicked(e)) 
+			{				
+				this.getOptionsPanel().setShowing(true);
 			} 
 			else if (this.getSelectPlayerButton().clicked(e)) 
 			{
 				_transitionAlpha = 0.01; 
 			}
-		} else {	
-			this.getHighScorePanel().onMouseClicked(e);
+		} 
+		else 
+		{	
+			this.getOptionsPanel().onMouseClicked(e);
 		}
 	}	
 	private FinalGameWorld getFinalGameWorld() {
@@ -128,22 +145,22 @@ public class Introduction extends GameWorld {
 	private void setFinalGameWorld(FinalGameWorld _finalGameWorld) {
 		this._finalGameWorld = _finalGameWorld;
 	}
-	HighScorePanel getHighScorePanel() {
-		return _highScorePanel;
-	}
-	void setHighScorePanel(HighScorePanel _highScorePanel) {
-		this._highScorePanel = _highScorePanel;
-	}
-	private Button getHighScoreButton() {
-		return _highScoreButton;
-	}
-	private void setHighScoreButton(Button _highScoreButton) {
-		this._highScoreButton = _highScoreButton;
-	}
 	private Button getSelectPlayerButton() {
 		return _selectPlayerButton;
 	}
 	private void setSelectPlayerButton(Button _selectPlayerButton) {
 		this._selectPlayerButton = _selectPlayerButton;
+	}
+	private Button getOptionsButton() {
+		return _optionsButton;
+	}
+	private void setOptionsButton(Button _optionsButton) {
+		this._optionsButton = _optionsButton;
+	}
+	private OptionsPanel getOptionsPanel() {
+		return _optionsPanel;
+	}
+	private void setOptionsPanel(OptionsPanel _optionsPanel) {
+		this._optionsPanel = _optionsPanel;
 	}
 }

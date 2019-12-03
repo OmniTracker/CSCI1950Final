@@ -14,6 +14,7 @@ public class GameWorld {
 	private Vec2d _gameSize;
 	private Vec2d _origin;
 	private GameWorld _parent;
+	public boolean miniMap;
 	
 	protected GameWorld(Application app, GameWorld parent) {
 		this.setApplication(app);

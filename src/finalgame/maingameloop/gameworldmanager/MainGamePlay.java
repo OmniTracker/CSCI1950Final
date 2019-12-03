@@ -34,48 +34,62 @@ import finalgame.engineAdditions.PlayerInputSystem;
 import finalgame.engineAdditions.TickSystem;
 import finalgame.engineAdditions.TransformComponent;
 
+
+import javafx.scene.paint.Color;
+import support.Vec2d;
+import engine.Application;
+import engine.GameWorld;
+import engine.ui.Button;
+import engine.ui.EngineFonts;
+import finalgame.ui.HighScorePanel;
+
 public class MainGamePlay extends GameWorld {
-	
+
+    //Highscore info
+    private boolean _highScoreTest = true;
+    private HighScorePanel _highScorePanel = null;
+    private Button _highScoreTestButton = null;
 
 	private ArrayList<GameSystem> _systems;
 	private ArrayList<GameObject> _objects;
 	private ArrayList<GameObject> _garbage;
-	
+
 	//Systems to maintain various engine functions
 	private GraphicsSystem _graphicsSys;
 	private TickSystem _tickSys;
 	private PlayerInputSystem _inputSys;
 	private CollisionSystem _collisionSys;
 	private BehaviorSystem _behaviorSys;
-	
+
 	//Hashmap that keeps track of all user input
 	private HashMap<String, Double> _input;
-	
+
 	//GameObject that represents the current player
 	private GameObject _player;
 
 	private Affine _affine;
-	
+
 	private int _selectedCharacter;
 	private FinalGameWorld _finalGameWorld;
-	
+
 	public MainGamePlay(Application app, FinalGameWorld parent) {
 		super(app);
 		_finalGameWorld = parent;
 		_input = new HashMap<String, Double>();
 		this.initializeInputs();
-		
+
 		_systems = new ArrayList<GameSystem>();
 		_objects = new ArrayList<GameObject>();
 		_garbage = new ArrayList<GameObject>();
-		
+
 		this.initializeSystems();
+		this.setupGeneralUI();
 
 		_affine = new Affine();
-		
+
 	}
-	
-	
+
+
 	private void initializeInputs() {
 		//Must include all gameplay buttons, will depend on key bindings
 		_input.put("UP", 0.);
@@ -98,7 +112,7 @@ public class MainGamePlay extends GameWorld {
 		_systems.add(_collisionSys);
 		_systems.add(_behaviorSys);
 	}
-	
+
 	private void loadCharacter() {
 		_selectedCharacter =_finalGameWorld.getCharacterSelection();
 		_player = new GameObject("PLAYER");
@@ -115,33 +129,26 @@ public class MainGamePlay extends GameWorld {
 		PlayerInputComponent curr = (PlayerInputComponent)_player.getComponent("INPUT");
 		curr.setFocus(true);
 	}
-	
+
 	private void loadMap() {
-		
+
 	}
-	
+
 	private void loadEnemies() {
-		
+
 	}
 
 
 
 
 	/*
-	 * 
-	 * 
-	 * 
 	 * 		enemy.getData().setImageSize(new Vec2d(48,48));
 		enemy.getData().setImageStart(new Vec2d(0,0));
 		enemy.getData().setImageGameSize(new Vec2d(60,60));
 		enemy.getData().setBox(new AABShape(main.getData().getAIposition(), new Vec2d(60,60)));
-	 * 
-	 * 
-	 * 
-
 	 */
-	
-	
+
+
 	public Vec2d toGameSpace(double x, double y) {
 		Point2D temp = null;
 		try {
@@ -151,17 +158,17 @@ public class MainGamePlay extends GameWorld {
 		}
 		return new Vec2d(temp.getX(), temp.getY());
 	}
-	
+
 	public void setCharacter(int character) {
 		AnimateGraphicsComponent temp = (AnimateGraphicsComponent)_player.getComponent("ANIMATE");
 		temp.setCharacter(this.getPlayerImage(character));
 	}
-	
+
 	public Image getPlayerImage(int character) {
 		switch(character) {
 			case 0:
 				return getLylaSprite();
-			case 1: 
+			case 1:
 				return getEzraSprite();
 			case 2:
 				return getSamSprite();
@@ -170,74 +177,89 @@ public class MainGamePlay extends GameWorld {
 			default:
 				return getArchySprite();
 		}
-		
 	}
-	
-	public static Image getEzraSprite (){
 
-		Image out = null;
-		try{
-			out = new Image(new File("resources/characters/ezra/little/ezra.png").toURI().toURL().toExternalForm()); 
-		}catch (Exception e){
-			System.err.println("Error: " + e.getMessage());
+
+
+	private void setupGeneralUI ()
+	{
+		// Options Panel
+		HighScorePanel highScorePanel = new HighScorePanel( this.getApplication().getAspectRatioHandler());
+		highScorePanel.setColor(Color.DARKGRAY);
+		highScorePanel.setSecondaryColor(Color.DARKGREEN);
+		highScorePanel.setSize( new Vec2d(500,300));
+		highScorePanel.setOrigin(new Vec2d(0,0));
+		highScorePanel.setBoarderSize(10);
+		this.setHighScorePanel(highScorePanel);
+		if (_highScoreTest == true)
+		{
+			// Options Button
+			Button highScoreTestButton = new Button();
+			highScoreTestButton.setText("Test High Score");
+			highScoreTestButton.setSize( new Vec2d(250,70));
+			highScoreTestButton.setColor(Color.BLUE);
+			highScoreTestButton.setFontName(EngineFonts.getAlc());
+			this.setHighScoreTestButton(highScoreTestButton);
 		}
-		return out; 
 	}
-	public static Image getZelchSprite () {
-		Image out = null;
+
+
+    public static Image getEzraSprite (){
+        Image out = null;
 		try{
-			out =  new Image(new File("resources/characters/zelch/zelch.png").toURI().toURL().toExternalForm()); 
+			out =  new Image(new File("resources/characters/ezra/little/ezra.png").toURI().toURL().toExternalForm());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return out; 
-	}
-	public static Image getArchySprite () {
+		return out;
+    }
+	public static Image getSamSprite () {
 		Image out = null;
 		try{
-			out =  new Image(new File("resources/characters/archy/little/archyWalk.png").toURI().toURL().toExternalForm()); 
+			out =  new Image(new File("resources/characters/sam/little/sam.png").toURI().toURL().toExternalForm());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return out; 
+		return out;
 	}
 	public static Image getLylaSprite () {
 		Image out = null;
 		try{
-			out =  new Image(new File("resources/characters/lyla/little/lyla.png").toURI().toURL().toExternalForm()); 
+			out =  new Image(new File("resources/characters/lyla/little/lyla.png").toURI().toURL().toExternalForm());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return out; 
+		return out;
 	}
-	public static Image getSamSprite () {
+	public static Image getArchySprite () {
 		Image out = null;
 		try{
-			out =  new Image(new File("resources/characters/sam/little/sam.png").toURI().toURL().toExternalForm()); 
+			out =  new Image(new File("resources/characters/archy/little/archyWalk.png").toURI().toURL().toExternalForm());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return out; 
+		return out;
 	}
+	
 
 	/*
-	 * 
+	 *
 	public static Image getVultureSprite () {
 		try {
 			return new Image(new File("resources/characters/vulture/vulture.png").toURI().toURL().toExternalForm());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
-		System.out.print("Dafuq \n");
-		return null;
+		}
+		else
+		{
+			this.getHighScorePanel().onMouseClicked(e);
+		}
 	}
-
-
 	 */
 	@Override
 	public void onTick(long nanosSincePreviousTick) {
@@ -266,22 +288,29 @@ public class MainGamePlay extends GameWorld {
 			_inputSys.onTick(nanosSincePreviousTick);
 			_behaviorSys.onTick(nanosSincePreviousTick);
 		}
-		
+
 	}
 
 	@Override
 	public void onDraw(GraphicsContext g)  {
+        //Highscore Related Draw calls
+        if (this.getHighScoreTestButton() != null)
+        {
+            Vec2d origin   = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin();
+            Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize();
+            Vec2d buttonOrigin = origin.plus( (size.x / 2), (size.y / 2));
+            this.getHighScoreTestButton().setOrigin(buttonOrigin);
+            this.getHighScoreTestButton().drawRounded(g);
+        }
+
+        if (this.getHighScorePanel().isShowing())
+        {
+            this.getHighScorePanel().onDraw(g);
+        }
+
 		_affine = g.getTransform();
-		//Draw some boarder for the game to look nice
-//		g.save();
-//		g.rect(_pos.x*_windowSize.x, _pos.y*_windowSize.y, _dim.x*_windowSize.x, _dim.y*_windowSize.y);
-//		g.strokeRect(_pos.x*_windowSize.x, _pos.y*_windowSize.y, _dim.x*_windowSize.x, _dim.y*_windowSize.y);
-//		_affine.appendTranslation(_pos.x*_windowSize.x, _pos.y*_windowSize.y);
-//		_affine.appendScale(_scale.x, _scale.y);
-//		_affine.appendTranslation(_translation.x, _translation.y);
-//		g.setTransform(_affine);
-//		_gw.onDraw(g, _affine);
-		
+		//Draw some border for the game to look nice
+
 		_graphicsSys.onDraw(g, _affine);
 		g.restore();
 	}
@@ -289,6 +318,10 @@ public class MainGamePlay extends GameWorld {
 	public void onKeyTyped(KeyEvent e) {}
 	@Override
 	public void onKeyPressed(KeyEvent e) {
+		if ( this.getHighScorePanel().isShowing() == true)
+		{
+			this.getHighScorePanel().onKeyPressed(e);
+		}
 		_input.put(e.getCode().toString(), 1.);
 		this.onInput();
 	}
@@ -303,15 +336,16 @@ public class MainGamePlay extends GameWorld {
 	@Override
 	public void onMousePressed(MouseEvent e) {
 		_input.put("MOUSE_LEFT", 1.);
-		this.onInput();		
+		this.onInput();
 	}
 	@Override
 	public void onMouseReleased(MouseEvent e) {
 		_input.put("MOUSE_LEFT", 0.);
 		this.onInput();
 	}
-	@Override
-	public void onMouseDragged(MouseEvent e) {}
+
+    @Override
+    public void onMouseDragged(MouseEvent e) {}
 	@Override
 	public void onMouseMoved(MouseEvent e) {
 		_input.put("MOUSE.X", e.getX());
@@ -328,11 +362,26 @@ public class MainGamePlay extends GameWorld {
 	public void onShutdown() {}
 	@Override
 	public void onStartup() {}
-	
+
+	private Button getHighScoreTestButton() {
+		return _highScoreTestButton;
+	}
+	private void setHighScoreTestButton(Button _highScoreTestButton) {
+		this._highScoreTestButton = _highScoreTestButton;
+	}
+	private HighScorePanel getHighScorePanel() {
+		return _highScorePanel;
+	}
+	private void setHighScorePanel(HighScorePanel _highScorePanel) {
+		this._highScorePanel = _highScorePanel;
+	}
+
+
+
 	public void onInput() {
 		_inputSys.onInput(_input);
 	}
-	
+
 	protected void purge() {
 		for(int i = 0; i < _garbage.size();i++) {
 			for(int j=0; j<_systems.size(); j++) {
@@ -342,13 +391,13 @@ public class MainGamePlay extends GameWorld {
 		}
 		_garbage.clear();
 	}
-	
+
 	private void addToSystems(GameObject go) {
 		for(int i=0; i<_systems.size(); i++) {
 			_systems.get(i).addObject(go);
 		}
 	}
-	
+
 	public void load() {
 		this.loadMap();
 		this.loadCharacter();

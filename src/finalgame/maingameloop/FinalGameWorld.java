@@ -8,7 +8,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import engine.Application;
 import engine.GameWorld;
-import finalgame.engineAdditions.SoundSystem;
 import finalgame.maingameloop.gameworldmanager.*;
 import finalgame.utils.*;
 
@@ -19,16 +18,16 @@ public class FinalGameWorld  extends GameWorld {
 	private PlayerSelection _playerSelection;
 	private PlayerDialog    _playerDialog;
 	private MainGamePlay    _mainGamePlay;
-	private FinalGameObjectHandler _finalGameObjectHandler; 
-	private GameWorld _currentlySelectedScreen; 
+	private FinalGameObjectHandler _finalGameObjectHandler;
+	private GameWorld _currentlySelectedScreen;
 	private VisibleGameWorld __visibleGameWorldEnum;
 	
-	private SoundSystem _soundSystem;
+	//private SoundSystem _soundSystem;
 	
 	public enum VisibleGameWorld {
-		INTRODUCTION, 
-		PLAYERSELECTION, 
-		PLAYERDIALOG,		
+		INTRODUCTION,
+		PLAYERSELECTION,
+		PLAYERDIALOG,
 		MAINGAMEPLAY
 	}
 	protected FinalGameWorld(Application app) {
@@ -36,31 +35,27 @@ public class FinalGameWorld  extends GameWorld {
 		this.seeShowMenuBar(false);
 		this.setIntroduction(new Introduction(app, this));
 		this.setPlayerSelection(new PlayerSelection(app, this));
-		this.setPlayerDialog(new PlayerDialog(app));
+		this.setPlayerDialog(new PlayerDialog(app, this));
 		this.setMainGamePlay(new MainGamePlay(app, this));
 		this.setFinalGameObjectHandler(new FinalGameObjectHandler());
 		this.changeCurrentScreen(VisibleGameWorld.INTRODUCTION);
-		
-		//Initialize sound system for playing music which will vary based on screen and play sfx during gameplay
-		this.setupSoundSystem();
-		
 		// Check at what point this is starting
 		this.getFinalGameObjectHandler().initGameCharacters();
 	}
-	public void changeCurrentScreen(VisibleGameWorld screen) 
+	public void changeCurrentScreen(VisibleGameWorld screen)
 	{
 		if (screen == VisibleGameWorld.INTRODUCTION)
 		{
 			this.setCurrentlySelectedScreen(this.getIntroduction());
-		} 
-		else if (screen == VisibleGameWorld.PLAYERSELECTION) 
+		}
+		else if (screen == VisibleGameWorld.PLAYERSELECTION)
 		{
 			this.setCurrentlySelectedScreen(this.getPlayerSelection());
-		} 
-		else if (screen == VisibleGameWorld.PLAYERDIALOG) 
+		}
+		else if (screen == VisibleGameWorld.PLAYERDIALOG)
 		{
 			this.setCurrentlySelectedScreen(this.getPlayerDialog());
-		} 
+		}
 		else if (screen == VisibleGameWorld.MAINGAMEPLAY) {
 			this.setCurrentlySelectedScreen(this.getMainGamePlay());
 			this.getMainGamePlay().setCharacter(this.getCharacterSelection());
@@ -69,16 +64,16 @@ public class FinalGameWorld  extends GameWorld {
 	public void onTick(long nanosSincePreviousTick) {
 		if (this.getCurrentlySelectedScreen() != null) {
 			this.getCurrentlySelectedScreen().onTick(nanosSincePreviousTick);
-		}	
+		}
 	}
-	public void onDraw(GraphicsContext g) {		
+	public void onDraw(GraphicsContext g) {
 		this.getCurrentlySelectedScreen().onDraw(g);
 	}
 	public void onMouseClicked(MouseEvent e) {
 		if (this.getCurrentlySelectedScreen() != null) {
 			this.getCurrentlySelectedScreen().onMouseClicked(e);
-		}	
-	}	
+		}
+	}
 	public void onKeyPressed(KeyEvent e)  {
 		if (this.getCurrentlySelectedScreen() != null) {
 			this.getCurrentlySelectedScreen().onKeyPressed(e);
@@ -89,7 +84,7 @@ public class FinalGameWorld  extends GameWorld {
 		this.getPlayerDialog().setCharacterImages(this.getFinalGameObjectHandler().getCharacterImages());
 		this.getMainGamePlay().load();
 	}
-	public void onShutdown() { 
+	public void onShutdown() {
 		if (this.getCurrentlySelectedScreen() != null) {
 			this.getCurrentlySelectedScreen().onShutdown();
 		}
@@ -148,13 +143,13 @@ public class FinalGameWorld  extends GameWorld {
 	private void setPlayerDialog(PlayerDialog _playerDialog) {
 		this._playerDialog = _playerDialog;
 	}
-	private MainGamePlay getMainGamePlay() {
+	public MainGamePlay getMainGamePlay() {
 		return _mainGamePlay;
 	}
 	private void setMainGamePlay(MainGamePlay _mainGamePlay) {
 		this._mainGamePlay = _mainGamePlay;
 	}
-	private GameWorld getCurrentlySelectedScreen() {
+	public GameWorld getCurrentlySelectedScreen() {
 		return _currentlySelectedScreen;
 	}
 	private void setCurrentlySelectedScreen(GameWorld _currentlySelectedScreen) {
@@ -175,11 +170,11 @@ public class FinalGameWorld  extends GameWorld {
 	public VisibleGameWorld getVisibleGameWorldEnum() {
 		return __visibleGameWorldEnum;
 	}
-	
-	private void setupSoundSystem() {
-		_soundSystem = new SoundSystem(this);
-	}
-	
+
+//	private void setupSoundSystem() {
+//		_soundSystem = new SoundSystem(this);
+//	}
+
 	public int getCharacterSelection() {
 		return _playerSelection.getCharacterSelection();
 	}

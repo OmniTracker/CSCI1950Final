@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import support.Vec2i;
 import engine.Application;
 import engine.GameWorld;
+import engine.gameobject.GameObject;
 import engine.systems.Components;
 
 public class GameBoardDataComponent extends Components {
@@ -17,7 +18,6 @@ public class GameBoardDataComponent extends Components {
 	public double sizeX; 
 	public double sizeY; 
 	public boolean _mini = false;
-
 	/*
 	 * Level 0
 	 */
@@ -36,10 +36,7 @@ public class GameBoardDataComponent extends Components {
 	protected final Integer LEVEL_1_GREEN_R = 19;
 	protected final Integer LEVEL_1_BLUE_C = 13;
 	protected final Integer LEVEL_1_BLUE_R = 17;
-	// I have no idea of what is going on here.
-
 	protected final Integer COL_0 = 2;
-
 	public void onDraw(GraphicsContext g)
 	{
 		this.drawGameGrid(g);		
@@ -48,24 +45,29 @@ public class GameBoardDataComponent extends Components {
 	{		
 		if (this.getGameWorld().getLevel() == 0) 
 		{	
-			drawMapLevel0(g);
+			this.drawMapLevel0(g);
 		} 
 		else if (this.getGameWorld().getLevel() == 1) 
 		{
-			drawMapLevel1(g);
+			this.drawMapLevel1(g);
 		}
 	}
 	private void drawMapLevel1(GraphicsContext g) 
 	{
 		Vec2i location;
 		Image tron = this.getGameWorld().getWIZDelegateContainer().getWIZMapDelegate().getTron();
+		GameObject main = this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevel1().get("Main");
+		
+		
 		ArrayList<String> level1Grid = this.getGameWorld().getWIZDelegateContainer().getWIZMapDelegate().getLevel1Map(); 
 		int r = 0;
+		int c = 0;
 		for (String map : level1Grid ) 
 		{
 			String[] section = map.split(","); 
 			int size = section.length - 1;
-			for (int c = 0; c < size; c++)
+		
+			for (c = 0; c < size; c++)
 			{
 				int x = (100 * (r)) + (int) this.getGameWorld().getOrigin().x +
 						(int) ( this.getApp().getAspectRatioHandler().getCurrentScreenSize().y / 2); 
@@ -76,62 +78,22 @@ public class GameBoardDataComponent extends Components {
 					y = (100 *(c))  + ( int )  this.getGameWorld().getApplication().getAspectRatioHandler().calculateUpdatedOrigin().y; 
 				}
 				location = new Vec2i(x,y);
+
 				if (!section[c].equals("x"))
 				{
 					g.drawImage(tron,0,0,500,500,location.y,location.x,getTileSize(),getTileSize());					
 				}
-				// Need tp be replaced for achievement
-				if ((r == 23) && (c == 7)) {
-					g.setFill(Color.RED);
-					g.fillRect(y, x, getTileSize(), getTileSize());
-				}
 
-				/* 
-				 * 
-
-if ((r == 23) && (c == 7)) {
-					if (ezra._level1RedKeyFound  && ezra._level1BlueKeyFound && ezra._level1GreenKeyFound) {	
-						Image next = this.getGameWorld().getWIZDelegateContainer().getWIZAchievementDelegate().getNextLevel(); 
-						g.drawImage(next,0,0,500,500,location.y,location.x,getTileSize(),getTileSize());			
+				if ((r == 23) && (c == 7)) 
+				{
+					if (main.getData()._level1RedKeyFound  		&& 
+							main.getData()._level1BlueKeyFound 	&& 
+							main.getData()._level1GreenKeyFound ) 
+					{	
+						g.setFill(Color.RED);
+						g.fillRect(y, x, getTileSize(), getTileSize());		
 					}
 				}
-				if (this.getKeyObjects() != null) 
-				{		
-					Image image = null;
-					WIZGameObject obj = null;
-					if (ezra._level1RedKeyFound == false) 
-					{
-						// Draw the Red
-						if ( (r == LEVEL_1_RED_R)  && ( c == LEVEL_1_RED_C )  ) {
-							obj = this.getKeyObjects().get("Red");
-							image = obj.getImage();
-						}
-					}
-					if (ezra._level1BlueKeyFound == false) 
-					{
-						// Draw the blue
-						if ( ( r ==  LEVEL_1_BLUE_R)  && ( c == LEVEL_1_BLUE_C)  ) {						
-							obj = this.getKeyObjects().get("Blue");
-							image = obj.getImage();
-						}
-					}
-					if (ezra._level1GreenKeyFound == false) 
-					{
-						// Draw the green
-						if ( ( r == LEVEL_1_GREEN_R )  && ( c == LEVEL_1_GREEN_C )  ) {						
-							obj = this.getKeyObjects().get("Green");
-							image = obj.getImage();
-						}
-					}
-					if (image != null) {
-						g.drawImage(image,0,0,520,520, (y + 20) , (x + 20),    getTileSize() / 2,getTileSize() / 2  );
-					}
-				}
-
-
-				 */
-
-
 			}
 			r++;
 		}
@@ -139,8 +101,11 @@ if ((r == 23) && (c == 7)) {
 	private void drawMapLevel0(GraphicsContext g) {
 		Vec2i location;
 		Image lava = this.getGameWorld().getWIZDelegateContainer().getWIZMapDelegate().getLava(); 
+		GameObject main = this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevel1().get("Main");; 
 		ArrayList<String> level0Grid = this.getGameWorld().getWIZDelegateContainer().getWIZMapDelegate().getLevel0Map();
 		int r = 0;
+		
+		
 		int randomFlame = ThreadLocalRandom.current().nextInt(200, 250 + 1);
 		int randomStart = ThreadLocalRandom.current().nextInt(0, 30 + 1);
 		int randomLocation; 
@@ -173,79 +138,27 @@ if ((r == 23) && (c == 7)) {
 		for (String map : this.getGameWorld().getWIZDelegateContainer().getWIZMapDelegate().getLevel0Map() ) {
 			String[] section = map.split(","); 	
 			int size = section.length;
-			for (int c = 0; c < size - 1; c++) {
+			for (int c = 0; c < size - 1; c++) 
+			{
 				int x = (100 * (r)) + (int) this.getGameWorld().getOrigin().x + (int) ( this.getApp().getAspectRatioHandler().getCurrentScreenSize().y / 2); 
 				int y = (100 * (c)) + (int) this.getGameWorld().getOrigin().y + (int) ( this.getApp().getAspectRatioHandler().getCurrentScreenSize().x / 2); 
-
-
 				if (_mini == true) {
-					x = (100 * (r)) + ( int ) this.getGameWorld().getApplication().getAspectRatioHandler().calculateUpdatedOrigin().x; 
-					y = (100 *(c))  + ( int )  this.getGameWorld().getApplication().getAspectRatioHandler().calculateUpdatedOrigin().y; 
+					x = (100 * (r))  + ( int ) this.getGameWorld().getApplication().getAspectRatioHandler().calculateUpdatedOrigin().x; 
+					y = (100 * (c))  + ( int ) this.getGameWorld().getApplication().getAspectRatioHandler().calculateUpdatedOrigin().y; 
 				}	
-
 				location = new Vec2i(x,y);
 				fillMap(g, location, section, c); 
 
-
-				// Needs to be replaced for achievement
-				if ((r == 8) && (c == 23)) {
-					g.setFill(Color.BLUE);
-					g.fillRect(y, x, getTileSize(), getTileSize());
-				}
-
-				/*
-				 * 
-
-				if ((r == 8) && (c == 23)) {
-					if (ezra._level0RedKeyFound  && ezra._level0BlueKeyFound && ezra._level0GreenKeyFound) {	
-						Image next = this.getGameWorld().getWIZDelegateContainer().getWIZAchievementDelegate().getNextLevel(); 
-						g.drawImage(next,0,0,500,500,location.y,location.x,getTileSize(),getTileSize());			
+				if ((r == 8) && (c == 23)) 
+				{
+					if (main.getData()._level0RedKeyFound  		&& 
+							main.getData()._level0BlueKeyFound 	&& 
+							main.getData()._level0GreenKeyFound ) 
+					{	
+						g.setFill(Color.BLUE);
+						g.fillRect(y, x, getTileSize(), getTileSize());		
 					}
 				}
-
-
-				if ((r == 8) && (c == 23)) {
-					if (ezra._level0RedKeyFound  && ezra._level0BlueKeyFound && ezra._level0GreenKeyFound) {	
-						Image next = this.getGameWorld().getWIZDelegateContainer().getWIZAchievementDelegate().getNextLevel(); 
-						g.drawImage(next,0,0,500,500,location.y,location.x,getTileSize(),getTileSize());			
-					}
-				}
-				if (this.getKeyObjects() != null) 
-				{		
-					Image image = null;
-					WIZGameObject obj = null;
-
-					if (ezra._level0RedKeyFound == false) 
-					{
-						// Draw the Red
-						if ( (r == LEVEL_0_RED_R)  && ( c == LEVEL_0_RED_C )  ) {
-							obj = this.getKeyObjects().get("Red");
-							image = obj.getImage();
-						}
-					}
-					if (ezra._level0BlueKeyFound == false) 
-					{
-						// Draw the blue
-						if ( ( r ==  LEVEL_0_BLUE_R)  && ( c == LEVEL_0_BLUE_C)  ) {						
-							obj = this.getKeyObjects().get("Blue");
-							image = obj.getImage();
-						}
-					}
-					if (ezra._level0GreenKeyFound == false) 
-					{
-						// Draw the green
-						if ( ( r == LEVEL_0_GREEN_R )  && ( c == LEVEL_0_GREEN_C )  ) {						
-							obj = this.getKeyObjects().get("Green");
-							image = obj.getImage();
-						}
-					}
-					if (image != null) {
-						g.drawImage(image,0,0,520,520, (y + 20) , (x + 20),    getTileSize() / 2,getTileSize() / 2  );
-					}
-				}
-				 */ 
-
-
 				sizeX = c * 100; 
 			}
 			r++;

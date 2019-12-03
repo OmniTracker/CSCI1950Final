@@ -17,7 +17,6 @@ public class MovementComponent extends Components {
 	private GameWorld _gameWorld; 
 	private long _lastTimeUpdate = 0;
 	private boolean DEBUG = false;
-
 	public MovementComponent (Application app, GameWorld gameWorld)
 	{
 		this.setApp(app);
@@ -26,14 +25,15 @@ public class MovementComponent extends Components {
 	}
 	public void onTick(long nanosSincePreviousTick) 
 	{
-		this.updateMainCharacterPosition();
+		this.updateMainCharacterPosition();	
 		this.updateEnemyPosition(nanosSincePreviousTick);
 	}
-	public void onKeyPressed(KeyEvent e) {
+	public void onKeyPressed(KeyEvent e) 
+	{
 		this.moveMainCharacter(e);
 	}
 	// This more so used to keep the main character in the middle of the screen. This function doesn't move the
-	// character in context to the rest of the game. 
+	// character in context to the rest of the game. 	
 	private void updateMainCharacterPosition() 
 	{	
 		GameObject main = this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevel1().get("Main");	
@@ -42,23 +42,31 @@ public class MovementComponent extends Components {
 		Vec2d boxPos = main.getData().getPosition().minus(-10, -15); 
 		main.getData().getBox().setTopLeft(boxPos);
 	}
-
-	private void moveMainCharacter(KeyEvent e) {
+	private void moveMainCharacter(KeyEvent e) 
+	{
 		GameObject main = this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevel1().get("Main");	
-		if (main == null) {
+		
+		if (main == null) 
+		{
 			return;
 		}
-		
 		String direction = e.getCode().toString();
 		double x = 0; 
 		double y = 0; 
-		if (direction.contains("UP"))  {
+		if (direction.contains("UP"))  
+		{
 			x = main.getWizSpeed();;
-		} else if (direction.contains("DOWN")){
+		} 
+		else if (direction.contains("DOWN"))
+		{
 			x = -1 * main.getWizSpeed();
-		} else if (direction.contains("LEFT")) {
+		} 
+		else if (direction.contains("LEFT")) 
+		{
 			y = main.getWizSpeed();
-		} else if (direction.contains("RIGHT")) {
+		} 
+		else if (direction.contains("RIGHT")) 
+		{
 			y = -1 * main.getWizSpeed();;
 		}	
 		this.getGameWorld().setOrigin(this.getGameWorld().getOrigin().plus( new Vec2d(x,y)));
@@ -77,8 +85,7 @@ public class MovementComponent extends Components {
 			// Need to write something for if the main character is close to the enemy.
 			HashMap<String ,GameObject> characters = null;
 			Integer gameLevel = this.getGameWorld().getLevel();
-			
-			// 
+		
 			if (gameLevel == 0) 
 			{
 				characters = this.getGameWorld().getWIZDelegateContainer().getWIZGameObjectDelegate().getObjsLevelO();
@@ -92,9 +99,9 @@ public class MovementComponent extends Components {
 				return;
 			}
 			for (Entry<String, GameObject> character : characters.entrySet())  
-			{
+			{				
 				if (character.getKey() != "Main")
-				{	
+				{					
 					// Used for sprite animation
 					if (character.getValue().getAIStepCount() == 2)
 					{
