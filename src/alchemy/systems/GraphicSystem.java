@@ -21,6 +21,8 @@ public class GraphicSystem  extends Systems {
 		this.setSystemName("Graphics");
 	}
 	public void onDraw(GraphicsContext g) {		
+	
+		
 		for (GameObject obj : this.getGameObjects()) {
 			obj.draw(g);
 		}
@@ -29,7 +31,7 @@ public class GraphicSystem  extends Systems {
 		Vec2d mousePoint = new Vec2d(e.getSceneX(),e.getSceneY());
 		GameObject newObj = null;
 		for (GameObject obj : this.getGameObjects()) {
-			if (Collision.isColliding(obj.getBox(), mousePoint)) {
+			if (Collision.isColliding(obj.getData().getBox(), mousePoint)) {
 				newObj = this.clone(obj);
 				break;
 			}
@@ -41,10 +43,10 @@ public class GraphicSystem  extends Systems {
 	}
 	public GameObject clone(GameObject obj) {
 		GameObject clone = new GameObject(); 
-		clone.setPosition(obj.getPosition());
-		clone.setSize(obj.getSize());
-		clone.setImage(obj.getImage());
-		clone.setBox(new AABShape(obj.getPosition(),obj.getSize()));
+		clone.getData().setPosition(obj.getData().getPosition());
+		clone.getData().setSize(obj.getData().getSize());
+		clone.getData().setImage(obj.getData().getImage());
+		clone.getData().setBox(new AABShape(obj.getData().getPosition(),obj.getData().getSize()));
 		return clone;
 	}	
 	public void addGameObject(GameObject obj ) {

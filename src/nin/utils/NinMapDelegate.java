@@ -29,10 +29,6 @@ public class NinMapDelegate extends GameObjectDelegate {
 		platform.getData().setImageGameSize(new Vec2d(60,60));
 		platform.getData().setBox(new AABShape(platform.getData().getPosition(), new Vec2d(60,60)));
 		this.getGameBoardPlatforms().add(platform);
-		
-		
-		
-		
 	}
 
 	public ArrayList<GameObject> getGameBoardPlatforms() {

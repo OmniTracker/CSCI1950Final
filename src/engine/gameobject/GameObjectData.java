@@ -31,6 +31,9 @@ public class GameObjectData {
 	public Vec2d _AIposition                = new Vec2d(0.0,0.0); 
 	public Vec2i _AIGridLocation            = new Vec2i(0,0);
 	public Vec2d _currentMTV                = new Vec2d(0.0,0.0); 
+	public NINBehaviorTree _ninBehaviorTree = new NINBehaviorTree();
+
+
 	public GameObjectData() {}
 	
 	/*
@@ -147,6 +150,12 @@ public class GameObjectData {
 	}
 	public void setAIGridLocation(Vec2i _AIGridLocation) {
 		this._AIGridLocation = _AIGridLocation;
+	}
+	public NINBehaviorTree getNinBehaviorTree() {
+		return _ninBehaviorTree;
+	}
+	public void setNinBehaviorTree(NINBehaviorTree _ninBehaviorTree) {
+		this._ninBehaviorTree = _ninBehaviorTree;
 	}
 	public Vec2d getCurrentMTV() {
 		return _currentMTV;

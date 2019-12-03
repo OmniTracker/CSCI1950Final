@@ -141,45 +141,46 @@ public class Application extends FXFrontEnd {
 	@Override
 	protected void onMouseReleased(MouseEvent e) {
 		if (this.getCurrentLevel() != null) {
-			this.getCurrentLevel().onMouseReleased(e);
+			// this.getCurrentLevel().onMouseReleased(e);
 		}	
 	}
 	@Override
 	protected void onMouseDragged(MouseEvent e) {
 		if (this.getCurrentLevel() != null) {
-			this.getCurrentLevel().onMouseDragged(e);
+			// this.getCurrentLevel().onMouseDragged(e);
 		}				
 	}
 	@Override
 	protected void onMouseMoved(MouseEvent e) {
 		if (this.getCurrentLevel() != null) {
-			this.getCurrentLevel().onMouseMoved(e);
+			// this.getCurrentLevel().onMouseMoved(e);
 		}		
 	}
 	@Override
 	protected void onMouseWheelMoved(ScrollEvent e) {
 		if (this.getCurrentLevel() != null) {
-			this.getCurrentLevel().onMouseWheelMoved(e);
+			// this.getCurrentLevel().onMouseWheelMoved(e);
 		}		
 	}
 	@Override
 	protected void onFocusChanged(boolean newVal) {
 		if (this.getCurrentLevel() != null) {
-			this.getCurrentLevel().onFocusChanged(newVal);
+			// this.getCurrentLevel().onFocusChanged(newVal);
 		}
 	}
 	@Override
 	protected void onResize(Vec2d newSize) {
 		this.getAspectRatioHandler().setCurrentScreenSize(newSize);
 		if (this.getCurrentLevel() != null){
-			this.getCurrentLevel().onResize(newSize);
+			// this.getCurrentLevel().onResize(newSize);
 		}
 	}
 	@Override
 	protected void onShutdown() {
 		if (this.getCurrentLevel() != null) {
-			this.getCurrentLevel().onShutdown();
-		}	}
+			// this.getCurrentLevel().onShutdown();
+		}	
+	}
 	@Override
 	protected void onStartup() {
 		if (this.getCurrentLevel() != null) {

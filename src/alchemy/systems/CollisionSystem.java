@@ -33,11 +33,11 @@ public class CollisionSystem extends Systems {
 			return;
 		}
 		for (GameObject obj: this.getGameObjects()) {
-			if ( Collision.isColliding(obj.getBox(), mousePoint) ) {	
-				double xDiff = obj.getPosition().x - (this.getLastMouseDrag().x - mousePoint.x); 
-				double yDiff = obj.getPosition().y - (this.getLastMouseDrag().y - mousePoint.y);
-				obj.setPosition(new Vec2d(xDiff,yDiff));
-				obj.getBox().setTopLeft(new Vec2d(xDiff,yDiff));
+			if ( Collision.isColliding(obj.getData().getBox(), mousePoint) ) {	
+				double xDiff = obj.getData().getPosition().x - (this.getLastMouseDrag().x - mousePoint.x); 
+				double yDiff = obj.getData().getPosition().y - (this.getLastMouseDrag().y - mousePoint.y);
+				obj.getData().setPosition(new Vec2d(xDiff,yDiff));
+				obj.getData().getBox().setTopLeft(new Vec2d(xDiff,yDiff));
 				this.setLastMouseDrag(mousePoint);
 			}	
 		}

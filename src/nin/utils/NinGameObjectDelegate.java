@@ -151,30 +151,30 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 		p2.setWalkVel(-0.3);
 		p2.setVelocity(new Vec2d(0,0) );
 		
-		testCharacter0.setImage( Factory.getNinBricks());
-		testCharacter0.setPosition(new Vec2d(600,400));
-		testCharacter0.setImageSize(new Vec2d(48,48));
-		testCharacter0.setImageStart(new Vec2d(0,0));
-		testCharacter0.setImageGameSize(new Vec2d(60,60));
-		testCharacter0.setBox(new AABShape(testCharacter0.getPosition(), new Vec2d(30,60)));
-		testCharacter1.setImage( Factory.getNinBricks());
-		testCharacter1.setPosition(new Vec2d(200,400));
-		testCharacter1.setImageSize(new Vec2d(48,48));
-		testCharacter1.setImageStart(new Vec2d(0,0));
-		testCharacter1.setImageGameSize(new Vec2d(60,60));
-		testCharacter1.setBox(new AABShape(testCharacter1.getPosition(), new Vec2d(20,120)));
-		testCharacter2.setImage( Factory.getNinBricks());
-		testCharacter2.setPosition(new Vec2d(800,400));
-		testCharacter2.setImageSize(new Vec2d(48,48));
-		testCharacter2.setImageStart(new Vec2d(0,0));
-		testCharacter2.setImageGameSize(new Vec2d(60,60));
-		testCharacter2.setBox(new AABShape(mainCharacter.getPosition(), new Vec2d(40,100)));
-		mainCharacter.setImage( Factory.getNinBricks());
-		mainCharacter.setPosition(new Vec2d(200,0));
-		mainCharacter.setImageSize(new Vec2d(48,48));
-		mainCharacter.setImageStart(new Vec2d(0,0));
-		mainCharacter.setImageGameSize(new Vec2d(60,60));
-		mainCharacter.setBox(new AABShape(mainCharacter.getPosition(), new Vec2d(100,100)));
+		testCharacter0.getData().setImage( Factory.getNinBricks());
+		testCharacter0.getData().setPosition(new Vec2d(600,400));
+		testCharacter0.getData().setImageSize(new Vec2d(48,48));
+		testCharacter0.getData().setImageStart(new Vec2d(0,0));
+		testCharacter0.getData().setImageGameSize(new Vec2d(60,60));
+		testCharacter0.getData().setBox(new AABShape(testCharacter0.getData().getPosition(), new Vec2d(30,60)));
+		testCharacter1.getData().setImage( Factory.getNinBricks());
+		testCharacter1.getData().setPosition(new Vec2d(200,400));
+		testCharacter1.getData().setImageSize(new Vec2d(48,48));
+		testCharacter1.getData().setImageStart(new Vec2d(0,0));
+		testCharacter1.getData().setImageGameSize(new Vec2d(60,60));
+		testCharacter1.getData().setBox(new AABShape(testCharacter1.getData().getPosition(), new Vec2d(20,120)));
+		testCharacter2.getData().setImage( Factory.getNinBricks());
+		testCharacter2.getData().setPosition(new Vec2d(800,400));
+		testCharacter2.getData().setImageSize(new Vec2d(48,48));
+		testCharacter2.getData().setImageStart(new Vec2d(0,0));
+		testCharacter2.getData().setImageGameSize(new Vec2d(60,60));
+		testCharacter2.getData().setBox(new AABShape(mainCharacter.getData().getPosition(), new Vec2d(40,100)));
+		mainCharacter.getData().setImage( Factory.getNinBricks());
+		mainCharacter.getData().setPosition(new Vec2d(200,0));
+		mainCharacter.getData().setImageSize(new Vec2d(48,48));
+		mainCharacter.getData().setImageStart(new Vec2d(0,0));
+		mainCharacter.getData().setImageGameSize(new Vec2d(60,60));
+		mainCharacter.getData().setBox(new AABShape(mainCharacter.getData().getPosition(), new Vec2d(100,100)));
 	}
 	
 	
@@ -192,6 +192,7 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 		p1.setCOR(0.3);
 		p1.setWalkVel(0.8);
 		p1.setVelocity(new Vec2d(0.0,0) );
+		
 		p2.getOtherCharacter().add(testCharacter0); 
 		p2.getOtherCharacter().add(testCharacter1); 
 		p2.setMass(30);
@@ -199,36 +200,36 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 		p2.setWalkVel(0);
 		p2.setVelocity(new Vec2d(0,0) );
 		p2.setStaticFlag(false);
-		testCharacter0.setImage( Factory.getNinBricks());
-		testCharacter0.setPosition(new Vec2d(600,400));
-		testCharacter0.setImageSize(new Vec2d(48,48));
-		testCharacter0.setImageStart(new Vec2d(0,0));
-		testCharacter0.setImageGameSize(new Vec2d(60,60));
-		testCharacter0.setBox(new AABShape(testCharacter0.getPosition(), new Vec2d(30,60)));
-		testCharacter1.setImage( Factory.getNinBricks());
-		testCharacter1.setPosition(new Vec2d(200,400));
-		testCharacter1.setImageSize(new Vec2d(48,48));
-		testCharacter1.setImageStart(new Vec2d(0,0));
-		testCharacter1.setImageGameSize(new Vec2d(60,60));
-		testCharacter1.setBox(new AABShape(testCharacter1.getPosition(), new Vec2d(20,120)));
-		testCharacter2.setImage( Factory.getNinBricks());
-		testCharacter2.setPosition(new Vec2d(800,400));
-		testCharacter2.setImageSize(new Vec2d(48,48));
-		testCharacter2.setImageStart(new Vec2d(0,0));
-		testCharacter2.setImageGameSize(new Vec2d(60,60));
-		testCharacter2.setBox(new AABShape(mainCharacter.getPosition(), new Vec2d(40,100)));
-		mainCharacter.setImage( Factory.getNinBricks());
-		mainCharacter.setPosition(new Vec2d(200,0));
-		mainCharacter.setImageSize(new Vec2d(48,48));
-		mainCharacter.setImageStart(new Vec2d(0,0));
-		mainCharacter.setImageGameSize(new Vec2d(60,60));
-		mainCharacter.setBox(new AABShape(mainCharacter.getPosition(), new Vec2d(100,100)));
+		
+		testCharacter0.getData().setImage( Factory.getNinBricks());
+		testCharacter0.getData().setPosition(new Vec2d(600,400));
+		testCharacter0.getData().setImageSize(new Vec2d(48,48));
+		testCharacter0.getData().setImageStart(new Vec2d(0,0));
+		testCharacter0.getData().setImageGameSize(new Vec2d(60,60));
+		testCharacter0.getData().setBox(new AABShape(testCharacter0.getData().getPosition(), new Vec2d(30,60)));
+		
+		testCharacter1.getData().setImage( Factory.getNinBricks());
+		testCharacter1.getData().setPosition(new Vec2d(200,400));
+		testCharacter1.getData().setImageSize(new Vec2d(48,48));
+		testCharacter1.getData().setImageStart(new Vec2d(0,0));
+		testCharacter1.getData().setImageGameSize(new Vec2d(60,60));
+		testCharacter1.getData().setBox(new AABShape(testCharacter1.getData().getPosition(), new Vec2d(20,120)));
+		
+		testCharacter2.getData().setImage( Factory.getNinBricks());
+		testCharacter2.getData().setPosition(new Vec2d(800,400));
+		testCharacter2.getData().setImageSize(new Vec2d(48,48));
+		testCharacter2.getData().setImageStart(new Vec2d(0,0));
+		testCharacter2.getData().setImageGameSize(new Vec2d(60,60));
+		testCharacter2.getData().setBox(new AABShape(mainCharacter.getData().getPosition(), new Vec2d(40,100)));
+		
+		mainCharacter.getData().setImage( Factory.getNinBricks());
+		mainCharacter.getData().setPosition(new Vec2d(200,0));
+		mainCharacter.getData().setImageSize(new Vec2d(48,48));
+		mainCharacter.getData().setImageStart(new Vec2d(0,0));
+		mainCharacter.getData().setImageGameSize(new Vec2d(60,60));
+		mainCharacter.getData().setBox(new AABShape(mainCharacter.getData().getPosition(), new Vec2d(100,100)));
 	}
 	
-	
-	
-	
-
 	public ArrayList<GameObject> getGameCharacters() {
 		return _gameCharacters;
 	}

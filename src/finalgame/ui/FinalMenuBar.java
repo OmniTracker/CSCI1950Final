@@ -1,6 +1,5 @@
 package finalgame.ui;
 
-import nin.ui.InstructionPanel;
 import support.Vec2d;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;

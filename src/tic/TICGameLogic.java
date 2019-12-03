@@ -45,8 +45,6 @@ public class TICGameLogic {
 		}
 		return false;
 	}
-
-
 	public void resetGame( ){
 		for (Integer x = 0; x < this._gameDimension; x++) 
 		{
@@ -56,9 +54,6 @@ public class TICGameLogic {
 		}	
 		this.incrementPlayerScore();
 	}
-
-
-
 	public boolean checkFilled (){
 		Integer count =0; 
 		for (Integer x = 0; x < this._gameDimension; x++) 
@@ -71,7 +66,6 @@ public class TICGameLogic {
 				}
 			}	
 		}	
-
 		if(count == 9) {
 			for (Integer x = 0; x < this._gameDimension; x++) 
 			{
@@ -83,10 +77,8 @@ public class TICGameLogic {
 			this.resetG(); 
 			return true;
 		}
-		
 		return false; 
 	}
-
 	public void resetG( ){
 		for (Integer x = 0; x < this._gameDimension; x++) 
 		{
@@ -94,14 +86,9 @@ public class TICGameLogic {
 				this._gameGrid[x][y] = 0;
 			}	
 		}	
-		
-		
-		
 		_player1WinCount = 0;
 		_player2WinCount = 0;
 	}
-
-
 	private boolean checkForDiagonalWin() 
 	{ 
 		Integer indexCount = 0; 
@@ -117,10 +104,7 @@ public class TICGameLogic {
 		{
 			return true;
 		}
-
-
 		indexCount = 0; 
-
 		for (Integer start = 0; start < this.getGameDimension(); start++ ) 
 		{
 			if (this.getLastPlayer() == 
@@ -128,16 +112,13 @@ public class TICGameLogic {
 			{
 				indexCount++; 
 			}
-
 		}
 		if (indexCount == this.getGameDimension()) 
 		{
 			return true;
 		}
-
 		return false;
 	}
-
 	private boolean checkHorizontalWin () 
 	{
 		Integer indexCount = 0; 
@@ -190,7 +171,6 @@ public class TICGameLogic {
 		{
 			this._player2WinCount++;			
 		}
-
 	}
 
 	public void switchPlayer() 

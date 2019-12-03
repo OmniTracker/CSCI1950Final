@@ -40,13 +40,13 @@ public class AlcGameWorld  extends GameWorld {
 				return;
 			} 
 			GameObject kimObj = new GameObject();
-			kimObj.setImage(kimImg);
+			kimObj.getData().setImage(kimImg);
 			Vec2d screenSize = this.getApplication().getAspectRatioHandler().getCurrentScreenSize();
 			double x = screenSize.x / 2; 
 			double y = screenSize.y / 2; 
-			kimObj.setPosition(new Vec2d(x - 60,y - 100));
-			kimObj.setSize(new Vec2d(140,200));
-			kimObj.setBox(new AABShape(kimObj.getPosition(),kimObj.getSize()));
+			kimObj.getData().setPosition(new Vec2d(x - 60,y - 100));
+			kimObj.getData().setSize(new Vec2d(140,200));
+			kimObj.getData().setBox(new AABShape(kimObj.getData().getPosition(),kimObj.getData().getSize()));
 			this.getCollisionSystem().addGameObject(kimObj);
 			this.getGraphicSystem().addGameObject(kimObj);
 		}

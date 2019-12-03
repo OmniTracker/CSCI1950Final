@@ -12,6 +12,8 @@ import engine.Screen;
 public class Final extends Screen {
 	private FinalViewport _finalViewport 		= null;
 	private FinalGameWorld _finalGameWorld 		= null;
+	
+	boolean startUP = false;
 	public Final(Application app) {
 		super(app);
 	}
@@ -22,6 +24,10 @@ public class Final extends Screen {
 		this.getFinalViewport().onMouseDragged(e);		
 	}
 	public void onDraw(GraphicsContext g) {
+		
+		if (startUP == false) {
+			 onStartup();
+		}
 		this.getFinalViewport().onDraw(g);
 		this.getApplication().borders(g, Color.BLACK);
 	}
@@ -38,6 +44,7 @@ public class Final extends Screen {
 				new Vec2d(0,0), 
 				new Vec2d(0,0)));
 
+		startUP = true;
 		this.getFinalViewport().onStartup();
 	}
 	public void onKeyReleased(KeyEvent e) {
@@ -56,7 +63,6 @@ public class Final extends Screen {
 		this.getFinalViewport().onMouseWheelMoved(e);
 	}
 	public void onFocusChanged(boolean newVal) {
-		this.getFinalViewport().onFocusChanged(newVal);
 	}
 	public void onResize(Vec2d newSize) {
 		this.getFinalViewport().onResize(newSize);
@@ -75,6 +81,5 @@ public class Final extends Screen {
 	}
 	@Override
 	public void onShutdown() {
-		_finalGameWorld.onShutdown();
 	}
 }
