@@ -19,11 +19,18 @@ import support.debugger.support.Vec2f;
 import support.debugger.support.shapes.AABShapeDefine;
 import engine.Application;
 import engine.GameWorld;
+import engine.ai.BehaviorTree;
+import engine.ai.Selector;
+import engine.ai.Sequencer;
 import engine.utility.Factory;
 import finalgame.maingameloop.FinalGameWorld;
 
 import finalgame.engineAdditions.GameSystem;
+import finalgame.ai.MoveToLeader;
+import finalgame.ai.NotNearGroup;
+import finalgame.ai.TestGI;
 import finalgame.engineAdditions.AABCollisionComponent;
+import finalgame.engineAdditions.AIBehaviorComponent;
 import finalgame.engineAdditions.AnimateGraphicsComponent;
 import finalgame.engineAdditions.BehaviorSystem;
 import finalgame.engineAdditions.CollisionSystem;
@@ -135,7 +142,21 @@ public class MainGamePlay extends GameWorld {
 	}
 
 	private void loadEnemies() {
-
+		GameObject g = new GameObject("ENEMY");
+		AnimateGraphicsComponent animate = new AnimateGraphicsComponent(g, this.getPlayerImage(_selectedCharacter), new Vec2d(54,0), new Vec2d(34,48), 2, new Vec2d(48,48));
+		g.addComponent("DRAW", animate);
+		g.addComponent("ANIMATE", animate);
+		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(20,100), new Vec2d(40,60), 1.0));
+		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
+		TestGI gi = new TestGI();
+		BehaviorTree bt = new BehaviorTree(new Selector(),gi, this, g);
+		bt.addBehavior(0,  new Sequencer());
+		bt.addBehavior(1, new NotNearGroup(g,100000));
+		bt.addBehavior(1, new MoveToLeader());
+		gi.setLeader(_player);
+		g.addComponent("AI", new AIBehaviorComponent(g,bt));
+		_objects.add(g);
+		this.addToSystems(g);
 	}
 
 
@@ -282,6 +303,12 @@ public class MainGamePlay extends GameWorld {
 			_behaviorSys.onTick(lastTick);
 		}
 		else {
+			for (GameObject g: _objects) {
+				if (g.hasComponent("AI")) {
+					g.getComponent("AI").tick(nanosSincePreviousTick);
+				}
+			}
+			
 			this.purge();
 			_tickSys.onTick(nanosSincePreviousTick);
 			_collisionSys.onTick(nanosSincePreviousTick);
@@ -402,5 +429,10 @@ public class MainGamePlay extends GameWorld {
 		this.loadMap();
 		this.loadCharacter();
 		this.loadEnemies();
+	}
+	
+	@Override
+	public ArrayList<GameObject> getObjects() {
+		return _objects;
 	}
 }

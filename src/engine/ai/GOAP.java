@@ -2,19 +2,17 @@ package engine.ai;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import engine.gameobject.GameObject;
-import engine.GameWorld;
+
+import finalgame.engineAdditions.GameObject;
 
 public abstract class GOAP extends SearchProblem {
 
-	public GameWorld _w;
 	public GameObject _obj;
 	public ArrayList<Action> _actions;
 	public GOAPState _start;
 	public GOAPState _goal;
 	
-	public GOAP(GameWorld w, GameObject g, ArrayList<Action> actions, GOAPState start, GOAPState goal) {
-		_w = w;
+	public GOAP(GameObject g, ArrayList<Action> actions, GOAPState start, GOAPState goal) {
 		_obj = g;
 		_actions = actions;
 		_start = start;

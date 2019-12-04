@@ -1,7 +1,14 @@
 package engine.ai;
 
-public interface Action extends BTNode{
+import finalgame.engineAdditions.GameObject;
+import engine.GameWorld;
 
-	public Status act();
+public abstract class Action {
+
+	public Action() {
+		
+	}
 	
-}
+	public abstract void act(GameWorld w, GameObject obj);
+	
+} 

@@ -3,6 +3,7 @@ package finalgame.engineAdditions;
 import java.util.HashMap;
 
 import support.Vec2d;
+import support.debugger.support.shapes.AABShapeDefine;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
 
@@ -18,6 +19,15 @@ public class GameObject {
 	public GameObject(String name) {
 		_name = name;
 		_components = new HashMap<String, Component>();
+	}
+	
+	public GameObject(GameObject o) {
+		_name = o.getName();
+		_components = new HashMap<String, Component>();
+		TransformComponent other = (TransformComponent) o.getComponent("TRANSFORM");
+		this.addComponent("TRANSFORM", new TransformComponent(this, other.getLoc(), other.getDim(), 1.0));
+		CollisionComponent oth = (CollisionComponent) o.getComponent("COLLISION");
+		this.addComponent("COLLISION", new AABCollisionComponent(this, (AABShapeDefine)oth._shape));
 	}
 	
 	public void addComponent(String tag, Component c) {
@@ -63,4 +73,5 @@ public class GameObject {
 		CollisionComponent curr = (CollisionComponent)(_components.get("COLLISION"));
 		return curr.collide(o);
 	}
+	
 }
