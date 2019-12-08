@@ -140,19 +140,6 @@ public final class Week6 extends Week6Reqs {
 		return null;
 	}
 
-	@Override
-	public Vec2f collision(AABShape s1, PolygonShape s2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Vec2f collision(CircleShape s1, PolygonShape s2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 	// POLYGONS
 
 	@Override
@@ -176,13 +163,22 @@ public final class Week6 extends Week6Reqs {
 	public Vec2f collision(PolygonShape s1, PolygonShape s2) {
 		return null;
 	}
+	
+	@Override
+	public Vec2f collision(AABShape s1, PolygonShape s2) {
+		return null;
+	}
+
+	@Override
+	public Vec2f collision(CircleShape s1, PolygonShape s2) {
+		return null;
+	}
 
 	// RAYCASTING
 	@Override
 	public float raycast(CircleShape s1, Ray s2) {
 		return -1;
 	}
-
 	@Override
 	public float raycast(AABShape s1, Ray s2) {
 		// Top left corner
@@ -195,10 +191,8 @@ public final class Week6 extends Week6Reqs {
 		Vec2f point3 = s1.getTopLeft().plus(s1.size.x,0); 
 		return raycast(new PolygonShape(point0,point1,point2,point3),s2);
 	}
-
 	@Override
-	public float raycast(PolygonShape s1, Ray s2) 
-	{
+	public float raycast(PolygonShape s1, Ray s2) {
 		Vec2f m, n, a, b; 
 		Vec2f polyEdge; 
 		// Ray Variables
@@ -241,5 +235,4 @@ public final class Week6 extends Week6Reqs {
 		}		
 		return intersection_t_length;
 	}
-
 }
