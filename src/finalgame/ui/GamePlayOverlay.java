@@ -30,16 +30,6 @@ public class GamePlayOverlay extends UIElement{
 		this.drawAbilities (g);	
 	}
 	
-	private void labelHelper(GraphicsContext g,Vec2d roundOrigin, String text) {
-		g.setFill(Color.GRAY);
-		g.fillRoundRect(roundOrigin.x , roundOrigin.y, 180, 35, 5, 5);
-		g.setFill(Color.WHITE);
-		g.fillRoundRect(roundOrigin.x + 5, roundOrigin.y + 5, 180 - 10, 35 - 10, 5, 5);
-		g.setFill(Color.BLACK);	
-		g.setFont(Font.font(this.getEngineFont().getFontString(this.getText()), 20 ));
-		g.fillText(text, roundOrigin.x + 90, roundOrigin.y + 25);
-	}
-	
 	private void drawHitPointValues (GraphicsContext g) {
 		Vec2d size = _aspect.calculateUpdatedScreenSize();
 		Vec2d origin = _aspect.calculateUpdatedOrigin();
@@ -68,14 +58,31 @@ public class GamePlayOverlay extends UIElement{
 		this.labelHelper(g,roundOrigin, "Coins: xxxx"); 
 	}
 	
+	
+	private void labelHelper(GraphicsContext g,Vec2d roundOrigin, String text) {
+		g.setFill(Color.GRAY);
+		g.fillRoundRect(roundOrigin.x , roundOrigin.y, 180, 35, 5, 5);
+		g.setFill(Color.WHITE);
+		g.fillRoundRect(roundOrigin.x + 5, roundOrigin.y + 5, 180 - 10, 35 - 10, 5, 5);
+		g.setFill(Color.BLACK);	
+		g.setFont(Font.font(this.getEngineFont().getFontString(this.getText()), 20 ));
+		g.fillText(text, roundOrigin.x + 90, roundOrigin.y + 25);
+	}
+	
+	
 	public void drawHitPoints (GraphicsContext g) {
 		Vec2d size = _aspect.calculateUpdatedScreenSize();
 		Vec2d origin = _aspect.calculateUpdatedOrigin();
 		double heathBarMaxDraw = size.x - 600;
 		Vec2d hitpointOrigin = origin.plus(0,size.y - 40);
+		
 		// Draw Health bar max.
 		g.setFill(Color.BLACK);
 		g.fillRoundRect(origin.x + 220, hitpointOrigin.y, heathBarMaxDraw, 30, 20, 20);
+		
+		// This is just here as a placeholder 
+		g.setFill(Color.AQUA);
+		g.fillRoundRect(origin.x + 225, hitpointOrigin.y + 4, 200, 22, 20, 20); 
 	}
 
 	public void drawAbilities (GraphicsContext g) {
