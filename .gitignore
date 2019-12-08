@@ -1,1 +1,7 @@
+<<<<<<< HEAD
 bin/*
+=======
+# exclude everything except directory foo/ba
+
+bin/
+>>>>>>> 840df5474e0318fd99a7efbee6e7d07fd09afbae
