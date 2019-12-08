@@ -7,7 +7,7 @@ import support.debugger.collisions.PolygonShape;
 
 public class CircleCollisionComponent extends CollisionComponent{
 	
-	private CircleShape _circle;
+	protected CircleShape _circle;
 	
 	public CircleCollisionComponent(GameObject go, CircleShape shape) {
 		super(go, shape);
@@ -17,6 +17,9 @@ public class CircleCollisionComponent extends CollisionComponent{
 	
 	@Override 
 	public Vec2d collide(GameObject o) {
+		TransformComponent curr = (TransformComponent)_go.getComponent("TRANSFORM");
+		_circle.setRadius(curr.getDim().x);
+		_circle.setCenter(curr.getLoc());
 		CollisionComponent other = (CollisionComponent)o.getComponent("COLLISION");
 		return other.collideWithSphere(_circle);
 	}
@@ -35,5 +38,4 @@ public class CircleCollisionComponent extends CollisionComponent{
 	public Vec2d collideWithPolygon(PolygonShape s1) {
 		return this.colliding(_circle, s1);
 	}
-
 }

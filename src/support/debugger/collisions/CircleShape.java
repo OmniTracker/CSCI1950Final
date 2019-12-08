@@ -19,8 +19,16 @@ public class CircleShape extends Shape {
 		return center;
 	}
 	
+	public void setCenter(Vec2d cent) {
+		this.center = cent;
+	}
+	
 	public float getRadius() {
 		return radius;
+	}
+	
+	public void setRadius(double r) {
+		this.radius = (float)r;
 	}
 
 	@Override

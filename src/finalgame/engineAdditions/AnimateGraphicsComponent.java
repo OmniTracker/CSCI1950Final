@@ -74,5 +74,9 @@ public class AnimateGraphicsComponent extends UnitGraphicsComponent{
 	public void setCharacter(Image c) {
 		_img = c;
 	}
+	
+	public int getDir() {
+		return _recentMove;
+	}
 
 }

@@ -14,7 +14,6 @@ public class PlayerInputComponent extends Component{
 	
 	public PlayerInputComponent(GameObject go, HashMap<String,Double> input) {
 		super(go);
-		// TODO Auto-generated constructor stub
 		_input = input;
 		_hasFocus = false;
 		_moveMultiplier = 1;
@@ -26,41 +25,68 @@ public class PlayerInputComponent extends Component{
 			double mult = nanosSinceLastTick * 0.00000005 * _moveMultiplier;
 			boolean moved=false;
 			TransformComponent curr = (TransformComponent)_go.getComponent("TRANSFORM");
-			if(_input.get("UP") == 1) {
+			if(_input.containsKey("W") && _input.get("W") == 1) {
 				if(_go.hasComponent("ANIMATE")) {
 					AnimateGraphicsComponent anim = (AnimateGraphicsComponent) _go.getComponent("ANIMATE");
 					anim.setAnimate(4);
 				}
-				curr.move(new Vec2d(0,-3.*mult));
+				curr.move(new Vec2d(0,-5.*mult));
 				moved = true;
 			}
-			if(_input.get("DOWN") == 1) {
+			if(_input.containsKey("S") && _input.get("S") == 1) {
 				if(_go.hasComponent("ANIMATE")) {
 					AnimateGraphicsComponent anim = (AnimateGraphicsComponent) _go.getComponent("ANIMATE");
 					anim.setAnimate(1);
 				}
-				curr.move(new Vec2d(0,3.*mult));
+				curr.move(new Vec2d(0,5.*mult));
 				moved = true;
 			}
-			if(_input.get("LEFT") == 1) {
+			if(_input.containsKey("A") && _input.get("A") == 1) {
 				if(_go.hasComponent("ANIMATE")) {
 					AnimateGraphicsComponent anim = (AnimateGraphicsComponent) _go.getComponent("ANIMATE");
 					anim.setAnimate(2);
 				}
-				curr.move(new Vec2d(-3.*mult,0));
+				curr.move(new Vec2d(-5.*mult,0));
 				moved = true;
 			}
-			if(_input.get("RIGHT") == 1) {
+			if(_input.containsKey("D") && _input.get("D") == 1) {
 				if(_go.hasComponent("ANIMATE")) {
 					AnimateGraphicsComponent anim = (AnimateGraphicsComponent) _go.getComponent("ANIMATE");
 					anim.setAnimate(3);
 				}
-				curr.move(new Vec2d(3.*mult,0));
+				curr.move(new Vec2d(5.*mult,0));
 				moved = true;
 			}
 			if (!moved && _go.hasComponent("ANIMATE")) {
 				AnimateGraphicsComponent anim = (AnimateGraphicsComponent) _go.getComponent("ANIMATE");
 				anim.setAnimate(0);
+			}
+			
+			if(_input.containsKey("E") && _input.get("E") == 1) {
+				if(_go.hasComponent("ABILITY_E")) {
+					AnimateAbilityComponent ability = (AnimateAbilityComponent) _go.getComponent("ABILITY_E");
+					ability.activateAbility();
+				}
+			}
+			
+			if (_input.containsKey("MOUSE_LEFT") && _input.get("MOUSE_LEFT") == 1) {
+				if(_go.hasComponent("ABILITY_CLICK")) {
+					AnimateAbilityComponent ability = (AnimateAbilityComponent) _go.getComponent("ABILITY_CLICK");
+					ability.activateAbility();
+				}
+			}
+
+			if (_input.containsKey("MOUSE_RIGHT") && _input.get("MOUSE_RIGHT") == 1) {
+				if(_go.hasComponent("ABILITY_CLICK")) {
+					MouseAbilityAnimationComponent ability = (MouseAbilityAnimationComponent) _go.getComponent("ABILITY_CLICK");
+					ability.showRangeIndicator();
+				}
+			}
+			else {
+				if(_go.hasComponent("ABILITY_CLICK")) {
+					MouseAbilityAnimationComponent ability = (MouseAbilityAnimationComponent) _go.getComponent("ABILITY_CLICK");
+					ability.hideRangeIndicator();
+				}
 			}
 		}
 	}
