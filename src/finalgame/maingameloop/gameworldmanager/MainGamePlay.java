@@ -37,10 +37,13 @@ import finalgame.engineAdditions.BehaviorSystem;
 import finalgame.engineAdditions.CollisionSystem;
 import finalgame.engineAdditions.GameObject;
 import finalgame.engineAdditions.GraphicsSystem;
+import finalgame.engineAdditions.HealthComponent;
 import finalgame.engineAdditions.PlayerInputComponent;
 import finalgame.engineAdditions.PlayerInputSystem;
 import finalgame.engineAdditions.TickSystem;
 import finalgame.engineAdditions.TransformComponent;
+import finalgame.engineAdditions.MouseAbilityAnimationComponent;
+import finalgame.engineAdditions.ScratchAbilityAnimationComponent;
 
 
 import javafx.scene.paint.Color;
@@ -121,10 +124,41 @@ public class MainGamePlay extends GameWorld {
 		_player.addComponent("TRANSFORM", new TransformComponent(_player, gameSpawnLoc, new Vec2d(40,60), 1.0));
 		_player.addComponent("INPUT", new PlayerInputComponent(_player, _input));
 		_player.addComponent("COLLISION", new AABCollisionComponent(_player, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
+		this.addSpecificCharacterComponents();
 		_objects.add(_player);
 		this.addToSystems(_player);
 		PlayerInputComponent curr = (PlayerInputComponent)_player.getComponent("INPUT");
 		curr.setFocus(true);
+	}
+	
+	private void addSpecificCharacterComponents() {
+		switch(_selectedCharacter) {
+			case 0:
+				//LYLA
+				_player.addComponent("HEALTH", new HealthComponent(_player, 100));
+				break;
+			case 1:
+				//EZRA
+				_player.addComponent("HEALTH", new HealthComponent(_player, 150));
+				break;
+			case 2:
+				//SAM
+				_player.addComponent("HEALTH", new HealthComponent(_player, 125));
+				break;
+			case 3:
+				//ARCHY
+				_player.addComponent("HEALTH", new HealthComponent(_player, 200));
+				
+				_player.addComponent("ABILITY_E", new ScratchAbilityAnimationComponent(_player, getElectricScratchImage(), new Vec2d(0,0), 
+						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(50,50), new Vec2d(192, 192),
+						11, 1, 2));
+				
+				_player.addComponent("ABILITY_CLICK", new MouseAbilityAnimationComponent(_player, getBulletImage(), new Vec2d(135,123), 
+						new Vec2d(23, 23), new Vec2d(0,0), new Vec2d(10,10), new Vec2d(0, 0),1, 1.0, 0, 250.));
+				break;
+			default:
+				break;
+		}
 	}
 
 	private void loadMap() {
@@ -298,7 +332,26 @@ public class MainGamePlay extends GameWorld {
 		}
 		return out;
 	}
-	
+	public static Image getElectricScratchImage() {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/Weapons/electricScratch.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
+	public static Image getBulletImage() {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/Weapons/simpleProjectile.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
 
 	/*
 	 *
@@ -412,6 +465,7 @@ public class MainGamePlay extends GameWorld {
     public void onMouseDragged(MouseEvent e) {
 		_input.put("MOUSE.X", e.getX());
 		_input.put("MOUSE.Y", e.getY());
+		System.out.println("CALLED");
 		this.onInput();
 	}
 	@Override

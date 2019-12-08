@@ -105,6 +105,11 @@ public class FinalGameWorld  extends GameWorld {
 			this.getCurrentlySelectedScreen().onMouseReleased(e);
 		}
 	}
+	public void onMouseDragged(MouseEvent e) {
+		if (this.getCurrentlySelectedScreen() != null) {
+			this.getCurrentlySelectedScreen().onMouseDragged(e);
+		}
+	}
 	public void onMouseMoved(MouseEvent e) {
 		if (this.getCurrentlySelectedScreen() != null) {
 			this.getCurrentlySelectedScreen().onMouseMoved(e);

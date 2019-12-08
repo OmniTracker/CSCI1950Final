@@ -24,16 +24,16 @@ public class ScratchAbilityAnimationComponent extends AnimateAbilityComponent{
 			Vec2d abilityLoc = new Vec2d(charLoc.x,charLoc.y);
 			Vec2d charDim = currTransform.getDim();
 			switch (facing) {
-				case 1:
+				case 4:
 					abilityLoc = charLoc.plus(new Vec2d(0,-_dim.y));
 					break;
 				case 2:
 					abilityLoc = charLoc.plus(new Vec2d(-_dim.x,0));
 					break;
-				case 3:
+				case 1:
 					abilityLoc = charLoc.plus(new Vec2d(0,charDim.y+5));
 					break;
-				case 4:
+				case 3:
 					abilityLoc = charLoc.plus(new Vec2d(charDim.x+5,0));
 					break;
 				default:
@@ -41,7 +41,6 @@ public class ScratchAbilityAnimationComponent extends AnimateAbilityComponent{
 			}
 			g.drawImage(_img,_imageLoc.x+(_currFrame%5)*_animationIncrement.x, _imageLoc.y + (_currFrame/5)*_animationIncrement.y, 
 					_imageDim.x, _imageDim.y,abilityLoc.x,abilityLoc.y,_dim.x,_dim.y);
-			
 		}
 	}
 		
