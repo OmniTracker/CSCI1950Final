@@ -13,8 +13,12 @@ import engine.ai.GameState;
 
 public class DistanceGOAP extends GOAP {
 
-	public DistanceGOAP(GameObject g, ArrayList<Action> actions, GOAPState start, GOAPState goal) {
+	// Maximum distance from target.
+	private double dist;
+	
+	public DistanceGOAP(GameObject g, ArrayList<Action> actions, GOAPState start, GOAPState goal, double dist) {
 		super(g, actions, start, goal);
+		this.dist = dist;
 	}
 
 	@Override
@@ -39,7 +43,7 @@ public class DistanceGOAP extends GOAP {
 	
 	@Override
 	public boolean isGoalState(GameState s) {
-		if (((DistanceState) s).getLoc().dist2(((DistanceState) _goal).getLoc())<=100000) {
+		if (((DistanceState) s).getLoc().dist2(((DistanceState) _goal).getLoc())<=dist) {
 			return true;
 		} else {
 			return false;

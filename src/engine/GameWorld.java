@@ -101,4 +101,8 @@ public class GameWorld {
 	public ArrayList<GameObject> getObjects() {
 		return _gameObjects;
 	}
+	
+	public void tickCollision() {
+		
+	}
 }

@@ -27,5 +27,11 @@ public class Move extends Action {
 	public void act(GameWorld w, GameObject obj) {
 		TransformComponent m = (TransformComponent) obj.getComponent("TRANSFORM");
 		m.move(dir.smult(speed));
+		w.tickCollision();
+	}
+	
+	@Override
+	public Vec2d getDir() {
+		return dir;
 	}
 }

@@ -2,7 +2,6 @@ package finalgame.engineAdditions;
 
 import engine.GameWorld;
 import support.Vec2d;
-import support.debugger.support.Vec2f;
 
 public class CollisionSystem extends GameSystem{
 
@@ -36,6 +35,9 @@ public class CollisionSystem extends GameSystem{
 	}
 	
 	private void collidePair(GameObject go1, GameObject go2, Vec2d mtv) {
-		
+		TransformComponent m1 = (TransformComponent) go1.getComponent("TRANSFORM");
+		TransformComponent m2 = (TransformComponent) go2.getComponent("TRANSFORM");
+		m1.move(mtv.sdiv(1));
+		//m2.move(mtv.sdiv(-2));
 	}
 }

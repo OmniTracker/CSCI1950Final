@@ -39,4 +39,10 @@ public class CopyWorld extends GameWorld {
 		}
 	}
 	
+	
+	@Override
+	public void tickCollision() {
+		_cs.onTick(0);
+	}
+	
 }

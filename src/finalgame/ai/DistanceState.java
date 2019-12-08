@@ -37,7 +37,7 @@ public class DistanceState extends GOAPState {
 	@Override
 	public boolean compare(GameState other) {
 		DistanceState o = (DistanceState) other;
-		if (this.loc.dist2(o.getLoc())<100) {
+		if (this.loc.dist2(o.getLoc())==0) {
 			return true;
 		} else {
 			return false;

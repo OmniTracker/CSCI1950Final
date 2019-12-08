@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class BehaviorSystem extends GameSystem{
 
 	private ArrayList<AIBehaviorComponent> _components;
+	private int counter = 0;
 	
 	public BehaviorSystem() {
 		super();
@@ -12,8 +13,11 @@ public class BehaviorSystem extends GameSystem{
 	}
 	
 	public void onTick(long nanosSinceLastTick) {
-		for(int i = 0; i<_components.size();i++) {
-			_components.get(i).tick(nanosSinceLastTick);
+		counter++;
+		if (counter%5==0) {
+			for(int i = 0; i<_components.size();i++) {
+				_components.get(i).tick(nanosSinceLastTick);
+			}
 		}
 	}
 	

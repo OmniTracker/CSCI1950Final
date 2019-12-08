@@ -40,10 +40,9 @@ public class AStar {
 			} catch(NoSuchElementException e) {
 				continue;
 			} 
-			//System.out.println(((DistanceState) curr).getLoc());
 			front.remove(curr);
-			count++;
-/*			if (count>3) {
+			count++;/*
+			if (count>500) {
 				goal_found = true;
 				fin = curr;
 			}*/
