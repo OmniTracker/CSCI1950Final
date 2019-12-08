@@ -24,8 +24,8 @@ import engine.ai.BehaviorTree;
 import engine.ai.Selector;
 import engine.ai.Sequencer;
 import engine.utility.Factory;
-import finalgame.maingameloop.FinalGameWorld;
 
+import finalgame.maingameloop.FinalGameWorld;
 import finalgame.engineAdditions.GameSystem;
 import finalgame.ai.MoveToLeader;
 import finalgame.ai.NotNearGroup;
@@ -38,13 +38,12 @@ import finalgame.engineAdditions.CollisionSystem;
 import finalgame.engineAdditions.GameObject;
 import finalgame.engineAdditions.GraphicsSystem;
 import finalgame.engineAdditions.HealthComponent;
+import finalgame.engineAdditions.MouseAbilityAnimationComponent;
 import finalgame.engineAdditions.PlayerInputComponent;
 import finalgame.engineAdditions.PlayerInputSystem;
+import finalgame.engineAdditions.ScratchAbilityAnimationComponent;
 import finalgame.engineAdditions.TickSystem;
 import finalgame.engineAdditions.TransformComponent;
-import finalgame.engineAdditions.MouseAbilityAnimationComponent;
-import finalgame.engineAdditions.ScratchAbilityAnimationComponent;
-
 
 import javafx.scene.paint.Color;
 import support.Vec2d;
@@ -52,7 +51,9 @@ import engine.Application;
 import engine.GameWorld;
 import engine.ui.Button;
 import engine.ui.EngineFonts;
+import finalgame.ui.GamePlayOverlay;
 import finalgame.ui.HighScorePanel;
+
 
 public class MainGamePlay extends GameWorld {
 
@@ -60,6 +61,7 @@ public class MainGamePlay extends GameWorld {
     private boolean _highScoreTest = true;
     private HighScorePanel _highScorePanel = null;
     private Button _highScoreTestButton = null;
+
 
 	private ArrayList<GameSystem> _systems;
 	private ArrayList<GameObject> _objects;
@@ -71,6 +73,9 @@ public class MainGamePlay extends GameWorld {
 	private PlayerInputSystem _inputSys;
 	private CollisionSystem _collisionSys;
 	private BehaviorSystem _behaviorSys;
+
+	// Game Play Overlay
+	private GamePlayOverlay _gamePlayOverlay;
 
 	//Hashmap that keeps track of all user input
 	private HashMap<String, Double> _input;
@@ -97,6 +102,8 @@ public class MainGamePlay extends GameWorld {
 
 		_affine = new Affine();
 
+		// Used to display game view overlay
+		_gamePlayOverlay = new GamePlayOverlay(app,parent);
 	}
 
 
@@ -130,30 +137,30 @@ public class MainGamePlay extends GameWorld {
 		PlayerInputComponent curr = (PlayerInputComponent)_player.getComponent("INPUT");
 		curr.setFocus(true);
 	}
-	
+
 	private void addSpecificCharacterComponents() {
 		switch(_selectedCharacter) {
 			case 0:
 				//LYLA
-				_player.addComponent("HEALTH", new HealthComponent(_player, 100));
+//				_player.addComponent("HEALTH", new HealthComponent(_player, 100));
 				break;
 			case 1:
 				//EZRA
-				_player.addComponent("HEALTH", new HealthComponent(_player, 150));
+//				_player.addComponent("HEALTH", new HealthComponent(_player, 150));
 				break;
 			case 2:
 				//SAM
-				_player.addComponent("HEALTH", new HealthComponent(_player, 125));
+//				_player.addComponent("HEALTH", new HealthComponent(_player, 125));
 				break;
 			case 3:
 				//ARCHY
 				_player.addComponent("HEALTH", new HealthComponent(_player, 200));
-				
-				_player.addComponent("ABILITY_E", new ScratchAbilityAnimationComponent(_player, getElectricScratchImage(), new Vec2d(0,0), 
+
+				_player.addComponent("ABILITY_E", new ScratchAbilityAnimationComponent(_player, getElectricScratchImage(), new Vec2d(0,0),
 						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(50,50), new Vec2d(192, 192),
 						11, 1, 2));
-				
-				_player.addComponent("ABILITY_CLICK", new MouseAbilityAnimationComponent(_player, getBulletImage(), new Vec2d(135,123), 
+
+				_player.addComponent("ABILITY_CLICK", new MouseAbilityAnimationComponent(_player, getBulletImage(), new Vec2d(135,123),
 						new Vec2d(23, 23), new Vec2d(0,0), new Vec2d(10,10), new Vec2d(0, 0),1, 1.0, 0, 250.));
 				break;
 			default:
@@ -182,7 +189,7 @@ public class MainGamePlay extends GameWorld {
 		g.addComponent("BEHAVIOR", new AIBehaviorComponent(g,bt));
 		_objects.add(g);
 		this.addToSystems(g);
-		
+
 		g = new GameObject("ENEMY");
 		animate = new AnimateGraphicsComponent(g, this.getPlayerImage(_selectedCharacter), new Vec2d(54,0), new Vec2d(34,48), 2, new Vec2d(48,48));
 		g.addComponent("DRAW", animate);
@@ -196,7 +203,7 @@ public class MainGamePlay extends GameWorld {
 		g.addComponent("BEHAVIOR", new AIBehaviorComponent(g,bt));
 		_objects.add(g);
 		this.addToSystems(g);
-		
+
 		g = new GameObject("ENEMY");
 		animate = new AnimateGraphicsComponent(g, this.getPlayerImage(_selectedCharacter), new Vec2d(54,0), new Vec2d(34,48), 2, new Vec2d(48,48));
 		g.addComponent("DRAW", animate);
@@ -210,7 +217,7 @@ public class MainGamePlay extends GameWorld {
 		g.addComponent("BEHAVIOR", new AIBehaviorComponent(g,bt));
 		_objects.add(g);
 		this.addToSystems(g);
-		
+
 		g = new GameObject("ENEMY");
 		animate = new AnimateGraphicsComponent(g, this.getPlayerImage(_selectedCharacter), new Vec2d(54,0), new Vec2d(34,48), 2, new Vec2d(48,48));
 		g.addComponent("DRAW", animate);
@@ -420,9 +427,16 @@ public class MainGamePlay extends GameWorld {
 
 		_graphicsSys.onDraw(g, _affine);
 		g.restore();
+
+		// Draw
+		_gamePlayOverlay.drawOverlay(g);
 	}
+
+
 	@Override
 	public void onKeyTyped(KeyEvent e) {}
+
+
 	@Override
 	public void onKeyPressed(KeyEvent e) {
 		if ( this.getHighScorePanel().isShowing() == true)
@@ -432,6 +446,8 @@ public class MainGamePlay extends GameWorld {
 		_input.put(e.getCode().toString(), 1.);
 		this.onInput();
 	}
+
+
 	@Override
 	public void onKeyReleased(KeyEvent e) {
 		_input.put(e.getCode().toString(), 0.);
@@ -528,9 +544,11 @@ public class MainGamePlay extends GameWorld {
 		this.loadCharacter();
 		this.loadEnemies();
 	}
-	
+
 	@Override
 	public ArrayList<GameObject> getObjects() {
 		return _objects;
 	}
+
+
 }

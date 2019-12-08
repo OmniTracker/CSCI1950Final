@@ -4,15 +4,14 @@ import java.util.ArrayList;
 
 import finalgame.engineAdditions.GameObject;
 
-public class GroupInformation {
+public abstract class GroupInformation {
 
 	public ArrayList<GameObject> _group;
 	// Flags are used to fork conditions in the Behavior Tree. Can be used for intragroup communication.
-	public ArrayList<String> _flags;
+	public ArrayList<Boolean> _flags;
 	
 	public GroupInformation() {
 		_group = new ArrayList<GameObject>();
-		_flags = new ArrayList<String>();
 	}
 	
 	public GroupInformation(GameObject ... gameObjects) {
@@ -20,13 +19,11 @@ public class GroupInformation {
 		for (GameObject obj: gameObjects) {
 			_group.add(obj);
 		}
-		_flags = new ArrayList<String>();
+		_flags = new ArrayList<Boolean>();
 	}
 	
 	// Check conditions on each object.
-	public void tick(long nanos) {
-		return;
-	}
+	public abstract void tick(long nanos);
 	
 	public void addObjects(GameObject ... gameObjects) {
 		for (GameObject obj: gameObjects) {
@@ -38,11 +35,11 @@ public class GroupInformation {
 		_group.remove(obj);
 	}
 	
-	public void addFlag(String flag) {
+	public void addFlag(boolean flag) {
 		_flags.add(flag);
 	}
 	
-	public void removeFlag(String flag) {
+	public void removeFlag(boolean flag) {
 		_flags.remove(flag);
 	}
 

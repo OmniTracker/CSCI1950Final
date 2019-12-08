@@ -11,6 +11,12 @@ public class TestGI extends GroupInformation {
 		super();	
 	}
 	
+	@Override
+	public void tick(long nanos) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	public void setLeader(GameObject o) {
 		if (!_group.contains(o)) {
 			_group.add(o);
@@ -30,5 +36,7 @@ public class TestGI extends GroupInformation {
 	public GameObject getLeader() {
 		return _leader;
 	}
+
+	
 	
 }

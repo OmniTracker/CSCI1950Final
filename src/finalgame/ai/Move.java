@@ -12,15 +12,8 @@ public class Move extends Action {
 	private Vec2d dir;
 	
 	public Move(double s, Vec2d dir) {
-		
 		this.speed = Math.abs(s);
 		this.dir = dir.normalize();
-	}
-	
-	public Move(Action act) {
-		Move m = (Move) act;
-		this.speed = m.speed;
-		this.dir = m.dir;
 	}
 	
 	@Override
