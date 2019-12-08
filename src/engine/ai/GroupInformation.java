@@ -1,9 +1,10 @@
 package engine.ai;
 
 import java.util.ArrayList;
-import engine.gameobject.GameObject;
 
-public abstract class GroupInformation {
+import finalgame.engineAdditions.GameObject;
+
+public class GroupInformation {
 
 	public ArrayList<GameObject> _group;
 	// Flags are used to fork conditions in the Behavior Tree. Can be used for intragroup communication.
@@ -22,8 +23,10 @@ public abstract class GroupInformation {
 		_flags = new ArrayList<String>();
 	}
 	
-	// Check conditions on each object and update flags.
-	public abstract void tick(long nanos);
+	// Check conditions on each object.
+	public void tick(long nanos) {
+		return;
+	}
 	
 	public void addObjects(GameObject ... gameObjects) {
 		for (GameObject obj: gameObjects) {

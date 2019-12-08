@@ -19,11 +19,18 @@ import support.debugger.support.Vec2f;
 import support.debugger.support.shapes.AABShapeDefine;
 import engine.Application;
 import engine.GameWorld;
+import engine.ai.BehaviorTree;
+import engine.ai.Selector;
+import engine.ai.Sequencer;
 import engine.utility.Factory;
 import finalgame.maingameloop.FinalGameWorld;
 
 import finalgame.engineAdditions.GameSystem;
+import finalgame.ai.MoveToLeader;
+import finalgame.ai.NotNearGroup;
+import finalgame.ai.TestGI;
 import finalgame.engineAdditions.AABCollisionComponent;
+import finalgame.engineAdditions.AIBehaviorComponent;
 import finalgame.engineAdditions.AnimateGraphicsComponent;
 import finalgame.engineAdditions.BehaviorSystem;
 import finalgame.engineAdditions.CollisionSystem;
@@ -135,7 +142,64 @@ public class MainGamePlay extends GameWorld {
 	}
 
 	private void loadEnemies() {
-
+		double follow_dist = 5000;
+		GameObject g = new GameObject("ENEMY");
+		AnimateGraphicsComponent animate = new AnimateGraphicsComponent(g, this.getPlayerImage(_selectedCharacter), new Vec2d(54,0), new Vec2d(34,48), 2, new Vec2d(48,48));
+		g.addComponent("DRAW", animate);
+		g.addComponent("ANIMATE", animate);
+		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1000,100), new Vec2d(40,60), 1.0));
+		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
+		TestGI gi = new TestGI();
+		BehaviorTree bt = new BehaviorTree(new Selector(),gi, this, g);
+		bt.addBehavior(0,  new Sequencer());
+		bt.addBehavior(1, new NotNearGroup(g,follow_dist));
+		bt.addBehavior(1, new MoveToLeader(follow_dist));
+		gi.setLeader(_player);
+		g.addComponent("BEHAVIOR", new AIBehaviorComponent(g,bt));
+		_objects.add(g);
+		this.addToSystems(g);
+		
+		g = new GameObject("ENEMY");
+		animate = new AnimateGraphicsComponent(g, this.getPlayerImage(_selectedCharacter), new Vec2d(54,0), new Vec2d(34,48), 2, new Vec2d(48,48));
+		g.addComponent("DRAW", animate);
+		g.addComponent("ANIMATE", animate);
+		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1000,200), new Vec2d(40,60), 1.0));
+		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
+		bt = new BehaviorTree(new Selector(),gi, this, g);
+		bt.addBehavior(0,  new Sequencer());
+		bt.addBehavior(1, new NotNearGroup(g,follow_dist));
+		bt.addBehavior(1, new MoveToLeader(follow_dist));
+		g.addComponent("BEHAVIOR", new AIBehaviorComponent(g,bt));
+		_objects.add(g);
+		this.addToSystems(g);
+		
+		g = new GameObject("ENEMY");
+		animate = new AnimateGraphicsComponent(g, this.getPlayerImage(_selectedCharacter), new Vec2d(54,0), new Vec2d(34,48), 2, new Vec2d(48,48));
+		g.addComponent("DRAW", animate);
+		g.addComponent("ANIMATE", animate);
+		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1000,300), new Vec2d(40,60), 1.0));
+		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
+		bt = new BehaviorTree(new Selector(),gi, this, g);
+		bt.addBehavior(0,  new Sequencer());
+		bt.addBehavior(1, new NotNearGroup(g,follow_dist));
+		bt.addBehavior(1, new MoveToLeader(follow_dist));
+		g.addComponent("BEHAVIOR", new AIBehaviorComponent(g,bt));
+		_objects.add(g);
+		this.addToSystems(g);
+		
+		g = new GameObject("ENEMY");
+		animate = new AnimateGraphicsComponent(g, this.getPlayerImage(_selectedCharacter), new Vec2d(54,0), new Vec2d(34,48), 2, new Vec2d(48,48));
+		g.addComponent("DRAW", animate);
+		g.addComponent("ANIMATE", animate);
+		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1000,400), new Vec2d(40,60), 1.0));
+		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
+		bt = new BehaviorTree(new Selector(),gi, this, g);
+		bt.addBehavior(0,  new Sequencer());
+		bt.addBehavior(1, new NotNearGroup(g,follow_dist));
+		bt.addBehavior(1, new MoveToLeader(follow_dist));
+		g.addComponent("BEHAVIOR", new AIBehaviorComponent(g,bt));
+		_objects.add(g);
+		this.addToSystems(g);
 	}
 
 
@@ -376,7 +440,10 @@ public class MainGamePlay extends GameWorld {
 		this._highScorePanel = _highScorePanel;
 	}
 
-
+	@Override
+	public void tickCollision() {
+		_collisionSys.onTick(0);
+	}
 
 	public void onInput() {
 		_inputSys.onInput(_input);
@@ -402,5 +469,10 @@ public class MainGamePlay extends GameWorld {
 		this.loadMap();
 		this.loadCharacter();
 		this.loadEnemies();
+	}
+	
+	@Override
+	public ArrayList<GameObject> getObjects() {
+		return _objects;
 	}
 }

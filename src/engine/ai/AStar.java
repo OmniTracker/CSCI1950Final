@@ -27,8 +27,6 @@ public class AStar {
 		HashSet<GameState> front = new HashSet<GameState>();
 		front.add(start);
 		HashMap<GameState,GameState> parent = new HashMap<GameState,GameState>();
-		//HashMap<GameState,Double> cost = new HashMap<GameState,Double>();
-		//cost.put(start, 0.0);
 		ArrayList<GameState> path = new ArrayList<GameState>();
 		GameState fin = start;
 		int count = 0;
@@ -42,11 +40,9 @@ public class AStar {
 			} catch(NoSuchElementException e) {
 				continue;
 			} 
-			
 			front.remove(curr);
-			/*count++;
-			System.out.println(count);
-			if (count>750) {
+			count++;/*
+			if (count>500) {
 				goal_found = true;
 				fin = curr;
 			}*/
@@ -57,7 +53,8 @@ public class AStar {
 				visited.add(curr);
 				HashSet<GameState> successors = s.getSuccessors(curr);
 				for (GameState suc: successors) {
-					if (!this.inSet(visited, suc)&&!this.inSet(front, suc)) {
+					//System.out.println(((DistanceState) suc).getLoc());
+					if (!this.inSet(visited, suc)&& !this.inSet(front, suc)) {
 						parent.put(suc, curr);
 						//cost.put(suc, cost.get(curr)+successors.get(curr));
 						frontier.add(suc);
@@ -78,15 +75,6 @@ public class AStar {
 	}
 	
 	public GameState getNext(boolean newPath) {
-		/*
-		GameState start = s.getStartState();
-		HashSet<GameState> successors = s.getSuccessors(start);
-		for (GameState suc: successors) {
-			//cost.put(suc, cost.get(curr)+successors.get(curr));
-			frontier.add(suc);
-		}
-		
-		return frontier.remove();*/
 		if (newPath) {
 			path = this.getPath();
 		}

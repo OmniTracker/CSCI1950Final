@@ -1,5 +1,9 @@
 package engine;
 
+import java.util.ArrayList;
+
+import finalgame.engineAdditions.GameObject;
+import finalgame.engineAdditions.GameSystem;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -14,6 +18,8 @@ public class GameWorld {
 	private Vec2d _gameSize;
 	private Vec2d _origin;
 	private GameWorld _parent;
+	public ArrayList<GameObject> _gameObjects;
+	public ArrayList<GameSystem> _systems;
 	public boolean miniMap;
 	
 	protected GameWorld(Application app, GameWorld parent) {
@@ -22,6 +28,9 @@ public class GameWorld {
 	}
 	protected GameWorld(Application app) {
 		this.setApplication(app);
+	}
+	protected GameWorld() {
+		
 	}
 	public void onTick(long nanosSincePreviousTick) {
 	}
@@ -88,5 +97,12 @@ public class GameWorld {
 	}
 	private void setParent(GameWorld _parent) {
 		this._parent = _parent;
+	}
+	public ArrayList<GameObject> getObjects() {
+		return _gameObjects;
+	}
+	
+	public void tickCollision() {
+		
 	}
 }
