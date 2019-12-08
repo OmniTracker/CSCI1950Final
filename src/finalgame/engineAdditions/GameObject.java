@@ -50,14 +50,26 @@ public class GameObject {
 		if(_components.containsKey("TICK")) {
 			_components.get("TICK").tick(t);
 		}
-		if(_components.containsKey("PHYSICS")) {
-			_components.get("PHYSICS").tick(t);
+		if(_components.containsKey("ABILITY_E")) {
+			_components.get("ABILITY_E").tick(t);
+		}
+		if(_components.containsKey("ABILITY_CLICK")) {
+			_components.get("ABILITY_CLICK").tick(t);
 		}
 	}
 	
 	public void draw(GraphicsContext g, Affine af) {
 		if(_components.containsKey("DRAW")) {
 			_components.get("DRAW").draw(g, af);
+		}
+		if(_components.containsKey("HEALTH")) {
+			_components.get("HEALTH").draw(g, af);
+		}
+		if(_components.containsKey("ABILITY_E")) {
+			_components.get("ABILITY_E").draw(g, af);
+		}
+		if(_components.containsKey("ABILITY_CLICK")) {
+			_components.get("ABILITY_CLICK").draw(g, af);
 		}
 	}
 	

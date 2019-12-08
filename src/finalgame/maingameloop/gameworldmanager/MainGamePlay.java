@@ -9,6 +9,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.transform.Affine;
@@ -85,7 +86,6 @@ public class MainGamePlay extends GameWorld {
 		super(app);
 		_finalGameWorld = parent;
 		_input = new HashMap<String, Double>();
-		this.initializeInputs();
 
 		_systems = new ArrayList<GameSystem>();
 		_objects = new ArrayList<GameObject>();
@@ -98,16 +98,6 @@ public class MainGamePlay extends GameWorld {
 		
 		// Used to display game view overlay
 		_gamePlayOverlay = new GamePlayOverlay(app,parent);
-	}
-
-
-	private void initializeInputs() {
-		//Must include all gameplay buttons, will depend on key bindings
-		_input.put("UP", 0.);
-		_input.put("DOWN", 0.);
-		_input.put("LEFT", 0.);
-		_input.put("RIGHT", 0.);
-		_input.put("SPACE", 0.);
 	}
 
 
@@ -412,17 +402,31 @@ public class MainGamePlay extends GameWorld {
 
 	@Override
 	public void onMousePressed(MouseEvent e) {
-		_input.put("MOUSE_LEFT", 1.);
+		if(e.getButton() == MouseButton.PRIMARY) {
+			_input.put("MOUSE_LEFT", 1.);
+		}
+		else if (e.getButton() == MouseButton.SECONDARY) {
+			_input.put("MOUSE_RIGHT", 1.);
+		}
 		this.onInput();
 	}
 	@Override
 	public void onMouseReleased(MouseEvent e) {
-		_input.put("MOUSE_LEFT", 0.);
+		if(e.getButton() == MouseButton.PRIMARY) {
+			_input.put("MOUSE_LEFT", 0.);
+		}
+		else if (e.getButton() == MouseButton.SECONDARY) {
+			_input.put("MOUSE_RIGHT", 0.);
+		}
 		this.onInput();
 	}
 
     @Override
-    public void onMouseDragged(MouseEvent e) {}
+    public void onMouseDragged(MouseEvent e) {
+		_input.put("MOUSE.X", e.getX());
+		_input.put("MOUSE.Y", e.getY());
+		this.onInput();
+	}
 	@Override
 	public void onMouseMoved(MouseEvent e) {
 		_input.put("MOUSE.X", e.getX());
