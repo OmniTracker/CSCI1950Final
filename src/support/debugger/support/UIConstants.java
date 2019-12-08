@@ -1,4 +1,4 @@
-package support.debugger.support;
+package debugger.support;
 
 import javafx.scene.paint.Color;
 

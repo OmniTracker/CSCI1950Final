@@ -3,7 +3,7 @@ package support.debugger.collisions;
 import support.debugger.support.Vec2f;
 import support.debugger.support.shapes.Shape;
 
-public class PolygonShape extends Shape {
+public  class PolygonShape extends Shape {
 	
 	protected Vec2f[] points;
 	

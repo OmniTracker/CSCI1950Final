@@ -5,7 +5,7 @@ import support.debugger.support.shapes.Shape;
 
 public abstract class AABShape extends Shape {
 	
-	public Vec2f topLeft;
+	protected Vec2f topLeft;
 	protected Vec2f size;
 
 	public AABShape(Vec2f topLeft, Vec2f size) {

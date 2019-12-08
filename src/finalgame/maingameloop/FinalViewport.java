@@ -20,7 +20,6 @@ public class FinalViewport extends ViewportHandler {
 	}
 	public void onDraw(GraphicsContext g) {		
 		this.getGameWorld().onDraw(g);
-		
 		this.getMenuBar().onDraw(g);
 	}
 	public void onMouseClicked(MouseEvent e) {

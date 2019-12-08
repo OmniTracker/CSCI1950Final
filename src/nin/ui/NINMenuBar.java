@@ -1,0 +1,227 @@
+package nin.ui;
+
+import nin.level0.NinGameWorld;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.paint.Color;
+import support.Vec2d;
+import engine.ui.Button;
+import engine.ui.EngineFonts;
+import engine.ui.MenuBar;
+import engine.utility.AspectRatioHandler;
+import engine.utility.EventHandler;
+
+public class NINMenuBar extends MenuBar implements EventHandler {
+	private Integer _contextHolder          = -1; 
+	private Integer RESTART_GAME_PANEL_VIEW = 1; 
+	private Integer END_GAME_PANEL_VIEW     = 2; 
+	private Integer SAVE_GAME_PANEL_VIEW    = 3; 
+	private NinGameWorld _gameWorld; 
+
+	private NINXMLGameHandler _xmlGameHandler; 
+	
+	
+	public NINMenuBar(AspectRatioHandler aspect) {
+		super(aspect,40 ,Color.DARKGRAY);
+		this.initializeMenuButtons();
+		this.initializePanelViews();
+		this.setXMLGameHandler(new NINXMLGameHandler());
+	}
+	
+	public void initializeMenuButtons () {
+		// Save Game
+		Button saveGame = new Button(); 
+		saveGame.setText("Save Game");
+		saveGame.setSize( new Vec2d(100,30));
+		saveGame.setColor( Color.WHITE);
+		saveGame.setFontName(EngineFonts.getWiz());
+		this.insertButton(saveGame.getText(),saveGame);	
+		// Restart Game
+		Button restartGame = new Button();
+		restartGame.setText("Restart Game");
+		restartGame.setSize(new Vec2d(100,30));
+		restartGame.setColor( Color.WHITE);
+		restartGame.setFontName(EngineFonts.getWiz());
+		this.insertButton(restartGame.getText() ,restartGame);
+		// End Game
+		Button endGame = new Button();
+		endGame.setText("End Game");
+		endGame.setSize(new Vec2d(100,30));
+		endGame.setColor( Color.WHITE);
+		endGame.setFontName(EngineFonts.getWiz());
+		this.insertButton(endGame.getText(),endGame);
+	}	
+	public void initializePanelViews () {
+		// Save Game
+		SaveGamePanel saveGamePanel = new SaveGamePanel(this.getAspectRatio());
+		saveGamePanel.setColor(Color.DARKGRAY);
+		saveGamePanel.setSecondaryColor(Color.DARKGREEN);
+		saveGamePanel.setSize( new Vec2d(500,200));
+		saveGamePanel.setOrigin(new Vec2d(0,0));
+		saveGamePanel.setBoarderSize(10);
+		this.insertPanel(SAVE_GAME_PANEL_VIEW, saveGamePanel);	
+		// Restart Game Panel
+		RestartGamePanel restartGamePanel = new RestartGamePanel( this.getAspectRatio()); 
+		restartGamePanel.setColor(Color.DARKGRAY);
+		restartGamePanel.setSecondaryColor(Color.DARKGREEN);
+		restartGamePanel.setSize( new Vec2d(500,200));	
+		restartGamePanel.setOrigin(new Vec2d(0,0));
+		restartGamePanel.setBoarderSize(10);
+		this.insertPanel((Integer)RESTART_GAME_PANEL_VIEW, restartGamePanel);
+		// End Game Panel
+		EndGamePanel endGamePanel = new EndGamePanel( this.getAspectRatio()); 
+		endGamePanel.setColor(Color.DARKGRAY);
+		endGamePanel.setSecondaryColor(Color.DARKGREEN);
+		endGamePanel.setSize( new Vec2d(500,200));	
+		endGamePanel.setOrigin(new Vec2d(0,0));
+		endGamePanel.setBoarderSize(10);
+		this.insertPanel((Integer)END_GAME_PANEL_VIEW, endGamePanel);
+	}
+
+	private void drawPanelView(GraphicsContext g) {
+		if (this.isMenuActivated() == true)  {
+			if (this.getContextHolder() == RESTART_GAME_PANEL_VIEW)  {
+				RestartGamePanel panel = (RestartGamePanel) this.getPanelViews().get(RESTART_GAME_PANEL_VIEW);
+				panel.onDraw(g);	
+			} 
+			else if (this.getContextHolder() == END_GAME_PANEL_VIEW) {
+				EndGamePanel panel = (EndGamePanel) this.getPanelViews().get(END_GAME_PANEL_VIEW);
+				panel.onDraw(g);	
+			}
+			else if (this.getContextHolder() == SAVE_GAME_PANEL_VIEW) {
+				SaveGamePanel panel = (SaveGamePanel) this.getPanelViews().get(SAVE_GAME_PANEL_VIEW);
+				panel.onDraw(g);	
+			}
+		}
+	}
+	public void onMouseClicked(MouseEvent e) {
+		if (this.isMenuActivated() == false) {
+			this.checkMenuButtonActivation(e);			
+		} else {
+			if (this.getContextHolder() == RESTART_GAME_PANEL_VIEW) {
+				RestartGamePanel panel = (RestartGamePanel) this.getPanelViews().get(RESTART_GAME_PANEL_VIEW);
+				panel.onMouseClicked(e);
+				if (panel.getOKButton().clicked(e)) 
+				{
+					System.out.print("Restart Game \n");
+					return;
+				}
+				if ( panel.isShowing() == false) {
+					this.setContextHolder(-1);
+					this.setMenuActivated(false);
+				}
+
+			} else if (this.getContextHolder() == SAVE_GAME_PANEL_VIEW) {	
+				SaveGamePanel panel = (SaveGamePanel) this.getPanelViews().get(SAVE_GAME_PANEL_VIEW);
+				panel.onMouseClicked(e);
+				if (panel.getOKButton().clicked(e)) 
+				{
+					System.out.print("Save Game \n");
+					return;
+				}
+				if ( panel.isShowing() == false) {
+					this.setContextHolder(-1);
+					this.setMenuActivated(false);
+				}
+			} else if (this.getContextHolder() == END_GAME_PANEL_VIEW) {	
+				EndGamePanel panel = (EndGamePanel) this.getPanelViews().get(END_GAME_PANEL_VIEW);
+				panel.onMouseClicked(e);	
+				
+				if (panel.getOKButton().clicked(e)) 
+				{
+					System.out.print("End Game \n");
+					return;
+				}
+				
+				if ( panel.isShowing() == false) {
+					this.setContextHolder(-1);
+					this.setMenuActivated(false);
+				}
+			} 
+		}
+	}
+
+	private void checkMenuButtonActivation(MouseEvent e) 
+	{
+		if (this.checkMenuCollision(e) == true) 
+		{	
+			String buttonPushed = this.checkButtonCollision(e);
+			if (!buttonPushed.isEmpty()) 
+			{				
+				this.setMenuActivated(true);
+				// Give the contexts to right button.
+				if (buttonPushed.contains("Save Game"))
+				{
+					this.setContextHolder(SAVE_GAME_PANEL_VIEW);
+				}
+				else if (buttonPushed.contains("Restart Game")) 
+				{					
+					this.setContextHolder(RESTART_GAME_PANEL_VIEW);
+				}
+				else if (buttonPushed.contains("End Game"))
+				{					
+					this.setContextHolder(END_GAME_PANEL_VIEW);
+				}
+				else 
+				{
+					this.setMenuActivated(false);
+					return;
+				}
+			}
+			 
+		}	
+
+	}
+	public void onTick(long nanosSincePreviousTick) {}
+	public void onKeyTyped(KeyEvent e) {}
+	public void onMousePressed(MouseEvent e) {}
+	public void onMouseDragged(MouseEvent e) {}
+	public void onMouseReleased(MouseEvent e) {}
+	public void onMouseMoved(MouseEvent e) {}
+	public void onMouseWheelMoved(ScrollEvent e) {}
+	public void onFocusChanged(boolean newVal) {}
+	public void onResize(Vec2d newSize) {}
+	public void onShutdown() {}
+	public void onStartup() {}
+	public void onKeyReleased(KeyEvent e) {}
+	private Integer getContextHolder() {
+		return _contextHolder;
+	}
+
+	private void setContextHolder(Integer _contextHolder) {
+		this._contextHolder = _contextHolder;
+	}
+
+	public void setGameWorld(NinGameWorld _gameWorld) {
+		this._gameWorld = _gameWorld;
+	}
+
+	private NinGameWorld getGameWorld() {
+		return _gameWorld;
+	}
+
+	public void onDraw(GraphicsContext g) {
+		this.drawPanelView(g);
+		this.draw(g);
+	}
+
+	@Override
+	public void onKeyPressed(KeyEvent e) {
+		
+		System.out.print("Fuck !");
+		// TODO Auto-generated method stub
+
+	}
+
+	private NINXMLGameHandler getXMLGameHandler() {
+		return _xmlGameHandler;
+	}
+
+	private void setXMLGameHandler(NINXMLGameHandler _xmlGameHandler) {
+		this._xmlGameHandler = _xmlGameHandler;
+	}
+
+
+}

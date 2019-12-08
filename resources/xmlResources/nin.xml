@@ -1,0 +1,15 @@
+<Game>
+
+    <platform id="1">
+        <triggered>NO</triggered>
+    </platform>
+
+    <platform id="2">
+        <triggered>NO</triggered>
+    </platform>
+
+    <platform id="3">
+        <triggered>NO</triggered>
+    </platform>
+
+</Game>

@@ -58,7 +58,7 @@ public class NINStart extends Screen {
 			_fadeOutLimit += 6; 				
 		}
 		if (_fadeOut > 1.2)  {
-			this.getApplication().setLevel((this.getApplication().TIC + 1));
+			this.getApplication().setLevel((this.getApplication().NIN + 1));
 		}
 	}
 

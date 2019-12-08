@@ -1,1 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><KeyBindings><action tag="0"><s/></action><action tag="1"><w/></action><action tag="2"><w/></action><action tag="3"><w/></action><action tag="4"><q/></action></KeyBindings>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<KeyBindings>
+<action tag="0">
+<s/>
+</action>
+
+<action tag="1">
+<w/>
+</action>
+
+<action tag="2">
+<w/>
+</action>
+
+<action tag="3"><w/>
+
+</action>
+
+<action tag="4">
+<q/>
+
+</action></KeyBindings>

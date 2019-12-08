@@ -50,14 +50,14 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 
 		// Setup Sequence Node
 		ArrayList<NinBehaviorSequence> sequence = new ArrayList<NinBehaviorSequence>(); 
-		mainCharacter.setNinBehaviorTree(new NINBehaviorTree());
-		mainCharacter.getNinBehaviorTree().setName("Main");
+		mainCharacter.getData().setNinBehaviorTree(new NINBehaviorTree());
+		mainCharacter.getData().getNinBehaviorTree().setName("Main");
 
 		sequence.add(new JumpSignaled(mainCharacter)); 
 		sequence.add(new PhysicsAction(mainCharacter)); 
 
 		// Add Sequence node
-		mainCharacter.getNinBehaviorTree().getSequence().add(sequence); 
+		mainCharacter.getData().getNinBehaviorTree().getSequence().add(sequence); 
 
 		// Finally add the character to the ArrayList
 		this.getGameCharacters().add(mainCharacter);
@@ -68,36 +68,36 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 
 		// Setup Sequence Node
 		ArrayList<NinBehaviorSequence> sequence0 = new ArrayList<NinBehaviorSequence>(); 
-		testCharacter0.setNinBehaviorTree(new NINBehaviorTree());
-		testCharacter0.getNinBehaviorTree().setName("0");
+		testCharacter0.getData().setNinBehaviorTree(new NINBehaviorTree());
+		testCharacter0.getData().getNinBehaviorTree().setName("0");
 
 		// Add Sequence node
-		testCharacter0.getNinBehaviorTree().getSequence().add(sequence0); 
+		testCharacter0.getData().getNinBehaviorTree().getSequence().add(sequence0); 
 
 		// Finally add the character to the ArrayList
 		this.getGameCharacters().add(testCharacter0);
 		testCharacter1 = new GameObject();
 		this.getFactory();
-		testCharacter1.setName("1");
+		testCharacter1.getData().setName("1");
 
 		// Setup Sequence Node
 		ArrayList<NinBehaviorSequence> sequence1 = new ArrayList<NinBehaviorSequence>(); 
-		testCharacter1.setNinBehaviorTree(new NINBehaviorTree());
-		testCharacter1.getNinBehaviorTree().setName("1");
+		testCharacter1.getData().setNinBehaviorTree(new NINBehaviorTree());
+		testCharacter1.getData().getNinBehaviorTree().setName("1");
 		// Add Sequence node
-		testCharacter1.getNinBehaviorTree().getSequence().add(sequence1); 
+		testCharacter1.getData().getNinBehaviorTree().getSequence().add(sequence1); 
 		// Finally add the character to the ArrayList
 		this.getGameCharacters().add(testCharacter1);
 
 		testCharacter2 = new GameObject();
 		this.getFactory();
-		testCharacter2.setName("2");
+		testCharacter2.getData().setName("2");
 		// Setup Sequence Node
 		ArrayList<NinBehaviorSequence> sequence2 = new ArrayList<NinBehaviorSequence>(); 
-		testCharacter2.setNinBehaviorTree(new NINBehaviorTree());
-		testCharacter2.getNinBehaviorTree().setName("2");
+		testCharacter2.getData().setNinBehaviorTree(new NINBehaviorTree());
+		testCharacter2.getData().getNinBehaviorTree().setName("2");
 		// Add Sequence node
-		testCharacter2.getNinBehaviorTree().getSequence().add(sequence2); 
+		testCharacter2.getData().getNinBehaviorTree().getSequence().add(sequence2); 
 
 		// Finally add the character to the ArrayList
 		this.getGameCharacters().add(testCharacter2);

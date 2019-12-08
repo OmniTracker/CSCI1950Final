@@ -36,7 +36,7 @@ public class MoveMainCharacterComponent  extends Components {
 		JumpSignaled signal = (JumpSignaled) this.getNinGameWorld().
 				getNinGameObjectDelegate().
 				getGameCharacters().
-				get(0).
+				get(0).getData().
 				getNinBehaviorTree().
 				getSequence().
 				get(0).

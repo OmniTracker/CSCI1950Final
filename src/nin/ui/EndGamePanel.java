@@ -1,4 +1,5 @@
-package finalgame.ui;
+package nin.ui;
+
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -12,16 +13,9 @@ import engine.utility.AspectRatioHandler;
 import engine.utility.EventHandler;
 
 public class EndGamePanel extends Panel implements EventHandler {
-	private boolean _gameQuit  = false; 
-
-	public EndGamePanel(AspectRatioHandler app) {
+	private boolean _gameEnd  = false; 
+	protected EndGamePanel(AspectRatioHandler app) {
 		super(app);
-		// TODO Auto-generated constructor stub
-	}
-	@Override
-	public void onTick(long nanosSincePreviousTick) {
-		// TODO Auto-generated method stub
-
 	}
 	public void onDraw(GraphicsContext g) {	
 		this.drawRounded(g);
@@ -33,6 +27,7 @@ public class EndGamePanel extends Panel implements EventHandler {
 		g.fillText("Are you sure?", center.x, center.y - 20);
 		this.drawYes(g);
 	}
+	public void onTick(long nanosSincePreviousTick) {}
 	public void onKeyTyped(KeyEvent e) {}
 	public void onKeyPressed(KeyEvent e) {}
 	public void onKeyReleased(KeyEvent e) {}
@@ -45,10 +40,11 @@ public class EndGamePanel extends Panel implements EventHandler {
 	public void onResize(Vec2d newSize) {}
 	public void onShutdown() {}
 	public void onStartup() {}
-	public boolean isGameQuit() {
-		return _gameQuit;
+	public boolean isGameEnd() {
+		return _gameEnd;
 	}
-	public void setGameQuit(boolean _gameQuit) {
-		this._gameQuit = _gameQuit;
+	public void setGameEnd(boolean _gameEnd) {
+		this._gameEnd = _gameEnd;
 	}
+
 }

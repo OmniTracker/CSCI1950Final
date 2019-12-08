@@ -37,7 +37,7 @@ public class Application extends FXFrontEnd {
 
 	private static final Vec2d DEFAULT_STAGE_SIZE = new Vec2d(1154,700);
 
-	public void loadGame (Integer game) throws MalformedURLException {
+	public void loadGame (Integer game) {
 
 		if (game == GameMask.TIC) 
 		{

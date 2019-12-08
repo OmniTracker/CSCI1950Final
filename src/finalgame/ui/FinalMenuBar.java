@@ -22,47 +22,41 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 	private FinalGameWorld _gameWorld;
 	private boolean DEBUG = false;
 	private double _transitionAlpha = 0.0; 
-	public FinalMenuBar(AspectRatioHandler aspect) 
-	{
+	public FinalMenuBar(AspectRatioHandler aspect) {
 		super(aspect,40 ,Color.DARKGRAY);
 		this.initializeMenuButtons();
 		this.initializePanelViews(); 
 	}
-	public void setMenuHeight (double height) 
-	{
+	public void setMenuHeight (double height) {
 		this.setHeight(height);
 	}
-	public void onDraw(GraphicsContext g) 
-	{		
-		if (this.getGameWorld().getMainGamePlay() == this.getGameWorld().getCurrentlySelectedScreen()) 
-		{
+	public void onDraw(GraphicsContext g)  {		
+		if (this.getGameWorld().getMainGamePlay() == this.getGameWorld().getCurrentlySelectedScreen()) {
 			this.drawPanelView(g);
 			this.draw(g);
 			this.fillTransition(g);
 		}
 	}
-	private void fillTransition(GraphicsContext g) 
-	{
+	private void fillTransition(GraphicsContext g) {
 		Vec2d origin = this.getAspectRatio().calculateUpdatedOrigin();
 		Vec2d size = this.getAspectRatio().calculateUpdatedScreenSize();
 		g.setGlobalAlpha(_transitionAlpha);
 		g.setFill(Color.BLACK);
 		g.fillRect(origin.x, origin.y, size.x, size.y);
 		g.setGlobalAlpha(1);
-		if (_transitionAlpha != 0) 
-		{
+		if (_transitionAlpha != 0) {
 			_transitionAlpha += 0.05;
 		}
-		if (_transitionAlpha > 1.3) 
-		{
+		
+		if (_transitionAlpha > 1.3) {
 			_transitionAlpha = 0;
 			this.setContextHolder(-1);
 			this.setMenuActivated(false);
 			this.getGameWorld().changeCurrentScreen(VisibleGameWorld.INTRODUCTION);
 		}
 	}
-	public void initializePanelViews () 
-	{
+	
+	public void initializePanelViews () {
 		// Instructions panel
 		InstructionPanel intructionsPanel = new InstructionPanel(this.getAspectRatio());
 		intructionsPanel.setColor(Color.DARKGRAY);
@@ -88,8 +82,8 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		endGamePanel.setBoarderSize(10);
 		this.insertPanel((Integer)END_GAME_PANEL_VIEW, endGamePanel);
 	}
-	public void initializeMenuButtons () 
-	{
+	
+	public void initializeMenuButtons () {
 		// Instructions
 		Button instructions = new Button(); 
 		instructions.setText("Instructions");
@@ -112,12 +106,10 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		endGame.setFontName(EngineFonts.getWiz());
 		this.insertButton(endGame.getText(),endGame);
 	}	
-	private void drawPanelView(GraphicsContext g) 
-	{
-		if (this.isMenuActivated() == true)  
-		{
-			if (this.getContextHolder() == INSTRUCTIONS_PANEL_VIEW) 
-			{
+	
+	private void drawPanelView(GraphicsContext g) {
+		if (this.isMenuActivated() == true)  {
+			if (this.getContextHolder() == INSTRUCTIONS_PANEL_VIEW) {
 				if (DEBUG == true) 
 				{
 					System.out.print("INSTRUCTIONS HAS CONTEXT \n");
@@ -225,12 +217,9 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 			} 
 		}
 	}
-	public void onKeyPressed(KeyEvent e) 
-	{	
-		if (this.isMenuActivated()) 
-		{
-			if (this.getContextHolder() == OPTIONS_PANEL_VIEW) 
-			{
+	public void onKeyPressed(KeyEvent e)  {	
+		if (this.isMenuActivated()) {
+			if (this.getContextHolder() == OPTIONS_PANEL_VIEW) {
 				OptionsPanel panel = (OptionsPanel) this.getPanelViews().get(OPTIONS_PANEL_VIEW);
 				panel.onKeyPressed(e);
 			}

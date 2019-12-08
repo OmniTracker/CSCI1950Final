@@ -52,11 +52,8 @@ public class PlayerDialog extends GameWorld {
 			transitionAlpha += 0.007; 
 		}		
 		if (transitionAlpha >= 1.2) {	
-		
-			
 			this.getGameWorld().changeCurrentScreen(VisibleGameWorld.MAINGAMEPLAY);
 		}
-		
 		
 		if (this.getDialogFrame().size() != 0)
 		{

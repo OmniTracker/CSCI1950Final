@@ -26,6 +26,8 @@ public abstract class Week2Reqs implements CollisionFunctions {
 		return isColliding(s1, s2) ? new Vec2f(0, 0) : null;
 	}
 	public final Vec2f collision(AABShape s1, PolygonShape s2) {
+		
+		System.out.print("dqioj iw\n");
 		return null;
 	}
 	

@@ -123,6 +123,7 @@ public class CSCI1950ProjectScreen extends Screen {
 	}
 	private void selectGame(Button button) {
 		this.setBorderColor(button.getColor());
+		
 		if (button.getText() == "Tic")
 		{
 			this.setSelectedGame(this.getApplication().TIC);
@@ -136,7 +137,7 @@ public class CSCI1950ProjectScreen extends Screen {
 			this.setSelectedGame(this.getApplication().WIZ);
 		} 
 		else if (button.getText() == "Nin") 
-		{
+		{			
 			this.setSelectedGame(this.getApplication().NIN);
 		}  
 		else if (button.getText() == "Final") 

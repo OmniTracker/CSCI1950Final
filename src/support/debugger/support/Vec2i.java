@@ -1,4 +1,4 @@
-package support.debugger.support;
+package debugger.support;
 
 import java.io.Serializable;
 

@@ -97,25 +97,33 @@ public class OptionsPanel  extends Panel implements EventHandler{
 			e.printStackTrace();
 		}
 		Document doc = null;
-		try {
+		
+		try 
+		{
 			doc = docBuilder.parse(xmlPath);
-		} catch (SAXException e) {
+		} 
+		catch (SAXException e) 
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
+		} 
+		catch (IOException e) 
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		doc.getDocumentElement().normalize();
 		NodeList nList = doc.getElementsByTagName("action");
 		int size = nList.getLength();
-		for (int x = 0; x<size;x++) {
+		
+		for (int x = 0; x<size;x++) 
+		{
 			String name = "Action" + nList.item(x).getAttributes().item(0).getNodeValue();
 			String val = nList.item(x).getChildNodes().item(0).getNodeName();
 			this.getKeyBindingMap().put(x,  new KeyBinding (name, val, new Vec2d(50,10), Color.GREEN, Color.WHEAT, width,height));
 		}
 	}
-	
 	private void drawKeyBinding (GraphicsContext g) {
 		Vec2d menuOrigin = this.getOrigin();
 		Vec2d menuSize  = this.getSize(); 
@@ -132,25 +140,35 @@ public class OptionsPanel  extends Panel implements EventHandler{
 			mapBinding.getValue().drawKeyBindingStuff(g, center, offset+= offsetIncrement);	
 		}
 	}
+	
 	public void onMouseClicked(MouseEvent e) {
+		
 		// Check for collision with one of the buttons.
-		for (Entry<Integer, KeyBinding> mapBinding : this.getKeyBindingMap().entrySet()) { 			
-			if (mapBinding.getValue().clicked(e) == true) {
+		for (Entry<Integer, KeyBinding> mapBinding : this.getKeyBindingMap().entrySet()) 
+		{ 			
+			if (mapBinding.getValue().clicked(e) == true) 
+			{
 				System.out.print( "following hit: " + mapBinding.getValue().getControlElementName()  + "\n");
 				this.setCurrentlyHoldingContext(mapBinding.getKey());
 				return;
 			}
 		}
+		
 		this.setCurrentlyHoldingContext(this.getContextFreeNumber());
-		if (this.checkPanelCollision(e) == true) {
-			if ( this.getCloseButton().clicked(e) ) {
+		if (this.checkPanelCollision(e) == true) 
+		{
+			if ( this.getCloseButton().clicked(e) ) 
+			{
 				this.setShowing(false);				
 			}
-			if (this.getApplyButton().clicked(e)) {
+			
+			if (this.getApplyButton().clicked(e)) 
+			{
 				this.saveBindings();
 			}
 		}
 	}
+	
 	private void saveBindings() {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = null;
@@ -195,6 +213,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 			e.printStackTrace();
 		}
 	}
+	
 	@SuppressWarnings("static-access")
 	private void drawSounds(GraphicsContext g) {
 		Vec2d menuOrigin = this.getOrigin();
@@ -207,6 +226,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		this.getSoundFXSlider().draw(g, center.plus( -1 * (menuSize.x * 0.25), (menuSize.y / 2) ),  - 130);
 		this.getMusicSlider().draw(g, center.plus(   -1 * (menuSize.x * 0.25), (menuSize.y / 2) ),  -70);
 	}
+	
 	@SuppressWarnings("static-access")
 	private void drawDivider(GraphicsContext g) {
 		Vec2d menuOrigin = this.getOrigin();
@@ -217,6 +237,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		g.setFont(Font.font(this.getEngineFont().getFontString(this.getWiz()), 40 ));
 		g.fillText("Options", center.x, center.y - 20);
 	}
+	
 	private void drawHighScores(GraphicsContext g) {
 		Vec2d menuOrigin = this.getOrigin();
 		Vec2d menuSize  = this.getSize(); 
@@ -236,6 +257,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 			loop++;
 		}	
 	}
+	
 	private void parseHighScores() 
 	{		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

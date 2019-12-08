@@ -2,6 +2,7 @@ package engine.gameobject;
 
 import java.util.ArrayList;
 
+import nin.behaviortree.NINBehaviorTree;
 import javafx.scene.image.Image;
 import support.Vec2d;
 import support.Vec2i;

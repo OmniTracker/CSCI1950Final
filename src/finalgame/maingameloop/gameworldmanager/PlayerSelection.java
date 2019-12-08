@@ -41,12 +41,16 @@ public class PlayerSelection extends GameWorld {
 	int R = 255;
 	int G = 0;
 	int B = 0;
-	public PlayerSelection(Application app, GameWorld parent) {
+	
+	public PlayerSelection(Application app, GameWorld parent) 
+	{
 		super(app);
 		this.setFinalGameWorld((FinalGameWorld) parent);
 		this.setAspect(this.getApplication().getAspectRatioHandler());
 	}
-	public void initScreen () {
+	
+	public void initScreen () 
+	{
 		this.setRightButton(new Button());
 		this.setLeftButton(new Button());
 		this.setNextLevelButton((new Button()));
@@ -62,7 +66,9 @@ public class PlayerSelection extends GameWorld {
 			}
 		} 
 	}
-	public void onDraw(GraphicsContext g) {
+	
+	public void onDraw(GraphicsContext g) 
+	{
 		// Draw the left and right Arrows
 		Vec2d origin = this.getAspect().calculateUpdatedOrigin();
 		Vec2d size = this.getAspect().calculateUpdatedScreenSize();	
@@ -111,6 +117,7 @@ public class PlayerSelection extends GameWorld {
 		g.fillText(this.getCharacterSelector().get(_currentPlayer), textOrigin.x, textOrigin.y);
 		g.setGlobalAlpha(1.0);
 	}
+	
 	private void colorRotation ( ) {
 		Vec2d origin = this.getAspect().calculateUpdatedOrigin();
 		Vec2d size = this.getAspect().calculateUpdatedScreenSize();
@@ -155,7 +162,9 @@ public class PlayerSelection extends GameWorld {
 			B = 255;
 		}
 	}
-	public void onTick(long nanosSincePreviousTick) {
+	
+	public void onTick(long nanosSincePreviousTick) 
+	{
 		if (_inTransition == true) 
 		{
 			if (direction == RIGHT_DIRECTION) 
@@ -170,6 +179,7 @@ public class PlayerSelection extends GameWorld {
 		}
 		this.repositionFrame();
 	}
+	
 	void repositionFrame() {
 		Vec2d origin = this.getAspect().calculateUpdatedOrigin();
 		Vec2d size = this.getAspect().calculateUpdatedScreenSize();
@@ -200,9 +210,11 @@ public class PlayerSelection extends GameWorld {
 			transitionX = 0.0;
 		}
 	}
+	
 	public void onMouseClicked(MouseEvent e) {
 		rotateCharacters(e);
 	}
+	
 	private void rotateCharacters(MouseEvent e) {
 		if (_inTransition == false) {
 			if (this.getRightButton().clicked(e)) {
@@ -218,6 +230,7 @@ public class PlayerSelection extends GameWorld {
 			}
 		}
 	}
+	
 	private FinalGameWorld getFinalGameWorld() {
 		return _finalGameWorld;
 	}

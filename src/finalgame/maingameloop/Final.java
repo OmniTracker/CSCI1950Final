@@ -24,7 +24,6 @@ public class Final extends Screen {
 		this.getFinalViewport().onMouseDragged(e);		
 	}
 	public void onDraw(GraphicsContext g) {
-		
 		if (startUP == false) {
 			 onStartup();
 		}

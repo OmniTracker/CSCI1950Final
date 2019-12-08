@@ -28,10 +28,10 @@ public class NinGameWorld  extends GameWorld {
 	public void onTick(long nanosSincePreviousTick) {
 		if ( this.getNinGameObjectDelegate().getGameCharacters().size() != 0) {
 			// Run the Decision Tree. This will run on every Tick.
-			this.getNinGameObjectDelegate().getGameCharacters().get(0).getNinBehaviorTree().runTree();
-			this.getNinGameObjectDelegate().getGameCharacters().get(1).getNinBehaviorTree().runTree();
-			this.getNinGameObjectDelegate().getGameCharacters().get(2).getNinBehaviorTree().runTree();
-			this.getNinGameObjectDelegate().getGameCharacters().get(3).getNinBehaviorTree().runTree();
+			this.getNinGameObjectDelegate().getGameCharacters().get(0).getData().getNinBehaviorTree().runTree();
+			this.getNinGameObjectDelegate().getGameCharacters().get(1).getData().getNinBehaviorTree().runTree();
+			this.getNinGameObjectDelegate().getGameCharacters().get(2).getData().getNinBehaviorTree().runTree();
+			this.getNinGameObjectDelegate().getGameCharacters().get(3).getData().getNinBehaviorTree().runTree();
 		}
 	}
 	
