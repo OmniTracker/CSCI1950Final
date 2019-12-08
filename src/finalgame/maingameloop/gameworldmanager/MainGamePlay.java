@@ -24,7 +24,6 @@ import engine.ai.Selector;
 import engine.ai.Sequencer;
 import engine.utility.Factory;
 import finalgame.maingameloop.FinalGameWorld;
-
 import finalgame.engineAdditions.GameSystem;
 import finalgame.ai.MoveToLeader;
 import finalgame.ai.NotNearGroup;
@@ -40,14 +39,13 @@ import finalgame.engineAdditions.PlayerInputComponent;
 import finalgame.engineAdditions.PlayerInputSystem;
 import finalgame.engineAdditions.TickSystem;
 import finalgame.engineAdditions.TransformComponent;
-
-
 import javafx.scene.paint.Color;
 import support.Vec2d;
 import engine.Application;
 import engine.GameWorld;
 import engine.ui.Button;
 import engine.ui.EngineFonts;
+import finalgame.ui.GamePlayOverlay;
 import finalgame.ui.HighScorePanel;
 
 public class MainGamePlay extends GameWorld {
@@ -56,7 +54,8 @@ public class MainGamePlay extends GameWorld {
     private boolean _highScoreTest = true;
     private HighScorePanel _highScorePanel = null;
     private Button _highScoreTestButton = null;
-
+    
+    
 	private ArrayList<GameSystem> _systems;
 	private ArrayList<GameObject> _objects;
 	private ArrayList<GameObject> _garbage;
@@ -66,7 +65,10 @@ public class MainGamePlay extends GameWorld {
 	private TickSystem _tickSys;
 	private PlayerInputSystem _inputSys;
 	private CollisionSystem _collisionSys;
-	private BehaviorSystem _behaviorSys;
+	private BehaviorSystem _behaviorSys; 
+	
+	// Game Play Overlay
+	private GamePlayOverlay _gamePlayOverlay;
 
 	//Hashmap that keeps track of all user input
 	private HashMap<String, Double> _input;
@@ -93,7 +95,9 @@ public class MainGamePlay extends GameWorld {
 		this.setupGeneralUI();
 
 		_affine = new Affine();
-
+		
+		// Used to display game view overlay
+		_gamePlayOverlay = new GamePlayOverlay(app,parent);
 	}
 
 
@@ -377,9 +381,16 @@ public class MainGamePlay extends GameWorld {
 
 		_graphicsSys.onDraw(g, _affine);
 		g.restore();
+		
+		// Draw
+		_gamePlayOverlay.drawOverlay(g);
 	}
+	
+	
 	@Override
 	public void onKeyTyped(KeyEvent e) {}
+	
+	
 	@Override
 	public void onKeyPressed(KeyEvent e) {
 		if ( this.getHighScorePanel().isShowing() == true)
@@ -389,6 +400,8 @@ public class MainGamePlay extends GameWorld {
 		_input.put(e.getCode().toString(), 1.);
 		this.onInput();
 	}
+	
+	
 	@Override
 	public void onKeyReleased(KeyEvent e) {
 		_input.put(e.getCode().toString(), 0.);
@@ -475,4 +488,6 @@ public class MainGamePlay extends GameWorld {
 	public ArrayList<GameObject> getObjects() {
 		return _objects;
 	}
+
+
 }

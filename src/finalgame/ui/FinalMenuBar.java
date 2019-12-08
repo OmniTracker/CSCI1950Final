@@ -19,6 +19,9 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 	private Integer INSTRUCTIONS_PANEL_VIEW = 3; 
 	private Integer END_GAME_PANEL_VIEW     = 5; 
 	private Integer OPTIONS_PANEL_VIEW      = 8; 
+	private Integer UPGRADES_PANEL_VIEW     = 9; 
+
+
 	private FinalGameWorld _gameWorld;
 	private boolean DEBUG = false;
 	private double _transitionAlpha = 0.0; 
@@ -87,6 +90,15 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		endGamePanel.setOrigin(new Vec2d(0,0));
 		endGamePanel.setBoarderSize(10);
 		this.insertPanel((Integer)END_GAME_PANEL_VIEW, endGamePanel);
+
+		// End Game Panel
+		UpgradesPanel upgradesPanel = new UpgradesPanel( this.getAspectRatio()); 
+		upgradesPanel.setColor(Color.DARKGRAY);
+		upgradesPanel.setSecondaryColor(Color.DARKGREEN);
+		upgradesPanel.setSize( new Vec2d(500,400));	
+		upgradesPanel.setOrigin(new Vec2d(0,0));
+		upgradesPanel.setBoarderSize(10);
+		this.insertPanel((Integer)UPGRADES_PANEL_VIEW, upgradesPanel);
 	}
 	public void initializeMenuButtons () 
 	{
@@ -111,6 +123,14 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		endGame.setColor( Color.WHITE);
 		endGame.setFontName(EngineFonts.getWiz());
 		this.insertButton(endGame.getText(),endGame);
+
+		// Upgrades
+		Button upgrades = new Button();
+		upgrades.setText("Upgrades");
+		upgrades.setSize(new Vec2d(100,30));
+		upgrades.setColor( Color.WHITE);
+		upgrades.setFontName(EngineFonts.getWiz());
+		this.insertButton(upgrades.getText(),upgrades);
 	}	
 	private void drawPanelView(GraphicsContext g) 
 	{
@@ -143,6 +163,15 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 				EndGamePanel panel = (EndGamePanel) this.getPanelViews().get(END_GAME_PANEL_VIEW);
 				panel.onDraw(g);
 			}
+			else if (this.getContextHolder() == UPGRADES_PANEL_VIEW) 
+			{
+				if (DEBUG == true) 
+				{
+					System.out.print("UPGRADES HAS CONTEXT \n");
+				}	
+				UpgradesPanel panel = (UpgradesPanel) this.getPanelViews().get(UPGRADES_PANEL_VIEW);
+				panel.onDraw(g);
+			}
 		}
 	}
 	private void checkMenuButtonActivation(MouseEvent e) 
@@ -166,6 +195,10 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 				{					
 					this.setContextHolder(END_GAME_PANEL_VIEW);
 				}
+				else if (buttonPushed.contains("Upgrades"))
+				{					
+					this.setContextHolder(UPGRADES_PANEL_VIEW);
+				}
 				else 
 				{
 					return;
@@ -188,7 +221,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 				// Check if the window has been closed
 				if ( panel.isShowing() == false) 
 				{
-					// Reset Context holder
+					// Reset Context holders
 					this.setContextHolder(-1);
 					this.setMenuActivated(false);
 				}
@@ -197,7 +230,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 			{	
 				OptionsPanel panel = (OptionsPanel) this.getPanelViews().get(OPTIONS_PANEL_VIEW);
 				panel.onMouseClicked(e);	
-				// Check if the window has been closed
+				// Check if the window has been closeduu
 				if ( panel.isShowing() == false)
 				{
 					// Reset Context holder
@@ -222,19 +255,41 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 					this.setContextHolder(-1);
 					this.setMenuActivated(false);
 				}
-			} 
+			}
+			else if (this.getContextHolder() == UPGRADES_PANEL_VIEW) 
+			{	
+				UpgradesPanel panel = (UpgradesPanel) this.getPanelViews().get(UPGRADES_PANEL_VIEW);
+				panel.onMouseClicked(e);	
+				// Check if the window has been closed
+				if ( panel.isShowing() == false)
+				{
+					// Reset Context holder
+					this.setContextHolder(-1);
+					this.setMenuActivated(false);
+				}
+			}
 		}
 	}
 	public void onKeyPressed(KeyEvent e) 
 	{	
+		
 		if (this.isMenuActivated()) 
 		{
 			if (this.getContextHolder() == OPTIONS_PANEL_VIEW) 
 			{
 				OptionsPanel panel = (OptionsPanel) this.getPanelViews().get(OPTIONS_PANEL_VIEW);
 				panel.onKeyPressed(e);
-			}
-		}	
+			}		
+		}
+		
+		if (e.getCode().toString().equals("U")  && 
+				this.isMenuActivated() == false && 
+				this.getGameWorld().getMainGamePlay() == 
+				this.getGameWorld().getCurrentlySelectedScreen()) 
+		{	
+			this.setMenuActivated(true);
+			this.setContextHolder(UPGRADES_PANEL_VIEW);	
+		}
 	}
 	public void onTick(long nanosSincePreviousTick) {}
 	public void onKeyTyped(KeyEvent e) {}
