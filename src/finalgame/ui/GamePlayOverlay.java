@@ -10,7 +10,6 @@ import engine.utility.AspectRatioHandler;
 import finalgame.maingameloop.FinalGameWorld;
 
 public class GamePlayOverlay extends UIElement{
-
 	Application _app;
 	FinalGameWorld _parent;
 	AspectRatioHandler _aspect; 
@@ -58,7 +57,6 @@ public class GamePlayOverlay extends UIElement{
 		this.labelHelper(g,roundOrigin, "Coins: xxxx"); 
 	}
 	
-	
 	private void labelHelper(GraphicsContext g,Vec2d roundOrigin, String text) {
 		g.setFill(Color.GRAY);
 		g.fillRoundRect(roundOrigin.x , roundOrigin.y, 180, 35, 5, 5);
@@ -68,7 +66,6 @@ public class GamePlayOverlay extends UIElement{
 		g.setFont(Font.font(this.getEngineFont().getFontString(this.getText()), 20 ));
 		g.fillText(text, roundOrigin.x + 90, roundOrigin.y + 25);
 	}
-	
 	
 	public void drawHitPoints (GraphicsContext g) {
 		Vec2d size = _aspect.calculateUpdatedScreenSize();
