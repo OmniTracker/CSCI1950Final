@@ -103,7 +103,8 @@ public class MainGamePlay extends GameWorld {
 		_affine = new Affine();
 
 		// Used to display game view overlay
-		_gamePlayOverlay = new GamePlayOverlay(app,parent);
+		set_gamePlayOverlay(new GamePlayOverlay(app,parent));
+		get_gamePlayOverlay().setKeyValues();
 	}
 
 
@@ -430,7 +431,7 @@ public class MainGamePlay extends GameWorld {
 		g.restore();
 
 		// Draw
-		_gamePlayOverlay.drawOverlay(g);
+		get_gamePlayOverlay().drawOverlay(g);
 	}
 
 
@@ -548,6 +549,16 @@ public class MainGamePlay extends GameWorld {
 	@Override
 	public ArrayList<GameObject> getObjects() {
 		return _objects;
+	}
+
+
+	public GamePlayOverlay get_gamePlayOverlay() {
+		return _gamePlayOverlay;
+	}
+
+
+	public void set_gamePlayOverlay(GamePlayOverlay _gamePlayOverlay) {
+		this._gamePlayOverlay = _gamePlayOverlay;
 	}
 
 
