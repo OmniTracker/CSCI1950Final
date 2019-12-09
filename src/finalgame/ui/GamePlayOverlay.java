@@ -4,7 +4,19 @@ import support.Vec2d;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+
+import java.io.IOException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import engine.Application;
+import engine.ui.KeyBinding;
 import engine.ui.UIElement;
 import engine.utility.AspectRatioHandler;
 import finalgame.maingameloop.FinalGameWorld;
@@ -12,7 +24,9 @@ import finalgame.maingameloop.FinalGameWorld;
 public class GamePlayOverlay extends UIElement{
 	Application _app;
 	FinalGameWorld _parent;
-	AspectRatioHandler _aspect; 
+	AspectRatioHandler _aspect;
+	private String xmlPath = "./resources/xmlResources/.KeyBinding.xml";
+	String[] placeHolders = new String[8]; 
 
 	public GamePlayOverlay(Application app, FinalGameWorld parent) {
 		_app = app;
@@ -92,32 +106,58 @@ public class GamePlayOverlay extends UIElement{
 		int increment = 0;
 		int incrementSize = 85;
 		int smallBaxFactor = 2;
-		String placeHolders = "X"; 
 		// This is literally a black box of code.
 		g.setFill(Color.RED);
 		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize, 10, 10);
 		g.setFill(Color.WHITESMOKE);
 		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize) + 2, attributesOrigin.y + (boxSize / smallBaxFactor) - 2 , (boxSize / smallBaxFactor) - 2, (boxSize / smallBaxFactor) - 2, 10, 10);
 		g.setFill(Color.BLACK);
-		g.fillText(placeHolders, attributesOrigin.x + (increment++ * incrementSize) + (boxSize/ 4), attributesOrigin.y + (boxSize / smallBaxFactor) +  ( (boxSize/ 3) + 4));
+		g.fillText(placeHolders[0], attributesOrigin.x + (increment++ * incrementSize) + (boxSize/ 4), attributesOrigin.y + (boxSize / smallBaxFactor) +  ( (boxSize/ 3) + 4));
 		g.setFill(Color.PURPLE);
 		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize, 10, 10);
 		g.setFill(Color.WHITESMOKE);
 		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize) + 2, attributesOrigin.y + (boxSize / smallBaxFactor) - 2 , (boxSize / smallBaxFactor) - 2, (boxSize / smallBaxFactor) - 2, 10, 10);
 		g.setFill(Color.BLACK);
-		g.fillText(placeHolders, attributesOrigin.x + (increment++ * incrementSize) + (boxSize/ 4), attributesOrigin.y + (boxSize / smallBaxFactor) +  ( (boxSize/ 3) + 4));		
+		g.fillText(placeHolders[1], attributesOrigin.x + (increment++ * incrementSize) + (boxSize/ 4), attributesOrigin.y + (boxSize / smallBaxFactor) +  ( (boxSize/ 3) + 4));		
 		g.setFill(Color.GREEN);
 		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize, 10, 10);
 		g.setFill(Color.WHITESMOKE);
 		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize) + 2, attributesOrigin.y + (boxSize / smallBaxFactor) - 2 , (boxSize / smallBaxFactor) - 2, (boxSize / smallBaxFactor) - 2, 10, 10);
 		g.setFill(Color.BLACK);
-		g.fillText(placeHolders, attributesOrigin.x + (increment++ * incrementSize) + (boxSize/ 4), attributesOrigin.y + (boxSize / smallBaxFactor) +  ( (boxSize/ 3) + 4));
+		g.fillText(placeHolders[2], attributesOrigin.x + (increment++ * incrementSize) + (boxSize/ 4), attributesOrigin.y + (boxSize / smallBaxFactor) +  ( (boxSize/ 3) + 4));
 		g.setFill(Color.PINK);
 		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize, 10, 10);
 		g.setFill(Color.WHITESMOKE);
 		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize) + 2, attributesOrigin.y + (boxSize / smallBaxFactor) - 2 , (boxSize / smallBaxFactor) - 2, (boxSize / smallBaxFactor) - 2, 10, 10);
 		g.setFill(Color.BLACK);
-		g.fillText(placeHolders, attributesOrigin.x + (increment++ * incrementSize) + (boxSize/ 4), attributesOrigin.y + (boxSize / smallBaxFactor) +  ( (boxSize/ 3) + 4));
+		g.fillText(placeHolders[3], attributesOrigin.x + (increment++ * incrementSize) + (boxSize/ 4), attributesOrigin.y + (boxSize / smallBaxFactor) +  ( (boxSize/ 3) + 4));
+	}
+	
+	public void setKeyValues() {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder = null;
+		try {
+			docBuilder = factory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Document doc = null;
+		try {
+			doc = docBuilder.parse(xmlPath);
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		doc.getDocumentElement().normalize();
+		NodeList nList = doc.getElementsByTagName("action");
+		int size = nList.getLength();
+		for (int x = 0; x<size;x++) {
+			placeHolders[x] = nList.item(x).getChildNodes().item(0).getNodeName();
+		}
 	}
 
 }

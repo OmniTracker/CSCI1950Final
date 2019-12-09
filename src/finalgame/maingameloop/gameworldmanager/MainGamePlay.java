@@ -47,9 +47,6 @@ import finalgame.engineAdditions.TickSystem;
 import finalgame.engineAdditions.TransformComponent;
 
 import javafx.scene.paint.Color;
-import support.Vec2d;
-import engine.Application;
-import engine.GameWorld;
 import engine.ui.Button;
 import engine.ui.EngineFonts;
 import finalgame.ui.GamePlayOverlay;

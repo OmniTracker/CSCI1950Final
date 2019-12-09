@@ -47,7 +47,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 	private HashMap<Integer,KeyBinding > _keyBindingMap = null;
 	private Integer _currentlyHoldingContext;
 	private Integer _contextFreeNumber = -1;
-	private String xmlPath = "./resources/xmlResources/KeyBinding.xml";
+	private String xmlPath = "./resources/xmlResources/.KeyBinding.xml";
 	// High Score XML
 	private HashMap < String, Pair <String,String>> _playerRanking =  new HashMap <String,Pair <String,String> > ();
 	private String highScoreXMLPath = "./resources/xmlResources/HighScore.xml";
@@ -68,7 +68,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 	}
 	public void onKeyPressed(KeyEvent e) {
 		if ( this.getCurrentlyHoldingContext() != this.getContextFreeNumber()) {
-			String input = e.getText().toString(); 			
+			String input = e.getCode().toString(); 			
 			KeyBinding keyBinding = this.getKeyBindingMap().get(this.getCurrentlyHoldingContext()); 
 			keyBinding.alterCurrentKeyBinding(input);			
 		} 
@@ -110,9 +110,36 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		NodeList nList = doc.getElementsByTagName("action");
 		int size = nList.getLength();
 		for (int x = 0; x<size;x++) {
-			String name = "Action" + nList.item(x).getAttributes().item(0).getNodeValue();
+			String tname = null;
+			switch(x) {
+			case 0:
+				tname = "Move Up";
+				break;
+			case 1:
+				tname = "Move Left";
+				break;
+			case 2:
+				tname = "Move Right";
+				break;
+			case 3:
+				tname = "Move Down";
+				break;
+			case 4:
+				tname = "Heal";
+				break;
+			case 5:
+				tname = "Ability 1";
+				break;
+			case 6:
+				tname = "Ability 2";
+				break;
+			case 7:
+				tname = "Ability 3";
+				break;
+			}
+			String name = tname;// + nList.item(x).getAttributes().item(0).getNodeValue();
 			String val = nList.item(x).getChildNodes().item(0).getNodeName();
-			this.getKeyBindingMap().put(x,  new KeyBinding (name, val, new Vec2d(50,10), Color.GREEN, Color.WHEAT, width,height));
+			this.getKeyBindingMap().put(x,  new KeyBinding (name, val, new Vec2d(50,7), Color.GREEN, Color.WHEAT, width,height));
 		}
 	}
 	
@@ -148,6 +175,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 			}
 			if (this.getApplyButton().clicked(e)) {
 				this.saveBindings();
+				
 			}
 		}
 	}

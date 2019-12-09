@@ -236,6 +236,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 					// Reset Context holder
 					this.setContextHolder(-1);
 					this.setMenuActivated(false);
+					_gameWorld.getMainGamePlay().get_gamePlayOverlay().setKeyValues();
 				}
 			} 
 			else if (this.getContextHolder() == END_GAME_PANEL_VIEW) 
