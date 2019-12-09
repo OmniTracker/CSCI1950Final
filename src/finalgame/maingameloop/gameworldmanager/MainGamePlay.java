@@ -42,6 +42,7 @@ import finalgame.engineAdditions.MouseAbilityAnimationComponent;
 import finalgame.engineAdditions.PlayerInputComponent;
 import finalgame.engineAdditions.PlayerInputSystem;
 import finalgame.engineAdditions.ScratchAbilityAnimationComponent;
+import finalgame.engineAdditions.TeleportAbilityComponent;
 import finalgame.engineAdditions.TickSystem;
 import finalgame.engineAdditions.TransformComponent;
 
@@ -160,6 +161,10 @@ public class MainGamePlay extends GameWorld {
 						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(50,50), new Vec2d(192, 192),
 						11, 1, 2));
 
+				_player.addComponent("ABILITY_F", new TeleportAbilityComponent(_player, getTeleportImage(), new Vec2d(0,0),
+						new Vec2d(128, 128), new Vec2d(0,0), new Vec2d(0,0), new Vec2d(128, 128),
+						58, 3, 2, 200));
+				
 				_player.addComponent("ABILITY_CLICK", new MouseAbilityAnimationComponent(_player, getBulletImage(), new Vec2d(135,123),
 						new Vec2d(23, 23), new Vec2d(0,0), new Vec2d(10,10), new Vec2d(0, 0),1, 1.0, 0, 250.));
 				break;
@@ -342,7 +347,7 @@ public class MainGamePlay extends GameWorld {
 	public static Image getElectricScratchImage() {
 		Image out = null;
 		try{
-			out =  new Image(new File("resources/randomFinalImages/Weapons/electricScratch.png").toURI().toURL().toExternalForm());
+			out =  new Image(new File("resources/randomFinalImages/ArchyAbilities/electricScratch.png").toURI().toURL().toExternalForm());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -352,7 +357,17 @@ public class MainGamePlay extends GameWorld {
 	public static Image getBulletImage() {
 		Image out = null;
 		try{
-			out =  new Image(new File("resources/randomFinalImages/Weapons/simpleProjectile.png").toURI().toURL().toExternalForm());
+			out =  new Image(new File("resources/randomFinalImages/ArchyAbilities/simpleProjectile.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
+	public static Image getTeleportImage() {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/ArchyAbilities/teleport.png").toURI().toURL().toExternalForm());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
