@@ -13,6 +13,9 @@ import engine.utility.AspectRatioHandler;
 public abstract class MenuBar extends UIElement {
 	private boolean _menuActivated = false;
 	private double _height = 20;
+	
+	public Color setColor = null;
+	
 	// White is just the default saved color.
 	private AABShape _collisionBox = null;
 	// All the buttons that need to be placed on the menu bar
@@ -52,7 +55,14 @@ public abstract class MenuBar extends UIElement {
 		if (this.getColor() == null) {
 			return;
 		}
-		g.setFill(Color.DARKGRAY);
+		if ( setColor!= null ) 
+		{
+			g.setFill(setColor);			
+		} 
+		else 
+		{
+			g.setFill(Color.DARKGRAY);			
+		}
 		// Set the size of the menu.
 		Vec2d menuSize = new Vec2d(this.getAspectRatio().
 				calculateUpdatedScreenSize()

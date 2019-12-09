@@ -18,7 +18,7 @@ public class PhysicsAction extends NinBehaviorSequence implements  Actions {
 		this.setOtherCharacter( new  ArrayList<GameObject> ());
 	}
 	public PhysicsActionData data = new PhysicsActionData(true, new Vec2d(0,0),
-			new Vec2d(0,0), new Vec2d(0,0), new Vec2d(0,0), 0.05, 0, 10, 0, 9.8, false);
+			new Vec2d(0,0), new Vec2d(0,0), new Vec2d(0,0), 0.02, 0, 10, 0, 10.0, false);
 
 	public void incrementX () {
 		if (isStaticFlag() == true) {
@@ -50,7 +50,7 @@ public class PhysicsAction extends NinBehaviorSequence implements  Actions {
 		data._jumpVel = data._jumpVel - data._timeStep * data._gravity;
 		data._jumpPos = data._jumpPos + data._jumpVel * data._timeStep;
 		if (data._jumpVel <= -10.5) {
-			data._timeStep = 0.05;
+			data._timeStep = 0.02;
 			data._jumpPos = 0; 
 			data._jumpVel = 10; 
 			return false; 

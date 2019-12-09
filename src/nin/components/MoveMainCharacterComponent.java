@@ -12,16 +12,13 @@ import engine.gameobject.GameObject;
 import engine.systems.Components;
 
 public class MoveMainCharacterComponent  extends Components {
-
 	private MovementSystem _movementSystem;
 	private NinGameWorld  _ninGameWorld;
 	private int shootCount = 0;
-
 	public MoveMainCharacterComponent(MovementSystem movementSystem,  NinGameWorld ninGameWorld) {
 		this.setMovementSystem(movementSystem);
 		this.setNinGameWorld(ninGameWorld);
 	}
-
 	public void moveMain (KeyEvent e) {
 		GameObject mainCharacter = this.getNinGameWorld().getNinGameObjectDelegate().getGameCharacters().get(0);		
 		String keyInput = e.getCode().toString(); 
@@ -33,7 +30,7 @@ public class MoveMainCharacterComponent  extends Components {
 				getSequence().
 				get(0).
 				get(0); 
-		if (keyInput.contains("LEFT")) 
+		if (keyInput.equals("A")) 
 		{
 			if (mainCharacter.getData().getPosition().x > 10) 
 			{
@@ -45,7 +42,7 @@ public class MoveMainCharacterComponent  extends Components {
 				mainCharacter.getData().fileIndex =  (( mainCharacter.getData().fileIndex + 1 == 5) ? 0 : mainCharacter.getData().fileIndex + 1);	
 			}						
 		} 
-		else if (keyInput.contains("RIGHT"))  
+		else if (keyInput.equals("D"))  
 		{
 			if (mainCharacter.getData().getPosition().x < this.getNinGameWorld().getApplication().getAspectRatioHandler().getCurrentScreenSize().x - 120) 
 			{
@@ -67,8 +64,10 @@ public class MoveMainCharacterComponent  extends Components {
 			if ( coins.get(index).getData().coinMoving == true ) 
 			{	
 				int speed = coins.get(index).getData().coinSpeed;
-				coins.get(index).getData().setPosition(coins.get(index).getData().getPosition().plus(speed,0));			
-				coins.get(index).getData().fileIndex = (( coins.get(index).getData().fileIndex + 1 == 8) ? 0 : coins.get(index).getData().fileIndex + 1);	
+				coins.get(index).getData().setPosition(coins.get(index).getData().getPosition().plus(speed,0));		
+				if (nanosSincePreviousTick % 2 == 0  ) {	
+					coins.get(index).getData().fileIndex = (( coins.get(index).getData().fileIndex + 1 == 8) ? 0 : coins.get(index).getData().fileIndex + 1);		
+				}
 			}
 		}
 		// Check if a coin needs to be reset
@@ -95,11 +94,8 @@ public class MoveMainCharacterComponent  extends Components {
 					{	
 						// Coming from right or left
 						int direction =   r.nextInt((1 - 0) + 1) + 0;
-
-
 						int maxY = ( int ) this.getNinGameWorld().getApplication().getAspectRatioHandler().getCurrentScreenSize().y - 250; 
 						int randomY =   r.nextInt((maxY - 30) + 1) + 30;
-
 						// Go to right
 						if (direction == 1) 
 						{
@@ -139,7 +135,7 @@ public class MoveMainCharacterComponent  extends Components {
 				get(0); 
 		GameObject mainCharacter = this.getNinGameWorld().getNinGameObjectDelegate().getGameCharacters().get(0);		
 		// Use the MTV to allow jumping to happen.
-		if (keyCode.contains("SPACE")) {
+		if (keyCode.contains("SPACE") || keyCode.equals("W")) {
 			if (mainCharacter.getData().getCurrentMTV() != null) {				
 				signal.setJumpSignaled(true);
 				mainCharacter.getData().fileIndex = 0; 

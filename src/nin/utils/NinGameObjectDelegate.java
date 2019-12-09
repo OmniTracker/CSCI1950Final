@@ -19,6 +19,8 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 	private ArrayList<GameObject> _gameCharacters = null;
 	private ArrayList<GameObject> _movingUnits = null;
 	private ArrayList<GameObject> _movingCoins = null;
+	private ArrayList<GameObject> _movingCoinsNo = null;
+
 
 	GameObject mainCharacter; 
 	GameObject testCharacter0; 
@@ -42,7 +44,17 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 		for (int i = 0;  i < 10  ;i++) {
 			GameObject coin = new GameObject();
 			coin.getData().setImage( Factory.getGenericImage("resources/terrain/bitcoin.png"));
-			coin.getData().setSize(new Vec2d(50,50));
+			coin.getData().setSize(new Vec2d(75,75));
+			coin.getData().setPosition( new Vec2d(-200,30));
+			coin.getData().setBox(new AABShape(coin.getData().getPosition(), coin.getData().getSize()));
+			this.getMovingCoins().add(coin);
+		}
+	
+		// Anti Bitcoins
+		for (int i = 0;  i < 5  ;i++) {
+			GameObject coin = new GameObject();
+			coin.getData().setImage( Factory.getGenericImage("resources/terrain/BulletBill.png"));
+			coin.getData().setSize(new Vec2d(100,140));
 			coin.getData().setPosition( new Vec2d(-200,30));
 			coin.getData().setBox(new AABShape(coin.getData().getPosition(), coin.getData().getSize()));
 			this.getMovingCoins().add(coin);
@@ -262,5 +274,13 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 
 	private void setMovingCoins(ArrayList<GameObject> _movingCoins) {
 		this._movingCoins = _movingCoins;
+	}
+
+	private ArrayList<GameObject> getMovingCoinsNo() {
+		return _movingCoinsNo;
+	}
+
+	private void setMovingCoinsNo(ArrayList<GameObject> _movingCoinsNo) {
+		this._movingCoinsNo = _movingCoinsNo;
 	}	
 }

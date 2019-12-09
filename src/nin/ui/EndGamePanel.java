@@ -23,7 +23,7 @@ public class EndGamePanel extends Panel implements EventHandler {
 		Vec2d origin = this.getOrigin();
 		Vec2d center = 	origin.plus( (size.x / 2),(size.y / 2));
 		g.setFill(Color.BLACK);	
-		g.setFont(Font.font(this.getEngineFont().getFontString(this.getText()), 40 ));
+		g.setFont(Font.font("Ethnocentric", 40 ));
 		g.fillText("Are you sure?", center.x, center.y - 20);
 		this.drawYes(g);
 	}

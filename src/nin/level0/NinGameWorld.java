@@ -15,15 +15,19 @@ public class NinGameWorld  extends GameWorld {
 	private NinMapDelegate _ninMapDelegate = null;
 	private GraphicsSystem _graphicsSystem = null;
 	private MovementSystem _movementSystem = null;
+	private CollisionSystem  _collisionSystem = null;
 	
 	private Button _button = null; 
 
+	public int score = 0;
+	
 	protected NinGameWorld(Application app) {
 		super(app);
 		this.setGraphicsSystem(new GraphicsSystem(app,this));
 		this.setMovementSystem(new MovementSystem(app,this));
 		this.setNinGameObjectDelegate( new NinGameObjectDelegate(app) );
 		this.setNinMapDelegate( new NinMapDelegate(app));
+		this.setCollisionSystem( new CollisionSystem(app,this));
 	}
 	
 	public void onTick(long nanosSincePreviousTick) {
@@ -39,6 +43,7 @@ public class NinGameWorld  extends GameWorld {
 			this.getApplication().stage.setMaxWidth(this.getApplication().getAspectRatioHandler().getInitialScreenSize().x);
 		}
 		this.getMovementSystem().onTick(nanosSincePreviousTick);
+		this.getCollisionSystem().onTick(nanosSincePreviousTick);
 	}
 	
 	public void onDraw(GraphicsContext g) {
@@ -94,5 +99,13 @@ public class NinGameWorld  extends GameWorld {
 	}
 	public void setButton(Button _button) {
 		this._button = _button;
+	}
+
+	private CollisionSystem getCollisionSystem() {
+		return _collisionSystem;
+	}
+
+	private void setCollisionSystem(CollisionSystem _collisionSystem) {
+		this._collisionSystem = _collisionSystem;
 	}
 }

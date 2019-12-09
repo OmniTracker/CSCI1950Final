@@ -21,47 +21,45 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 	private Integer END_GAME_PANEL_VIEW     = 2; 
 	private Integer SAVE_GAME_PANEL_VIEW    = 3; 
 	private NinGameWorld _gameWorld; 
-
 	private final static Integer CSCI1950ProjectScreenIndex = 0;
-	
 	private NINXMLGameHandler _xmlGameHandler; 
-
 	public NINMenuBar(AspectRatioHandler aspect) {
-		super(aspect,40 ,Color.DARKGRAY);
+		super(aspect,40 ,Color.BLUE);
 		this.initializeMenuButtons();
 		this.initializePanelViews();
 		this.setXMLGameHandler(new NINXMLGameHandler());
+		this.setColor = Color.DARKBLUE;
 	}
-
 	public void initializeMenuButtons () {
 		// Save Game
 		Button saveGame = new Button(); 
 		saveGame.setText("Save");
 		saveGame.setSize( new Vec2d(100,30));
 		saveGame.setColor( Color.WHITE);
-		saveGame.setFontName(EngineFonts.getWiz());
+		saveGame.setFontName(EngineFonts.getAlc());
 		this.insertButton(saveGame.getText(),saveGame);	
 		// Load Game
 		Button restartGame = new Button();
 		restartGame.setText("Load");
 		restartGame.setSize(new Vec2d(100,30));
 		restartGame.setColor( Color.WHITE);
-		restartGame.setFontName(EngineFonts.getWiz());
+		restartGame.setFontName(EngineFonts.getAlc());
 		this.insertButton(restartGame.getText() ,restartGame);
 		// End Game
 		Button endGame = new Button();
 		endGame.setText("End");
 		endGame.setSize(new Vec2d(100,30));
 		endGame.setColor( Color.WHITE);
-		endGame.setFontName(EngineFonts.getWiz());
+		endGame.setFontName(EngineFonts.getAlc());
 		this.insertButton(endGame.getText(),endGame);
 	}	
 	public void initializePanelViews () {
 		// Save Game
 		SaveGamePanel saveGamePanel = new SaveGamePanel(this.getAspectRatio());
+		saveGamePanel.setFontName("Ethnocentric");
 		saveGamePanel.setColor(Color.DARKGRAY);
 		saveGamePanel.setSecondaryColor(Color.DARKBLUE);
-		saveGamePanel.setSize( new Vec2d(500,200));
+		saveGamePanel.setSize( new Vec2d(600,100));
 		saveGamePanel.setOrigin(new Vec2d(0,0));
 		saveGamePanel.setBoarderSize(10);
 		this.insertPanel(SAVE_GAME_PANEL_VIEW, saveGamePanel);	
@@ -69,15 +67,16 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 		RestartGamePanel restartGamePanel = new RestartGamePanel( this.getAspectRatio()); 
 		restartGamePanel.setColor(Color.DARKGRAY);
 		restartGamePanel.setSecondaryColor(Color.DARKBLUE);
-		restartGamePanel.setSize( new Vec2d(500,200));	
+		restartGamePanel.setSize( new Vec2d(600,100));	
 		restartGamePanel.setOrigin(new Vec2d(0,0));
 		restartGamePanel.setBoarderSize(10);
 		this.insertPanel((Integer)RESTART_GAME_PANEL_VIEW, restartGamePanel);
 		// End Game Panel
 		EndGamePanel endGamePanel = new EndGamePanel( this.getAspectRatio()); 
+		endGamePanel.setFontName("Ethnocentric");
 		endGamePanel.setColor(Color.DARKGRAY);
 		endGamePanel.setSecondaryColor(Color.DARKBLUE);
-		endGamePanel.setSize( new Vec2d(500,200));	
+		endGamePanel.setSize( new Vec2d(600,100));	
 		endGamePanel.setOrigin(new Vec2d(0,0));
 		endGamePanel.setBoarderSize(10);
 		this.insertPanel((Integer)END_GAME_PANEL_VIEW, endGamePanel);

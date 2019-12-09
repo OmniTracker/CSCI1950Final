@@ -9,10 +9,12 @@ import support.collision.MTV;
 import nin.level0.NinGameWorld;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import engine.Application;
 import engine.gameobject.GameObject;
 import engine.systems.Components;
 import engine.utility.Factory;
+import javafx.scene.text.Font;
 
 public class NinDrawComponent  extends Components {
 	private Application _app;
@@ -24,8 +26,8 @@ public class NinDrawComponent  extends Components {
 	}
 	public void onDraw(GraphicsContext g)  {	
 		GameObject platform = this.getNinGameWorld().getNinMapDelegate().getGameBoardPlatforms().get(0); 
-		platform.getData().setBox( new AABShape(  new Vec2d(10, 520), new Vec2d(1200, 100))); 	
-		
+		platform.getData().setBox( new AABShape(  new Vec2d(10, 600), new Vec2d(1200, 100))); 	
+
 		GameObject character = this.getNinGameWorld().getNinGameObjectDelegate().getGameCharacters().get(0);  
 		if (characterImg == null) { 
 			characterImg = Factory.getGenericImage("resources/terrain/runSprite.png"); 
@@ -60,22 +62,50 @@ public class NinDrawComponent  extends Components {
 				Vec2d newPos = new Vec2d ( character.getData().getPosition().x - mtv.x,  character.getData().getPosition().y - mtv.y); 
 				character.getData().setPosition(newPos);
 			} catch (Exception e) {
-				
+
 			}
-		}	
-		g.drawImage(platform.getData().getImage(), 0, 0, 600, 100, 0, 500, 600, 100);
-		g.drawImage(platform.getData().getImage(), 0, 0, 600, 100, 0, 500, 1200, 100);
+		}
+		g.setFill(Color.BLACK);
+		g.fillRect(0, 600, this._app.getAspectRatioHandler().getCurrentScreenSize().x, 400);
+		g.drawImage(platform.getData().getImage(), 0, 140, 600, 100, 0, 570, 600, 100);
+		g.drawImage(platform.getData().getImage(), 0, 140, 600, 100, 600, 570, 600, 100);
 		this.drawCoins(g);	
+		this.drawScore(g);
+		this.drawGameName(g);
 	}
-	
-	
-	public void drawCoins (GraphicsContext g) {	
+	private void drawGameName (GraphicsContext g) {
+		Vec2d origin = this._app.getAspectRatioHandler().calculateUpdatedOrigin();
+		Vec2d roundOrigin = origin.plus(10, 60);
+		g.setFill(Color.DARKBLUE);
+		g.fillRoundRect(roundOrigin.x , roundOrigin.y, 500, 50, 5, 5);
+		g.setFill(Color.WHITE);
+		g.fillRoundRect(roundOrigin.x + 5, roundOrigin.y + 5, 500 - 10, 50 - 10, 5, 5);
+		g.setFill(Color.BLACK);		
+		g.setFont(Font.font("Ethnocentric", 40 ));
+		g.fillText("Bitcoin Bandet", roundOrigin.x + 250, roundOrigin.y + 40);
+
+	}
+	private void drawScore (GraphicsContext g) {	
+		Vec2d origin = this._app.getAspectRatioHandler().calculateUpdatedOrigin();
+		Vec2d roundOrigin = origin.plus(20, 120);
+		this.labelHelper(g,roundOrigin, "Coins: " + this.getNinGameWorld().score); 
+	}
+	private void labelHelper(GraphicsContext g,Vec2d roundOrigin, String text) {
+		g.setFill(Color.RED);
+		g.fillRoundRect(roundOrigin.x , roundOrigin.y, 220, 35, 5, 5);
+		g.setFill(Color.WHITE);
+		g.fillRoundRect(roundOrigin.x + 5, roundOrigin.y + 5, 220 - 10, 35 - 10, 5, 5);
+		g.setFill(Color.BLACK);		
+		g.setFont(Font.font("Ethnocentric", 20 ));
+		g.fillText(text, roundOrigin.x + 90, roundOrigin.y + 25);
+	}
+	private void drawCoins (GraphicsContext g) {	
 		ArrayList<GameObject> movingCoins = this.getNinGameWorld().getNinGameObjectDelegate().getMovingCoins(); 
 		if ( movingCoins.size() == 0) {
 			this.getNinGameWorld().getNinGameObjectDelegate().initMovingCoins();
 		}
 		for (int i = 0; i < movingCoins.size(); i++) {
-			
+
 			movingCoins.get(i).getData().getBox().setTopLeft(movingCoins.get(i).getData().getPosition());
 			int xIndex = 0;
 			if (movingCoins.get(i).getData().fileIndex == 1) {
@@ -104,7 +134,6 @@ public class NinDrawComponent  extends Components {
 					movingCoins.get(i).getData().getBox().size.y);
 		}
 	}
-	
 	private void setApp(Application _app) {
 		this._app = _app;
 	}
