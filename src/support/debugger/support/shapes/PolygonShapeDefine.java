@@ -22,7 +22,6 @@ public class PolygonShapeDefine extends PolygonShape {
 		max = new Vec2f(maxX, maxY);
 	}
 	
-	@Override
 	public void move(Vec2f distance) {
 		for(int i = 0; i < points.length; i++) {
 			points[i] = points[i].plus(distance);
