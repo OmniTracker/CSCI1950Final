@@ -15,6 +15,9 @@ public class MovementSystem extends Systems {
 	public void onKeyPressed(KeyEvent e)  {
 		this.getMoveMainCharacterComponent().onKeyPressed(e);
 	}
+	public void onTick(long nanosSincePreviousTick) {	
+		this.getMoveMainCharacterComponent().onTick(nanosSincePreviousTick);
+	}
 	private MoveMainCharacterComponent getMoveMainCharacterComponent() {
 		return _moveMainCharacterComponent;
 	}

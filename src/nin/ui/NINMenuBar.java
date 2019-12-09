@@ -1,8 +1,6 @@
 package nin.ui;
 
-import alchemy.level0.ALCGameScreen;
 import main.CSCI1950ProjectScreen;
-import nin.level0.Nin;
 import nin.level0.NinGameWorld;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -10,15 +8,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 import support.Vec2d;
-import wizard.level0.WizLevel0;
-import wizard.level1.WizLevel1;
 import engine.GameMask;
 import engine.ui.Button;
 import engine.ui.EngineFonts;
 import engine.ui.MenuBar;
 import engine.utility.AspectRatioHandler;
 import engine.utility.EventHandler;
-import finalgame.maingameloop.Final;
 
 public class NINMenuBar extends MenuBar implements EventHandler {
 	private Integer _contextHolder          = -1; 
@@ -28,10 +23,8 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 	private NinGameWorld _gameWorld; 
 
 	private final static Integer CSCI1950ProjectScreenIndex = 0;
-
-
+	
 	private NINXMLGameHandler _xmlGameHandler; 
-
 
 	public NINMenuBar(AspectRatioHandler aspect) {
 		super(aspect,40 ,Color.DARKGRAY);
@@ -67,7 +60,7 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 		// Save Game
 		SaveGamePanel saveGamePanel = new SaveGamePanel(this.getAspectRatio());
 		saveGamePanel.setColor(Color.DARKGRAY);
-		saveGamePanel.setSecondaryColor(Color.DARKGREEN);
+		saveGamePanel.setSecondaryColor(Color.DARKBLUE);
 		saveGamePanel.setSize( new Vec2d(500,200));
 		saveGamePanel.setOrigin(new Vec2d(0,0));
 		saveGamePanel.setBoarderSize(10);
@@ -75,7 +68,7 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 		// Load Game Panel
 		RestartGamePanel restartGamePanel = new RestartGamePanel( this.getAspectRatio()); 
 		restartGamePanel.setColor(Color.DARKGRAY);
-		restartGamePanel.setSecondaryColor(Color.DARKGREEN);
+		restartGamePanel.setSecondaryColor(Color.DARKBLUE);
 		restartGamePanel.setSize( new Vec2d(500,200));	
 		restartGamePanel.setOrigin(new Vec2d(0,0));
 		restartGamePanel.setBoarderSize(10);
@@ -83,7 +76,7 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 		// End Game Panel
 		EndGamePanel endGamePanel = new EndGamePanel( this.getAspectRatio()); 
 		endGamePanel.setColor(Color.DARKGRAY);
-		endGamePanel.setSecondaryColor(Color.DARKGREEN);
+		endGamePanel.setSecondaryColor(Color.DARKBLUE);
 		endGamePanel.setSize( new Vec2d(500,200));	
 		endGamePanel.setOrigin(new Vec2d(0,0));
 		endGamePanel.setBoarderSize(10);
@@ -142,7 +135,6 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 					this.getXMLGameHandler().saveGame();					
 					return;
 				}
-
 
 				if ( panel.isShowing() == false) 
 				{

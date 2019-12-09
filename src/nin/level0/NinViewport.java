@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.paint.Color;
 import support.Vec2d;
 import engine.Application;
 import engine.GameWorld;
@@ -29,18 +28,14 @@ public class NinViewport extends ViewportHandler {
 		this.getMenuBar().onDraw(g);
 	}
 	private void genericBackground(GraphicsContext g) {
-		
 		if (_sky == null) {
 			_sky = Factory.getGenericImage("resources/terrain/sky.jpg"); 
 		}
-		
-		
 		g.drawImage(_sky, 
 				0, 
 				0, 
 				this.getAspect().calculateUpdatedScreenSize().x,
 				this.getAspect().calculateUpdatedScreenSize().y);
-	
 	}
 	public void onMouseClicked(MouseEvent e) {
 		this.getMenuBar().onMouseClicked(e);
@@ -48,7 +43,6 @@ public class NinViewport extends ViewportHandler {
 			this.getGameWorld().onMouseClicked(e);
 		}
 	}
-	
 	public void onTick(long nanosSincePreviousTick) {
 		this.getMenuBar().onTick(nanosSincePreviousTick);	
 		if ( this.getMenuBar().isMenuActivated() == false ) {

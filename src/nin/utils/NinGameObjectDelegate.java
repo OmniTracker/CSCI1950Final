@@ -42,8 +42,8 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 		for (int i = 0;  i < 10  ;i++) {
 			GameObject coin = new GameObject();
 			coin.getData().setImage( Factory.getGenericImage("resources/terrain/bitcoin.png"));
-			coin.getData().setSize(new Vec2d(150,150));
-			coin.getData().setPosition( new Vec2d(-100,0));
+			coin.getData().setSize(new Vec2d(50,50));
+			coin.getData().setPosition( new Vec2d(-200,30));
 			coin.getData().setBox(new AABShape(coin.getData().getPosition(), coin.getData().getSize()));
 			this.getMovingCoins().add(coin);
 		}
@@ -256,7 +256,7 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 		this._movingUnits = _movingUnits;
 	}
 
-	private ArrayList<GameObject> getMovingCoins() {
+	public ArrayList<GameObject> getMovingCoins() {
 		return _movingCoins;
 	}
 

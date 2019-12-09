@@ -36,6 +36,9 @@ public class GameObjectData {
 	
 	public int dir = 1;
 	public int fileIndex = 0;
+	
+	public boolean coinMoving = false;
+	public int coinSpeed = 0;
 
 	public GameObjectData() {}
 	

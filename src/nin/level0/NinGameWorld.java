@@ -38,6 +38,7 @@ public class NinGameWorld  extends GameWorld {
 			this.getApplication().stage.setMaxHeight(this.getApplication().getAspectRatioHandler().getInitialScreenSize().y);
 			this.getApplication().stage.setMaxWidth(this.getApplication().getAspectRatioHandler().getInitialScreenSize().x);
 		}
+		this.getMovementSystem().onTick(nanosSincePreviousTick);
 	}
 	
 	public void onDraw(GraphicsContext g) {
