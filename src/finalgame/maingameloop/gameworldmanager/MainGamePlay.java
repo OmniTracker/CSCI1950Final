@@ -377,8 +377,9 @@ public class MainGamePlay extends GameWorld {
 	 */
 	@Override
 	public void onTick(long nanosSincePreviousTick) {
-		//System.out.print("Main Game Play \n");
+//		System.out.print("Main Game Play \n");
 		//Tick and split up into component ticks if any given tick is too long
+		
 		if(nanosSincePreviousTick > 50000000) {
 			int n = (int)(nanosSincePreviousTick/50000000.);
 			long lastTick = nanosSincePreviousTick%50000000;
@@ -481,7 +482,6 @@ public class MainGamePlay extends GameWorld {
     public void onMouseDragged(MouseEvent e) {
 		_input.put("MOUSE.X", e.getX());
 		_input.put("MOUSE.Y", e.getY());
-		System.out.println("CALLED");
 		this.onInput();
 	}
 	@Override
