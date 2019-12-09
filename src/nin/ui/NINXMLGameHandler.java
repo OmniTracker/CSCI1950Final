@@ -88,6 +88,8 @@ public class NINXMLGameHandler {
 		
 	public void restartGame() 
 	{
+		
+		/*
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = null;
@@ -136,9 +138,13 @@ public class NINXMLGameHandler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		*/
 	}
 
 	public void saveGame() {
+		
+		/*
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = null;
 		try 
@@ -186,11 +192,8 @@ public class NINXMLGameHandler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/ 
 	}
-
-
-
-
 
 
 }

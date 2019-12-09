@@ -24,7 +24,7 @@ public abstract class FXFrontEnd extends CS1971FrontEnd {
 	/**
 	 * The window used to hold the canvas
 	 */
-	private Stage stage = null;
+	public Stage stage = null;
 	private Scene scene = null;
 	private String title = "";
 	private String debugTitle = "";

@@ -25,6 +25,7 @@ public class NinGameWorld  extends GameWorld {
 		this.setNinGameObjectDelegate( new NinGameObjectDelegate(app) );
 		this.setNinMapDelegate( new NinMapDelegate(app));
 	}
+	
 	public void onTick(long nanosSincePreviousTick) {
 		if ( this.getNinGameObjectDelegate().getGameCharacters().size() != 0) {
 			// Run the Decision Tree. This will run on every Tick.
@@ -32,6 +33,10 @@ public class NinGameWorld  extends GameWorld {
 			this.getNinGameObjectDelegate().getGameCharacters().get(1).getData().getNinBehaviorTree().runTree();
 			this.getNinGameObjectDelegate().getGameCharacters().get(2).getData().getNinBehaviorTree().runTree();
 			this.getNinGameObjectDelegate().getGameCharacters().get(3).getData().getNinBehaviorTree().runTree();
+			
+			// Need to reset this once I leave the this scene.
+			this.getApplication().stage.setMaxHeight(this.getApplication().getAspectRatioHandler().getInitialScreenSize().y);
+			this.getApplication().stage.setMaxWidth(this.getApplication().getAspectRatioHandler().getInitialScreenSize().x);
 		}
 	}
 	
@@ -45,16 +50,11 @@ public class NinGameWorld  extends GameWorld {
 		this.getGraphicsSystem().onDraw(g);
 	}
 	
-	
 	public void onMouseClicked(MouseEvent e) {
-		
-
-		
-		if (_button != null) {
-			
-
-			if ( _button.clicked(e) == true) {
-				
+		if (_button != null) 
+		{
+			if ( _button.clicked(e) == true) 
+			{	
 				this.getNinGameObjectDelegate().resetStatic();
 			}
 		}

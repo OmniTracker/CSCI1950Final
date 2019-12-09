@@ -366,7 +366,7 @@ public class Factory {
 		} 
 		return null;
 	}	
-	public Image getGenericImage (String path) {
+	public static Image getGenericImage (String path) {
 		try {
 			return new Image(new File(path).toURI().toURL().toExternalForm());
 		} catch (MalformedURLException e) {

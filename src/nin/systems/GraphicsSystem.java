@@ -14,16 +14,12 @@ public class GraphicsSystem extends Systems {
 		super(app, gameWorld);
 		this.setSystemName("Graphics");
 		this.setNinGameBoardComponent( new NinDrawComponent(app,gameWorld) );
-
 	}
 
 	public void onDraw(GraphicsContext g) {
-
 		this.getNinGameBoardComponent().onDraw(g);
 	}
 	
-	
-
 	private NinDrawComponent getNinGameBoardComponent() {
 		return _ninGameBoardComponent;
 	}

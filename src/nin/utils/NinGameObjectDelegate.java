@@ -18,8 +18,8 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 
 	private ArrayList<GameObject> _gameCharacters = null;
 	private ArrayList<GameObject> _movingUnits = null;
-	
-	
+	private ArrayList<GameObject> _movingCoins = null;
+
 	GameObject mainCharacter; 
 	GameObject testCharacter0; 
 	GameObject testCharacter1; 
@@ -30,15 +30,26 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 	PhysicsAction p2;
 	PhysicsAction p3;
 
-
 	public NinGameObjectDelegate(Application app) {
 		super(app);	
 		this.setGameCharacters(new ArrayList<GameObject>());
 		this.setMovingUnits(new ArrayList<GameObject>());
+		this.setMovingCoins( new ArrayList<GameObject>());
+	}
+	
+	public void initMovingCoins () {
+		// Only allow 10 coins at a time.
+		for (int i = 0;  i < 10  ;i++) {
+			GameObject coin = new GameObject();
+			coin.getData().setImage( Factory.getGenericImage("resources/terrain/bitcoin.png"));
+			coin.getData().setSize(new Vec2d(150,150));
+			coin.getData().setPosition( new Vec2d(-100,0));
+			coin.getData().setBox(new AABShape(coin.getData().getPosition(), coin.getData().getSize()));
+			this.getMovingCoins().add(coin);
+		}
 	}
 
 	public void initCharacter () {
-		
 		_static = new GameObject();
 		_static.getData().setName("static");
 		
@@ -243,5 +254,13 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 
 	public void setMovingUnits(ArrayList<GameObject> _movingUnits) {
 		this._movingUnits = _movingUnits;
+	}
+
+	private ArrayList<GameObject> getMovingCoins() {
+		return _movingCoins;
+	}
+
+	private void setMovingCoins(ArrayList<GameObject> _movingCoins) {
+		this._movingCoins = _movingCoins;
 	}	
 }

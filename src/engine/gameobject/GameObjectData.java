@@ -33,7 +33,9 @@ public class GameObjectData {
 	public Vec2i _AIGridLocation            = new Vec2i(0,0);
 	public Vec2d _currentMTV                = new Vec2d(0.0,0.0); 
 	public NINBehaviorTree _ninBehaviorTree = new NINBehaviorTree();
-
+	
+	public int dir = 1;
+	public int fileIndex = 0;
 
 	public GameObjectData() {}
 	

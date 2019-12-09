@@ -1,7 +1,5 @@
 package main;
 
-import java.net.MalformedURLException;
-
 import nin.level0.Nin;
 import wizard.level0.WizLevel0;
 import wizard.level1.WizLevel1;
@@ -13,9 +11,9 @@ public class Main
 {
 	private final static Integer CSCI1950ProjectScreenIndex = 0;
 
-	public static void main (String[] arg) throws MalformedURLException 
+	public static void main (String[] arg) 
 	{
-		Integer _debugGame =  0; 
+		Integer _debugGame =  5; 
 		Application app = new Application("Project Screen");
 		if (_debugGame == 0) 
 		{

@@ -16,23 +16,14 @@ public class MoveMainCharacterComponent  extends Components {
 		this.setMovementSystem(movementSystem);
 		this.setNinGameWorld(ninGameWorld);
 	}
+	
+	
+	
+	
 
 	public void moveMain (KeyEvent e) {
 		GameObject mainCharacter = this.getNinGameWorld().getNinGameObjectDelegate().getGameCharacters().get(0);		
 		String keyInput = e.getCode().toString(); 
-		if (keyInput.contains("LEFT")) {
-			mainCharacter.getData().setPosition(mainCharacter.getData().getPosition().minus(5,0));
-		} else if (keyInput.contains("RIGHT")) {
-			mainCharacter.getData().setPosition(mainCharacter.getData().getPosition().plus(5,0));
-		}
-		mainCharacter.getData().getBox().setTopLeft(mainCharacter.getData().getPosition());
-	}
-
-	public void onKeyPressed(KeyEvent e)  {
-		this.moveMain(e);
-		String keyCode = e.getCode().toString(); 
-		// Send signal to the Behavior tree. This is done here because it invokes movement
-
 		JumpSignaled signal = (JumpSignaled) this.getNinGameWorld().
 				getNinGameObjectDelegate().
 				getGameCharacters().
@@ -41,13 +32,44 @@ public class MoveMainCharacterComponent  extends Components {
 				getSequence().
 				get(0).
 				get(0); 
+		if (keyInput.contains("LEFT")) {
+			if (mainCharacter.getData().getPosition().x > 10) {
+				mainCharacter.getData().setPosition(mainCharacter.getData().getPosition().minus(10,0));				
+			}
+			mainCharacter.getData().dir = -1;
+			if( signal._jumpSignaled == false) {
+				mainCharacter.getData().fileIndex =  (( mainCharacter.getData().fileIndex + 1 == 5) ? 0 : mainCharacter.getData().fileIndex + 1);	
+			}						
+		} else if (keyInput.contains("RIGHT"))  {
+			if (mainCharacter.getData().getPosition().x < this.getNinGameWorld().getApplication().getAspectRatioHandler().getCurrentScreenSize().x - 120) {
+				mainCharacter.getData().setPosition(mainCharacter.getData().getPosition().plus(10,0));
+			}
+			mainCharacter.getData().dir = 1;
+			if( signal._jumpSignaled == false) {
+				mainCharacter.getData().fileIndex =  (( mainCharacter.getData().fileIndex + 1 == 5) ? 0 : mainCharacter.getData().fileIndex + 1);	
+			}			
+		}
+		mainCharacter.getData().getBox().setTopLeft(mainCharacter.getData().getPosition());
+	}
 
+	public void onKeyPressed(KeyEvent e)  {
+		this.moveMain(e);
+		String keyCode = e.getCode().toString(); 
+		// Send signal to the Behavior tree. This is done here because it invokes movement
+		JumpSignaled signal = (JumpSignaled) this.getNinGameWorld().
+				getNinGameObjectDelegate().
+				getGameCharacters().
+				get(0).getData().
+				getNinBehaviorTree().
+				getSequence().
+				get(0).
+				get(0); 
 		GameObject mainCharacter = this.getNinGameWorld().getNinGameObjectDelegate().getGameCharacters().get(0);		
-
 		// Use the MTV to allow jumping to happen.
 		if (keyCode.contains("SPACE")) {
 			if (mainCharacter.getData().getCurrentMTV() != null) {				
 				signal.setJumpSignaled(true);
+				mainCharacter.getData().fileIndex = 0; 
 				return;
 			}
 		}		

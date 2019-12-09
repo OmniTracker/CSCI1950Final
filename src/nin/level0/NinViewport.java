@@ -2,6 +2,7 @@ package nin.level0;
 
 import nin.ui.NINMenuBar;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -10,9 +11,12 @@ import support.Vec2d;
 import engine.Application;
 import engine.GameWorld;
 import engine.ui.ViewportHandler;
+import engine.utility.Factory;
 
 public class NinViewport extends ViewportHandler {
 	private NINMenuBar _menuBar = null; 
+	private Image _sky = null; 
+	
 	public NinViewport(Application parent, GameWorld gameWorld, Vec2d origin,
 			Vec2d size) {
 		super(parent, gameWorld, origin, size);
@@ -25,35 +29,38 @@ public class NinViewport extends ViewportHandler {
 		this.getMenuBar().onDraw(g);
 	}
 	private void genericBackground(GraphicsContext g) {
-		g.setFill(Color.RED);
-		Vec2d size = this.getAspect().getCurrentScreenSize();
-		g.fillRect(0,0, size.x, size.y );
+		
+		if (_sky == null) {
+			_sky = Factory.getGenericImage("resources/terrain/sky.jpg"); 
+		}
+		
+		
+		g.drawImage(_sky, 
+				0, 
+				0, 
+				this.getAspect().calculateUpdatedScreenSize().x,
+				this.getAspect().calculateUpdatedScreenSize().y);
+	
 	}
 	public void onMouseClicked(MouseEvent e) {
 		this.getMenuBar().onMouseClicked(e);
-		
 		if ( this.getMenuBar().isMenuActivated() == false ) {
 			this.getGameWorld().onMouseClicked(e);
 		}
-		
 	}
+	
 	public void onTick(long nanosSincePreviousTick) {
-		
-		this.getMenuBar().onTick(nanosSincePreviousTick);
-		
+		this.getMenuBar().onTick(nanosSincePreviousTick);	
 		if ( this.getMenuBar().isMenuActivated() == false ) {
 			this.getGameWorld().onTick(nanosSincePreviousTick);			
-		}
-		
+		}	
 	}
+	
 	public void onKeyPressed(KeyEvent e)  {
 		this.getMenuBar().onKeyPressed(e);
-		
-		if ( this.getMenuBar().isMenuActivated() == false ) {
-			
+		if ( this.getMenuBar().isMenuActivated() == false ) {	
 			this.getGameWorld().onKeyPressed(e);
 		}
-		
 	}
 	public void onMouseDragged(MouseEvent e) {
 		if ( this.getMenuBar().isMenuActivated() == false ) {

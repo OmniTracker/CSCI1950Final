@@ -5,7 +5,7 @@ import engine.ai.behaviortree.Conditions;
 import engine.gameobject.GameObject;
 
 public class JumpSignaled extends NinBehaviorSequence  implements Conditions  {
-	private boolean _jumpSignaled = false;
+	public boolean _jumpSignaled = false;
 	private boolean _saveJumpContex;
 	
 	private GameObject _mainCharacter;

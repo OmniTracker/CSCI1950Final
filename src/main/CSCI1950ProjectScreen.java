@@ -27,7 +27,7 @@ public class CSCI1950ProjectScreen extends Screen {
 	private boolean _gameLoading = false;
 	private double fadeInY = 0.0;
 	private double _fadeout = 0.0;
-	CSCI1950ProjectScreen(Application app){
+	public CSCI1950ProjectScreen(Application app){
 		super(app);
 		this.initButtons();
 	}

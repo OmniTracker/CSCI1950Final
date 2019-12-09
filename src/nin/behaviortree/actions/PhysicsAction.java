@@ -18,8 +18,7 @@ public class PhysicsAction extends NinBehaviorSequence implements  Actions {
 		this.setOtherCharacter( new  ArrayList<GameObject> ());
 	}
 	public PhysicsActionData data = new PhysicsActionData(true, new Vec2d(0,0),
-			new Vec2d(0,0), new Vec2d(0,0), new Vec2d(0,0), 0.01, 0, 10, 0, 9.8, false);
-
+			new Vec2d(0,0), new Vec2d(0,0), new Vec2d(0,0), 0.05, 0, 10, 0, 9.8, false);
 
 	public void incrementX () {
 		if (isStaticFlag() == true) {
@@ -29,7 +28,6 @@ public class PhysicsAction extends NinBehaviorSequence implements  Actions {
 			this.getMainCharacter().getData().setPosition(this.getPosition());
 		}
 	}
-
 	public void applyForce(Vec2d f) {
 		this.setForce( this.getForce().plus(f));
 	}
@@ -51,9 +49,8 @@ public class PhysicsAction extends NinBehaviorSequence implements  Actions {
 		// Velocity first (Symplectic Euler)
 		data._jumpVel = data._jumpVel - data._timeStep * data._gravity;
 		data._jumpPos = data._jumpPos + data._jumpVel * data._timeStep;
-
 		if (data._jumpVel <= -10.5) {
-			data._timeStep = 0.01;
+			data._timeStep = 0.05;
 			data._jumpPos = 0; 
 			data._jumpVel = 10; 
 			return false; 
@@ -98,13 +95,9 @@ public class PhysicsAction extends NinBehaviorSequence implements  Actions {
 	private Vec2d getVelocity() {
 		return data._velocity;
 	}
-	
-	
 	public void setVelocity(Vec2d _velocity) {
 		this.data._velocity = _velocity;
 	}
-	
-	
 	private Vec2d getPosition() {
 		return data._position;
 	}
@@ -122,7 +115,6 @@ public class PhysicsAction extends NinBehaviorSequence implements  Actions {
 	public boolean implementAction() {
 		return false;
 	}
-
 	public void setMass(double _mass) {
 		this.data._mass = _mass;
 	}
@@ -132,21 +124,16 @@ public class PhysicsAction extends NinBehaviorSequence implements  Actions {
 	public void setCOR(double _COR) {
 		this.data._COR = _COR;
 	}
-
 	public void setWalkVel(double _walkVel) {
-
 		this.setVelocity(new Vec2d(_walkVel,0));
 		this.data._walkVel = _walkVel;
 	}
-
 	public GameObject getMainCharacter() {
 		return data._mainCharacter;
 	}
-
 	public void setMainCharacter(GameObject _mainCharacter) {
 		this.data._mainCharacter = _mainCharacter;
 	}
-
 	public ArrayList<GameObject> getOtherCharacter() {
 		return data._otherCharacter;
 	}
