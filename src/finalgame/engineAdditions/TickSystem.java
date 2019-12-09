@@ -5,7 +5,6 @@ public class TickSystem extends GameSystem{
 	public void onTick(long nanosSinceLastTick) {
 		for(int i = 0; i<_objects.size();i++) {
 			_objects.get(i).tick(nanosSinceLastTick);
-			System.out.println("ADDED" + _objects.get(i).getName());
 		}
 	}
 	
@@ -17,7 +16,9 @@ public class TickSystem extends GameSystem{
 			_objects.add(go);
 		}
 		if(go.hasComponent("ABILITY_E")) {
-			System.out.println("ADDED" + go.getName());
+			_objects.add(go);
+		}
+		if(go.hasComponent("ABILITY_F")) {
 			_objects.add(go);
 		}
 	}

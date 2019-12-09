@@ -68,7 +68,12 @@ public class PlayerInputComponent extends Component{
 					ability.activateAbility();
 				}
 			}
-			
+			if(_input.containsKey("F") && _input.get("F") == 1) {
+				if(_go.hasComponent("ABILITY_F")) {
+					AnimateAbilityComponent ability = (AnimateAbilityComponent) _go.getComponent("ABILITY_F");
+					ability.activateAbility();
+				}
+			}
 			if (_input.containsKey("MOUSE_LEFT") && _input.get("MOUSE_LEFT") == 1) {
 				if(_go.hasComponent("ABILITY_CLICK")) {
 					AnimateAbilityComponent ability = (AnimateAbilityComponent) _go.getComponent("ABILITY_CLICK");
