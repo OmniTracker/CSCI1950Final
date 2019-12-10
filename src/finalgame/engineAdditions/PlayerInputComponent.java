@@ -11,6 +11,7 @@ public class PlayerInputComponent extends Component{
 	private HashMap<String, Double> _input;
 	protected boolean _hasFocus;
 	protected double _moveMultiplier;
+	private String[] keys = new String[8];
 	
 	public PlayerInputComponent(GameObject go, HashMap<String,Double> input) {
 		super(go);
@@ -25,7 +26,7 @@ public class PlayerInputComponent extends Component{
 			double mult = nanosSinceLastTick * 0.00000005 * _moveMultiplier;
 			boolean moved=false;
 			TransformComponent curr = (TransformComponent)_go.getComponent("TRANSFORM");
-			if(_input.containsKey("W") && _input.get("W") == 1) {
+			if(_input.containsKey(keys[4]) && _input.get(keys[4]) == 1) {
 				if(_go.hasComponent("ANIMATE")) {
 					AnimateGraphicsComponent anim = (AnimateGraphicsComponent) _go.getComponent("ANIMATE");
 					anim.setAnimate(4);
@@ -33,7 +34,7 @@ public class PlayerInputComponent extends Component{
 				curr.move(new Vec2d(0,-5.*mult));
 				moved = true;
 			}
-			if(_input.containsKey("S") && _input.get("S") == 1) {
+			if(_input.containsKey(keys[7]) && _input.get(keys[7]) == 1) {
 				if(_go.hasComponent("ANIMATE")) {
 					AnimateGraphicsComponent anim = (AnimateGraphicsComponent) _go.getComponent("ANIMATE");
 					anim.setAnimate(1);
@@ -41,7 +42,7 @@ public class PlayerInputComponent extends Component{
 				curr.move(new Vec2d(0,5.*mult));
 				moved = true;
 			}
-			if(_input.containsKey("A") && _input.get("A") == 1) {
+			if(_input.containsKey(keys[5]) && _input.get(keys[5]) == 1) {
 				if(_go.hasComponent("ANIMATE")) {
 					AnimateGraphicsComponent anim = (AnimateGraphicsComponent) _go.getComponent("ANIMATE");
 					anim.setAnimate(2);
@@ -49,7 +50,7 @@ public class PlayerInputComponent extends Component{
 				curr.move(new Vec2d(-5.*mult,0));
 				moved = true;
 			}
-			if(_input.containsKey("D") && _input.get("D") == 1) {
+			if(_input.containsKey(keys[6]) && _input.get(keys[6]) == 1) {
 				if(_go.hasComponent("ANIMATE")) {
 					AnimateGraphicsComponent anim = (AnimateGraphicsComponent) _go.getComponent("ANIMATE");
 					anim.setAnimate(3);
@@ -61,25 +62,25 @@ public class PlayerInputComponent extends Component{
 				AnimateGraphicsComponent anim = (AnimateGraphicsComponent) _go.getComponent("ANIMATE");
 				anim.setAnimate(0);
 			}
-			if(_input.containsKey("Q") && _input.get("Q") == 1) {
+			if(_input.containsKey(keys[3]) && _input.get(keys[3]) == 1) {
 				if(_go.hasComponent("ABILITY_Q")) {
 					AnimateAbilityComponent ability = (AnimateAbilityComponent) _go.getComponent("ABILITY_Q");
 					ability.activateAbility();
 				}
 			}
-			if(_input.containsKey("E") && _input.get("E") == 1) {
+			if(_input.containsKey(keys[2]) && _input.get(keys[2]) == 1) {
 				if(_go.hasComponent("ABILITY_E")) {
 					AnimateAbilityComponent ability = (AnimateAbilityComponent) _go.getComponent("ABILITY_E");
 					ability.activateAbility();
 				}
 			}
-			if(_input.containsKey("F") && _input.get("F") == 1) {
+			if(_input.containsKey(keys[1]) && _input.get(keys[1]) == 1) {
 				if(_go.hasComponent("ABILITY_F")) {
 					AnimateAbilityComponent ability = (AnimateAbilityComponent) _go.getComponent("ABILITY_F");
 					ability.activateAbility();
 				}
 			}
-			if(_input.containsKey("H") && _input.get("H") == 1) {
+			if(_input.containsKey(keys[0]) && _input.get(keys[0]) == 1) {
 				if(_go.hasComponent("HEALTH")) {
 					PlayerHealthComponent health = (PlayerHealthComponent) _go.getComponent("HEALTH");
 					health.usePotion();
@@ -127,5 +128,9 @@ public class PlayerInputComponent extends Component{
 	
 	public void setMoveMultiplier(double m) {
 		_moveMultiplier = m;
+	}
+	
+	public void setAbilityKeys(String[] p) {
+		keys = p;
 	}
 }

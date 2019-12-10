@@ -1,9 +1,18 @@
 package finalgame.maingameloop.gameworldmanager;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
@@ -86,6 +95,9 @@ public class MainGamePlay extends GameWorld {
 
 	private int _selectedCharacter;
 	private FinalGameWorld _finalGameWorld;
+	
+	private String[] placeHolders = new String[8];
+	private String xmlPath = "./resources/xmlResources/.KeyBinding.xml";
 
 	public MainGamePlay(Application app, FinalGameWorld parent) {
 		super(app);
@@ -103,7 +115,8 @@ public class MainGamePlay extends GameWorld {
 
 		// Used to display game view overlay
 		set_gamePlayOverlay(new GamePlayOverlay(app,parent));
-		get_gamePlayOverlay().setKeyValues();
+		this.getKeys();
+		get_gamePlayOverlay().setKeyValues(placeHolders);
 	}
 
 
@@ -136,6 +149,8 @@ public class MainGamePlay extends GameWorld {
 		this.addToSystems(_player);
 		PlayerInputComponent curr = (PlayerInputComponent)_player.getComponent("INPUT");
 		curr.setFocus(true);
+		this.getKeys();
+		curr.setAbilityKeys(placeHolders);
 	}
 
 	private void addSpecificCharacterComponents() {
@@ -576,6 +591,52 @@ public class MainGamePlay extends GameWorld {
 
 	public void set_gamePlayOverlay(GamePlayOverlay _gamePlayOverlay) {
 		this._gamePlayOverlay = _gamePlayOverlay;
+	}
+	
+	public void getKeys() {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder = null;
+		try {
+			docBuilder = factory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Document doc = null;
+		try {
+			doc = docBuilder.parse(xmlPath);
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		doc.getDocumentElement().normalize();
+		NodeList nList = doc.getElementsByTagName("action");
+		int size = nList.getLength();
+		for (int x = 0; x<size;x++) {
+			placeHolders[x] = nList.item(x).getChildNodes().item(0).getNodeName();
+		}
+	}
+	
+	public String[] getPlaceHolders() {
+		return placeHolders;
+	}
+
+
+	public void setPlaceHolders(String[] placeHolders) {
+		this.placeHolders = placeHolders;
+	}
+
+
+	public GameObject get_player() {
+		return _player;
+	}
+
+
+	public void set_player(GameObject _player) {
+		this._player = _player;
 	}
 
 

@@ -11,6 +11,7 @@ import engine.ui.EngineFonts;
 import engine.ui.MenuBar;
 import engine.utility.AspectRatioHandler;
 import engine.utility.EventHandler;
+import finalgame.engineAdditions.PlayerInputComponent;
 import finalgame.maingameloop.FinalGameWorld;
 import finalgame.maingameloop.FinalGameWorld.VisibleGameWorld;
 
@@ -190,6 +191,8 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 				else if (buttonPushed.contains("Options")) 
 				{					
 					this.setContextHolder(OPTIONS_PANEL_VIEW);
+					OptionsPanel panel = (OptionsPanel) this.getPanelViews().get(OPTIONS_PANEL_VIEW);
+					panel.initKeyBindingButtons();
 				}
 				else if (buttonPushed.contains("End Game"))
 				{					
@@ -236,7 +239,10 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 					// Reset Context holder
 					this.setContextHolder(-1);
 					this.setMenuActivated(false);
-					_gameWorld.getMainGamePlay().get_gamePlayOverlay().setKeyValues();
+					_gameWorld.getMainGamePlay().getKeys();
+					_gameWorld.getMainGamePlay().get_gamePlayOverlay().setKeyValues(_gameWorld.getMainGamePlay().getPlaceHolders());
+					PlayerInputComponent curr = (PlayerInputComponent)_gameWorld.getMainGamePlay().get_player().getComponent("INPUT");
+					curr.setAbilityKeys(_gameWorld.getMainGamePlay().getPlaceHolders());
 				}
 			} 
 			else if (this.getContextHolder() == END_GAME_PANEL_VIEW) 
