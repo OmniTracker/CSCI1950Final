@@ -82,7 +82,7 @@ public class NinDrawComponent  extends Components {
 		g.fillRoundRect(roundOrigin.x + 5, roundOrigin.y + 5, 500 - 10, 50 - 10, 5, 5);
 		g.setFill(Color.BLACK);		
 		g.setFont(Font.font("Ethnocentric", 40 ));
-		g.fillText("Bitcoin Bandet", roundOrigin.x + 250, roundOrigin.y + 40);
+		g.fillText("Bitcoin Bandit", roundOrigin.x + 250, roundOrigin.y + 40);
 
 	}
 	private void drawScore (GraphicsContext g) {	
