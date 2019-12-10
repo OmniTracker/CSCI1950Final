@@ -7,11 +7,11 @@ import javafx.scene.transform.Affine;
 
 public class MouseAbilityAnimationComponent extends AnimateAbilityComponent{
 	
-	private double _range;
-	private boolean _showRange;
+	protected double _range;
+	protected boolean _showRange;
 	
-	private Vec2d _src;
-	private Vec2d _dir;
+	protected Vec2d _src;
+	protected Vec2d _dir;
 	private Vec2d _activeBulletLoc;
 	
 	

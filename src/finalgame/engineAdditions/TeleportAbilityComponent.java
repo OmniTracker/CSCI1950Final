@@ -82,7 +82,7 @@ public class TeleportAbilityComponent extends AnimateAbilityComponent{
 			}
 			
 			g.drawImage(_img,_imageLoc.x+(_currFrame%8)*_animationIncrement.x, _imageLoc.y + (_currFrame/8)*_animationIncrement.y, 
-					_imageDim.x, _imageDim.y,charLoc.x-5,charLoc.y-5,charDim.x+10,charDim.y+10);
+					_imageDim.x, _imageDim.y,charLoc.x-10,charLoc.y-10,charDim.x+20,charDim.y+20);
 		}
 	}
 	
