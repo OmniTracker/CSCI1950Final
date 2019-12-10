@@ -25,7 +25,6 @@ public class GamePlayOverlay extends UIElement{
 	Application _app;
 	FinalGameWorld _parent;
 	AspectRatioHandler _aspect;
-	private String xmlPath = "./resources/xmlResources/.KeyBinding.xml";
 	String[] placeHolders = new String[8]; 
 
 	public GamePlayOverlay(Application app, FinalGameWorld parent) {
@@ -133,31 +132,8 @@ public class GamePlayOverlay extends UIElement{
 		g.fillText(placeHolders[3], attributesOrigin.x + (increment++ * incrementSize) + (boxSize/ 4), attributesOrigin.y + (boxSize / smallBaxFactor) +  ( (boxSize/ 3) + 4));
 	}
 	
-	public void setKeyValues() {
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder docBuilder = null;
-		try {
-			docBuilder = factory.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Document doc = null;
-		try {
-			doc = docBuilder.parse(xmlPath);
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		doc.getDocumentElement().normalize();
-		NodeList nList = doc.getElementsByTagName("action");
-		int size = nList.getLength();
-		for (int x = 0; x<size;x++) {
-			placeHolders[x] = nList.item(x).getChildNodes().item(0).getNodeName();
-		}
+	public void setKeyValues(String[] p) {
+		placeHolders = p;
 	}
 
 }

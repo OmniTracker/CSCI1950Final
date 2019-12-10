@@ -87,7 +87,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 	
 	public void initKeyBindingButtons () {
 		double width = 150; 
-		double height = 30;
+		double height = 20;
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = null;
 		try {
@@ -113,28 +113,28 @@ public class OptionsPanel  extends Panel implements EventHandler{
 			String tname = null;
 			switch(x) {
 			case 0:
-				tname = "Move Up";
-				break;
-			case 1:
-				tname = "Move Left";
-				break;
-			case 2:
-				tname = "Move Right";
-				break;
-			case 3:
-				tname = "Move Down";
-				break;
-			case 4:
 				tname = "Heal";
 				break;
-			case 5:
+			case 1:
 				tname = "Ability 1";
 				break;
-			case 6:
+			case 2:
 				tname = "Ability 2";
 				break;
-			case 7:
+			case 3:
 				tname = "Ability 3";
+				break;
+			case 4:
+				tname = "Move Up";
+				break;
+			case 5:
+				tname = "Move Left";
+				break;
+			case 6:
+				tname = "Move Right";
+				break;
+			case 7:
+				tname = "Move Down";
 				break;
 			}
 			String name = tname;// + nList.item(x).getAttributes().item(0).getNodeValue();
@@ -152,9 +152,9 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		g.setTextAlign(TextAlignment.CENTER);
 		// Mid point
 		center = menuOrigin.plus( (menuSize.x / 4), (menuSize.y  / ( 4 / 3.6)));
-		double offsetIncrement = 35;
+		double offsetIncrement = 30;
 		// Start of offset
-		double offset = -180; 
+		double offset = -190; 
 		for (Entry<Integer, KeyBinding> mapBinding : this.getKeyBindingMap().entrySet()) { 
 			mapBinding.getValue().drawKeyBindingStuff(g, center, offset+= offsetIncrement);	
 		}

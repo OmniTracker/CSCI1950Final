@@ -26,7 +26,7 @@ public class KeyBinding extends UIElement {
 		this.setKeyBindingShape( new AABShape( new Vec2d(0,0), new Vec2d(0,0)) );
 	}
 	public void drawKeyBindingStuff(GraphicsContext g, Vec2d center, double yOffset) {		
-		double moveUp = -22;
+		double moveUp = -18;
 		double xSpacing = 150; 
 		g.setFill(Color.WHITE);
 		g.fillRoundRect( (center.x - xSpacing) - (this.getWidth() / 2) , (center.y + yOffset) + moveUp, this.getWidth(), this.getHeight(), 15, 15);		
