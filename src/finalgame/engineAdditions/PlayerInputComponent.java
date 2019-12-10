@@ -61,7 +61,12 @@ public class PlayerInputComponent extends Component{
 				AnimateGraphicsComponent anim = (AnimateGraphicsComponent) _go.getComponent("ANIMATE");
 				anim.setAnimate(0);
 			}
-			
+			if(_input.containsKey("Q") && _input.get("Q") == 1) {
+				if(_go.hasComponent("ABILITY_Q")) {
+					AnimateAbilityComponent ability = (AnimateAbilityComponent) _go.getComponent("ABILITY_Q");
+					ability.activateAbility();
+				}
+			}
 			if(_input.containsKey("E") && _input.get("E") == 1) {
 				if(_go.hasComponent("ABILITY_E")) {
 					AnimateAbilityComponent ability = (AnimateAbilityComponent) _go.getComponent("ABILITY_E");
@@ -72,6 +77,12 @@ public class PlayerInputComponent extends Component{
 				if(_go.hasComponent("ABILITY_F")) {
 					AnimateAbilityComponent ability = (AnimateAbilityComponent) _go.getComponent("ABILITY_F");
 					ability.activateAbility();
+				}
+			}
+			if(_input.containsKey("H") && _input.get("H") == 1) {
+				if(_go.hasComponent("HEALTH")) {
+					PlayerHealthComponent health = (PlayerHealthComponent) _go.getComponent("HEALTH");
+					health.usePotion();
 				}
 			}
 			if (_input.containsKey("MOUSE_LEFT") && _input.get("MOUSE_LEFT") == 1) {

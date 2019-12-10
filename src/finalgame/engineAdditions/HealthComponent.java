@@ -17,7 +17,7 @@ public class HealthComponent extends Component{
 		_maxHealth = hp;
 		_showHealthBar = true;
 	}
-
+	
 	public void takeDamage(double amt) {
 		_currentHealth = Math.max(0, _currentHealth-amt);
 		if(_currentHealth == 0) {

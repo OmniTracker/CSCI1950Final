@@ -70,29 +70,14 @@ public class AnimateAbilityComponent extends Component{
 				_cooldownCounter = _cooldown;
 				_coolingDown = false;
 			}
-		}		
+		}
 	}
 
 	@Override
 	public void draw(GraphicsContext g, Affine af) {
 		if(_active) {
-			//continue showing ability animation
-			AnimateGraphicsComponent curr = (AnimateGraphicsComponent)_go.getComponent("ANIMATE");
-			int facing = curr.getDir();//1up, 2left, 3down, 4right
-			System.out.println(facing);
-			TransformComponent currTransform = (TransformComponent) _go.getComponent("TRANSFORM");
-			Vec2d charLoc = currTransform.getLoc();
-			Vec2d abilityLoc;
-			Vec2d charDim = currTransform.getDim();
-			switch (facing) {
-			case 1:
-				abilityLoc= charLoc.plus(new Vec2d(0,-_dim.y));
-			case 2:
-			case 3:
-			case 4:
-			}
-		}
-		
+			
+		}		
 	}
 	
 	public double getCurrCooldown() {

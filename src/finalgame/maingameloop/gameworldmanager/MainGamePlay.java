@@ -39,6 +39,7 @@ import finalgame.engineAdditions.GameObject;
 import finalgame.engineAdditions.GraphicsSystem;
 import finalgame.engineAdditions.HealthComponent;
 import finalgame.engineAdditions.MouseAbilityAnimationComponent;
+import finalgame.engineAdditions.PlayerHealthComponent;
 import finalgame.engineAdditions.PlayerInputComponent;
 import finalgame.engineAdditions.PlayerInputSystem;
 import finalgame.engineAdditions.ScratchAbilityAnimationComponent;
@@ -153,8 +154,12 @@ public class MainGamePlay extends GameWorld {
 				break;
 			case 3:
 				//ARCHY
-				_player.addComponent("HEALTH", new HealthComponent(_player, 200));
-
+				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 200));
+				
+				_player.addComponent("ABILITY_Q", new ScratchAbilityAnimationComponent(_player, getElectricScratchImage(), new Vec2d(0,0),
+						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(50,50), new Vec2d(192, 192),
+						11, 1, 2));
+				
 				_player.addComponent("ABILITY_E", new ScratchAbilityAnimationComponent(_player, getElectricScratchImage(), new Vec2d(0,0),
 						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(50,50), new Vec2d(192, 192),
 						11, 1, 2));
@@ -163,8 +168,8 @@ public class MainGamePlay extends GameWorld {
 						new Vec2d(128, 128), new Vec2d(0,0), new Vec2d(0,0), new Vec2d(128, 128),
 						58, 3, 2, 200));
 				
-				_player.addComponent("ABILITY_CLICK", new MouseAbilityAnimationComponent(_player, getBulletImage(), new Vec2d(135,123),
-						new Vec2d(23, 23), new Vec2d(0,0), new Vec2d(10,10), new Vec2d(0, 0),1, 1.0, 0, 250.));
+				_player.addComponent("ABILITY_CLICK", new MouseAbilityAnimationComponent(_player, getBulletImage(), new Vec2d(17,7),
+						new Vec2d(68, 68), new Vec2d(0,0), new Vec2d(15,15), new Vec2d(0, 0),1, 1.0, 0, 300.));
 				break;
 			default:
 				break;

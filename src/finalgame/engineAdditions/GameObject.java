@@ -50,8 +50,14 @@ public class GameObject {
 		if(_components.containsKey("TICK")) {
 			_components.get("TICK").tick(t);
 		}
+		if(_components.containsKey("HEALTH")) {
+			_components.get("HEALTH").tick(t);
+		}
 		if(_components.containsKey("ABILITY_E")) {
 			_components.get("ABILITY_E").tick(t);
+		}
+		if(_components.containsKey("ABILITY_Q")) {
+			_components.get("ABILITY_Q").tick(t);
 		}
 		if(_components.containsKey("ABILITY_F")) {
 			_components.get("ABILITY_F").tick(t);
@@ -67,6 +73,9 @@ public class GameObject {
 		}
 		if(_components.containsKey("HEALTH")) {
 			_components.get("HEALTH").draw(g, af);
+		}
+		if(_components.containsKey("ABILITY_Q")) {
+			_components.get("ABILITY_Q").draw(g, af);
 		}
 		if(_components.containsKey("ABILITY_E")) {
 			_components.get("ABILITY_E").draw(g, af);
