@@ -78,7 +78,7 @@ public class NINXMLGameHandler {
 		}
 	}
 		
-	public void restartGame() 
+	public void loadGame() 
 	{
 		
 		/*

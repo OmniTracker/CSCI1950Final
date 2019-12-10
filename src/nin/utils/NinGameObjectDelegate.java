@@ -19,9 +19,8 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 	private ArrayList<GameObject> _gameCharacters = null;
 	private ArrayList<GameObject> _movingUnits = null;
 	private ArrayList<GameObject> _movingCoins = null;
-	private ArrayList<GameObject> _movingCoinsNo = null;
-
-
+	private ArrayList<GameObject> _movingBullets = null;
+	
 	GameObject mainCharacter; 
 	GameObject testCharacter0; 
 	GameObject testCharacter1; 
@@ -37,8 +36,9 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 		this.setGameCharacters(new ArrayList<GameObject>());
 		this.setMovingUnits(new ArrayList<GameObject>());
 		this.setMovingCoins( new ArrayList<GameObject>());
+		this.setMovingBullets(  new ArrayList<GameObject>());
 	}
-	
+
 	public void initMovingCoins () {
 		// Only allow 10 coins at a time.
 		for (int i = 0;  i < 10  ;i++) {
@@ -49,22 +49,25 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 			coin.getData().setBox(new AABShape(coin.getData().getPosition(), coin.getData().getSize()));
 			this.getMovingCoins().add(coin);
 		}
+	}
 	
-		// Anti Bitcoins
-		for (int i = 0;  i < 5  ;i++) {
-			GameObject coin = new GameObject();
-			coin.getData().setImage( Factory.getGenericImage("resources/terrain/BulletBill.png"));
-			coin.getData().setSize(new Vec2d(100,140));
-			coin.getData().setPosition( new Vec2d(-200,30));
-			coin.getData().setBox(new AABShape(coin.getData().getPosition(), coin.getData().getSize()));
-			this.getMovingCoins().add(coin);
-		}
+	public void initMovingBullets ( ) {
+		// Anti bullets
+		for (int x = 0;  x < 5 ; x++) 
+		{	
+			GameObject bullet = new GameObject();
+			bullet.getData().setImage( Factory.getGenericImage("resources/terrain/BulletBill.png"));
+			bullet.getData().setSize(new Vec2d(100,50));
+			bullet.getData().setPosition( new Vec2d(-200,30));
+			bullet.getData().setBox(new AABShape(bullet.getData().getPosition(), bullet.getData().getSize()));
+			this.getMovingBullets().add(bullet); 
+		}		
 	}
 
 	public void initCharacter () {
 		_static = new GameObject();
 		_static.getData().setName("static");
-		
+
 		// Make main Character 
 		mainCharacter = new GameObject();
 		this.getFactory();
@@ -146,7 +149,7 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 		p1 = new PhysicsAction(testCharacter1); 
 		p2 = new PhysicsAction(testCharacter2);
 		p3 = new PhysicsAction(_static);
-		
+
 		sequence0.add(p0); 
 		sequence1.add(p1); 
 		sequence2.add(p2); 
@@ -160,7 +163,7 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 		p0.setCOR(0.5);
 		p0.setWalkVel(0.5);
 		p0.setVelocity(new Vec2d(0,0) );
-		
+
 		p1.getOtherCharacter().add(testCharacter0); 
 		p1.getOtherCharacter().add(testCharacter2); 
 		p1.setMass(50);
@@ -173,7 +176,7 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 		p2.setCOR(0.2);
 		p2.setWalkVel(-0.3);
 		p2.setVelocity(new Vec2d(0,0) );
-		
+
 		testCharacter0.getData().setImage( Factory.getNinBricks());
 		testCharacter0.getData().setPosition(new Vec2d(600,400));
 		testCharacter0.getData().setImageSize(new Vec2d(48,48));
@@ -199,10 +202,10 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 		mainCharacter.getData().setImageGameSize(new Vec2d(60,60));
 		mainCharacter.getData().setBox(new AABShape(mainCharacter.getData().getPosition(), new Vec2d(100,100)));
 	}
-	
-	
+
+
 	public void resetStatic() {
-		
+
 		p0.getOtherCharacter().add(testCharacter1); 
 		p0.getOtherCharacter().add(testCharacter2); 
 		p0.setMass(30);
@@ -215,7 +218,7 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 		p1.setCOR(0.3);
 		p1.setWalkVel(0.8);
 		p1.setVelocity(new Vec2d(0.0,0) );
-		
+
 		p2.getOtherCharacter().add(testCharacter0); 
 		p2.getOtherCharacter().add(testCharacter1); 
 		p2.setMass(30);
@@ -223,28 +226,28 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 		p2.setWalkVel(0);
 		p2.setVelocity(new Vec2d(0,0) );
 		p2.setStaticFlag(false);
-		
+
 		testCharacter0.getData().setImage( Factory.getNinBricks());
 		testCharacter0.getData().setPosition(new Vec2d(600,400));
 		testCharacter0.getData().setImageSize(new Vec2d(48,48));
 		testCharacter0.getData().setImageStart(new Vec2d(0,0));
 		testCharacter0.getData().setImageGameSize(new Vec2d(60,60));
 		testCharacter0.getData().setBox(new AABShape(testCharacter0.getData().getPosition(), new Vec2d(30,60)));
-		
+
 		testCharacter1.getData().setImage( Factory.getNinBricks());
 		testCharacter1.getData().setPosition(new Vec2d(200,400));
 		testCharacter1.getData().setImageSize(new Vec2d(48,48));
 		testCharacter1.getData().setImageStart(new Vec2d(0,0));
 		testCharacter1.getData().setImageGameSize(new Vec2d(60,60));
 		testCharacter1.getData().setBox(new AABShape(testCharacter1.getData().getPosition(), new Vec2d(20,120)));
-		
+
 		testCharacter2.getData().setImage( Factory.getNinBricks());
 		testCharacter2.getData().setPosition(new Vec2d(800,400));
 		testCharacter2.getData().setImageSize(new Vec2d(48,48));
 		testCharacter2.getData().setImageStart(new Vec2d(0,0));
 		testCharacter2.getData().setImageGameSize(new Vec2d(60,60));
 		testCharacter2.getData().setBox(new AABShape(mainCharacter.getData().getPosition(), new Vec2d(40,100)));
-		
+
 		mainCharacter.getData().setImage( Factory.getNinBricks());
 		mainCharacter.getData().setPosition(new Vec2d(200,0));
 		mainCharacter.getData().setImageSize(new Vec2d(48,48));
@@ -252,7 +255,7 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 		mainCharacter.getData().setImageGameSize(new Vec2d(60,60));
 		mainCharacter.getData().setBox(new AABShape(mainCharacter.getData().getPosition(), new Vec2d(100,100)));
 	}
-	
+
 	public ArrayList<GameObject> getGameCharacters() {
 		return _gameCharacters;
 	}
@@ -276,11 +279,11 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 		this._movingCoins = _movingCoins;
 	}
 
-	private ArrayList<GameObject> getMovingCoinsNo() {
-		return _movingCoinsNo;
+	public ArrayList<GameObject> getMovingBullets() {
+		return _movingBullets;
 	}
 
-	private void setMovingCoinsNo(ArrayList<GameObject> _movingCoinsNo) {
-		this._movingCoinsNo = _movingCoinsNo;
+	public void setMovingBullets(ArrayList<GameObject> _movingBullets) {
+		this._movingBullets = _movingBullets;
 	}	
 }

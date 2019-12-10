@@ -39,7 +39,11 @@ public class GameObjectData {
 	
 	public boolean coinMoving = false;
 	public int coinSpeed = 0;
-
+	
+	public boolean bulletMoving = false;
+	public int bulletSpeed = 0;
+	
+	
 	public GameObjectData() {}
 	
 	/*

@@ -11,10 +11,10 @@ import engine.ui.Panel;
 import engine.utility.AspectRatioHandler;
 import engine.utility.EventHandler;
 
-public class RestartGamePanel extends Panel implements EventHandler {
+public class LoadGamePanel extends Panel implements EventHandler {
 	
 	private boolean _gameRestart  = false; 
-	protected RestartGamePanel(AspectRatioHandler app) {
+	protected LoadGamePanel(AspectRatioHandler app) {
 		super(app);
 	}
 	public void onDraw(GraphicsContext g) {	

@@ -17,6 +17,8 @@ public class CollisionComponent  extends Components {
 		this.setGameWorld(gameWorld);
 	}
 	public void onTick(long nanosSincePreviousTick) {		
+
+		// Check for the collision of the character and coins. Increment coin count
 		GameObject mainCharacter = this.getGameWorld().getNinGameObjectDelegate().getGameCharacters().get(0);	
 		ArrayList < GameObject > coins = this.getGameWorld().getNinGameObjectDelegate().getMovingCoins();
 		for (int index = 0; index < coins.size(); index++) 
@@ -27,6 +29,23 @@ public class CollisionComponent  extends Components {
 				this.getGameWorld().score++;
 			}
 		}
+		ArrayList < GameObject > bullet = this.getGameWorld().getNinGameObjectDelegate().getMovingBullets();
+
+		for (int index = 0; index < bullet.size(); index++)
+		{
+			if (( Collision.isColliding(mainCharacter.getData().getBox(), bullet.get(index).getData().getBox()) == true)) 
+			{
+				// Set the bullet out of range. 
+				bullet.get(index).getData().setPosition( new Vec2d(-130,0));
+				this.getGameWorld().lives--;
+			}
+		}
+		
+		if (this.getGameWorld().lives == 0) {
+			this.getGameWorld().lives = 5;
+			this.getGameWorld().score = 0;
+		}
+
 	}	
 	private NinGameWorld getGameWorld() {
 		return _gameWorld;

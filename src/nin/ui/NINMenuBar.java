@@ -17,7 +17,7 @@ import engine.utility.EventHandler;
 
 public class NINMenuBar extends MenuBar implements EventHandler {
 	private Integer _contextHolder          = -1; 
-	private Integer RESTART_GAME_PANEL_VIEW = 1; 
+	private Integer LOAD_GAME_PANEL_VIEW = 1; 
 	private Integer END_GAME_PANEL_VIEW     = 2; 
 	private Integer SAVE_GAME_PANEL_VIEW    = 3; 
 	private NinGameWorld _gameWorld; 
@@ -39,12 +39,12 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 		saveGame.setFontName(EngineFonts.getAlc());
 		this.insertButton(saveGame.getText(),saveGame);	
 		// Load Game
-		Button restartGame = new Button();
-		restartGame.setText("Load");
-		restartGame.setSize(new Vec2d(100,30));
-		restartGame.setColor( Color.WHITE);
-		restartGame.setFontName(EngineFonts.getAlc());
-		this.insertButton(restartGame.getText() ,restartGame);
+		Button loadGame = new Button();
+		loadGame.setText("Load");
+		loadGame.setSize(new Vec2d(100,30));
+		loadGame.setColor( Color.WHITE);
+		loadGame.setFontName(EngineFonts.getAlc());
+		this.insertButton(loadGame.getText() ,loadGame);
 		// End Game
 		Button endGame = new Button();
 		endGame.setText("End");
@@ -64,13 +64,13 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 		saveGamePanel.setBoarderSize(10);
 		this.insertPanel(SAVE_GAME_PANEL_VIEW, saveGamePanel);	
 		// Load Game Panel
-		RestartGamePanel restartGamePanel = new RestartGamePanel( this.getAspectRatio()); 
-		restartGamePanel.setColor(Color.DARKGRAY);
-		restartGamePanel.setSecondaryColor(Color.DARKBLUE);
-		restartGamePanel.setSize( new Vec2d(600,100));	
-		restartGamePanel.setOrigin(new Vec2d(0,0));
-		restartGamePanel.setBoarderSize(10);
-		this.insertPanel((Integer)RESTART_GAME_PANEL_VIEW, restartGamePanel);
+		LoadGamePanel loadGamePanel = new LoadGamePanel( this.getAspectRatio()); 
+		loadGamePanel.setColor(Color.DARKGRAY);
+		loadGamePanel.setSecondaryColor(Color.DARKBLUE);
+		loadGamePanel.setSize( new Vec2d(600,100));	
+		loadGamePanel.setOrigin(new Vec2d(0,0));
+		loadGamePanel.setBoarderSize(10);
+		this.insertPanel((Integer)LOAD_GAME_PANEL_VIEW, loadGamePanel);
 		// End Game Panel
 		EndGamePanel endGamePanel = new EndGamePanel( this.getAspectRatio()); 
 		endGamePanel.setFontName("Ethnocentric");
@@ -84,8 +84,8 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 
 	private void drawPanelView(GraphicsContext g) {
 		if (this.isMenuActivated() == true)  {
-			if (this.getContextHolder() == RESTART_GAME_PANEL_VIEW)  {
-				RestartGamePanel panel = (RestartGamePanel) this.getPanelViews().get(RESTART_GAME_PANEL_VIEW);
+			if (this.getContextHolder() == LOAD_GAME_PANEL_VIEW)  {
+				LoadGamePanel panel = (LoadGamePanel) this.getPanelViews().get(LOAD_GAME_PANEL_VIEW);
 				panel.onDraw(g);	
 			} 
 			else if (this.getContextHolder() == END_GAME_PANEL_VIEW) {
@@ -106,14 +106,14 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 		} 
 		else 
 		{
-			if (this.getContextHolder() == RESTART_GAME_PANEL_VIEW) 
+			if (this.getContextHolder() == LOAD_GAME_PANEL_VIEW) 
 			{
-				RestartGamePanel panel = (RestartGamePanel) this.getPanelViews().get(RESTART_GAME_PANEL_VIEW);
+				LoadGamePanel panel = (LoadGamePanel) this.getPanelViews().get(LOAD_GAME_PANEL_VIEW);
 				panel.onMouseClicked(e);
 
 				if (panel.getOKButton().clicked(e)) 
 				{
-					this.getXMLGameHandler().restartGame();
+					this.getXMLGameHandler().loadGame();
 					return;
 				}
 
@@ -177,7 +177,7 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 				}
 				else if (buttonPushed.contains("Load")) 
 				{					
-					this.setContextHolder(RESTART_GAME_PANEL_VIEW);
+					this.setContextHolder(LOAD_GAME_PANEL_VIEW);
 				}
 				else if (buttonPushed.contains("End"))
 				{					

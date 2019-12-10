@@ -15,6 +15,8 @@ public class MoveMainCharacterComponent  extends Components {
 	private MovementSystem _movementSystem;
 	private NinGameWorld  _ninGameWorld;
 	private int shootCount = 0;
+	private int bulletShoot  = 0;
+
 	public MoveMainCharacterComponent(MovementSystem movementSystem,  NinGameWorld ninGameWorld) {
 		this.setMovementSystem(movementSystem);
 		this.setNinGameWorld(ninGameWorld);
@@ -34,7 +36,7 @@ public class MoveMainCharacterComponent  extends Components {
 		{
 			if (mainCharacter.getData().getPosition().x > 10) 
 			{
-				mainCharacter.getData().setPosition(mainCharacter.getData().getPosition().minus(10,0));				
+				mainCharacter.getData().setPosition(mainCharacter.getData().getPosition().minus(15,0));				
 			}
 			mainCharacter.getData().dir = -1;
 			if( signal._jumpSignaled == false) 
@@ -46,7 +48,7 @@ public class MoveMainCharacterComponent  extends Components {
 		{
 			if (mainCharacter.getData().getPosition().x < this.getNinGameWorld().getApplication().getAspectRatioHandler().getCurrentScreenSize().x - 120) 
 			{
-				mainCharacter.getData().setPosition(mainCharacter.getData().getPosition().plus(10,0));
+				mainCharacter.getData().setPosition(mainCharacter.getData().getPosition().plus(15,0));
 			}
 			mainCharacter.getData().dir = 1;
 			if( signal._jumpSignaled == false) 
@@ -58,7 +60,89 @@ public class MoveMainCharacterComponent  extends Components {
 	}
 	public void onTick(long nanosSincePreviousTick) 
 	{		
+		// Handle all coin stuff
 		ArrayList < GameObject > coins = this.getNinGameWorld().getNinGameObjectDelegate().getMovingCoins();
+		this.moveCoins(nanosSincePreviousTick, coins);
+		this.resetCoins(coins);
+		this.generateCoins(nanosSincePreviousTick, coins);
+		// Handle all the bullets.
+		ArrayList < GameObject > bullets = this.getNinGameWorld().getNinGameObjectDelegate().getMovingBullets();
+		this.moveBullets(nanosSincePreviousTick, bullets);
+		this.resetBullets(bullets);
+		this.generateBullets(nanosSincePreviousTick, bullets);
+	}
+	
+	private void moveBullets(long nanosSincePreviousTick, ArrayList<GameObject> bullets) {
+
+		for (int index = 0; index < bullets.size(); index++) 
+		{	
+			if ( bullets.get(index).getData().bulletMoving == true ) 
+			{	
+				int speed = bullets.get(index).getData().bulletSpeed;
+
+				bullets.get(index).getData().setPosition(bullets.get(index).getData().getPosition().plus(speed,0));		
+			}
+		}
+
+	}
+	private void resetBullets(ArrayList<GameObject> bullets) {
+
+		for (int index = 0; index < bullets.size(); index++) 
+		{	
+			if ( bullets.get(index).getData().bulletMoving == true ) 
+			{	
+				if (bullets.get(index).getData().getPosition().x < -120 || 
+						bullets.get(index).getData().getPosition().x > this.getNinGameWorld().getApplication().getAspectRatioHandler().getCurrentScreenSize().x + 120)
+				{
+					bullets.get(index).getData().bulletMoving = false;
+				}
+			}
+		}
+	}
+	private void generateBullets(long nanosSincePreviousTick, ArrayList<GameObject> bullets) {
+
+		if ((nanosSincePreviousTick % 6) == 0) 
+		{
+			bulletShoot++;
+			if (bulletShoot == 25) 
+			{
+				bulletShoot = 0;					
+				Random r = new Random();
+				for (int index = 0; index < bullets.size(); index++) 
+				{	
+					if ( bullets.get(index).getData().bulletMoving == false ) 
+					{	
+						// Coming from right or left
+						int direction =   r.nextInt((1 - 0) + 1) + 0;
+						int maxY = ( int ) this.getNinGameWorld().getApplication().getAspectRatioHandler().getCurrentScreenSize().y - 250; 
+						int randomY =   r.nextInt((maxY - 200) + 1) + 200;
+						// Go to right
+						if (direction == 1) 
+						{
+							// Need to do a bunch of randomization.
+							bullets.get(index).getData().bulletSpeed = r.nextInt((25 - 15) + 1) + 15;
+							bullets.get(index).getData().setPosition(new Vec2d( -100,randomY));		
+						}
+						// Go to the left
+						else if (direction == 0) 
+						{
+							// Need to do a bunch of randomization.
+							bullets.get(index).getData().bulletSpeed = -1 * (r.nextInt((25 - 15) + 1) + 15);
+							bullets.get(index).getData().setPosition(new Vec2d( this.getNinGameWorld().getApplication().getAspectRatioHandler().getCurrentScreenSize().x + 100,randomY));		
+						}
+						else 
+						{
+							return;
+						}
+						bullets.get(index).getData().bulletMoving = true; 
+						return;
+					}
+				}
+			}
+		}
+	}
+	private void moveCoins(long nanosSincePreviousTick,
+			ArrayList<GameObject> coins) {
 		for (int index = 0; index < coins.size(); index++) 
 		{	
 			if ( coins.get(index).getData().coinMoving == true ) 
@@ -70,7 +154,8 @@ public class MoveMainCharacterComponent  extends Components {
 				}
 			}
 		}
-		// Check if a coin needs to be reset
+	}
+	private void resetCoins(ArrayList<GameObject> coins) {
 		for (int index = 0; index < coins.size(); index++) 
 		{	
 			if ( coins.get(index).getData().coinMoving == true ) 
@@ -81,6 +166,9 @@ public class MoveMainCharacterComponent  extends Components {
 				}
 			}
 		}
+	}
+	private void generateCoins(long nanosSincePreviousTick,
+			ArrayList<GameObject> coins) {
 		if ((nanosSincePreviousTick % 6) == 0) 
 		{
 			shootCount++;

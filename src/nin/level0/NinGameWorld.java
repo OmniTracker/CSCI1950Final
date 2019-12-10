@@ -20,6 +20,9 @@ public class NinGameWorld  extends GameWorld {
 	private Button _button = null; 
 
 	public int score = 0;
+	public int lives = 5;
+
+	
 	
 	protected NinGameWorld(Application app) {
 		super(app);

@@ -70,7 +70,9 @@ public class NinDrawComponent  extends Components {
 		g.drawImage(platform.getData().getImage(), 0, 140, 600, 100, 0, 570, 600, 100);
 		g.drawImage(platform.getData().getImage(), 0, 140, 600, 100, 600, 570, 600, 100);
 		this.drawCoins(g);	
+		this.drawBullets(g);
 		this.drawScore(g);
+		this.drawLives(g);
 		this.drawGameName(g);
 	}
 	private void drawGameName (GraphicsContext g) {
@@ -90,15 +92,29 @@ public class NinDrawComponent  extends Components {
 		Vec2d roundOrigin = origin.plus(20, 120);
 		this.labelHelper(g,roundOrigin, "Coins: " + this.getNinGameWorld().score); 
 	}
+
+	private void drawLives (GraphicsContext g) {	
+		Vec2d origin = this._app.getAspectRatioHandler().calculateUpdatedOrigin();
+		Vec2d roundOrigin = origin.plus(220, 120);
+		this.labelHelper(g,roundOrigin, "Lives: " + this.getNinGameWorld().lives); 
+	}
+
 	private void labelHelper(GraphicsContext g,Vec2d roundOrigin, String text) {
-		g.setFill(Color.RED);
-		g.fillRoundRect(roundOrigin.x , roundOrigin.y, 220, 35, 5, 5);
+		if (this.getNinGameWorld().lives == 5) {
+			g.setFill(Color.GREEN);
+		} else if (this.getNinGameWorld().lives > 2) {
+			g.setFill(Color.GOLD);
+		} else {
+			g.setFill(Color.RED);			
+		}
+		g.fillRoundRect(roundOrigin.x , roundOrigin.y, 180, 35, 5, 5);
 		g.setFill(Color.WHITE);
-		g.fillRoundRect(roundOrigin.x + 5, roundOrigin.y + 5, 220 - 10, 35 - 10, 5, 5);
+		g.fillRoundRect(roundOrigin.x + 5, roundOrigin.y + 5, 180 - 10, 35 - 10, 5, 5);
 		g.setFill(Color.BLACK);		
 		g.setFont(Font.font("Ethnocentric", 20 ));
 		g.fillText(text, roundOrigin.x + 90, roundOrigin.y + 25);
 	}
+
 	private void drawCoins (GraphicsContext g) {	
 		ArrayList<GameObject> movingCoins = this.getNinGameWorld().getNinGameObjectDelegate().getMovingCoins(); 
 		if ( movingCoins.size() == 0) {
@@ -132,6 +148,28 @@ public class NinDrawComponent  extends Components {
 					movingCoins.get(i).getData().getBox().getTopLeft().y, 
 					movingCoins.get(i).getData().getBox().size.x,
 					movingCoins.get(i).getData().getBox().size.y);
+		}
+	}
+	private void drawBullets (GraphicsContext g) {	
+		ArrayList<GameObject> movingBullet = this.getNinGameWorld().getNinGameObjectDelegate().getMovingBullets();
+		if ( movingBullet.size() == 0)
+		{
+			this.getNinGameWorld().getNinGameObjectDelegate().initMovingBullets();			
+		}
+		for (int i = 0; i < movingBullet.size(); i++) 
+		{
+			movingBullet.get(i).getData().getBox().setTopLeft(movingBullet.get(i).getData().getPosition());
+			int x = 1;
+			int offSet = 0;
+			if (movingBullet.get(i).getData().bulletSpeed > 0) {
+				x *= -1;
+				offSet = 120;
+			}
+			g.drawImage(movingBullet.get(i).getData().getImage(), 0, 0, 600, 375, 
+					movingBullet.get(i).getData().getBox().getTopLeft().x + offSet,
+					movingBullet.get(i).getData().getBox().getTopLeft().y, 
+					(movingBullet.get(i).getData().getBox().size.x * x),
+					movingBullet.get(i).getData().getBox().size.y);
 		}
 	}
 	private void setApp(Application _app) {
