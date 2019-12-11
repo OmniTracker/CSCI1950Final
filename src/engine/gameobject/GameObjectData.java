@@ -43,6 +43,9 @@ public class GameObjectData {
 	public boolean bulletMoving = false;
 	public int bulletSpeed = 0;
 	
+	public boolean saveBulletMoving = true;
+	public int saveBulletSpeed      = 30;
+	public int bulletDirVar         = 1;
 	
 	public GameObjectData() {}
 	
@@ -61,9 +64,6 @@ public class GameObjectData {
 	
 	public boolean _visible = true;
 	public boolean _locked = false;
-	
-	
-	
 	
 	public String getName() {
 		return _name;

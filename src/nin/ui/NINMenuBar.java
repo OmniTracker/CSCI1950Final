@@ -113,7 +113,7 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 
 				if (panel.getOKButton().clicked(e)) 
 				{
-					this.getXMLGameHandler().loadGame();
+					this.getXMLGameHandler().loadGame(_gameWorld);
 					return;
 				}
 
@@ -131,7 +131,7 @@ public class NINMenuBar extends MenuBar implements EventHandler {
 
 				if (panel.getOKButton().clicked(e)) 
 				{
-					this.getXMLGameHandler().saveGame();					
+					this.getXMLGameHandler().saveGame(_gameWorld);					
 					return;
 				}
 

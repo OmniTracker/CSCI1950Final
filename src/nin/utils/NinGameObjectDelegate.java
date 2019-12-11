@@ -20,6 +20,7 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 	private ArrayList<GameObject> _movingUnits = null;
 	private ArrayList<GameObject> _movingCoins = null;
 	private ArrayList<GameObject> _movingBullets = null;
+	private GameObject _saveBullet = null;
 	
 	GameObject mainCharacter; 
 	GameObject testCharacter0; 
@@ -53,15 +54,23 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 	
 	public void initMovingBullets ( ) {
 		// Anti bullets
-		for (int x = 0;  x < 5 ; x++) 
+		for (int x = 0;  x < 6 ; x++) 
 		{	
 			GameObject bullet = new GameObject();
 			bullet.getData().setImage( Factory.getGenericImage("resources/terrain/BulletBill.png"));
-			bullet.getData().setSize(new Vec2d(100,50));
+			bullet.getData().setSize(new Vec2d(50,25));
 			bullet.getData().setPosition( new Vec2d(-200,30));
 			bullet.getData().setBox(new AABShape(bullet.getData().getPosition(), bullet.getData().getSize()));
 			this.getMovingBullets().add(bullet); 
 		}		
+	}
+	
+	public void initSaveBullet ( ) {
+		setSaveBullet(new GameObject());
+		getSaveBullet().getData().setImage( Factory.getGenericImage("resources/terrain/wave.png"));
+		getSaveBullet().getData().setSize(new Vec2d(100,100));
+		getSaveBullet().getData().setPosition( new Vec2d(-200,30));
+		getSaveBullet().getData().setBox(new AABShape(getSaveBullet().getData().getPosition(), getSaveBullet().getData().getSize()));	
 	}
 
 	public void initCharacter () {
@@ -285,5 +294,13 @@ public class NinGameObjectDelegate extends GameObjectDelegate {
 
 	public void setMovingBullets(ArrayList<GameObject> _movingBullets) {
 		this._movingBullets = _movingBullets;
+	}
+
+	public GameObject getSaveBullet() {
+		return _saveBullet;
+	}
+
+	private void setSaveBullet(GameObject _saveBullet) {
+		this._saveBullet = _saveBullet;
 	}	
 }

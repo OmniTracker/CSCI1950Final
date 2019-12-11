@@ -3,17 +3,23 @@ package nin.ui;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 import javafx.util.Pair;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
+import nin.level0.NinGameWorld;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import engine.utility.Factory;
 
 public class NINXMLGameHandler {
 
@@ -78,114 +84,19 @@ public class NINXMLGameHandler {
 		}
 	}
 		
-	public void loadGame() 
-	{
-		
-		/*
-
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder docBuilder = null;
-		try 
-		{
-			docBuilder = factory.newDocumentBuilder();
-		} 
-		catch (ParserConfigurationException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Document doc = docBuilder.newDocument();			
-		Element root = doc.createElement("KeyBindings");
-
-
-
-		doc.appendChild(root);
-		int size = _keyBindingMap.size();
-
-
-		for (int x = 0; x < size; x++) {
-			Element action = doc.createElement("action");
-			Attr tag = doc.createAttribute("tag");
-			tag.setValue(Integer.toString(x));
-			action.setAttributeNode(tag);
-
-			Element val = doc.createElement(_keyBindingMap.get(x).getCurrentKeyBindSetting());
-			root.appendChild(action);
-			action.appendChild(val);
-		}
-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
-		Transformer transformer = null;
-		try {
-			transformer = transformerFactory.newTransformer();
-		} catch (TransformerConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		DOMSource domSource = new DOMSource(doc);
-		StreamResult streamResult = new StreamResult(new File(xmlPath));
-
-		try {
-			transformer.transform(domSource, streamResult);
-		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		*/
+	public void loadGame(NinGameWorld GameWorld) {
+		// Write high Score First
+		List<String> info = Factory.readNin().get(0);	
+		GameWorld.score   = Integer.valueOf(info.get(0));
+		GameWorld.lives   = Integer.valueOf(info.get(1));
+		String stats = 	String.valueOf(GameWorld.score) + "," + 
+		String.valueOf(GameWorld.lives) + "," + String.valueOf(GameWorld.high);  
+		Factory.writeNin(stats);
 	}
 
-	public void saveGame() {
-		
-		/*
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder docBuilder = null;
-		try 
-		{
-			docBuilder = factory.newDocumentBuilder();
-		} 
-		catch (ParserConfigurationException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Document doc = docBuilder.newDocument();			
-		Element root = doc.createElement("KeyBindings");
-
-
-
-		doc.appendChild(root);
-		int size = _keyBindingMap.size();
-
-
-		for (int x = 0; x < size; x++) {
-			Element action = doc.createElement("action");
-			Attr tag = doc.createAttribute("tag");
-			tag.setValue(Integer.toString(x));
-			action.setAttributeNode(tag);
-
-			Element val = doc.createElement(_keyBindingMap.get(x).getCurrentKeyBindSetting());
-			root.appendChild(action);
-			action.appendChild(val);
-		}
-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
-		Transformer transformer = null;
-		try {
-			transformer = transformerFactory.newTransformer();
-		} catch (TransformerConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		DOMSource domSource = new DOMSource(doc);
-		StreamResult streamResult = new StreamResult(new File(xmlPath));
-
-		try {
-			transformer.transform(domSource, streamResult);
-		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/ 
+	public void saveGame(NinGameWorld GameWorld) {
+		String stats = 	String.valueOf(GameWorld.score) + "," + 
+		String.valueOf(GameWorld.lives) + "," + String.valueOf(GameWorld.high);  
+		Factory.writeNin(stats);
 	}
-
-
 }

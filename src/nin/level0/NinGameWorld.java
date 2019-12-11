@@ -1,5 +1,7 @@
 package nin.level0;
 
+import java.util.List;
+
 import nin.systems.*;
 import nin.utils.*;
 import javafx.scene.canvas.GraphicsContext;
@@ -8,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import engine.Application;
 import engine.GameWorld;
 import engine.ui.Button;
+import engine.utility.Factory;
 
 public class NinGameWorld  extends GameWorld {
 
@@ -21,8 +24,10 @@ public class NinGameWorld  extends GameWorld {
 
 	public int score = 0;
 	public int lives = 5;
+	public int high  = 0; 
 
-	
+	public int storedLives = 0;
+	public int storedScore = 0;
 	
 	protected NinGameWorld(Application app) {
 		super(app);
@@ -31,6 +36,10 @@ public class NinGameWorld  extends GameWorld {
 		this.setNinGameObjectDelegate( new NinGameObjectDelegate(app) );
 		this.setNinMapDelegate( new NinMapDelegate(app));
 		this.setCollisionSystem( new CollisionSystem(app,this));
+		// Set High Score
+		Factory.readNin();
+		List<String> info = Factory.readNin().get(0);		
+		high  = Integer.valueOf(info.get(2));
 	}
 	
 	public void onTick(long nanosSincePreviousTick) {
@@ -42,8 +51,11 @@ public class NinGameWorld  extends GameWorld {
 			this.getNinGameObjectDelegate().getGameCharacters().get(3).getData().getNinBehaviorTree().runTree();
 			
 			// Need to reset this once I leave the this scene.
-			this.getApplication().stage.setMaxHeight(this.getApplication().getAspectRatioHandler().getInitialScreenSize().y);
-			this.getApplication().stage.setMaxWidth(this.getApplication().getAspectRatioHandler().getInitialScreenSize().x);
+			
+			
+			
+			this.getApplication().stage.setMaxHeight(this.getApplication().getAspectRatioHandler().getInitialScreenSize().y + 100);
+			this.getApplication().stage.setMaxWidth(this.getApplication().getAspectRatioHandler().getInitialScreenSize().x + 100);
 		}
 		this.getMovementSystem().onTick(nanosSincePreviousTick);
 		this.getCollisionSystem().onTick(nanosSincePreviousTick);

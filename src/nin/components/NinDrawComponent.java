@@ -71,8 +71,10 @@ public class NinDrawComponent  extends Components {
 		g.drawImage(platform.getData().getImage(), 0, 140, 600, 100, 600, 570, 600, 100);
 		this.drawCoins(g);	
 		this.drawBullets(g);
+		this.drawSaveBullet(g);
 		this.drawScore(g);
 		this.drawLives(g);
+		this.drawHighScore(g);
 		this.drawGameName(g);
 	}
 	private void drawGameName (GraphicsContext g) {
@@ -99,6 +101,13 @@ public class NinDrawComponent  extends Components {
 		this.labelHelper(g,roundOrigin, "Lives: " + this.getNinGameWorld().lives); 
 	}
 
+
+	private void drawHighScore (GraphicsContext g) {	
+		Vec2d origin = this._app.getAspectRatioHandler().calculateUpdatedOrigin();
+		Vec2d roundOrigin = origin.plus(420, 120);
+		this.labelHigh(g,roundOrigin, "High Score: " + this.getNinGameWorld().high, ""); 
+	}
+
 	private void labelHelper(GraphicsContext g,Vec2d roundOrigin, String text) {
 		if (this.getNinGameWorld().lives == 5) {
 			g.setFill(Color.GREEN);
@@ -113,6 +122,16 @@ public class NinDrawComponent  extends Components {
 		g.setFill(Color.BLACK);		
 		g.setFont(Font.font("Ethnocentric", 20 ));
 		g.fillText(text, roundOrigin.x + 90, roundOrigin.y + 25);
+	}
+
+	private void labelHigh(GraphicsContext g,Vec2d roundOrigin, String text , String text2 ) {
+		g.setFill(Color.CYAN);
+		g.fillRoundRect(roundOrigin.x , roundOrigin.y, 320, 35, 5, 5);
+		g.setFill(Color.WHITE);
+		g.fillRoundRect(roundOrigin.x + 5, roundOrigin.y + 5, 320 - 10, 35 - 10, 5, 5);
+		g.setFill(Color.BLACK);		
+		g.setFont(Font.font("Ethnocentric", 20 ));
+		g.fillText(text + text2, roundOrigin.x + 130, roundOrigin.y + 25);
 	}
 
 	private void drawCoins (GraphicsContext g) {	
@@ -172,6 +191,23 @@ public class NinDrawComponent  extends Components {
 					movingBullet.get(i).getData().getBox().size.y);
 		}
 	}
+	
+	private void drawSaveBullet (GraphicsContext g) {
+		
+		GameObject saveBullet = this.getNinGameWorld().getNinGameObjectDelegate().getSaveBullet();
+		
+		if (saveBullet == null) {
+			this.getNinGameWorld().getNinGameObjectDelegate().initSaveBullet();
+			return;
+		}
+	
+		g.drawImage(saveBullet.getData().getImage(), 0, 0, 333, 336, 
+				saveBullet.getData().getBox().getTopLeft().x,
+				saveBullet.getData().getBox().getTopLeft().y, 
+				saveBullet.getData().getBox().size.x,
+				saveBullet.getData().getBox().size.y);	
+	}
+	
 	private void setApp(Application _app) {
 		this._app = _app;
 	}

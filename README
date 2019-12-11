@@ -1,42 +1,9 @@
-Everything below is w
-
-
-
-
-
-Implement Extras:
-
-1) Add a floating minimap UI element.
-
-		- Hoping to get 2x on this. My mini UI has the same animations of the game board (Tile Animation and location of all the enemies.)
-			The mini map moves around the main player. Since the map is moving, you lose some visibility of the board and the enemies
-
-2) Add a staircase or other exit that generates a new map when the player reaches it.–Have  difficulty  increase  each  time  a  new  map  is  generated,  resetting  when  the  playerloses.
-
-	- characters move faster. You are sent back to the start of each level if you are hit. You need to press restart to restart to the beginning of the game.
-
-
-3) Create at least three different enemy units with different abilities and AI.
-
-	- 4 AI
-
-	- Abilities added:
-		- different speeds
-		- invisible while in row
-		- invisible while in col
-		- Normal A*
-		- Randomized A* within the game scene
-
-4) I made am entire menu bar. The pause button lets you stop the game in the middle of play. I don't know if this would count as a secondary requirement, but I wanted to add this anyways.
-
-
-(Also, the restart button works. The instruction button works too, but I need to work on that a little more)
-
-
 [ ] - Playtesting
 [ ] - Primary
 [ ] - Secondary
 Total: -/4
+
+Hours (20)
 
 Retries used: NONE (2 extra retries remaining)
 
@@ -47,97 +14,69 @@ Retries used: NONE (2 extra retries remaining)
 
 Playtesting Requirements
 ========================================
-[ ] - Your game should have a map containing passable and impassable tiles
-[ ] - Your game must have a unit that can be controlled by the player
-[ ] - Your game must have an enemy unit that moves deterministically
-[ ] - There must be a visible reaction when the player and enemy collide
-[ ] - Your game must have a stationary item on the ground
-[ ] - There must be a (different) visible reaction when the player and item collide
+[ ] - Your handin meets all Nin1 primary requirements.
+[ ] - The player must be able to fire projectiles.
+(Beam to shoot down bullets)
 
 
 Primary Engine Requirements
 ========================================
-[ ] - Your engine must support A* pathfinding
 
-If you wait around long enough, you will be taken down on the first level. The second level uses
-A* but chose random locations to go on the board.
-
-[ ] - Your engine must implement an AI library
-    [ ] - If  using behavior trees, you must implement the following:
-
-You can find these implemented in WIZGameObjectDelegate class and the WIZBehaviorTree class.
-
-The behaviortree package holds all the other things below. I wasn't really creative with these. I ran
-into bugs trying to expand.
-
-        [ ] - Behavior Tree class
-        [ ] - Selector class
-        [ ] - Sequence class
-        [ ] - Action interface
-        [ ] - Condition interface
-    [ ] - If using GOAP, you must implement the following:
-        [ ] - Game State class
-        [ ] - Action class/interface
-        [ ] - Condition class/interface
-        [ ] - You should be able to search over the Action set using a starting Game State and a goal Condition using your engine's A* implementation (can use a heuristic of 0, or allow the game to define its own)
+[ ] - Your engine must correctly implement saving and loading through serialization.
+(Yes)
+[ ] - Your engine must correctly support raycasting for polygons and AABs.
+(Yes. Doesn't support raycasting for circles)
 
 Primary Game Requirements
 ========================================
-[ ] - The enemy unit should use your engine's AI framework.
-    [ ] - All AI tools included in the engine requirements should be used
-    [ ] - At least two distinct behaviors must be used and visible during gameplay
+[ ] - Your game must load from a txt file.
+(Use CSV file. File can be located in resources folder)
 
-You have 4 AIs.
+[ ] - You must have at least one txt file for us to load (unless your game loads from our default level file)
+(Game loads with high score)
 
-Level 0
+[ ] - Player must be able to
+	[ ] - save game state
 
-One AI moves with normal A* pathplanning. One moves with A* but choose random locations to go. This AI also turns invisble while going up and down cols.
+		(Current coin and lives count is stored. Highscore is saved if it has changed)
 
+	[ ] - restart the game
 
-Both AI moves with random A* pathplanning. Both AI are faster than the others in the first level. One of the
-AI turns invisble while going left and right down a row.
+		(Press end game or lose all your lives)
+
+	[ ] - load their saved state
+
+		(load saved state will load the saved coin and lives count)
+
+[ ] - The player must always be in view
+	(Player is not able to jump off screen)
+
+[ ] - The TA debugger must be completed to demonstrate correct raycasting for polygons and AABs.
+	(Went into detail of what happens in the INSTRUCTIONS. I works)
 
 [ ] - It must be possible to start a new game without restarting the program
 
-There is a restart button.
+	(You can lose all your lives or you can press end game. If you press end game, you will be taken to the main game screen. You have to navigate back to the game NIN)
 
 
-Secondary Engine Requirements
+Secondary Engine Requirements (N/A)
 =======================================
 [ ] - Handin meets all primary engine requirements
+[ ] - Your engine must support raycasting for circles
 
-Secondary Game Requirements
+Secondary Game Requirements (N/A)
 ======================================
 [ ] - Handin meets all primary game requirements
-[ ] - The enemy unit must move according to a path generated using A*
+[ ] - The TA debugger must be completed to demonstrate correct raycasting for circles.
+[ ] - Raycasting must be implemented in your game as follows:
+	[ ] - player can fire bullets which travel instantly
+	[ ] - bullets must apply an impulse to whatever they hit in the direction of the ray
+[ ] - Your game meets at least two of the Nin extra requirements (please list which ones you chose!)
 
 
-The A* algorithm can be found in engine.ai
-
-[ ] - The game must meet at least two of the extra game requirements that weren't used last week
-    [ ] - List all four game requirements in your README and specify which ones are for tac3 and which are tac4
 
 
-Global Playtesting Requirements (you don't need to show how to verify these)
-======================================
-[ ] - Eclipse project or ant build file
-[ ] - No external dependencies
-[ ] - Handin runs on department machines
-[ ] - Handin runs 20+ UPS
-[ ] - Handin only crashes on edge cases
-
-Global Primary Requirements (you don't need to show how to verify these)
-======================================
-[ ] - README
-    [ ] - has a copy of the rubric
-    [ ] - shows how to verify non-global requirements
-    [ ] - documents known bugs
-    [ ] - approximate hours to complete checkpoint
-[ ] - INSTRUCTIONS file included
-[ ] - Engine and game in separate packages
-[ ] - Engine and game logically separated
-[ ] - Engine code is well designed
-[ ] - Game code is reasonably designed
 [ ] - Handin isn't permanent fixed size
-[ ] - Handin never crashes
-[ ] - Handin meets all playtesting requirements
+(I limited the size of the screen to pass this checkpoint)
+
+

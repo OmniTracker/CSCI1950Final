@@ -1,10 +1,40 @@
-- Use the arrow keys to move the player.
+Bitcoin Bandit
+---------------
 
-- There are two level. Flames and StarLord.
+Controls: 
+----------------
 
-- You need to collect all the three keys in order to move on to the next level.
+A = Move Left
+W = Jump
+D = Move Right
+S = Shoot Beam
 
-- Each level has two startup characters and one dynamically generated characters. 
+Objective:
+-----------------
+
+- Collect as many Bitcoin as possible.  
+- Avoid getting hit by bullets
+- You will lose one life everytime you are hit by a bullet.
+- Your beam is your friend.
+- Shoot bullets with beam and get 10 extra bitcoin.
+- Try to beat the highest score.
+
+Saving and Loading:
+--------------------
+
+- The game loads with the highest score.
+- When you save the game, you save all the current game informations (Remaining Lives, Current Score, and Highest score )
+
+- If you quit the game and have achieved a new highscore, this score won't be saved. 
+- If you lose all you lives and achieve a new high score, the most up to date high score will be saves.
+- If you decided to load the last saved game, you will see that game coin count and lives update. The highscore value should remain the same.
+- When you press end game, you will be taken to the main screen. You can then re-enter the game and start a new session.
+- You can also lose all of your lives to restart the game. 
 
 
-	
+Debugger: 
+----------------------
+- Raycasting works for AAB Shapes and Polygon.   
+- I can't move the polygon in the corner because I never got the polygon collision working. 
+  That wasn't a primary requirement, so I just didn't do it. 
+- You are still able to shoot the raycast onto the polygon in the corner.

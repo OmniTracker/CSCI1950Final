@@ -1,11 +1,13 @@
 package engine.utility;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
@@ -155,6 +157,69 @@ public class Factory {
 		}
 		return out;
 	}
+
+	public static List<List<String>> readNin () 
+	{
+		String fileName = "resources/xmlResources/nin.csv";
+		File file = new File(fileName);
+		BufferedReader br = null;
+
+		try {
+			br = new BufferedReader(new FileReader(file));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+
+		List<List<String>> out = new ArrayList<List<String>>();
+		List<String> wall = null;
+		String st;
+
+		try {
+			while ((st = br.readLine()) != null) {
+				wall = new ArrayList<String>(Arrays.asList(st.split(",")));
+				out.add(wall);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return out;
+	}
+
+	public static void writeNin (String text) {
+		String file = "resources/xmlResources/nin.csv";
+		
+		BufferedWriter writer = null;
+		
+		try 
+		{
+			writer = new BufferedWriter(new FileWriter(file));
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		try 
+		{
+			writer.write(text);
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		try 
+		{
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public Image getKimSprite ( ) throws MalformedURLException{
 		Image out = null;
 		try{
@@ -277,11 +342,11 @@ public class Factory {
 		}
 		return out; 
 	}
-	
+
 	public Image getLevel1Tiles () throws MalformedURLException {
 		return new Image(new File("resources/.wiz/level1/level1.png").toURI().toURL().toExternalForm()); 
 	}
-	
+
 	public static  ArrayList<String> level0Map ()  {
 		ArrayList<String> out = new ArrayList<String>(); 
 		try{
