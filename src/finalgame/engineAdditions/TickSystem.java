@@ -12,13 +12,16 @@ public class TickSystem extends GameSystem{
 		if(go.hasComponent("TICK")) {
 			_objects.add(go);
 		}
-		if(go.hasComponent("PHYSICS")) {
+		else if(go.hasComponent("PHYSICS")) {
 			_objects.add(go);
 		}
-		if(go.hasComponent("ABILITY_E")) {
+		else if(go.hasComponent("ABILITY_E")) {
 			_objects.add(go);
 		}
-		if(go.hasComponent("ABILITY_F")) {
+		else if(go.hasComponent("ABILITY_F")) {
+			_objects.add(go);
+		}
+		else if(go.hasComponent("ABILITY_Q")) {
 			_objects.add(go);
 		}
 	}
