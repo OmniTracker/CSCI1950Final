@@ -12,7 +12,7 @@ public class NotInRange implements Condition {
 	private double range;
 	private GameObject target;
 	
-	public NotInRange(double range, GameObject target) {
+	public NotInRange(GameObject target, double range) {
 		this.range = range;
 		this.target = target;
 	}
@@ -21,9 +21,12 @@ public class NotInRange implements Condition {
 	public Status update(float seconds) {
 		TransformComponent ttc = (TransformComponent) target.getComponent("TRANSFORM");
 		TransformComponent tc = (TransformComponent) tree.getObject().getComponent("TRANSFORM");
+		
 		if (tc.getLoc().dist2(ttc.getLoc())>=range) {
+			System.out.println(1);
 			return Status.SUCCESS;
 		} else {
+			System.out.println(10);
 			return Status.FAILURE;
 		}
 	}
