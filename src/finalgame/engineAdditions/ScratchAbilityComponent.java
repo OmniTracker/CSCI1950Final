@@ -43,5 +43,12 @@ public class ScratchAbilityComponent extends AnimateAbilityComponent{
 					_imageDim.x, _imageDim.y,abilityLoc.x,abilityLoc.y,_dim.x,_dim.y);
 		}
 	}
+
+
+	@Override
+	public void onHit(GameObject hitObject) {
+		// TODO Auto-generated method stub
+		
+	}
 		
 }

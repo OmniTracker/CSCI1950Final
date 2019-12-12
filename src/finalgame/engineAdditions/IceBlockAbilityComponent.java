@@ -77,5 +77,10 @@ public class IceBlockAbilityComponent extends AnimateAbilityComponent{
 		temp.setImmobile(false);
 		_hp.setInvulnerable(false);
 	}
+
+	@Override
+	public void onHit(GameObject hitObject) {
+		//No onhit Effects	
+	}
 	
 }

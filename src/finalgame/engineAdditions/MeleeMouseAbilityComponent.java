@@ -12,18 +12,6 @@ public class MeleeMouseAbilityComponent extends MouseAbilityAnimationComponent{
 			Vec2d dim, Vec2d animation_increment, int numFrames, double active_time, double cooldown, double range) {
 		super(go, img, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown, range);
 	}
-	
-//	private void drawRotatedImage(GraphicsContext gc, Image image, double angle, double tlpx, double tlpy) {
-//		gc.save(); // saves the current state on stack, including the current transform
-//        rotate(gc, angle, tlpx + image.getWidth() / 2, tlpy + image.getHeight() / 2);
-//        gc.drawImage(image, tlpx, tlpy);
-//        gc.restore(); // back to original state (before rotation)
-//    }
-	
-//    private void rotate(GraphicsContext gc, double angle, double px, double py) {
-//        Rotate r = new Rotate(angle, px, py);
-//        gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
-//    }
     
 	@Override
 	public void draw(GraphicsContext g, Affine af) {

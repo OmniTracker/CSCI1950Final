@@ -76,5 +76,11 @@ public class PortalAbilityComponent extends AnimateAbilityComponent{
 			}
 		}
 	}
+
+	@Override
+	public void onHit(GameObject hitObject) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

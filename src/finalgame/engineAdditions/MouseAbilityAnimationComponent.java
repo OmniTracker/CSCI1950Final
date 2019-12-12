@@ -116,4 +116,11 @@ public class MouseAbilityAnimationComponent extends AnimateAbilityComponent{
 	public void setTravelTime(double time) {
 		_activeTime = time;
 	}
+
+
+	@Override
+	public void onHit(GameObject hitObject) {
+		// TODO Auto-generated method stub
+		
+	}
 }

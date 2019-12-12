@@ -168,8 +168,8 @@ public class MainGamePlay extends GameWorld {
 				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 100, getHealImage()));
 				_player.addComponent("ABILITY_CLICK", new MeleeMouseAbilityComponent(_player, getWeaponImage(), new Vec2d(108,133),
 						new Vec2d(46, 61), new Vec2d(0,0), new Vec2d(60,60), new Vec2d(0, 0),36, 1, 0, 70.));
-				_player.addComponent("ABILITY_Q", new FireWaveAbilityComponent(_player, getFireWaveImage(), new Vec2d(0,0),
-						new Vec2d(679, 892), new Vec2d(0,0), new Vec2d(40,150), new Vec2d(679, 0),30, 2, 0, 700.));
+				_player.addComponent("ABILITY_Q", new FireWaveAbilityComponent(_player, getFireWaveImage(), new Vec2d(42,0),
+						new Vec2d(591, 892), new Vec2d(0,0), new Vec2d(40,150), new Vec2d(721, 0),60, 2, 0, 700.));
 				
 				_player.addComponent("ABILITY_E", new IceBlockAbilityComponent(_player, getIceBlockImage(), new Vec2d(0,0),
 						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(75,75), new Vec2d(192, 192),25, 5, 4));

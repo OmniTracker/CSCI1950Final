@@ -21,7 +21,7 @@ public class ProjectileCollisionComponent extends CircleCollisionComponent{
 		return other.collideWithSphere(_circle);
 	}
 	
-	public void hit() {
-		_ability.hit();
+	public void hit(GameObject hitObject) {
+		_ability.onHit(hitObject);
 	}
 }

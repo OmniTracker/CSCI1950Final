@@ -85,5 +85,11 @@ public class TeleportAbilityComponent extends AnimateAbilityComponent{
 					_imageDim.x, _imageDim.y,charLoc.x-10,charLoc.y-10,charDim.x+20,charDim.y+20);
 		}
 	}
+
+	@Override
+	public void onHit(GameObject hitObject) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
