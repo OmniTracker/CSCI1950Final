@@ -12,17 +12,19 @@ public class PlayerInputComponent extends Component{
 	protected boolean _hasFocus;
 	protected double _moveMultiplier;
 	private String[] keys = new String[8];
+	private boolean _immobile;
 	
 	public PlayerInputComponent(GameObject go, HashMap<String,Double> input) {
 		super(go);
 		_input = input;
 		_hasFocus = false;
 		_moveMultiplier = 1;
+		_immobile = false;
 	}
 
 	@Override
 	public void tick(long nanosSinceLastTick) {
-		if(_hasFocus && _go.hasComponent("TRANSFORM")) {
+		if(_hasFocus && _go.hasComponent("TRANSFORM")&&!_immobile) {
 			double mult = nanosSinceLastTick * 0.00000005 * _moveMultiplier;
 			boolean moved=false;
 			TransformComponent curr = (TransformComponent)_go.getComponent("TRANSFORM");
@@ -132,5 +134,9 @@ public class PlayerInputComponent extends Component{
 	
 	public void setAbilityKeys(String[] p) {
 		keys = p;
+	}
+	
+	public void setImmobile(boolean immobile) {
+		_immobile = immobile;
 	}
 }

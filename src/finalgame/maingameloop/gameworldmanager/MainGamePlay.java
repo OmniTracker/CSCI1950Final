@@ -48,16 +48,20 @@ import finalgame.engineAdditions.AOELighningAbilityAnimationComponent;
 import finalgame.engineAdditions.AnimateGraphicsComponent;
 import finalgame.engineAdditions.BehaviorSystem;
 import finalgame.engineAdditions.CollisionSystem;
+import finalgame.engineAdditions.FireWaveAbilityComponent;
 import finalgame.engineAdditions.GameObject;
 import finalgame.engineAdditions.GraphicsSystem;
 import finalgame.engineAdditions.HealthComponent;
-import finalgame.engineAdditions.MeleeMouseAbilityAnimationComponent;
+import finalgame.engineAdditions.IceBlockAbilityComponent;
+import finalgame.engineAdditions.MeleeMouseAbilityComponent;
 import finalgame.engineAdditions.MouseAbilityAnimationComponent;
 import finalgame.engineAdditions.PlayerHealthComponent;
 import finalgame.engineAdditions.PlayerInputComponent;
 import finalgame.engineAdditions.PlayerInputSystem;
-import finalgame.engineAdditions.ScratchAbilityAnimationComponent;
+import finalgame.engineAdditions.PortalAbilityComponent;
+import finalgame.engineAdditions.ScratchAbilityComponent;
 import finalgame.engineAdditions.TeleportAbilityComponent;
+import finalgame.engineAdditions.TickComponent;
 import finalgame.engineAdditions.TickSystem;
 import finalgame.engineAdditions.TransformComponent;
 
@@ -149,6 +153,7 @@ public class MainGamePlay extends GameWorld {
 		_player.addComponent("TRANSFORM", new TransformComponent(_player, gameSpawnLoc, new Vec2d(40,60), 1.0));
 		_player.addComponent("INPUT", new PlayerInputComponent(_player, _input));
 		_player.addComponent("COLLISION", new AABCollisionComponent(_player, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
+		_player.addComponent("TICK", new TickComponent(_player));
 		_objects.add(_player);
 		PlayerInputComponent curr = (PlayerInputComponent)_player.getComponent("INPUT");
 		curr.setFocus(true);
@@ -160,27 +165,36 @@ public class MainGamePlay extends GameWorld {
 		switch(character) {
 			case 0:
 				//LYLA
-				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 100));
-				_player.addComponent("ABILITY_CLICK", new MeleeMouseAbilityAnimationComponent(_player, getWeaponImage(), new Vec2d(108,133),
-						new Vec2d(46, 61), new Vec2d(0,0), new Vec2d(60,60), new Vec2d(0, 0),36, 2, 0, 70.));
+				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 100, getHealImage()));
+				_player.addComponent("ABILITY_CLICK", new MeleeMouseAbilityComponent(_player, getWeaponImage(), new Vec2d(108,133),
+						new Vec2d(46, 61), new Vec2d(0,0), new Vec2d(60,60), new Vec2d(0, 0),36, 1, 0, 70.));
+				_player.addComponent("ABILITY_Q", new FireWaveAbilityComponent(_player, getFireWaveImage(), new Vec2d(0,0),
+						new Vec2d(679, 892), new Vec2d(0,0), new Vec2d(40,150), new Vec2d(679, 0),30, 2, 0, 700.));
+				
+				_player.addComponent("ABILITY_E", new IceBlockAbilityComponent(_player, getIceBlockImage(), new Vec2d(0,0),
+						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(75,75), new Vec2d(192, 192),25, 5, 4));
+				
+				_player.addComponent("ABILITY_F", new PortalAbilityComponent(_player, getPortalImage(),getPortalImage2(), new Vec2d(290,90),
+						new Vec2d(600, 450), new Vec2d(0,0), new Vec2d(60,45), new Vec2d(0,0),
+						1, 1, 2));
 				break;
 			case 1:
 				//EZRA
-//				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 150));
+//				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 150, getHealImage()));
 				break;
 			case 2:
 				//SAM
-//				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 125));
+//				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 125, getHealImage()));
 				break;
 			case 3:
 				//ARCHY
-				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 200));
+				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 200,getHealImage()));
 				
 				_player.addComponent("ABILITY_Q", new AOELighningAbilityAnimationComponent(_player, getAOELightningImage(), new Vec2d(0,0),
 						new Vec2d(2000, 2000), new Vec2d(0,0), new Vec2d(200,200), new Vec2d(2000, 2000),
 						3, 2.5, 2));
 				
-				_player.addComponent("ABILITY_E", new ScratchAbilityAnimationComponent(_player, getElectricScratchImage(), new Vec2d(0,0),
+				_player.addComponent("ABILITY_E", new ScratchAbilityComponent(_player, getElectricScratchImage(), new Vec2d(0,0),
 						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(50,50), new Vec2d(192, 192),
 						11, 1, 2));
 
@@ -380,7 +394,17 @@ public class MainGamePlay extends GameWorld {
 			e.printStackTrace();
 		}
 		return out;
-	}	
+	}
+	public static Image getHealImage () {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/RandomAbilities/heal.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
 	public static Image getAOELightningImage() {
 		Image out = null;
 		try{
@@ -431,7 +455,46 @@ public class MainGamePlay extends GameWorld {
 		}
 		return out;
 	}
-
+	public static Image getPortalImage() {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/LylaAbilities/portalSite.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}	
+	public static Image getPortalImage2() {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/LylaAbilities/portalCast.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
+	public static Image getFireWaveImage() {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/LylaAbilities/fireblast.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
+	public static Image getIceBlockImage() {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/LylaAbilities/iceBlock.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
 	/*
 	 *
 	public static Image getVultureSprite () {

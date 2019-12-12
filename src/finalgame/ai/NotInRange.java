@@ -23,10 +23,10 @@ public class NotInRange implements Condition {
 		TransformComponent tc = (TransformComponent) tree.getObject().getComponent("TRANSFORM");
 		
 		if (tc.getLoc().dist2(ttc.getLoc())>=range) {
-			System.out.println(1);
+//			System.out.println(1);
 			return Status.SUCCESS;
 		} else {
-			System.out.println(10);
+//			System.out.println(10);
 			return Status.FAILURE;
 		}
 	}
