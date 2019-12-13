@@ -63,7 +63,7 @@ public class HealthComponent extends Component{
 	public void death() {
 		_gw.dieObject(_go);
 		System.out.println("OOF, an "+_go.getName()+" just DIED");
-//		_gw.removeObject(_go);
+		_gw.removeObject(_go);
 	}
 
 }

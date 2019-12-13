@@ -53,6 +53,7 @@ import finalgame.engineAdditions.AnimateGraphicsComponent;
 import finalgame.engineAdditions.BehaviorSystem;
 import finalgame.engineAdditions.CircleAbilityCollisionComponent;
 import finalgame.engineAdditions.CollisionSystem;
+import finalgame.engineAdditions.EnemySystem;
 import finalgame.engineAdditions.FireWaveAbilityComponent;
 import finalgame.engineAdditions.GameObject;
 import finalgame.engineAdditions.GraphicsSystem;
@@ -97,6 +98,7 @@ public class MainGamePlay extends GameWorld {
 	private CollisionSystem _collisionSys;
 	private BehaviorSystem _behaviorSys;
 	private SoundSystem _soundSys;
+	private EnemySystem _enemySys;
 
 	// Game Play Overlay
 	private GamePlayOverlay _gamePlayOverlay;
@@ -143,12 +145,14 @@ public class MainGamePlay extends GameWorld {
 		_collisionSys = new CollisionSystem(this);
 		_behaviorSys = new BehaviorSystem();
 		_soundSys = new SoundSystem(_finalGameWorld);
+		_enemySys = new EnemySystem(this);
 		_systems.add(_tickSys);
 		_systems.add(_graphicsSys);
 		_systems.add(_inputSys);
 		_systems.add(_collisionSys);
 		_systems.add(_behaviorSys);
 		_systems.add(_soundSys);
+		_systems.add(_enemySys);
 	}
 
 	private void loadCharacter() {
@@ -223,7 +227,8 @@ public class MainGamePlay extends GameWorld {
 
 	}
 
-	private void loadEnemies() {
+	public void loadEnemies() {
+		
 		double follow_dist = 5000;
 		GameObject g = new GameObject("ENEMY");
 		AnimateGraphicsComponent animate = new AnimateGraphicsComponent(g, this.getPlayerImage(_selectedCharacter), new Vec2d(54,0), new Vec2d(34,48), 2, new Vec2d(48,48));
@@ -260,7 +265,7 @@ public class MainGamePlay extends GameWorld {
 		this.addToSystems(g);
 
 		follow_dist = 50000;
-		g = new GameObject("ENEMY");
+		g = new GameObject("ENEMYARC");
 		animate = new AnimateGraphicsComponent(g, this.getPlayerImage(_selectedCharacter), new Vec2d(54,0), new Vec2d(34,48), 2, new Vec2d(48,48));
 		g.addComponent("DRAW", animate);
 		g.addComponent("ANIMATE", animate);
@@ -276,7 +281,7 @@ public class MainGamePlay extends GameWorld {
 		_objects.add(g);
 		this.addToSystems(g);
 
-		g = new GameObject("ENEMY");
+		g = new GameObject("ENEMYARC");
 		animate = new AnimateGraphicsComponent(g, this.getPlayerImage(_selectedCharacter), new Vec2d(54,0), new Vec2d(34,48), 2, new Vec2d(48,48));
 		g.addComponent("DRAW", animate);
 		g.addComponent("ANIMATE", animate);
@@ -292,11 +297,6 @@ public class MainGamePlay extends GameWorld {
 		_objects.add(g);
 		this.addToSystems(g);
 
-		g = new GameObject("END");
-		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(100000,400), new Vec2d(40,60), 1.0));
-		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
-		_objects.add(g);
-		this.addToSystems(g);
 	}
 
 	public GameObject spawnAbilityHitbox(AnimateAbilityComponent ability) {
@@ -537,12 +537,14 @@ public class MainGamePlay extends GameWorld {
 			long lastTick = nanosSincePreviousTick%50000000;
 			for(int i = 0; i < n; i++) {
 				this.purge();
+				_enemySys.onTick(0);
 				_tickSys.onTick(50000000);
 				_collisionSys.onTick(50000000);
 				_inputSys.onTick(50000000);
 				_behaviorSys.onTick(50000000);
 			}
 			this.purge();
+			_enemySys.onTick(0);
 			_tickSys.onTick(lastTick);
 			_collisionSys.onTick(lastTick);
 			_inputSys.onTick(lastTick);
@@ -550,6 +552,7 @@ public class MainGamePlay extends GameWorld {
 		}
 		else {
 			this.purge();
+			_enemySys.onTick(0);
 			_tickSys.onTick(nanosSincePreviousTick);
 			_collisionSys.onTick(nanosSincePreviousTick);
 			_inputSys.onTick(nanosSincePreviousTick);
@@ -689,7 +692,7 @@ public class MainGamePlay extends GameWorld {
 		_garbage.clear();
 	}
 
-	private void addToSystems(GameObject go) {
+	public void addToSystems(GameObject go) {
 		for(int i=0; i<_systems.size(); i++) {
 			_systems.get(i).addObject(go);
 		}
@@ -761,7 +764,6 @@ public class MainGamePlay extends GameWorld {
 	public void set_player(GameObject _player) {
 		this._player = _player;
 	}
-
 
 	public int get_highScore() {
 		return _highScore;

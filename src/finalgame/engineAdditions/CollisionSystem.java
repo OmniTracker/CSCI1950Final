@@ -31,15 +31,20 @@ public class CollisionSystem extends GameSystem{
 	}
 	
 	private void collidePair(GameObject go1, GameObject go2, Vec2d mtv) {
-		if(go1.getName().equals("ENEMY") && go2.getName().equals("PLAYER")) {
+		if(go1.getName().contains("ENEMY") && go2.getName().equals("PLAYER")) {
 			TransformComponent m1 = (TransformComponent) go1.getComponent("TRANSFORM");
 			TransformComponent m2 = (TransformComponent) go2.getComponent("TRANSFORM");
-			m1.move(mtv.sdiv(2));
-			m2.move(mtv.sdiv(-2));
+			//m1.move(mtv.sdiv(1));
+			m2.move(mtv.sdiv(-1));
 		}
-		else if(go1.getName().equals("ABILITY") && go2.getName().equals("ENEMY")) {
+		else if(go1.getName().equals("ABILITY") && go2.getName().contains("ENEMY")) {
 			AbilityCollisionComponent curr = (AbilityCollisionComponent) go1.getComponent("COLLISION");
 			curr.hit(go2);
+		} else if (go1.getName().contains("ENEMY") && go2.getName().contains("ENEMY")) {
+			TransformComponent m1 = (TransformComponent) go1.getComponent("TRANSFORM");
+			TransformComponent m2 = (TransformComponent) go2.getComponent("TRANSFORM");
+			m1.move(mtv.sdiv(1));
+			//m2.move(mtv.sdiv(-2));
 		}
 	}
 }

@@ -105,4 +105,9 @@ public class GameObject {
 		return curr.collide(o);
 	}
 	
+	@Override
+	public String toString() {
+		return _name;
+	}
+	
 }
