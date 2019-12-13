@@ -21,6 +21,8 @@ public abstract class CollisionComponent extends Component{
 		// TODO Auto-generated constructor stub
 		_shape = shape;
 	}
+	
+	public abstract int getType();
 
 	@Override
 	public void tick(long nanosSinceLastTick) {

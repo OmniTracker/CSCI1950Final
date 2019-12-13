@@ -31,7 +31,8 @@ public class EnemyRangedAbilityComponent extends MouseAbilityAnimationComponent{
 	
 	@Override
 	public void draw(GraphicsContext g, Affine af) {
-		if(_active) {
+		
+		if(_active && _activeCounter<_activeTime) {
 			double trajLoc = _activeCounter/_activeTime;
 			Vec2d dirVector = _dir.smult(_range).smult(trajLoc);
 			Vec2d bulletLoc = dirVector.plus(_src);
@@ -48,6 +49,7 @@ public class EnemyRangedAbilityComponent extends MouseAbilityAnimationComponent{
 			hp.takeDamage(_damage);
 		}
 		this.removeHitBox();
+		_activeCounter = _activeTime+1;
 		if(hitObject.hasComponent("TRANSFORM")) {
 			TransformComponent tc = (TransformComponent)hitObject.getComponent("TRANSFORM");
 			tc.move(_dir.smult(_knockback));

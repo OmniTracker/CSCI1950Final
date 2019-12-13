@@ -45,6 +45,9 @@ public class CollisionSystem extends GameSystem{
 			TransformComponent m2 = (TransformComponent) go2.getComponent("TRANSFORM");
 			m1.move(mtv.sdiv(1));
 			//m2.move(mtv.sdiv(-2));
+		} else if (go1.getName().equals("ENABILITY") && go2.getName().contains("PLAYER")) {
+			AbilityCollisionComponent curr = (AbilityCollisionComponent) go1.getComponent("COLLISION");
+			curr.hit(go2);
 		}
 	}
 }

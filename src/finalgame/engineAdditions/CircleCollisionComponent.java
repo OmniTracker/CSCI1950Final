@@ -37,4 +37,9 @@ public class CircleCollisionComponent extends CollisionComponent{
 	public Vec2d collideWithPolygon(PolygonShape s1) {
 		return this.colliding(_circle, s1);
 	}
+
+	@Override
+	public int getType() {
+		return 0;
+	}
 }
