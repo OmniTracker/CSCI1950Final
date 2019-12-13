@@ -178,7 +178,7 @@ public class MainGamePlay extends GameWorld {
 
 				_player.addComponent("ABILITY_E", new IceBlockAbilityComponent(_player,this, getIceBlockImage(), new Vec2d(0,0),
 						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(75,75), new Vec2d(192, 192),25, 5, 4));
-				_player.addComponent("ABILITY_F", new TeleportAbilityComponent(_player, getTeleportImage(), new Vec2d(0,0),
+				_player.addComponent("ABILITY_F", new TeleportAbilityComponent(_player,this, getTeleportImage(), new Vec2d(0,0),
 						new Vec2d(128, 128), new Vec2d(0,0), new Vec2d(0,0), new Vec2d(128, 128),
 						58, 2.5, 2, 200));
 
@@ -202,7 +202,7 @@ public class MainGamePlay extends GameWorld {
 				_player.addComponent("ABILITY_E", new ScratchAbilityComponent(_player,this, getElectricScratchImage(), new Vec2d(0,0),
 						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(50,50), new Vec2d(192, 192),
 						11, 1, 2));
-				_player.addComponent("ABILITY_F", new PortalAbilityComponent(_player, getPortalImage(),getPortalImage2(), new Vec2d(290,90),
+				_player.addComponent("ABILITY_F", new PortalAbilityComponent(_player,this, getPortalImage(),getPortalImage2(), new Vec2d(290,90),
 						new Vec2d(600, 450), new Vec2d(0,0), new Vec2d(60,45), new Vec2d(0,0),
 						1, 1, 2));
 
