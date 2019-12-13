@@ -38,6 +38,7 @@ public class GamePlayOverlay extends UIElement {
 	AspectRatioHandler _aspect;
 	String[] placeHolders = new String[8];
 	Image[] buttonImages = new Image[4];
+	private int character;
 
 	public GamePlayOverlay(Application app, FinalGameWorld parent) {
 		_app = app;
@@ -72,7 +73,9 @@ public class GamePlayOverlay extends UIElement {
 		Vec2d size = _aspect.calculateUpdatedScreenSize();
 		Vec2d origin = _aspect.calculateUpdatedOrigin();
 		Vec2d scoreOrigin = origin.plus(size.x - 200, 90);
-		this.labelHelper(g, scoreOrigin, "Score: ###");
+		MainGamePlay main = _parent.getMainGamePlay();
+		String score = Integer.toString(main.get_highScore());
+		this.labelHelper(g, scoreOrigin, "Score: "+ score);
 	}
 
 	private void drawCoinCount(GraphicsContext g) {
@@ -120,7 +123,20 @@ public class GamePlayOverlay extends UIElement {
 		// This is literally a black box of code.
 		g.setFill(Color.RED);
 		g.strokeRoundRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize, 10, 10);
-		g.drawImage(buttonImages[0],0,0,32,32,attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);
+		switch(character) {
+		case 0:
+			g.drawImage(buttonImages[0],0,0,32,32,attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);
+			break;
+		case 1:
+			g.drawImage(buttonImages[0],0,0,32,32,attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);
+			break;
+		case 2:
+			g.drawImage(buttonImages[0],0,0,32,32,attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);
+			break;
+		case 3:
+			g.drawImage(buttonImages[0],0,0,32,32,attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);
+			break;
+		}
 		g.setFill(Color.WHITESMOKE);
 		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize) + 2,
 				attributesOrigin.y + (boxSize / smallBaxFactor) - 2, (boxSize / smallBaxFactor) - 2,
@@ -130,7 +146,16 @@ public class GamePlayOverlay extends UIElement {
 				attributesOrigin.y + (boxSize / smallBaxFactor) + ((boxSize / 3) + 4));
 		g.setFill(Color.PURPLE);
 		g.strokeRoundRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize, 10, 10);
-		g.drawImage(buttonImages[1], attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);
+		switch(character) {
+		case 0:
+			g.drawImage(buttonImages[1],768,512,128,128, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+		case 1:
+			g.drawImage(buttonImages[1], attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+		case 2:
+			g.drawImage(buttonImages[1], attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+		case 3:
+			g.drawImage(buttonImages[1], attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+		}
 		g.setFill(Color.WHITESMOKE);
 		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize) + 2,
 				attributesOrigin.y + (boxSize / smallBaxFactor) - 2, (boxSize / smallBaxFactor) - 2,
@@ -140,7 +165,16 @@ public class GamePlayOverlay extends UIElement {
 				attributesOrigin.y + (boxSize / smallBaxFactor) + ((boxSize / 3) + 4));
 		g.setFill(Color.GREEN);
 		g.strokeRoundRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize, 10, 10);
-		g.drawImage(buttonImages[2],576,0,192,192, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);
+		switch(character) {
+		case 0:
+			g.drawImage(buttonImages[2],576,0,192,192, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+		case 1:
+			g.drawImage(buttonImages[2],576,0,192,192, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+		case 2:
+			g.drawImage(buttonImages[2],576,0,192,192, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+		case 3:
+			g.drawImage(buttonImages[2],576,0,192,192, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+		}
 		g.setFill(Color.WHITESMOKE);
 		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize) + 2,
 				attributesOrigin.y + (boxSize / smallBaxFactor) - 2, (boxSize / smallBaxFactor) - 2,
@@ -150,7 +184,16 @@ public class GamePlayOverlay extends UIElement {
 				attributesOrigin.y + (boxSize / smallBaxFactor) + ((boxSize / 3) + 4));
 		g.setFill(Color.PINK);
 		g.strokeRoundRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize, 10, 10);
-		g.drawImage(buttonImages[3],0,0,2100,2000, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);
+		switch(character) {
+		case 0:
+			g.drawImage(buttonImages[3],0,0,728,892, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+		case 1:
+			g.drawImage(buttonImages[3],0,0,2100,2000, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+		case 2:
+			g.drawImage(buttonImages[3],0,0,2100,2000, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+		case 3:
+			g.drawImage(buttonImages[3],0,0,2100,2000, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+		}
 		g.setFill(Color.WHITESMOKE);
 		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize) + 2,
 				attributesOrigin.y + (boxSize / smallBaxFactor) - 2, (boxSize / smallBaxFactor) - 2,
@@ -165,10 +208,14 @@ public class GamePlayOverlay extends UIElement {
 	}
 
 	public void loadNeededImages(int character) {
+		this.character=character;
 		buttonImages[0]= MainGamePlay.getPotionImage();
 		switch (character) {
 		case 0:
 			// LYLA
+			buttonImages[1] = MainGamePlay.getTeleportImage();
+			buttonImages[3] = MainGamePlay.getFireWaveImage();
+			buttonImages[2] = MainGamePlay.getIceBlockImage();
 
 			break;
 		case 1:

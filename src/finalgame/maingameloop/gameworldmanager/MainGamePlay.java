@@ -65,6 +65,7 @@ import finalgame.engineAdditions.PlayerInputComponent;
 import finalgame.engineAdditions.PlayerInputSystem;
 import finalgame.engineAdditions.PortalAbilityComponent;
 import finalgame.engineAdditions.ScratchAbilityComponent;
+import finalgame.engineAdditions.SoundSystem;
 import finalgame.engineAdditions.TeleportAbilityComponent;
 import finalgame.engineAdditions.TickComponent;
 import finalgame.engineAdditions.TickSystem;
@@ -95,6 +96,7 @@ public class MainGamePlay extends GameWorld {
 	private PlayerInputSystem _inputSys;
 	private CollisionSystem _collisionSys;
 	private BehaviorSystem _behaviorSys;
+	private SoundSystem _soundSys;
 
 	// Game Play Overlay
 	private GamePlayOverlay _gamePlayOverlay;
@@ -140,11 +142,13 @@ public class MainGamePlay extends GameWorld {
 		_inputSys = new PlayerInputSystem();
 		_collisionSys = new CollisionSystem(this);
 		_behaviorSys = new BehaviorSystem();
+		_soundSys = new SoundSystem(_finalGameWorld);
 		_systems.add(_tickSys);
 		_systems.add(_graphicsSys);
 		_systems.add(_inputSys);
 		_systems.add(_collisionSys);
 		_systems.add(_behaviorSys);
+		_systems.add(_soundSys);
 	}
 
 	private void loadCharacter() {
@@ -312,8 +316,8 @@ public class MainGamePlay extends GameWorld {
 
 	public void dieObject(GameObject go) {
 		if(go.getName().equals("ENEMY")) {
-			_highScore += 50;
-			System.out.println("HIGHSCORE IS NOW: " + _highScore);
+			set_highScore(get_highScore() + 50);
+			System.out.println("HIGHSCORE IS NOW: " + get_highScore());
 		}
 	}
 
@@ -352,23 +356,23 @@ public class MainGamePlay extends GameWorld {
 	private void setupGeneralUI ()
 	{
 		// Options Panel
-		HighScorePanel highScorePanel = new HighScorePanel( this.getApplication().getAspectRatioHandler());
-		highScorePanel.setColor(Color.DARKGRAY);
-		highScorePanel.setSecondaryColor(Color.DARKGREEN);
-		highScorePanel.setSize( new Vec2d(500,300));
-		highScorePanel.setOrigin(new Vec2d(0,0));
-		highScorePanel.setBoarderSize(10);
-		this.setHighScorePanel(highScorePanel);
-		if (_highScoreTest == true)
-		{
-			// Options Button
-			Button highScoreTestButton = new Button();
-			highScoreTestButton.setText("Test High Score");
-			highScoreTestButton.setSize( new Vec2d(250,70));
-			highScoreTestButton.setColor(Color.BLUE);
-			highScoreTestButton.setFontName(EngineFonts.getAlc());
-			this.setHighScoreTestButton(highScoreTestButton);
-		}
+//		HighScorePanel highScorePanel = new HighScorePanel( this.getApplication().getAspectRatioHandler());
+//		highScorePanel.setColor(Color.DARKGRAY);
+//		highScorePanel.setSecondaryColor(Color.DARKGREEN);
+//		highScorePanel.setSize( new Vec2d(500,300));
+//		highScorePanel.setOrigin(new Vec2d(0,0));
+//		highScorePanel.setBoarderSize(10);
+//		this.setHighScorePanel(highScorePanel);
+//		if (_highScoreTest == true)
+//		{
+//			// Options Button
+//			Button highScoreTestButton = new Button();
+//			highScoreTestButton.setText("Test High Score");
+//			highScoreTestButton.setSize( new Vec2d(250,70));
+//			highScoreTestButton.setColor(Color.BLUE);
+//			highScoreTestButton.setFontName(EngineFonts.getAlc());
+//			this.setHighScoreTestButton(highScoreTestButton);
+//		}
 	}
 
 
@@ -557,19 +561,19 @@ public class MainGamePlay extends GameWorld {
 	@Override
 	public void onDraw(GraphicsContext g)  {
         //Highscore Related Draw calls
-        if (this.getHighScoreTestButton() != null)
-        {
-            Vec2d origin   = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin();
-            Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize();
-            Vec2d buttonOrigin = origin.plus( (size.x / 2), (size.y / 2));
-            this.getHighScoreTestButton().setOrigin(buttonOrigin);
-            this.getHighScoreTestButton().drawRounded(g);
-        }
-
-        if (this.getHighScorePanel().isShowing())
-        {
-            this.getHighScorePanel().onDraw(g);
-        }
+//        if (this.getHighScoreTestButton() != null)
+//        {
+//            Vec2d origin   = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin();
+//            Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize();
+//            Vec2d buttonOrigin = origin.plus( (size.x / 2), (size.y / 2));
+//            this.getHighScoreTestButton().setOrigin(buttonOrigin);
+//            //this.getHighScoreTestButton().drawRounded(g);
+//        }
+//
+//        if (this.getHighScorePanel().isShowing())
+//        {
+//            this.getHighScorePanel().onDraw(g);
+//        }
 
 		_affine = g.getTransform();
 		//Draw some border for the game to look nice
@@ -588,10 +592,10 @@ public class MainGamePlay extends GameWorld {
 
 	@Override
 	public void onKeyPressed(KeyEvent e) {
-		if ( this.getHighScorePanel().isShowing() == true)
-		{
-			this.getHighScorePanel().onKeyPressed(e);
-		}
+//		if ( this.getHighScorePanel().isShowing() == true)
+//		{
+//			this.getHighScorePanel().onKeyPressed(e);
+//		}
 		_input.put(e.getCode().toString(), 1.);
 		this.onInput();
 	}
@@ -756,6 +760,16 @@ public class MainGamePlay extends GameWorld {
 
 	public void set_player(GameObject _player) {
 		this._player = _player;
+	}
+
+
+	public int get_highScore() {
+		return _highScore;
+	}
+
+
+	public void set_highScore(int _highScore) {
+		this._highScore = _highScore;
 	}
 
 }

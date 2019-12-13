@@ -51,7 +51,7 @@ public class HighScorePanel extends Panel implements EventHandler {
 
 	public HighScorePanel(AspectRatioHandler app) {
 		super(app);
-		this.setName(new KeyBinding  ("Name",  "Jamieson", new Vec2d(50,10), Color.GREEN, Color.WHEAT,  70, 50));
+		this.setName(new KeyBinding  ("Name",  "Jamison", new Vec2d(50,10), Color.GREEN, Color.WHEAT,  70, 50));
 		this.setScore(new KeyBinding ("Score", "350",      new Vec2d(50,10), Color.GREEN, Color.WHEAT, 70, 50));
 		
 		
