@@ -173,10 +173,10 @@ public class MainGamePlay extends GameWorld {
 				
 				_player.addComponent("ABILITY_E", new IceBlockAbilityComponent(_player, getIceBlockImage(), new Vec2d(0,0),
 						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(75,75), new Vec2d(192, 192),25, 5, 4));
+				_player.addComponent("ABILITY_F", new TeleportAbilityComponent(_player, getTeleportImage(), new Vec2d(0,0),
+						new Vec2d(128, 128), new Vec2d(0,0), new Vec2d(0,0), new Vec2d(128, 128),
+						58, 2.5, 2, 200));
 				
-				_player.addComponent("ABILITY_F", new PortalAbilityComponent(_player, getPortalImage(),getPortalImage2(), new Vec2d(290,90),
-						new Vec2d(600, 450), new Vec2d(0,0), new Vec2d(60,45), new Vec2d(0,0),
-						1, 1, 2));
 				break;
 			case 1:
 				//EZRA
@@ -197,10 +197,9 @@ public class MainGamePlay extends GameWorld {
 				_player.addComponent("ABILITY_E", new ScratchAbilityComponent(_player, getElectricScratchImage(), new Vec2d(0,0),
 						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(50,50), new Vec2d(192, 192),
 						11, 1, 2));
-
-				_player.addComponent("ABILITY_F", new TeleportAbilityComponent(_player, getTeleportImage(), new Vec2d(0,0),
-						new Vec2d(128, 128), new Vec2d(0,0), new Vec2d(0,0), new Vec2d(128, 128),
-						58, 2.5, 2, 200));
+				_player.addComponent("ABILITY_F", new PortalAbilityComponent(_player, getPortalImage(),getPortalImage2(), new Vec2d(290,90),
+						new Vec2d(600, 450), new Vec2d(0,0), new Vec2d(60,45), new Vec2d(0,0),
+						1, 1, 2));
 				
 				_player.addComponent("ABILITY_CLICK", new MouseAbilityAnimationComponent(_player, getBulletImage(), new Vec2d(17,7),
 						new Vec2d(68, 68), new Vec2d(0,0), new Vec2d(15,15), new Vec2d(0, 0),1, 1.0, 0, 300.));
@@ -208,6 +207,7 @@ public class MainGamePlay extends GameWorld {
 			default:
 				break;
 		}
+		_gamePlayOverlay.loadNeededImages(character);
 	}
 
 	private void loadMap() {
@@ -399,6 +399,16 @@ public class MainGamePlay extends GameWorld {
 		Image out = null;
 		try{
 			out =  new Image(new File("resources/randomFinalImages/RandomAbilities/heal.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
+	public static Image getPotionImage() {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/RandomAbilities/spritesheet.png").toURI().toURL().toExternalForm());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
