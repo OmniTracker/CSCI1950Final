@@ -9,9 +9,9 @@ import support.Vec2d;
 
 public class MeleeMouseAbilityComponent extends MouseAbilityAnimationComponent{
 
-	private double _damage;
-	private double _knockback;
-	private Vec2d _middleSwordLoc;
+	protected double _damage;
+	protected double _knockback;
+	protected Vec2d _middleSwordLoc;
 	
 	public MeleeMouseAbilityComponent(GameObject go, MainGamePlay gw, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc,
 			Vec2d dim, Vec2d animation_increment, int numFrames, double active_time, double cooldown, double range) {
@@ -21,28 +21,6 @@ public class MeleeMouseAbilityComponent extends MouseAbilityAnimationComponent{
 		_middleSwordLoc = new Vec2d(0,0);
 	}
   
-
-	@Override
-	public void tick(long nanosSinceLastTick) {
-		if(_active) {
-			_activeCounter += (double)nanosSinceLastTick/1000000000.0;
-			_currFrame = (int)((_activeCounter/_activeTime)*_numFrames);
-			if(_activeCounter > _activeTime) {
-				_currFrame = 0;
-				_active = false;
-				_coolingDown = true;
-				_activeCounter = 0;
-				this.removeHitBox();
-			}
-		}
-		else if(_coolingDown) {
-			_cooldownCounter -= (double)nanosSinceLastTick/1000000000.0;
-			if(_cooldownCounter <= 0) {
-				_cooldownCounter = _cooldown;
-				_coolingDown = false;
-			}
-		}
-	}
 	
 	@Override
 	public void draw(GraphicsContext g, Affine af) {
