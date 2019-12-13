@@ -109,7 +109,7 @@ public class MainGamePlay extends GameWorld {
 
 	private int _selectedCharacter;
 	private FinalGameWorld _finalGameWorld;
-	
+
 	private String[] placeHolders = new String[8];
 	private String xmlPath = "./resources/xmlResources/.KeyBinding.xml";
 
@@ -175,13 +175,13 @@ public class MainGamePlay extends GameWorld {
 						new Vec2d(46, 61), new Vec2d(0,0), new Vec2d(60,60), new Vec2d(0, 0),36, 1, 0, 70.));
 				_player.addComponent("ABILITY_Q", new FireWaveAbilityComponent(_player,this, getFireWaveImage(), new Vec2d(42,0),
 						new Vec2d(591, 892), new Vec2d(0,0), new Vec2d(40,150), new Vec2d(721, 0),60, 2, 0, 700.));
-				
+
 				_player.addComponent("ABILITY_E", new IceBlockAbilityComponent(_player,this, getIceBlockImage(), new Vec2d(0,0),
 						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(75,75), new Vec2d(192, 192),25, 5, 4));
-				
-				_player.addComponent("ABILITY_F", new PortalAbilityComponent(_player,this, getPortalImage(),getPortalImage2(), new Vec2d(290,90),
-						new Vec2d(600, 450), new Vec2d(0,0), new Vec2d(60,45), new Vec2d(0,0),
-						1, 1, 2));
+				_player.addComponent("ABILITY_F", new TeleportAbilityComponent(_player, getTeleportImage(), new Vec2d(0,0),
+						new Vec2d(128, 128), new Vec2d(0,0), new Vec2d(0,0), new Vec2d(128, 128),
+						58, 2.5, 2, 200));
+
 				break;
 			case 1:
 				//EZRA
@@ -194,25 +194,25 @@ public class MainGamePlay extends GameWorld {
 			case 3:
 				//ARCHY
 				_player.addComponent("HEALTH", new PlayerHealthComponent(_player,this, 200,getHealImage()));
-				
+
 				_player.addComponent("ABILITY_Q", new AOELighningAbilityAnimationComponent(_player,this, getAOELightningImage(), new Vec2d(0,0),
 						new Vec2d(2000, 2000), new Vec2d(0,0), new Vec2d(200,200), new Vec2d(2000, 2000),
 						3, 2.5, 2));
-				
+
 				_player.addComponent("ABILITY_E", new ScratchAbilityComponent(_player,this, getElectricScratchImage(), new Vec2d(0,0),
 						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(50,50), new Vec2d(192, 192),
 						11, 1, 2));
+				_player.addComponent("ABILITY_F", new PortalAbilityComponent(_player, getPortalImage(),getPortalImage2(), new Vec2d(290,90),
+						new Vec2d(600, 450), new Vec2d(0,0), new Vec2d(60,45), new Vec2d(0,0),
+						1, 1, 2));
 
-				_player.addComponent("ABILITY_F", new TeleportAbilityComponent(_player,this, getTeleportImage(), new Vec2d(0,0),
-						new Vec2d(128, 128), new Vec2d(0,0), new Vec2d(0,0), new Vec2d(128, 128),
-						58, 2.5, 2, 200));
-				
 				_player.addComponent("ABILITY_CLICK", new MouseAbilityAnimationComponent(_player,this, getBulletImage(), new Vec2d(17,7),
 						new Vec2d(68, 68), new Vec2d(0,0), new Vec2d(15,15), new Vec2d(0, 0),1, 1.0, 0, 300.));
 				break;
 			default:
 				break;
 		}
+		_gamePlayOverlay.loadNeededImages(character);
 	}
 
 	private void loadMap() {
@@ -287,7 +287,7 @@ public class MainGamePlay extends GameWorld {
 		g.addComponent("BEHAVIOR", new AIBehaviorComponent(g,bt));
 		_objects.add(g);
 		this.addToSystems(g);
-		
+
 		g = new GameObject("END");
 		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(100000,400), new Vec2d(40,60), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
@@ -309,7 +309,7 @@ public class MainGamePlay extends GameWorld {
 		this.addToSystems(hitbox);
 		return hitbox;
 	}
-	
+
 	public void dieObject(GameObject go) {
 		if(go.getName().equals("ENEMY")) {
 			_highScore += 50;
@@ -422,6 +422,16 @@ public class MainGamePlay extends GameWorld {
 		}
 		return out;
 	}
+	public static Image getPotionImage() {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/RandomAbilities/spritesheet.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
 	public static Image getAOELightningImage() {
 		Image out = null;
 		try{
@@ -481,7 +491,7 @@ public class MainGamePlay extends GameWorld {
 			e.printStackTrace();
 		}
 		return out;
-	}	
+	}
 	public static Image getPortalImage2() {
 		Image out = null;
 		try{
@@ -512,12 +522,12 @@ public class MainGamePlay extends GameWorld {
 		}
 		return out;
 	}
-	
+
 	@Override
 	public void onTick(long nanosSincePreviousTick) {
 //		System.out.print("Main Game Play \n");
 		//Tick and split up into component ticks if any given tick is too long
-		
+
 		if(nanosSincePreviousTick > 50000000) {
 			int n = (int)(nanosSincePreviousTick/50000000.);
 			long lastTick = nanosSincePreviousTick%50000000;
@@ -660,11 +670,11 @@ public class MainGamePlay extends GameWorld {
 	public void onInput() {
 		_inputSys.onInput(_input);
 	}
-	
+
 	public void removeObject(GameObject go) {
 		_garbage.add(go);
 	}
-	
+
 	protected void purge() {
 		for(int i = 0; i < _garbage.size();i++) {
 			for(int j=0; j<_systems.size(); j++) {
@@ -701,7 +711,7 @@ public class MainGamePlay extends GameWorld {
 	public void set_gamePlayOverlay(GamePlayOverlay _gamePlayOverlay) {
 		this._gamePlayOverlay = _gamePlayOverlay;
 	}
-	
+
 	public void getKeys() {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = null;
@@ -728,7 +738,7 @@ public class MainGamePlay extends GameWorld {
 			placeHolders[x] = nList.item(x).getChildNodes().item(0).getNodeName();
 		}
 	}
-	
+
 	public String[] getPlaceHolders() {
 		return placeHolders;
 	}
@@ -746,6 +756,6 @@ public class MainGamePlay extends GameWorld {
 
 	public void set_player(GameObject _player) {
 		this._player = _player;
-	}	
-	
+	}
+
 }
