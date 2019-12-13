@@ -1,5 +1,6 @@
 package finalgame.engineAdditions;
 
+import finalgame.maingameloop.gameworldmanager.MainGamePlay;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.transform.Affine;
@@ -15,9 +16,9 @@ public class PortalAbilityComponent extends AnimateAbilityComponent{
 	private double _delayCounter;
 	private boolean _teleported;
 	
-	public PortalAbilityComponent(GameObject go, Image imgSite, Image imgCast, Vec2d imgLoc, Vec2d imgDim, Vec2d loc, Vec2d dim,
+	public PortalAbilityComponent(GameObject go, MainGamePlay gw, Image imgSite, Image imgCast, Vec2d imgLoc, Vec2d imgDim, Vec2d loc, Vec2d dim,
 			Vec2d animation_increment, int numFrames, double active_time, double cooldown) {
-		super(go, imgSite, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown);
+		super(go,gw,  imgSite, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown);
 		_imgCast = imgCast;
 		_siteLoc = null;
 		_teleporting = false;
@@ -93,6 +94,12 @@ public class PortalAbilityComponent extends AnimateAbilityComponent{
 	public Vec2d getHitBoxLoc() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int getHitboxType() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

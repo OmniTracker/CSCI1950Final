@@ -1,6 +1,7 @@
 package finalgame.engineAdditions;
 
 import support.Vec2d;
+import finalgame.maingameloop.gameworldmanager.MainGamePlay;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Affine;
@@ -10,9 +11,11 @@ public class HealthComponent extends Component{
 	protected double _currentHealth;
 	protected double _maxHealth;
 	protected boolean _showHealthBar;
+	protected MainGamePlay _gw;
 	
-	public HealthComponent(GameObject go, double hp) {
+	public HealthComponent(GameObject go, MainGamePlay gw, double hp) {
 		super(go);
+		_gw = gw;
 		_currentHealth = hp;
 		_maxHealth = hp;
 		_showHealthBar = true;
@@ -58,7 +61,9 @@ public class HealthComponent extends Component{
 	}
 	
 	public void death() {
-		//_gw.dieObject(_go);
+		_gw.dieObject(_go);
+		System.out.println("OOF, an "+_go.getName()+" just DIED");
+//		_gw.removeObject(_go);
 	}
 
 }

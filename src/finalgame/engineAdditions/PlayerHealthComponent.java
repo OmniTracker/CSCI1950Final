@@ -1,5 +1,6 @@
 package finalgame.engineAdditions;
 
+import finalgame.maingameloop.gameworldmanager.MainGamePlay;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -15,8 +16,8 @@ public class PlayerHealthComponent extends HealthComponent{
 	private boolean _invulnerable;
 	private Image _img;
 	
-	public PlayerHealthComponent(GameObject go, double hp, Image img) {
-		super(go, hp);
+	public PlayerHealthComponent(GameObject go, MainGamePlay gw,  double hp, Image img) {
+		super(go,gw, hp);
 		_cooldown = 30;
 		//default potion strength is 50 hp
 		_potionStrength = 50;
@@ -87,5 +88,10 @@ public class PlayerHealthComponent extends HealthComponent{
 	
 	public void setInvulnerable(boolean invuln) {
 		_invulnerable = invuln;
+	}
+	
+	@Override
+	public void death() {
+//		_gw.dieObject(_go);
 	}
 }

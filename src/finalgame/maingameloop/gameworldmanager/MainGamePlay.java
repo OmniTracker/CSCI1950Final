@@ -27,6 +27,7 @@ import support.Vec2d;
 import support.debugger.collisions.AABShape;
 import support.debugger.support.Vec2f;
 import support.debugger.support.shapes.AABShapeDefine;
+import support.debugger.support.shapes.CircleShapeDefine;
 import engine.Application;
 import engine.GameWorld;
 import engine.ai.BehaviorTree;
@@ -42,11 +43,15 @@ import finalgame.ai.MoveToLeader;
 import finalgame.ai.NotInRange;
 import finalgame.ai.NotNearGroup;
 import finalgame.ai.TestGI;
+import finalgame.engineAdditions.AABAbilityCollisionComponent;
 import finalgame.engineAdditions.AABCollisionComponent;
 import finalgame.engineAdditions.AIBehaviorComponent;
 import finalgame.engineAdditions.AOELighningAbilityAnimationComponent;
+import finalgame.engineAdditions.AbilityCollisionComponent;
+import finalgame.engineAdditions.AnimateAbilityComponent;
 import finalgame.engineAdditions.AnimateGraphicsComponent;
 import finalgame.engineAdditions.BehaviorSystem;
+import finalgame.engineAdditions.CircleAbilityCollisionComponent;
 import finalgame.engineAdditions.CollisionSystem;
 import finalgame.engineAdditions.FireWaveAbilityComponent;
 import finalgame.engineAdditions.GameObject;
@@ -78,7 +83,7 @@ public class MainGamePlay extends GameWorld {
     private boolean _highScoreTest = true;
     private HighScorePanel _highScorePanel = null;
     private Button _highScoreTestButton = null;
-
+    private int _highScore;
 
 	private ArrayList<GameSystem> _systems;
 	private ArrayList<GameObject> _objects;
@@ -145,7 +150,7 @@ public class MainGamePlay extends GameWorld {
 	private void loadCharacter() {
 		_selectedCharacter =_finalGameWorld.getCharacterSelection();
 		_player = new GameObject("PLAYER");
-		Vec2d gameSpawnLoc = toGameSpace(130, 100);
+		Vec2d gameSpawnLoc = new Vec2d(100,100);
 		//_player.addComponent("DRAW", new UnitGraphicsComponent(_player, _characterImage, new Vec2d(336,144), new Vec2d(32,48)));
 		AnimateGraphicsComponent animate = new AnimateGraphicsComponent(_player, this.getPlayerImage(_selectedCharacter), new Vec2d(54,0), new Vec2d(34,48), 2, new Vec2d(48,48));
 		_player.addComponent("DRAW", animate);
@@ -165,16 +170,16 @@ public class MainGamePlay extends GameWorld {
 		switch(character) {
 			case 0:
 				//LYLA
-				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 100, getHealImage()));
-				_player.addComponent("ABILITY_CLICK", new MeleeMouseAbilityComponent(_player, getWeaponImage(), new Vec2d(108,133),
+				_player.addComponent("HEALTH", new PlayerHealthComponent(_player,this, 100, getHealImage()));
+				_player.addComponent("ABILITY_CLICK", new MeleeMouseAbilityComponent(_player,this, getWeaponImage(), new Vec2d(108,133),
 						new Vec2d(46, 61), new Vec2d(0,0), new Vec2d(60,60), new Vec2d(0, 0),36, 1, 0, 70.));
-				_player.addComponent("ABILITY_Q", new FireWaveAbilityComponent(_player, getFireWaveImage(), new Vec2d(42,0),
+				_player.addComponent("ABILITY_Q", new FireWaveAbilityComponent(_player,this, getFireWaveImage(), new Vec2d(42,0),
 						new Vec2d(591, 892), new Vec2d(0,0), new Vec2d(40,150), new Vec2d(721, 0),60, 2, 0, 700.));
 				
-				_player.addComponent("ABILITY_E", new IceBlockAbilityComponent(_player, getIceBlockImage(), new Vec2d(0,0),
+				_player.addComponent("ABILITY_E", new IceBlockAbilityComponent(_player,this, getIceBlockImage(), new Vec2d(0,0),
 						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(75,75), new Vec2d(192, 192),25, 5, 4));
 				
-				_player.addComponent("ABILITY_F", new PortalAbilityComponent(_player, getPortalImage(),getPortalImage2(), new Vec2d(290,90),
+				_player.addComponent("ABILITY_F", new PortalAbilityComponent(_player,this, getPortalImage(),getPortalImage2(), new Vec2d(290,90),
 						new Vec2d(600, 450), new Vec2d(0,0), new Vec2d(60,45), new Vec2d(0,0),
 						1, 1, 2));
 				break;
@@ -188,21 +193,21 @@ public class MainGamePlay extends GameWorld {
 				break;
 			case 3:
 				//ARCHY
-				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 200,getHealImage()));
+				_player.addComponent("HEALTH", new PlayerHealthComponent(_player,this, 200,getHealImage()));
 				
-				_player.addComponent("ABILITY_Q", new AOELighningAbilityAnimationComponent(_player, getAOELightningImage(), new Vec2d(0,0),
+				_player.addComponent("ABILITY_Q", new AOELighningAbilityAnimationComponent(_player,this, getAOELightningImage(), new Vec2d(0,0),
 						new Vec2d(2000, 2000), new Vec2d(0,0), new Vec2d(200,200), new Vec2d(2000, 2000),
 						3, 2.5, 2));
 				
-				_player.addComponent("ABILITY_E", new ScratchAbilityComponent(_player, getElectricScratchImage(), new Vec2d(0,0),
+				_player.addComponent("ABILITY_E", new ScratchAbilityComponent(_player,this, getElectricScratchImage(), new Vec2d(0,0),
 						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(50,50), new Vec2d(192, 192),
 						11, 1, 2));
 
-				_player.addComponent("ABILITY_F", new TeleportAbilityComponent(_player, getTeleportImage(), new Vec2d(0,0),
+				_player.addComponent("ABILITY_F", new TeleportAbilityComponent(_player,this, getTeleportImage(), new Vec2d(0,0),
 						new Vec2d(128, 128), new Vec2d(0,0), new Vec2d(0,0), new Vec2d(128, 128),
 						58, 2.5, 2, 200));
 				
-				_player.addComponent("ABILITY_CLICK", new MouseAbilityAnimationComponent(_player, getBulletImage(), new Vec2d(17,7),
+				_player.addComponent("ABILITY_CLICK", new MouseAbilityAnimationComponent(_player,this, getBulletImage(), new Vec2d(17,7),
 						new Vec2d(68, 68), new Vec2d(0,0), new Vec2d(15,15), new Vec2d(0, 0),1, 1.0, 0, 300.));
 				break;
 			default:
@@ -222,6 +227,7 @@ public class MainGamePlay extends GameWorld {
 		g.addComponent("ANIMATE", animate);
 		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1000,100), new Vec2d(40,60), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
+		g.addComponent("HEALTH", new HealthComponent(g,this, 1000));
 		TestGI gi = new TestGI();
 		BehaviorTree bt = new BehaviorTree(new Selector(),gi, this, g);
 		bt.addBehavior(0,  new Sequencer());
@@ -239,6 +245,7 @@ public class MainGamePlay extends GameWorld {
 		g.addComponent("ANIMATE", animate);
 		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1000,200), new Vec2d(40,60), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
+		g.addComponent("HEALTH", new HealthComponent(g,this, 1000));
 		bt = new BehaviorTree(new Selector(),gi, this, g);
 		bt.addBehavior(0,  new Sequencer());
 		bt.addBehavior(1, new NotInRange(_player,follow_dist));
@@ -255,6 +262,7 @@ public class MainGamePlay extends GameWorld {
 		g.addComponent("ANIMATE", animate);
 		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1000,300), new Vec2d(40,60), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
+		g.addComponent("HEALTH", new HealthComponent(g,this, 1000));
 		bt = new BehaviorTree(new Selector(),gi, this, g);
 		bt.addBehavior(0,  new Sequencer());
 		bt.addBehavior(1, new NotInRange(_player,follow_dist));
@@ -270,6 +278,7 @@ public class MainGamePlay extends GameWorld {
 		g.addComponent("ANIMATE", animate);
 		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1000,400), new Vec2d(40,60), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
+		g.addComponent("HEALTH", new HealthComponent(g,this, 1000));
 		bt = new BehaviorTree(new Selector(),gi, this, g);
 		bt.addBehavior(0,  new Sequencer());
 		bt.addBehavior(1, new NotInRange(_player,follow_dist));
@@ -286,8 +295,27 @@ public class MainGamePlay extends GameWorld {
 		this.addToSystems(g);
 	}
 
-
-
+	public GameObject spawnAbilityHitbox(AnimateAbilityComponent ability) {
+		GameObject hitbox = new GameObject("ABILITY");
+		AbilityCollisionComponent curr = null;
+		if(ability.getHitboxType() == 0) {
+			curr = new CircleAbilityCollisionComponent(hitbox,new CircleShapeDefine(new Vec2d(0,0), 1),ability,1);
+		}
+		else if (ability.getHitboxType() == 1) {
+			curr = new AABAbilityCollisionComponent(hitbox,new AABShapeDefine(new Vec2d(0,0), new Vec2d(0,0)), ability, 1);
+		}
+		hitbox.addComponent("COLLISION", curr);
+		_objects.add(hitbox);
+		this.addToSystems(hitbox);
+		return hitbox;
+	}
+	
+	public void dieObject(GameObject go) {
+		if(go.getName().equals("ENEMY")) {
+			_highScore += 50;
+			System.out.println("HIGHSCORE IS NOW: " + _highScore);
+		}
+	}
 
 	/*
 	 * 		enemy.getData().setImageSize(new Vec2d(48,48));
@@ -295,17 +323,6 @@ public class MainGamePlay extends GameWorld {
 		enemy.getData().setImageGameSize(new Vec2d(60,60));
 		enemy.getData().setBox(new AABShape(main.getData().getAIposition(), new Vec2d(60,60)));
 	 */
-
-
-	public Vec2d toGameSpace(double x, double y) {
-		Point2D temp = null;
-		try {
-			temp = _affine.inverseTransform(x, y);
-		} catch (NonInvertibleTransformException e1) {
-			e1.printStackTrace();
-		}
-		return new Vec2d(temp.getX(), temp.getY());
-	}
 
 	public void setCharacter(int character) {
 		_selectedCharacter = character;
@@ -495,21 +512,7 @@ public class MainGamePlay extends GameWorld {
 		}
 		return out;
 	}
-	/*
-	 *
-	public static Image getVultureSprite () {
-		try {
-			return new Image(new File("resources/characters/vulture/vulture.png").toURI().toURL().toExternalForm());
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		else
-		{
-			this.getHighScorePanel().onMouseClicked(e);
-		}
-	}
-	 */
+	
 	@Override
 	public void onTick(long nanosSincePreviousTick) {
 //		System.out.print("Main Game Play \n");
@@ -657,7 +660,11 @@ public class MainGamePlay extends GameWorld {
 	public void onInput() {
 		_inputSys.onInput(_input);
 	}
-
+	
+	public void removeObject(GameObject go) {
+		_garbage.add(go);
+	}
+	
 	protected void purge() {
 		for(int i = 0; i < _garbage.size();i++) {
 			for(int j=0; j<_systems.size(); j++) {
@@ -739,7 +746,6 @@ public class MainGamePlay extends GameWorld {
 
 	public void set_player(GameObject _player) {
 		this._player = _player;
-	}
-
-
+	}	
+	
 }

@@ -5,7 +5,7 @@ import support.debugger.collisions.AABShape;
 import support.debugger.collisions.CircleShape;
 import support.debugger.collisions.PolygonShape;
 
-public abstract class CircleAbilityCollisionComponent extends AbilityCollisionComponent{
+public class CircleAbilityCollisionComponent extends AbilityCollisionComponent{
 
 	protected CircleShape _circle;
 	
@@ -14,9 +14,6 @@ public abstract class CircleAbilityCollisionComponent extends AbilityCollisionCo
 		super(go, shape, ability, numTargets);
 		_circle = shape;
 	}
-
-	@Override
-	public abstract void hit(GameObject go);
 
 	@Override
 	public Vec2d collide(GameObject go) {

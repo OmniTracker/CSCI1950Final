@@ -1,5 +1,6 @@
 package finalgame.engineAdditions;
 
+import finalgame.maingameloop.gameworldmanager.MainGamePlay;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.transform.Affine;
@@ -10,9 +11,9 @@ public class TeleportAbilityComponent extends AnimateAbilityComponent{
 	private boolean _toTeleport;
 	private double _travelDist;
 
-	public TeleportAbilityComponent(GameObject go, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc, Vec2d dim,
+	public TeleportAbilityComponent(GameObject go, MainGamePlay gw, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc, Vec2d dim,
 			Vec2d animation_increment, int numFrames, double active_time, double cooldown, double dist) {
-		super(go, img, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown);
+		super(go,gw, img, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown);
 		//will use active_time as casttime for the teleport and only update location at the end or right before the end
 		//of the active time;
 		_travelDist = dist;
@@ -102,6 +103,12 @@ public class TeleportAbilityComponent extends AnimateAbilityComponent{
 	public Vec2d getHitBoxLoc() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int getHitboxType() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package finalgame.engineAdditions;
 
+import finalgame.maingameloop.gameworldmanager.MainGamePlay;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.transform.Affine;
@@ -14,13 +15,15 @@ public class FireWaveAbilityComponent extends AnimateAbilityComponent{
 	private double _range;
 	private double _rotation;
 	private int _facing;
+	private double _damage;
 	
 	
-	public FireWaveAbilityComponent(GameObject go, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc, Vec2d dim,
+	public FireWaveAbilityComponent(GameObject go, MainGamePlay gw, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc, Vec2d dim,
 			Vec2d animation_increment, int numFrames, double active_time, double cooldown, double range) {
-		super(go, img, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown);
+		super(go,gw, img, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown);
 		_range = range;
 		_offsetDir = new Vec2d(0,-1);
+		_damage = 10;
 	}
 	
 	public void activateAbility() {
@@ -32,6 +35,9 @@ public class FireWaveAbilityComponent extends AnimateAbilityComponent{
 			
 			AnimateGraphicsComponent curr = (AnimateGraphicsComponent)_go.getComponent("ANIMATE");
 			_facing = curr.getDir();//1up, 2left, 3down, 4right
+			
+			this.spawnHitbox();
+			
 			switch (_facing) {
 				case 4:
 					_dir = new Vec2d(0,-1);
@@ -56,6 +62,28 @@ public class FireWaveAbilityComponent extends AnimateAbilityComponent{
 	}
 	
 	@Override
+	public void tick(long nanosSinceLastTick) {
+		if(_active) {
+			_activeCounter += (double)nanosSinceLastTick/1000000000.0;
+			_currFrame = (int)((_activeCounter/_activeTime)*_numFrames);
+			if(_activeCounter > _activeTime) {
+				this.removeHitBox();
+				_currFrame = 0;
+				_active = false;
+				_coolingDown = true;
+				_activeCounter = 0;
+			}
+		}
+		else if(_coolingDown) {
+			_cooldownCounter -= (double)nanosSinceLastTick/1000000000.0;
+			if(_cooldownCounter <= 0) {
+				_cooldownCounter = _cooldown;
+				_coolingDown = false;
+			}
+		}
+	}
+	
+	@Override
 	public void draw(GraphicsContext g, Affine af) {
 		if(_active) {
 			double trajLoc = _activeCounter/_activeTime;
@@ -74,8 +102,10 @@ public class FireWaveAbilityComponent extends AnimateAbilityComponent{
 
 	@Override
 	public void onHit(GameObject hitObject) {
-		// TODO Auto-generated method stub
-		
+		if(hitObject.hasComponent("HEALTH")) {
+			HealthComponent hp = (HealthComponent)hitObject.getComponent("HEALTH");
+			hp.takeDamage(_damage);
+		}		
 	}
 
 	@Override
@@ -107,5 +137,10 @@ public class FireWaveAbilityComponent extends AnimateAbilityComponent{
 		}
 		//.plus(_offsetDir.smult(_dim.x*1.6))
 		return new Vec2d(_loc.x,_loc.y).plus(hitBoxOffset);
+	}
+
+	@Override
+	public int getHitboxType() {
+		return 1;
 	}
 }

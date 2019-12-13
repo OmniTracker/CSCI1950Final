@@ -1,12 +1,16 @@
 package finalgame.engineAdditions;
 
 import support.Vec2d;
+import finalgame.maingameloop.gameworldmanager.MainGamePlay;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.transform.Affine;
 
 public abstract class AnimateAbilityComponent extends Component{
 
+	protected MainGamePlay _gw;
+	protected GameObject _activeHitboxObj;
+	
 	protected Image _img;
 	protected Vec2d _imageLoc;
 	protected Vec2d _imageDim;
@@ -24,12 +28,15 @@ public abstract class AnimateAbilityComponent extends Component{
 	protected boolean _coolingDown;
 	
 	
-	public AnimateAbilityComponent(GameObject go, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc, Vec2d dim, Vec2d animation_increment, int numFrames, double active_time, double cooldown) {
+	public AnimateAbilityComponent(GameObject go, MainGamePlay gw, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc, Vec2d dim, Vec2d animation_increment, int numFrames, double active_time, double cooldown) {
 		super(go);
+		_gw = gw;
 		_img = img;
 		_imageLoc = imgLoc;
 		_imageDim = imgDim;
 		_animationIncrement = animation_increment;
+		
+		_activeHitboxObj = null;
 		
 		//values specific to the ability, location relative to character using ability and dimensions of the drawn image
 		_loc = loc;
@@ -72,7 +79,15 @@ public abstract class AnimateAbilityComponent extends Component{
 			}
 		}
 	}
-
+	
+	protected void spawnHitbox() {
+		_activeHitboxObj = _gw.spawnAbilityHitbox(this);
+	}
+	
+	protected void removeHitBox() {
+		_gw.removeObject(_activeHitboxObj);
+	}
+	
 	@Override
 	public void draw(GraphicsContext g, Affine af) {
 		
@@ -86,5 +101,5 @@ public abstract class AnimateAbilityComponent extends Component{
 	
 	public abstract Vec2d getHitBoxDim();
 	public abstract Vec2d getHitBoxLoc();
-	
+	public abstract int getHitboxType();
 }

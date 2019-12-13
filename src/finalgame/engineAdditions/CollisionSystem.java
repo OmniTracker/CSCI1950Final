@@ -4,12 +4,9 @@ import engine.GameWorld;
 import support.Vec2d;
 
 public class CollisionSystem extends GameSystem{
-
-	private GameWorld _gw;
 	
 	public CollisionSystem(GameWorld gw) {
 		super();
-		_gw = gw;
 	}
 	
 	@Override
@@ -20,7 +17,6 @@ public class CollisionSystem extends GameSystem{
 	}
 	
 	public void onTick(float nanos) {
-		boolean ground = false;
 		for(int i = 0; i < _objects.size();i++) {
 			for(int j = 0; j < _objects.size(); j++) {
 				if(i==j) {
@@ -35,9 +31,15 @@ public class CollisionSystem extends GameSystem{
 	}
 	
 	private void collidePair(GameObject go1, GameObject go2, Vec2d mtv) {
-		TransformComponent m1 = (TransformComponent) go1.getComponent("TRANSFORM");
-		TransformComponent m2 = (TransformComponent) go2.getComponent("TRANSFORM");
-		m1.move(mtv.sdiv(1));
-		//m2.move(mtv.sdiv(-2));
+		if(go1.getName().equals("ENEMY") && go2.getName().equals("PLAYER")) {
+			TransformComponent m1 = (TransformComponent) go1.getComponent("TRANSFORM");
+			TransformComponent m2 = (TransformComponent) go2.getComponent("TRANSFORM");
+			m1.move(mtv.sdiv(2));
+			m2.move(mtv.sdiv(-2));
+		}
+		else if(go1.getName().equals("ABILITY") && go2.getName().equals("ENEMY")) {
+			AbilityCollisionComponent curr = (AbilityCollisionComponent) go1.getComponent("COLLISION");
+			curr.hit(go2);
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package finalgame.engineAdditions;
 
 import support.Vec2d;
+import finalgame.maingameloop.gameworldmanager.MainGamePlay;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.transform.Affine;
@@ -10,14 +11,48 @@ public class ScratchAbilityComponent extends AnimateAbilityComponent{
 	private double _damage;
 	private double _knockback;
 	private int _facing;
+	private boolean _hitSpawned;
 	
-	public ScratchAbilityComponent(GameObject go, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc, Vec2d dim, Vec2d animation_increment,
+	public ScratchAbilityComponent(GameObject go, MainGamePlay gw, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc, Vec2d dim, Vec2d animation_increment,
 			int numFrames, double active_time, double cooldown) {
-		super(go, img, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown);
+		super(go, gw, img, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown);
 		_damage = 40;
 		_knockback = 200;
+		_hitSpawned = false;
 	}
 
+	public void activateAbility() {
+		if(!_coolingDown && !_active) {
+			_active = true;
+		}
+	}
+
+	@Override
+	public void tick(long nanosSinceLastTick) {
+		if(_active) {
+			_activeCounter += (double)nanosSinceLastTick/1000000000.0;
+			_currFrame = (int)((_activeCounter/_activeTime)*_numFrames);
+			if(_currFrame <= 3 && !_hitSpawned) {
+				this.spawnHitbox();
+				_hitSpawned = true;
+			}
+			if(_activeCounter > _activeTime) {
+				_currFrame = 0;
+				_active = false;
+				_coolingDown = true;
+				_activeCounter = 0;
+				this.removeHitBox();
+				_hitSpawned = false;
+			}
+		}
+		else if(_coolingDown) {
+			_cooldownCounter -= (double)nanosSinceLastTick/1000000000.0;
+			if(_cooldownCounter <= 0) {
+				_cooldownCounter = _cooldown;
+				_coolingDown = false;
+			}
+		}
+	}
 	
 	@Override
 	public void draw(GraphicsContext g, Affine af) {
@@ -89,6 +124,12 @@ public class ScratchAbilityComponent extends AnimateAbilityComponent{
 	@Override
 	public Vec2d getHitBoxLoc() {
 		return _loc;
+	}
+
+
+	@Override
+	public int getHitboxType() {
+		return 1;
 	}
 		
 }

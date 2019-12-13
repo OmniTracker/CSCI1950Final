@@ -24,10 +24,14 @@ public class GameObject {
 	public GameObject(GameObject o) {
 		_name = o.getName();
 		_components = new HashMap<String, Component>();
-		TransformComponent other = (TransformComponent) o.getComponent("TRANSFORM");
-		this.addComponent("TRANSFORM", new TransformComponent(this, other.getLoc(), other.getDim(), 1.0));
-		CollisionComponent oth = (CollisionComponent) o.getComponent("COLLISION");
-		this.addComponent("COLLISION", new AABCollisionComponent(this, (AABShapeDefine)oth._shape));
+		if(o.hasComponent("TRANSFORM")) {
+			TransformComponent other = (TransformComponent) o.getComponent("TRANSFORM");
+			this.addComponent("TRANSFORM", new TransformComponent(this, other.getLoc(), other.getDim(), 1.0));			
+		}
+		if(o.hasComponent("COLLISION")) {
+			CollisionComponent oth = (CollisionComponent) o.getComponent("COLLISION");
+			this.addComponent("COLLISION", new AABCollisionComponent(this, (AABShapeDefine)oth._shape));			
+		}
 	}
 	
 	public void addComponent(String tag, Component c) {

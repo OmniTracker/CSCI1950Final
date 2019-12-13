@@ -1,6 +1,7 @@
 package finalgame.engineAdditions;
 
 import support.Vec2d;
+import finalgame.maingameloop.gameworldmanager.MainGamePlay;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.transform.Affine;
@@ -17,15 +18,15 @@ public class MouseAbilityAnimationComponent extends AnimateAbilityComponent{
 	private Vec2d _activeBulletLoc;
 	
 	
-	public MouseAbilityAnimationComponent(GameObject go, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc, Vec2d dim,
+	public MouseAbilityAnimationComponent(GameObject go, MainGamePlay gw,Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc, Vec2d dim,
 			Vec2d animation_increment, int numFrames, double active_time, double cooldown, double range) {
 //		, WizWorld gw  did take gameworld
-		super(go, img, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown);
+		super(go, gw, img, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown);
 		_range = range;
 		_showRange = false;
 		_src = null;
 		_dir = null;
-		_activeBulletLoc = null;
+		_activeBulletLoc = new Vec2d(0,0);
 		_damage = 20;
 		_knockback = 5;
 	}
@@ -36,8 +37,7 @@ public class MouseAbilityAnimationComponent extends AnimateAbilityComponent{
 		if(!_coolingDown && !_active) {
 			_active = true;
 			
-			//_gw.spawnProjectile(this);
-			
+			this.spawnHitbox();
 			TransformComponent currTransform = (TransformComponent) _go.getComponent("TRANSFORM");
 			_src = currTransform.getLoc().plus(currTransform.getDim().smult(0.5));
 			PlayerInputComponent inputComp = (PlayerInputComponent) _go.getComponent("INPUT");
@@ -47,6 +47,27 @@ public class MouseAbilityAnimationComponent extends AnimateAbilityComponent{
 		}
 	}
 
+	@Override
+	public void tick(long nanosSinceLastTick) {
+		if(_active) {
+			_activeCounter += (double)nanosSinceLastTick/1000000000.0;
+			_currFrame = (int)((_activeCounter/_activeTime)*_numFrames);
+			if(_activeCounter > _activeTime) {
+				_currFrame = 0;
+				_active = false;
+				_coolingDown = true;
+				_activeCounter = 0;
+				this.removeHitBox();
+			}
+		}
+		else if(_coolingDown) {
+			_cooldownCounter -= (double)nanosSinceLastTick/1000000000.0;
+			if(_cooldownCounter <= 0) {
+				_cooldownCounter = _cooldown;
+				_coolingDown = false;
+			}
+		}
+	}
 	
 	@Override
 	public void draw(GraphicsContext g, Affine af) {
@@ -82,14 +103,6 @@ public class MouseAbilityAnimationComponent extends AnimateAbilityComponent{
 	
 	public Vec2d getDim() {
 		return _dim;
-	}
-	
-	public void hit() {
-		_currFrame = 0;
-		_active = false;
-		_coolingDown = true;
-		_activeCounter = 0;
-		_activeBulletLoc = new Vec2d(-10,-10);
 	}
 	
 	public double getRange() {
@@ -131,5 +144,11 @@ public class MouseAbilityAnimationComponent extends AnimateAbilityComponent{
 	@Override
 	public Vec2d getHitBoxLoc() {
 		return _activeBulletLoc.plus(_dim.sdiv(2));
+	}
+
+
+	@Override
+	public int getHitboxType() {
+		return 0;
 	}
 }

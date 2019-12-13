@@ -21,7 +21,7 @@ public class CopyWorld extends GameWorld {
 		for (GameObject o: copy.getObjects()) {
 
 			CollisionComponent cc = (CollisionComponent) o.getComponent("COLLISION");
-			if (cc!=null) {
+			if (cc!=null && !o.getName().equals("ABILITY")) {
 				GameObject co = new GameObject(o);
 				this.addToSystems(co);
 				if (o.equals(real)) {

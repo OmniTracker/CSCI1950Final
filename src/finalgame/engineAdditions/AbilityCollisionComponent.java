@@ -13,6 +13,8 @@ public abstract class AbilityCollisionComponent extends CollisionComponent{
 		_numTargets = numTargets;
 	}
 	
-	public abstract void hit(GameObject go);
+	public void hit(GameObject go) {
+		_ability.onHit(go);
+	}
 
 }

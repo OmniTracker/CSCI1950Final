@@ -24,12 +24,6 @@ public class AABAbilityCollisionComponent extends AbilityCollisionComponent{
 	}
 
 	@Override
-	public void hit(GameObject go) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public Vec2d collideWithSphere(CircleShape s1) {
 		return this.colliding(_aab, s1);
 	}

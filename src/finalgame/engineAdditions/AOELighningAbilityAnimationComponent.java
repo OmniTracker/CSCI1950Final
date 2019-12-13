@@ -1,5 +1,6 @@
 package finalgame.engineAdditions;
 
+import finalgame.maingameloop.gameworldmanager.MainGamePlay;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.transform.Affine;
@@ -12,9 +13,9 @@ public class AOELighningAbilityAnimationComponent extends AnimateAbilityComponen
 	private double _damage;
 	private double _shockDistance;
 	
-	public AOELighningAbilityAnimationComponent(GameObject go, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc,
+	public AOELighningAbilityAnimationComponent(GameObject go, MainGamePlay gw, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc,
 			Vec2d dim, Vec2d animation_increment, int numFrames, double active_time, double cooldown) {
-		super(go, img, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown);
+		super(go,gw, img, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown);
 
 		_hp = (PlayerHealthComponent)_go.getComponent("HEALTH");
 		_input = (PlayerInputComponent)_go.getComponent("INPUT");
@@ -28,6 +29,7 @@ public class AOELighningAbilityAnimationComponent extends AnimateAbilityComponen
 			_active = true;
 			_hp.setInvulnerable(true);
 			_input.setMoveMultiplier(1.5);
+			this.spawnHitbox();
 		}
 	}
 	
@@ -50,6 +52,7 @@ public class AOELighningAbilityAnimationComponent extends AnimateAbilityComponen
 			if(_cooldownCounter <= 0) {
 				_cooldownCounter = _cooldown;
 				_coolingDown = false;
+				this.removeHitBox();
 			}
 		}
 	}
@@ -91,6 +94,12 @@ public class AOELighningAbilityAnimationComponent extends AnimateAbilityComponen
 	@Override
 	public Vec2d getHitBoxLoc() {
 		return _loc;
+	}
+
+
+	@Override
+	public int getHitboxType() {
+		return 0;
 	}
 	
 	
