@@ -36,23 +36,32 @@ import engine.utility.Factory;
 
 import finalgame.maingameloop.FinalGameWorld;
 import finalgame.engineAdditions.GameSystem;
+import finalgame.ai.AttackEnemy;
+import finalgame.ai.MoveTo;
 import finalgame.ai.MoveToLeader;
+import finalgame.ai.NotInRange;
 import finalgame.ai.NotNearGroup;
 import finalgame.ai.TestGI;
 import finalgame.engineAdditions.AABCollisionComponent;
 import finalgame.engineAdditions.AIBehaviorComponent;
+import finalgame.engineAdditions.AOELighningAbilityAnimationComponent;
 import finalgame.engineAdditions.AnimateGraphicsComponent;
 import finalgame.engineAdditions.BehaviorSystem;
 import finalgame.engineAdditions.CollisionSystem;
+import finalgame.engineAdditions.FireWaveAbilityComponent;
 import finalgame.engineAdditions.GameObject;
 import finalgame.engineAdditions.GraphicsSystem;
 import finalgame.engineAdditions.HealthComponent;
+import finalgame.engineAdditions.IceBlockAbilityComponent;
+import finalgame.engineAdditions.MeleeMouseAbilityComponent;
 import finalgame.engineAdditions.MouseAbilityAnimationComponent;
 import finalgame.engineAdditions.PlayerHealthComponent;
 import finalgame.engineAdditions.PlayerInputComponent;
 import finalgame.engineAdditions.PlayerInputSystem;
-import finalgame.engineAdditions.ScratchAbilityAnimationComponent;
+import finalgame.engineAdditions.PortalAbilityComponent;
+import finalgame.engineAdditions.ScratchAbilityComponent;
 import finalgame.engineAdditions.TeleportAbilityComponent;
+import finalgame.engineAdditions.TickComponent;
 import finalgame.engineAdditions.TickSystem;
 import finalgame.engineAdditions.TransformComponent;
 
@@ -144,44 +153,54 @@ public class MainGamePlay extends GameWorld {
 		_player.addComponent("TRANSFORM", new TransformComponent(_player, gameSpawnLoc, new Vec2d(40,60), 1.0));
 		_player.addComponent("INPUT", new PlayerInputComponent(_player, _input));
 		_player.addComponent("COLLISION", new AABCollisionComponent(_player, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
-		this.addSpecificCharacterComponents();
+		_player.addComponent("TICK", new TickComponent(_player));
 		_objects.add(_player);
-		this.addToSystems(_player);
 		PlayerInputComponent curr = (PlayerInputComponent)_player.getComponent("INPUT");
 		curr.setFocus(true);
 		this.getKeys();
 		curr.setAbilityKeys(placeHolders);
 	}
 
-	private void addSpecificCharacterComponents() {
-		switch(_selectedCharacter) {
+	private void addSpecificCharacterComponents(int character) {
+		switch(character) {
 			case 0:
 				//LYLA
-//				_player.addComponent("HEALTH", new HealthComponent(_player, 100));
+				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 100, getHealImage()));
+				_player.addComponent("ABILITY_CLICK", new MeleeMouseAbilityComponent(_player, getWeaponImage(), new Vec2d(108,133),
+						new Vec2d(46, 61), new Vec2d(0,0), new Vec2d(60,60), new Vec2d(0, 0),36, 1, 0, 70.));
+				_player.addComponent("ABILITY_Q", new FireWaveAbilityComponent(_player, getFireWaveImage(), new Vec2d(42,0),
+						new Vec2d(591, 892), new Vec2d(0,0), new Vec2d(40,150), new Vec2d(721, 0),60, 2, 0, 700.));
+				
+				_player.addComponent("ABILITY_E", new IceBlockAbilityComponent(_player, getIceBlockImage(), new Vec2d(0,0),
+						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(75,75), new Vec2d(192, 192),25, 5, 4));
+				
+				_player.addComponent("ABILITY_F", new PortalAbilityComponent(_player, getPortalImage(),getPortalImage2(), new Vec2d(290,90),
+						new Vec2d(600, 450), new Vec2d(0,0), new Vec2d(60,45), new Vec2d(0,0),
+						1, 1, 2));
 				break;
 			case 1:
 				//EZRA
-//				_player.addComponent("HEALTH", new HealthComponent(_player, 150));
+//				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 150, getHealImage()));
 				break;
 			case 2:
 				//SAM
-//				_player.addComponent("HEALTH", new HealthComponent(_player, 125));
+//				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 125, getHealImage()));
 				break;
 			case 3:
 				//ARCHY
-				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 200));
+				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 200,getHealImage()));
 				
-				_player.addComponent("ABILITY_Q", new ScratchAbilityAnimationComponent(_player, getElectricScratchImage(), new Vec2d(0,0),
-						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(50,50), new Vec2d(192, 192),
-						11, 1, 2));
+				_player.addComponent("ABILITY_Q", new AOELighningAbilityAnimationComponent(_player, getAOELightningImage(), new Vec2d(0,0),
+						new Vec2d(2000, 2000), new Vec2d(0,0), new Vec2d(200,200), new Vec2d(2000, 2000),
+						3, 2.5, 2));
 				
-				_player.addComponent("ABILITY_E", new ScratchAbilityAnimationComponent(_player, getElectricScratchImage(), new Vec2d(0,0),
+				_player.addComponent("ABILITY_E", new ScratchAbilityComponent(_player, getElectricScratchImage(), new Vec2d(0,0),
 						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(50,50), new Vec2d(192, 192),
 						11, 1, 2));
 
 				_player.addComponent("ABILITY_F", new TeleportAbilityComponent(_player, getTeleportImage(), new Vec2d(0,0),
 						new Vec2d(128, 128), new Vec2d(0,0), new Vec2d(0,0), new Vec2d(128, 128),
-						58, 3, 2, 200));
+						58, 2.5, 2, 200));
 				
 				_player.addComponent("ABILITY_CLICK", new MouseAbilityAnimationComponent(_player, getBulletImage(), new Vec2d(17,7),
 						new Vec2d(68, 68), new Vec2d(0,0), new Vec2d(15,15), new Vec2d(0, 0),1, 1.0, 0, 300.));
@@ -206,8 +225,9 @@ public class MainGamePlay extends GameWorld {
 		TestGI gi = new TestGI();
 		BehaviorTree bt = new BehaviorTree(new Selector(),gi, this, g);
 		bt.addBehavior(0,  new Sequencer());
-		bt.addBehavior(1, new NotNearGroup(g,follow_dist));
-		bt.addBehavior(1, new MoveToLeader(follow_dist));
+		bt.addBehavior(1, new NotInRange(_player,follow_dist));
+		bt.addBehavior(1, new MoveTo(_player, follow_dist));
+		bt.addBehavior(0, new AttackEnemy(_player));
 		gi.setLeader(_player);
 		g.addComponent("BEHAVIOR", new AIBehaviorComponent(g,bt));
 		_objects.add(g);
@@ -221,12 +241,14 @@ public class MainGamePlay extends GameWorld {
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
 		bt = new BehaviorTree(new Selector(),gi, this, g);
 		bt.addBehavior(0,  new Sequencer());
-		bt.addBehavior(1, new NotNearGroup(g,follow_dist));
-		bt.addBehavior(1, new MoveToLeader(follow_dist));
+		bt.addBehavior(1, new NotInRange(_player,follow_dist));
+		bt.addBehavior(1, new MoveTo(_player, follow_dist));
+		bt.addBehavior(0, new AttackEnemy(_player));
 		g.addComponent("BEHAVIOR", new AIBehaviorComponent(g,bt));
 		_objects.add(g);
 		this.addToSystems(g);
 
+		follow_dist = 50000;
 		g = new GameObject("ENEMY");
 		animate = new AnimateGraphicsComponent(g, this.getPlayerImage(_selectedCharacter), new Vec2d(54,0), new Vec2d(34,48), 2, new Vec2d(48,48));
 		g.addComponent("DRAW", animate);
@@ -235,8 +257,9 @@ public class MainGamePlay extends GameWorld {
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
 		bt = new BehaviorTree(new Selector(),gi, this, g);
 		bt.addBehavior(0,  new Sequencer());
-		bt.addBehavior(1, new NotNearGroup(g,follow_dist));
-		bt.addBehavior(1, new MoveToLeader(follow_dist));
+		bt.addBehavior(1, new NotInRange(_player,follow_dist));
+		bt.addBehavior(1, new MoveTo(_player, follow_dist));
+		bt.addBehavior(0, new AttackEnemy(_player));
 		g.addComponent("BEHAVIOR", new AIBehaviorComponent(g,bt));
 		_objects.add(g);
 		this.addToSystems(g);
@@ -249,9 +272,16 @@ public class MainGamePlay extends GameWorld {
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
 		bt = new BehaviorTree(new Selector(),gi, this, g);
 		bt.addBehavior(0,  new Sequencer());
-		bt.addBehavior(1, new NotNearGroup(g,follow_dist));
-		bt.addBehavior(1, new MoveToLeader(follow_dist));
+		bt.addBehavior(1, new NotInRange(_player,follow_dist));
+		bt.addBehavior(1, new MoveTo(_player, follow_dist));
+		bt.addBehavior(0, new AttackEnemy(_player));
 		g.addComponent("BEHAVIOR", new AIBehaviorComponent(g,bt));
+		_objects.add(g);
+		this.addToSystems(g);
+		
+		g = new GameObject("END");
+		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(100000,400), new Vec2d(40,60), 1.0));
+		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
 		_objects.add(g);
 		this.addToSystems(g);
 	}
@@ -278,8 +308,11 @@ public class MainGamePlay extends GameWorld {
 	}
 
 	public void setCharacter(int character) {
+		_selectedCharacter = character;
 		AnimateGraphicsComponent temp = (AnimateGraphicsComponent)_player.getComponent("ANIMATE");
 		temp.setCharacter(this.getPlayerImage(character));
+		this.addSpecificCharacterComponents(character);
+		this.addToSystems(_player);
 	}
 
 	public Image getPlayerImage(int character) {
@@ -362,6 +395,26 @@ public class MainGamePlay extends GameWorld {
 		}
 		return out;
 	}
+	public static Image getHealImage () {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/RandomAbilities/heal.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
+	public static Image getAOELightningImage() {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/ArchyAbilities/AOELightning.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
 	public static Image getElectricScratchImage() {
 		Image out = null;
 		try{
@@ -382,6 +435,16 @@ public class MainGamePlay extends GameWorld {
 		}
 		return out;
 	}
+	public static Image getWeaponImage() {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/Weapons/randomMeleeWeapons.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
 	public static Image getTeleportImage() {
 		Image out = null;
 		try{
@@ -392,7 +455,46 @@ public class MainGamePlay extends GameWorld {
 		}
 		return out;
 	}
-
+	public static Image getPortalImage() {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/LylaAbilities/portalSite.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}	
+	public static Image getPortalImage2() {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/LylaAbilities/portalCast.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
+	public static Image getFireWaveImage() {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/LylaAbilities/fireblast.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
+	public static Image getIceBlockImage() {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/LylaAbilities/iceBlock.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
 	/*
 	 *
 	public static Image getVultureSprite () {

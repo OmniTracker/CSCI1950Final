@@ -85,5 +85,23 @@ public class TeleportAbilityComponent extends AnimateAbilityComponent{
 					_imageDim.x, _imageDim.y,charLoc.x-10,charLoc.y-10,charDim.x+20,charDim.y+20);
 		}
 	}
+
+	@Override
+	public void onHit(GameObject hitObject) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Vec2d getHitBoxDim() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Vec2d getHitBoxLoc() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

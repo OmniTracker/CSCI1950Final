@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.transform.Affine;
 
-public class AnimateAbilityComponent extends Component{
+public abstract class AnimateAbilityComponent extends Component{
 
 	protected Image _img;
 	protected Vec2d _imageLoc;
@@ -75,13 +75,16 @@ public class AnimateAbilityComponent extends Component{
 
 	@Override
 	public void draw(GraphicsContext g, Affine af) {
-		if(_active) {
-			
-		}		
+		
 	}
 	
 	public double getCurrCooldown() {
 		return _cooldownCounter;
 	}
-
+	
+	public abstract void onHit(GameObject hitObject);
+	
+	public abstract Vec2d getHitBoxDim();
+	public abstract Vec2d getHitBoxLoc();
+	
 }

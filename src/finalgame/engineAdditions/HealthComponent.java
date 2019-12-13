@@ -7,9 +7,9 @@ import javafx.scene.transform.Affine;
 
 public class HealthComponent extends Component{
 
-	private double _currentHealth;
-	private double _maxHealth;
-	private boolean _showHealthBar;
+	protected double _currentHealth;
+	protected double _maxHealth;
+	protected boolean _showHealthBar;
 	
 	public HealthComponent(GameObject go, double hp) {
 		super(go);

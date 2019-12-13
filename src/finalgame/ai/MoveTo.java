@@ -25,8 +25,8 @@ public class MoveTo extends BTAction {
 	
 	@Override
 	public Status update(float seconds) {
-		
 		double speed = 10;
+		
 		_actions = new ArrayList<Action>();
 		_actions.add(new Move(speed,new Vec2d(0,1)));
 		_actions.add(new Move(speed,new Vec2d(0,-1)));

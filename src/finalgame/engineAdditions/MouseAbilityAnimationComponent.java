@@ -9,6 +9,8 @@ public class MouseAbilityAnimationComponent extends AnimateAbilityComponent{
 	
 	protected double _range;
 	protected boolean _showRange;
+	private double _damage;
+	private double _knockback;
 	
 	protected Vec2d _src;
 	protected Vec2d _dir;
@@ -24,6 +26,8 @@ public class MouseAbilityAnimationComponent extends AnimateAbilityComponent{
 		_src = null;
 		_dir = null;
 		_activeBulletLoc = null;
+		_damage = 20;
+		_knockback = 5;
 	}
 	
 	
@@ -80,19 +84,6 @@ public class MouseAbilityAnimationComponent extends AnimateAbilityComponent{
 		return _dim;
 	}
 	
-	public void setDim(Vec2d dim) {
-		_dim = dim;
-	}
-	
-	public Vec2d getBulletLoc() {
-		if (_active) {
-			return _activeBulletLoc.plus(_dim.sdiv(2));
-		}
-		else {
-			return new Vec2d(-10,-10);
-		}
-	}
-	
 	public void hit() {
 		_currFrame = 0;
 		_active = false;
@@ -115,5 +106,30 @@ public class MouseAbilityAnimationComponent extends AnimateAbilityComponent{
 	
 	public void setTravelTime(double time) {
 		_activeTime = time;
+	}
+
+
+	@Override
+	public void onHit(GameObject hitObject) {
+		if(hitObject.hasComponent("HEALTH")) {
+			HealthComponent hp = (HealthComponent)hitObject.getComponent("HEALTH");
+			hp.takeDamage(_damage);
+		}
+		if(hitObject.hasComponent("TRANSFORM")) {
+			TransformComponent tc = (TransformComponent)hitObject.getComponent("TRANSFORM");
+			tc.move(_dir.smult(_knockback));
+		}
+	}
+
+
+	@Override
+	public Vec2d getHitBoxDim() {
+		return _dim.sdiv(2);
+	}	
+
+
+	@Override
+	public Vec2d getHitBoxLoc() {
+		return _activeBulletLoc.plus(_dim.sdiv(2));
 	}
 }
