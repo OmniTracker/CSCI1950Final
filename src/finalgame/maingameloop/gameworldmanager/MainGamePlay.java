@@ -313,6 +313,21 @@ public class MainGamePlay extends GameWorld {
 		this.addToSystems(hitbox);
 		return hitbox;
 	}
+	
+	public GameObject spawnEnemyAbilityHitbox(AnimateAbilityComponent ability) {
+		GameObject hitbox = new GameObject("ENEMYABILITY");
+		AbilityCollisionComponent curr = null;
+		if(ability.getHitboxType() == 0) {
+			curr = new CircleAbilityCollisionComponent(hitbox,new CircleShapeDefine(new Vec2d(0,0), 1),ability,1);
+		}
+		else if (ability.getHitboxType() == 1) {
+			curr = new AABAbilityCollisionComponent(hitbox,new AABShapeDefine(new Vec2d(0,0), new Vec2d(0,0)), ability, 1);
+		}
+		hitbox.addComponent("COLLISION", curr);
+		_objects.add(hitbox);
+		this.addToSystems(hitbox);
+		return hitbox;
+	}
 
 	public void dieObject(GameObject go) {
 		if(go.getName().equals("ENEMY")) {
