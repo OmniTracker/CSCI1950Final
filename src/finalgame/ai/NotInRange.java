@@ -9,11 +9,13 @@ import finalgame.engineAdditions.TransformComponent;
 public class NotInRange implements Condition {
 
 	private BehaviorTree tree;
-	private double range;
+	private double upper_range;
+	private double lower_range;
 	private GameObject target;
 	
-	public NotInRange(GameObject target, double range) {
-		this.range = range;
+	public NotInRange(GameObject target, double upper_range, double lower_range) {
+		this.upper_range = upper_range;
+		this.lower_range = lower_range;
 		this.target = target;
 	}
 	
@@ -22,11 +24,11 @@ public class NotInRange implements Condition {
 		TransformComponent ttc = (TransformComponent) target.getComponent("TRANSFORM");
 		TransformComponent tc = (TransformComponent) tree.getObject().getComponent("TRANSFORM");
 		
-		if (tc.getLoc().dist2(ttc.getLoc())>=range) {
-//			System.out.println(1);
+		if (tc.getLoc().dist2(ttc.getLoc())>=upper_range || tc.getLoc().dist2(ttc.getLoc())<=lower_range) {
+			System.out.println(1);
 			return Status.SUCCESS;
 		} else {
-//			System.out.println(10);
+			System.out.println(0);
 			return Status.FAILURE;
 		}
 	}
@@ -44,6 +46,10 @@ public class NotInRange implements Condition {
 	@Override
 	public BehaviorTree getTree() {
 		return tree;
+	}
+	
+	public void setTarget(GameObject obj) {
+		target = obj;
 	}
 
 

@@ -18,7 +18,8 @@ public class DistanceHeuristic extends Heuristic {
 		DistanceState goal = (DistanceState) p.getGoalState();
 		//Vec2d dist = goal.getLoc().minus(curr.getLoc());
 		//double cost = (Math.abs(dist.x)+Math.abs(dist.y));
-		double cost = curr.getLoc().dist2(goal.getLoc());
+		double distance = curr.getLoc().dist2(goal.getLoc());
+		double cost = Math.min(Math.abs(distance-p.dist), Math.abs(distance-p.lower_dist));
 		curr.setCost(cost);
 		return cost;
 	}
