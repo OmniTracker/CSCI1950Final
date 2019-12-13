@@ -14,8 +14,8 @@ public class ProjectileCollisionComponent extends CircleCollisionComponent{
 	
 	@Override 
 	public Vec2d collide(GameObject o) {
-		_circle.setRadius(_ability.getDim().x/2);
-		_circle.setCenter(_ability.getBulletLoc());
+		_circle.setRadius(_ability.getHitBoxDim().x);
+		_circle.setCenter(_ability.getHitBoxLoc());
 		CollisionComponent other = (CollisionComponent)o.getComponent("COLLISION");
 		Vec2d temp = other.collideWithSphere(_circle);
 		return other.collideWithSphere(_circle);

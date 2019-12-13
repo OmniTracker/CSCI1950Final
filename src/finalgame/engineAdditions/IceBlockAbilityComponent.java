@@ -82,5 +82,17 @@ public class IceBlockAbilityComponent extends AnimateAbilityComponent{
 	public void onHit(GameObject hitObject) {
 		//No onhit Effects	
 	}
+
+	@Override
+	public Vec2d getHitBoxDim() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Vec2d getHitBoxLoc() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
