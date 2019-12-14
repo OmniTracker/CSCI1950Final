@@ -26,8 +26,8 @@ public class SoundSystem extends GameSystem{
 	File _soundFile;
 	public SoundSystem(FinalGameWorld finalGameWorld) {
 		Runnable runSound = new Runnable() {
-		    public void run() {
-			    Sequencer sequencer = null;
+			public void run() {
+				Sequencer sequencer = null;
 				try {
 					Sequence sequence = null;
 					try {
@@ -38,7 +38,7 @@ public class SoundSystem extends GameSystem{
 					}
 					sequencer = MidiSystem.getSequencer();
 					sequencer.open();
-				    try {
+					try {
 						sequencer.setSequence(sequence);
 					} catch (InvalidMidiDataException e) {
 						// TODO Auto-generated catch block
@@ -49,9 +49,9 @@ public class SoundSystem extends GameSystem{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			    // Start playing
-			  sequencer.start();
-		    }
+				// Start playing
+				sequencer.start();
+			}
 		};
 		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 		executor.scheduleAtFixedRate(runSound, 0, 50, TimeUnit.SECONDS);

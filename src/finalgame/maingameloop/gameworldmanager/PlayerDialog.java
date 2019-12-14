@@ -2,7 +2,6 @@ package finalgame.maingameloop.gameworldmanager;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -11,13 +10,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import engine.Application;
 import engine.GameWorld;
 import engine.ui.Button;
 import engine.ui.EngineFonts;
 import finalgame.maingameloop.FinalGameWorld;
 import finalgame.maingameloop.FinalGameWorld.VisibleGameWorld;
-import finalgame.utils.DialogDelegate;
 
 public class PlayerDialog extends GameWorld {
 	private Button _nextButton;
@@ -26,15 +25,13 @@ public class PlayerDialog extends GameWorld {
 	private HashMap<String,HashMap<String, Image>> _characterImages; 
 	private String _selectedPlayersName = "";
 	private HashMap<Integer,String> _characterSelector;
-
 	private Image _brownSpecial = null;
 	private Image _backRandom = null;
 	private Image _mainDude = null;
 	private Image _fuckBoy = null;
-
+	private Integer _dialogSequence = 0;
 	private int _selectedCharacter = -1;
 	private double transitionAlpha = 0.5;
-
 	public PlayerDialog(Application app, FinalGameWorld finalGameWorld) {
 		super(app);
 		Button nextButton = new Button(); 
@@ -43,7 +40,6 @@ public class PlayerDialog extends GameWorld {
 		nextButton.setColor(Color.WHITE);
 		nextButton.setFontName(EngineFonts.getAlc());
 		this.setNextButton(nextButton);
-
 		Button skipButton = new Button(); 
 		skipButton.setText("Skip Dialog");
 		skipButton.setSize( new Vec2d(200,30));
@@ -51,7 +47,6 @@ public class PlayerDialog extends GameWorld {
 		skipButton.setFontName(EngineFonts.getAlc());
 		this.setSkipButton( skipButton);
 		this.setGameWorld(finalGameWorld);
-
 		this.setCharacterSelector( new HashMap<Integer,String>());
 	}
 	public void onDraw(GraphicsContext g) { 
@@ -83,16 +78,76 @@ public class PlayerDialog extends GameWorld {
 		this.drawDialogTransitionButtons(g);
 	}
 	private void drawDialogViews(GraphicsContext g) {
+		Vec2d origin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin(); 
+		Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize();
+		String output = "";
+		String output2 = "";
+		Vec2d boxOrigin; 
+		Vec2d fuckBoy =  new Vec2d(origin.x + (size.x * 0.25), origin.y + (size.y * 0.4)); 
+		Vec2d mainBoy =  new Vec2d(origin.x + (size.x * 0.55), origin.y + (size.y * 0.4)); 
+		switch(_dialogSequence) 
+		{
+		case 0:
+			
+			boxOrigin = fuckBoy; 
+			
+			output = "And I was like"; 
+
+			break;
+		case 1:
+
+			
+			boxOrigin = mainBoy; 
+			
+			output = "baby, baby, baby oh"; 
+
+			
+			break;
+		case 2:
+
+			boxOrigin = fuckBoy; 
+			
+			output = "Like baby, baby, baby no"; 
+
+			
+			break;
+		case 3:
+
+			boxOrigin = mainBoy; 
+			
+			output = "I thought you'd always"; 
+
+
+			
+			break;
+		case 4:
+
+			boxOrigin = fuckBoy; 
+
+			output = "be mine (mine)"; 
+
+			
+			break;
+		default:
+			return;
+		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
+		g.setGlobalAlpha(0.8);
+		this.labelHelper(g, boxOrigin, output,output2);
+		g.setGlobalAlpha(1);
 	}
+	private void labelHelper(GraphicsContext g,Vec2d roundOrigin, String text, String text2) {
+		g.setFill(Color.GREEN);
+		g.fillRoundRect(roundOrigin.x , roundOrigin.y, 250, 150, 50 , 50);
+		g.setFill(Color.WHITE);
+		g.fillRoundRect(roundOrigin.x + 5, roundOrigin.y + 5, 250 - 10, 150 - 10, 50, 50);
+		g.setFill(Color.BLACK);		
+		
+		g.setFont(Font.font("Ethnocentric", 10 ));
+		
+		g.fillText(text, roundOrigin.x + 90, roundOrigin.y + 40);
+	}
+
 	private void drawMainCharacterAndFuckBoy(GraphicsContext g) {
 		Vec2d origin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin(); 
 		Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize();
@@ -130,12 +185,16 @@ public class PlayerDialog extends GameWorld {
 		}		
 		if (transitionAlpha >= 1.0) {	
 			_selectedCharacter = -1;
+			_dialogSequence = 0;
 			this.getGameWorld().changeCurrentScreen(VisibleGameWorld.MAINGAMEPLAY);
 		}
 	}
 	public void onMouseClicked(MouseEvent e) {
 		if (this.getNextButton().clicked(e)) {
-			System.out.print("NEXT \n");
+			_dialogSequence++;
+			if (_dialogSequence == 5) {
+				transitionAlpha += 0.1; 
+			}
 		}
 		if (this.getSkipButton().clicked(e)) {
 			transitionAlpha += 0.1; 

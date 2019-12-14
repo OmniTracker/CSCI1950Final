@@ -189,7 +189,6 @@ public class MainGamePlay extends GameWorld {
 				_player.addComponent("ABILITY_F", new TeleportAbilityComponent(_player,this, getTeleportImage(), new Vec2d(0,0),
 						new Vec2d(128, 128), new Vec2d(0,0), new Vec2d(0,0), new Vec2d(128, 128),
 						58, 2.5, 2, 200));
-
 				break;
 			case 1:
 				//EZRA
