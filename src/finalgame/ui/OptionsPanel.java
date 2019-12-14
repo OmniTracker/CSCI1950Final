@@ -455,4 +455,8 @@ public class OptionsPanel  extends Panel implements EventHandler{
 	public void onShutdown() {}
 	public void onStartup() {}
 	public void onMousePressed(MouseEvent e) {}
+	//public boolean shouldUpdateHighScores(int get_highScore) {
+		// TODO Auto-generated method stub
+		//return false;
+	//}
 }
