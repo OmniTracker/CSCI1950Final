@@ -1,7 +1,10 @@
 package finalgame.maingameloop.gameworldmanager;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import support.Vec2d;
 import javafx.scene.canvas.GraphicsContext;
@@ -24,9 +27,14 @@ public class PlayerDialog extends GameWorld {
 	private ArrayList<DialogDelegate> _dialogFrame; 
 	private Image _selectedPlayerImage = null;
 	private String _selectedPlayersName = "";
+	private HashMap<Integer,String> _characterSelector;
 	private Button _skipDialog; 
-	
-	private double transitionAlpha = 0.0;
+
+	private Image _brownSpecial = null;
+	private Image _backRandom = null;
+
+	private int _selectedCharacter = -1;
+	private double transitionAlpha = 0.5;
 
 	public PlayerDialog(Application app, FinalGameWorld finalGameWorld) {
 		super(app);
@@ -45,51 +53,108 @@ public class PlayerDialog extends GameWorld {
 		skipButton.setFontName(EngineFonts.getAlc());
 		this.setSkipButton( skipButton);
 		this.setGameWorld(finalGameWorld);
+
+		this.setCharacterSelector( new HashMap<Integer,String>() );
+
+
 	}
+
+
 	public void onDraw(GraphicsContext g) { 
-		
-		if ( transitionAlpha > 0.0) {
-			transitionAlpha += 0.007; 
-		}		
-		if (transitionAlpha >= 1.2) {	
-		
-			
-			this.getGameWorld().changeCurrentScreen(VisibleGameWorld.MAINGAMEPLAY);
+		if (_selectedCharacter == -1) {
+			_selectedCharacter = this.getGameWorld().getCharacterSelection();			
 		}
-		
-		
+		if (_brownSpecial == null) {
+			return;
+		}
+		if (_characterSelector.size() == 0) {
+			return;
+		}
+		if (_backRandom == null) {
+			return;
+		}
+
+
+		this.incrementTransition();
+
+
+
+
+
+
+
+
 		if (this.getDialogFrame().size() != 0)
 		{
 			this.getDialogFrame().get(0).onDraw(g);			
 		}
+
+
+		/*
 		g.setFill(Color.DARKGREEN);
 		g.fillRect(this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin().x,
 				this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin().y, 
 				this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize().x, 
 				this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize().y);
-		double xOrigin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin().x + 
-				(this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize().x * 0.8);
-		double yOrigin1 = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin().y + 
-				(this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize().y * 0.8); 
-		double yOrigin2 = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin().y + 
-				(this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize().y * 0.85); 
-		this.getNextButton().setOrigin(new Vec2d(xOrigin,yOrigin1));
-		this.getNextButton().drawRounded(g);
-		this.getSkipButton().setOrigin(new Vec2d(xOrigin,yOrigin2));
-		this.getSkipButton().drawRounded(g);
-		
-		
+		 */ 
 
-		
+
+
+		this.drawBackground(g);
 		
 		Vec2d origin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin(); 
 		Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize(); 
 		g.setGlobalAlpha(transitionAlpha);
 		g.setFill(Color.BLACK);
 		g.fillRect(origin.x,origin.y,size.x,size.y);
+		this.drawBrownSpecial(g);	
 		g.setGlobalAlpha(1);
+
+
+		this.drawDialogTransitionButtons(g);
+
 	}
-	
+
+	private void drawBrownSpecial(GraphicsContext g) {
+		Vec2d origin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin(); 
+		Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize(); 
+		Vec2d center = origin.plus(size.x/2, size.y/2);
+		double scale = 2.5;
+		g.drawImage( _brownSpecial, center.x - ( 130 * scale) , center.y - ( 100 * scale ) , 260 * scale , 200 * scale);
+	}
+
+	private void drawBackground (GraphicsContext g) {
+
+		Vec2d origin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin(); 
+		Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize(); 
+
+		g.drawImage(_backRandom,origin.x, origin.y, size.x, size.y);
+	}
+
+
+	private void drawDialogTransitionButtons(GraphicsContext g) {
+		double xOrigin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin().x + 
+				(this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize().x * 0.8);
+		double yOrigin1 = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin().y + 
+				(this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize().y * 0.8); 
+		double yOrigin2 = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin().y + 
+				(this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize().y * 0.85); 	
+		this.getNextButton().setOrigin(new Vec2d(xOrigin,yOrigin1));
+		this.getNextButton().drawRounded(g);
+		this.getSkipButton().setOrigin(new Vec2d(xOrigin,yOrigin2));
+		this.getSkipButton().drawRounded(g);
+	}
+
+	private void incrementTransition() {
+		if ( transitionAlpha > 0.5) {
+			transitionAlpha += 0.001; 
+		}		
+		
+		if (transitionAlpha >= 1.0) {	
+			_selectedCharacter = -1;
+			this.getGameWorld().changeCurrentScreen(VisibleGameWorld.MAINGAMEPLAY);
+		}
+	}
 	public void onTick(long nanosSincePreviousTick) {
 
 
@@ -100,18 +165,12 @@ public class PlayerDialog extends GameWorld {
 		{
 			System.out.print("NEXT \n");
 		}
-		
+
 		if (this.getSkipButton().clicked(e)) 
 		{
-			
-			transitionAlpha += .001; 
-			
-			
-			System.out.print("SKIP \n");
-			
+			transitionAlpha += 0.1; 
 		}
 	}
-
 	public void setCurrentPlayer () {
 
 
@@ -156,98 +215,51 @@ public class PlayerDialog extends GameWorld {
 
 		this.getDialogFrame().add(sequenceDelegate);
 	}
-	private void sequence2 (Image player1, Image player2) {
-		DialogDelegate sequenceDelegate = new DialogDelegate(this.getApplication(),2,null, null); 
-
-		// Player one Line one
-
-
-		// Player two Line one
-
-
-		// Player one Line two
-
-
-		// Player two Line two
-
-		this.getDialogFrame().add(sequenceDelegate);
-	}
-	private void sequence3 (Image player1, Image player2) {
-		DialogDelegate sequenceDelegate = new DialogDelegate(this.getApplication(),2,null, null); 		
-
-
-		// Player one Line one
-
-
-		// Player two Line one
-
-
-		// Player one Line two
-
-
-		// Player two Line two
-
-
-
-		this.getDialogFrame().add(sequenceDelegate);
-	}
-	private void sequence4 (Image player1, Image player2) {
-		DialogDelegate sequenceDelegate = new DialogDelegate(this.getApplication(),2,null, null); 	
-
-		// Player one Line one
-
-
-		// Player two Line one
-
-
-		// Player one Line two
-
-
-		// Player two Line two
-
-
-		this.getDialogFrame().add(sequenceDelegate);
-	}
-	private void sequence5 (Image player1, Image player2) {
-		DialogDelegate sequenceDelegate = new DialogDelegate(this.getApplication(),1,null, null); 		
-
-		// Line one
-
-		// Line two
-
-		// Line there
-
-		this.getDialogFrame().add(sequenceDelegate);
-	}
 	private ArrayList<DialogDelegate> getDialogFrame() {
 		return _dialogFrame;
 	}
 	private void setDialogFrame(ArrayList<DialogDelegate> _dialogFrame) {
 		this._dialogFrame = _dialogFrame;
 	}
-	private Image getSelectedPlayerImage() {
-		return _selectedPlayerImage;
-	}
-	private void setSelectedPlayerImage(Image _selectedPlayerImage) {
-		this._selectedPlayerImage = _selectedPlayerImage;
-	}
-	private String getSelectedPlayersName() {
-		return _selectedPlayersName;
-	}
-	private void setSelectedPlayersName(String _selectedPlayersName) {
-		this._selectedPlayersName = _selectedPlayersName;
-	}
-	private Button getSkipDialog() {
-		return _skipDialog;
-	}
-	private void setSkipDialog(Button _skipDialog) {
-		this._skipDialog = _skipDialog;
-	}
 	private  HashMap<String,HashMap<String, Image>> getCharacterImages() {
 		return _characterImages;
 	}
+
 	public void setCharacterImages(HashMap<String,HashMap<String, Image>> _characterImages) {
 		this._characterImages = _characterImages;
+		Integer index = 0;
+		for (Entry<String, HashMap<String, Image>> mapElement : this.getCharacterImages().entrySet()) 
+		{
+			String key = (String) mapElement.getKey();
+
+			if (!key.contains("enemy")) 
+			{
+				this.getCharacterSelector().put(index, key);
+				index++;
+			}
+		}
+		_brownSpecial = getBrownLogo (); 
+		_backRandom = getRand (); 
+	}
+	public static Image getBrownLogo () {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/backgrounds/BrownFinal.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
+	public static Image getRand () {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/terrain/newBack.jpg").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
 	}
 	private Button getNextButton() {
 		return _nextButton;
@@ -266,5 +278,11 @@ public class PlayerDialog extends GameWorld {
 	}
 	private void setGameWorld(FinalGameWorld _gameWorld) {
 		this._gameWorld = _gameWorld;
+	}
+	private HashMap<Integer,String> getCharacterSelector() {
+		return _characterSelector;
+	}
+	private void setCharacterSelector(HashMap<Integer,String> _characterSelector) {
+		this._characterSelector = _characterSelector;
 	}
 }

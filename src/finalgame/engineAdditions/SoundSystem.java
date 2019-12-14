@@ -25,7 +25,7 @@ public class SoundSystem extends GameSystem{
 	static String _filePathMusic; 
 	File _soundFile;
 	public SoundSystem(FinalGameWorld finalGameWorld) {
-		Runnable helloRunnable = new Runnable() {
+		Runnable runSound = new Runnable() {
 		    public void run() {
 			    Sequencer sequencer = null;
 				try {
@@ -50,21 +50,18 @@ public class SoundSystem extends GameSystem{
 					e.printStackTrace();
 				}
 			    // Start playing
-			    sequencer.start();
+			   // sequencer.start();
 		    }
 		};
-
 		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-		executor.scheduleAtFixedRate(helloRunnable, 0, 3, TimeUnit.MINUTES);
+		executor.scheduleAtFixedRate(runSound, 0, 3, TimeUnit.MINUTES);
 	}
-
 	@Override
 	public void addObject(GameObject go) {
 		if(go.hasComponent("SOUND")) {
 			this.addObject(go);
 		}
 	}
-
 	public void loadFiles() {
 		_soundFile = new File("resources/sounds/test.wav");
 	}

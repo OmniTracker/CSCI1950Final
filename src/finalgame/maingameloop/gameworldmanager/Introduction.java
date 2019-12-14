@@ -78,8 +78,6 @@ public class Introduction extends GameWorld {
 			this.getFinalGameWorld().getVisibleGameWorldEnum();
 			_transitionAlpha = 0;
 			alphaIncrement = 0.0f; 
-			//this.getFinalGameWorld().changeCurrentScreen(VisibleGameWorld.MAINGAMEPLAY);
-			//Temporary change of game flow
 			this.getFinalGameWorld().changeCurrentScreen(VisibleGameWorld.PLAYERSELECTION);
 		}
 	}
