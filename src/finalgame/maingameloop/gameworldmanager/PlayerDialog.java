@@ -32,6 +32,8 @@ public class PlayerDialog extends GameWorld {
 
 	private Image _brownSpecial = null;
 	private Image _backRandom = null;
+	private Image _mainDude = null;
+	private Image _fuckBoy = null;
 
 	private int _selectedCharacter = -1;
 	private double transitionAlpha = 0.5;
@@ -54,15 +56,14 @@ public class PlayerDialog extends GameWorld {
 		this.setSkipButton( skipButton);
 		this.setGameWorld(finalGameWorld);
 
-		this.setCharacterSelector( new HashMap<Integer,String>() );
-
-
+		this.setCharacterSelector( new HashMap<Integer,String>());
 	}
 
 
 	public void onDraw(GraphicsContext g) { 
 		if (_selectedCharacter == -1) {
-			_selectedCharacter = this.getGameWorld().getCharacterSelection();			
+			_selectedCharacter = this.getGameWorld().getCharacterSelection();	
+			_mainDude = this.getCharacterImages().get(this.getCharacterSelector().get(_selectedCharacter)).get("big");
 		}
 		if (_brownSpecial == null) {
 			return;
@@ -74,34 +75,14 @@ public class PlayerDialog extends GameWorld {
 			return;
 		}
 
-
 		this.incrementTransition();
-
-
-
-
-
-
-
 
 		if (this.getDialogFrame().size() != 0)
 		{
 			this.getDialogFrame().get(0).onDraw(g);			
 		}
 
-
-		/*
-		g.setFill(Color.DARKGREEN);
-		g.fillRect(this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin().x,
-				this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin().y, 
-				this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize().x, 
-				this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize().y);
-		 */ 
-
-
-
 		this.drawBackground(g);
-		
 		Vec2d origin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin(); 
 		Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize(); 
 		g.setGlobalAlpha(transitionAlpha);
@@ -109,9 +90,18 @@ public class PlayerDialog extends GameWorld {
 		g.fillRect(origin.x,origin.y,size.x,size.y);
 		this.drawBrownSpecial(g);	
 		g.setGlobalAlpha(1);
-
-
+		this.drawMainCharacterAndFuckBoy(g);
 		this.drawDialogTransitionButtons(g);
+	}
+
+	private void drawMainCharacterAndFuckBoy(GraphicsContext g) {
+		Vec2d origin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin(); 
+		Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize();
+		Vec2d mainCharOrigin = origin.plus((size.x * 1.9 / 3), 0);
+		
+		g.drawImage(_mainDude, mainCharOrigin.x, mainCharOrigin.y +  (size.y * 0.05), (size.x * 1 / 3), size.y * 0.95);
+		
+		g.drawImage(_fuckBoy, origin.x + (size.x * 0.05), origin.y +  (size.y * 0.1), (size.x * 1.1 / 3), size.y * 0.9);
 
 	}
 
@@ -122,16 +112,11 @@ public class PlayerDialog extends GameWorld {
 		double scale = 2.5;
 		g.drawImage( _brownSpecial, center.x - ( 130 * scale) , center.y - ( 100 * scale ) , 260 * scale , 200 * scale);
 	}
-
 	private void drawBackground (GraphicsContext g) {
-
 		Vec2d origin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin(); 
 		Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize(); 
-
 		g.drawImage(_backRandom,origin.x, origin.y, size.x, size.y);
 	}
-
-
 	private void drawDialogTransitionButtons(GraphicsContext g) {
 		double xOrigin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin().x + 
 				(this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize().x * 0.8);
@@ -144,76 +129,22 @@ public class PlayerDialog extends GameWorld {
 		this.getSkipButton().setOrigin(new Vec2d(xOrigin,yOrigin2));
 		this.getSkipButton().drawRounded(g);
 	}
-
 	private void incrementTransition() {
 		if ( transitionAlpha > 0.5) {
-			transitionAlpha += 0.001; 
+			transitionAlpha += 0.01; 
 		}		
-		
 		if (transitionAlpha >= 1.0) {	
 			_selectedCharacter = -1;
 			this.getGameWorld().changeCurrentScreen(VisibleGameWorld.MAINGAMEPLAY);
 		}
 	}
-	public void onTick(long nanosSincePreviousTick) {
-
-
-	}
-
 	public void onMouseClicked(MouseEvent e) {
-		if (this.getNextButton().clicked(e)) 
-		{
+		if (this.getNextButton().clicked(e)) {
 			System.out.print("NEXT \n");
 		}
-
-		if (this.getSkipButton().clicked(e)) 
-		{
+		if (this.getSkipButton().clicked(e)) {
 			transitionAlpha += 0.1; 
 		}
-	}
-	public void setCurrentPlayer () {
-
-
-	}
-
-	public void initDialogSequence () {	
-		// this.sequence0();
-		// This will be the sequence where your selected character will have there 
-		// custom dialog. All the dialog up to this point is the same given any selected 
-		// player.
-		// this.sequence1();
-		// this.sequence2();
-		// this.sequence3();
-		// this.sequence4();
-		// This will be the sequence where your selected character will have there 
-		// custom dialog. All the dialog up to this point is the same given any selected 
-		// player.
-		// this.sequence5();
-	}
-
-	private void sequence0 (Image player1, Image player2) {
-		DialogDelegate sequenceDelegate = new DialogDelegate(this.getApplication(),0,null, null); 
-
-		// Line one
-
-		// Line two
-
-		// Line there
-
-
-		this.getDialogFrame().add(sequenceDelegate);
-	}
-
-	private void sequence1 (Image player1, Image player2) {
-		DialogDelegate sequenceDelegate = new DialogDelegate(this.getApplication(),1,null, null); 		
-
-		// Line one
-
-		// Line two
-
-		// Line there
-
-		this.getDialogFrame().add(sequenceDelegate);
 	}
 	private ArrayList<DialogDelegate> getDialogFrame() {
 		return _dialogFrame;
@@ -240,6 +171,7 @@ public class PlayerDialog extends GameWorld {
 		}
 		_brownSpecial = getBrownLogo (); 
 		_backRandom = getRand (); 
+		_fuckBoy =  getFuckBoy ();
 	}
 	public static Image getBrownLogo () {
 		Image out = null;
@@ -255,6 +187,16 @@ public class PlayerDialog extends GameWorld {
 		Image out = null;
 		try{
 			out =  new Image(new File("resources/terrain/newBack.jpg").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
+	public static Image getFuckBoy () {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/characters/fuckBoy.png").toURI().toURL().toExternalForm());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
