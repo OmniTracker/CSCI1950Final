@@ -31,7 +31,7 @@ public class SoundSystem extends GameSystem{
 				try {
 					Sequence sequence = null;
 					try {
-						sequence = MidiSystem.getSequence(new File("resources/sounds/Cantina.mid"));
+						sequence = MidiSystem.getSequence(new File("resources/sounds/Avengers.mid"));
 					} catch (InvalidMidiDataException | IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -50,11 +50,11 @@ public class SoundSystem extends GameSystem{
 					e.printStackTrace();
 				}
 			    // Start playing
-			   // sequencer.start();
+			  sequencer.start();
 		    }
 		};
 		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-		executor.scheduleAtFixedRate(runSound, 0, 3, TimeUnit.MINUTES);
+		executor.scheduleAtFixedRate(runSound, 0, 50, TimeUnit.SECONDS);
 	}
 	@Override
 	public void addObject(GameObject go) {

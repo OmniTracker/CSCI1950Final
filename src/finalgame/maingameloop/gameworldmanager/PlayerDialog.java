@@ -24,11 +24,8 @@ public class PlayerDialog extends GameWorld {
 	private Button _skipButton;
 	private FinalGameWorld _gameWorld;
 	private HashMap<String,HashMap<String, Image>> _characterImages; 
-	private ArrayList<DialogDelegate> _dialogFrame; 
-	private Image _selectedPlayerImage = null;
 	private String _selectedPlayersName = "";
 	private HashMap<Integer,String> _characterSelector;
-	private Button _skipDialog; 
 
 	private Image _brownSpecial = null;
 	private Image _backRandom = null;
@@ -40,7 +37,6 @@ public class PlayerDialog extends GameWorld {
 
 	public PlayerDialog(Application app, FinalGameWorld finalGameWorld) {
 		super(app);
-		this.setDialogFrame(new ArrayList<DialogDelegate>());
 		Button nextButton = new Button(); 
 		nextButton.setText("Next => ");
 		nextButton.setSize( new Vec2d(200,30));
@@ -58,12 +54,11 @@ public class PlayerDialog extends GameWorld {
 
 		this.setCharacterSelector( new HashMap<Integer,String>());
 	}
-
-
 	public void onDraw(GraphicsContext g) { 
 		if (_selectedCharacter == -1) {
 			_selectedCharacter = this.getGameWorld().getCharacterSelection();	
-			_mainDude = this.getCharacterImages().get(this.getCharacterSelector().get(_selectedCharacter)).get("big");
+			_selectedPlayersName =  this.getCharacterSelector().get(_selectedCharacter); 
+			_mainDude = this.getCharacterImages().get(_selectedPlayersName).get("big");
 		}
 		if (_brownSpecial == null) {
 			return;
@@ -74,14 +69,7 @@ public class PlayerDialog extends GameWorld {
 		if (_backRandom == null) {
 			return;
 		}
-
 		this.incrementTransition();
-
-		if (this.getDialogFrame().size() != 0)
-		{
-			this.getDialogFrame().get(0).onDraw(g);			
-		}
-
 		this.drawBackground(g);
 		Vec2d origin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin(); 
 		Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize(); 
@@ -91,20 +79,27 @@ public class PlayerDialog extends GameWorld {
 		this.drawBrownSpecial(g);	
 		g.setGlobalAlpha(1);
 		this.drawMainCharacterAndFuckBoy(g);
+		this.drawDialogViews(g);
 		this.drawDialogTransitionButtons(g);
 	}
-
+	private void drawDialogViews(GraphicsContext g) {
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
 	private void drawMainCharacterAndFuckBoy(GraphicsContext g) {
 		Vec2d origin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin(); 
 		Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize();
 		Vec2d mainCharOrigin = origin.plus((size.x * 1.9 / 3), 0);
-		
-		g.drawImage(_mainDude, mainCharOrigin.x, mainCharOrigin.y +  (size.y * 0.05), (size.x * 1 / 3), size.y * 0.95);
-		
+		g.drawImage(_mainDude, mainCharOrigin.x, mainCharOrigin.y +  (size.y * 0.05), (size.x * 0.9 / 3), size.y * 0.95);
 		g.drawImage(_fuckBoy, origin.x + (size.x * 0.05), origin.y +  (size.y * 0.1), (size.x * 1.1 / 3), size.y * 0.9);
-
 	}
-
 	private void drawBrownSpecial(GraphicsContext g) {
 		Vec2d origin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin(); 
 		Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize(); 
@@ -146,16 +141,9 @@ public class PlayerDialog extends GameWorld {
 			transitionAlpha += 0.1; 
 		}
 	}
-	private ArrayList<DialogDelegate> getDialogFrame() {
-		return _dialogFrame;
-	}
-	private void setDialogFrame(ArrayList<DialogDelegate> _dialogFrame) {
-		this._dialogFrame = _dialogFrame;
-	}
 	private  HashMap<String,HashMap<String, Image>> getCharacterImages() {
 		return _characterImages;
 	}
-
 	public void setCharacterImages(HashMap<String,HashMap<String, Image>> _characterImages) {
 		this._characterImages = _characterImages;
 		Integer index = 0;
