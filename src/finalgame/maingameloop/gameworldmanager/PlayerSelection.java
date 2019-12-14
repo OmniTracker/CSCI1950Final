@@ -160,11 +160,11 @@ public class PlayerSelection extends GameWorld {
 		{
 			if (direction == RIGHT_DIRECTION)
 			{
-				transitionX += 5.0;
+				transitionX += 15.0;
 			}
 			else if (direction == LEFT_DIRECTION)
 			{
-				transitionX -= 5.0;
+				transitionX -= 15.0;
 			}
 			this.colorRotation();
 		}
@@ -213,11 +213,8 @@ public class PlayerSelection extends GameWorld {
 				direction = LEFT_DIRECTION;
 				_nextPlayer = (( _currentPlayer - 1 == -1) ? 3 : _currentPlayer - 1);
 				_inTransition = true;
-			} else if (this.getNextLevelButton().clicked(e)) {
-
-
-				//this.getFinalGameWorld().changeCurrentScreen(VisibleGameWorld.PLAYERDIALOG);
-				//Temporarily change the flow to go to the main gameplay screen just for testing purposes
+			} else if (this.getNextLevelButton().clicked(e)) 
+			{
 				this.getFinalGameWorld().changeCurrentScreen(VisibleGameWorld.MAINGAMEPLAY);
 
 				System.out.print("Next level \n");
