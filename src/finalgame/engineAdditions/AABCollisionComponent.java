@@ -39,5 +39,10 @@ public class AABCollisionComponent extends CollisionComponent{
 		return this.colliding(_aab, s1);
 	}
 
+	@Override
+	public int getType() {
+		return 1;
+	}
+
 
 }

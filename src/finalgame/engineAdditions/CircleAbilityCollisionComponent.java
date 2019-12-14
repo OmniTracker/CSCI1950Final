@@ -38,4 +38,9 @@ public class CircleAbilityCollisionComponent extends AbilityCollisionComponent{
 		return this.colliding(_circle, s1);
 	}
 
+	@Override
+	public int getType() {
+		return 2;
+	}
+
 }

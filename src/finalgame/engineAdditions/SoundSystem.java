@@ -2,6 +2,9 @@ package finalgame.engineAdditions;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiChannel;
@@ -17,57 +20,36 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 public class SoundSystem extends GameSystem{
-
-    // to store current position 
-    Long _currentFrame; 
-    Clip _clipMusic; 
-      
-    // current status of clip 
-    String _status; 
-    
-   
-      
-    AudioInputStream _audioInputStreamMusic; 
-    static String _filePathMusic; 
-	
+	// to store current position 
+	Long _currentFrame; 
+	Clip _clipMusic; 
+	// current status of clip 
+	String _status; 
+	AudioInputStream _audioInputStreamMusic; 
+	static String _filePathMusic; 
 	File _soundFile;
-	
-	
 	public SoundSystem(FinalGameWorld finalGameWorld) {
-//		_filePathMusic = "resources/sounds/test.wav";
-//		String filePathLzer = "resources/sounds/Laser_Shoot_Long1.wav";
-//		Clip lazclip = null;
-//		try {
-//		_audioInputStreamMusic = AudioSystem.getAudioInputStream(new File(_filePathMusic).getAbsoluteFile());
-//
-//		_clipMusic = AudioSystem.getClip();
-//		
-//		_clipMusic.open(_audioInputStreamMusic);
-//		
-//		FloatControl gainControl = (FloatControl) _clipMusic.getControl(FloatControl.Type.MASTER_GAIN);
-//		
-//		gainControl.setValue(-20);
-//		
-//		AudioInputStream lazStream = AudioSystem.getAudioInputStream(new File(filePathLzer).getAbsoluteFile());
-//		lazclip = AudioSystem.getClip();
-//		lazclip.open(lazStream);
-//		
-//		FloatControl lzcon = (FloatControl) lazclip.getControl(FloatControl.Type.MASTER_GAIN);
-//		
-//		lzcon.setValue(-30);
-//		
-//		}
-//		catch(Exception e) {
-//			System.out.println(e.getMessage());
-//		}
-//		
-//		_clipMusic.loop(_clipMusic.LOOP_CONTINUOUSLY);
-//		_clipMusic.start();
-//		lazclip.start();
-		
-		
+		Runnable runSound = new Runnable() {
+			public void run() {
+				Sequencer sequencer = null;
+				try {
+					Sequence sequence = null;
+					try {
+						sequence = MidiSystem.getSequence(new File("resources/sounds/Avengers.mid"));
+					} catch (InvalidMidiDataException | IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					sequencer = MidiSystem.getSequencer();
+					sequencer.open();
+					try {
+						sequencer.setSequence(sequence);
+					} catch (InvalidMidiDataException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
-
+<<<<<<< HEAD
 //	    Sequencer sequencer = null;
 //		try {
 //			Sequence sequence = null;
@@ -113,15 +95,25 @@ public class SoundSystem extends GameSystem{
 //	    AudioObj.play();
 //	    
 //	    AudioObj.setBalance(0);
+=======
+				} catch (MidiUnavailableException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				// Start playing
+				sequencer.start();
+			}
+		};
+		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+		executor.scheduleAtFixedRate(runSound, 0, 50, TimeUnit.SECONDS);
+>>>>>>> 583186cb23f9558515972ea4f323a54bc0722351
 	}
-	
 	@Override
 	public void addObject(GameObject go) {
 		if(go.hasComponent("SOUND")) {
 			this.addObject(go);
 		}
 	}
-	
 	public void loadFiles() {
 		_soundFile = new File("resources/sounds/test.wav");
 	}

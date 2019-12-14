@@ -14,13 +14,12 @@ import support.Vec2d;
 
 public class MoveTo extends BTAction {
 	
-	private double dist;
-	private GameObject target;
+	private double upper_dist;
+	private double lower_dist;
 	
-	public MoveTo(GameObject target, double dist) {
-		this.dist = dist;
+	public MoveTo(GameObject target, double up_dist, double low_dist) {
+		upper_dist = up_dist;
 		this.target = target;
-		
 	}
 	
 	@Override
@@ -37,7 +36,7 @@ public class MoveTo extends BTAction {
 		DistanceState start = new DistanceState(null,tc.getLoc(),tc.getDim(), _tree.getWorld(),_tree.getObject());
 		DistanceState goal = new DistanceState(null, ttc.getLoc(), ttc.getDim(), _tree.getWorld(), _tree.getObject());
 		
-		_goap = new DistanceGOAP(_tree.getObject(),_actions,start,goal,dist);
+		_goap = new DistanceGOAP(_tree.getObject(),_actions,start,goal,upper_dist,lower_dist);
 		_astar = new AStar(new DistanceHeuristic((DistanceGOAP) _goap),_goap);
 		
 		DistanceState s = (DistanceState) _astar.getNext(true);
@@ -76,16 +75,6 @@ public class MoveTo extends BTAction {
 	@Override
 	public void reset() {
 
-	}
-
-	@Override
-	public void setTree(BehaviorTree tree) {
-		_tree = tree;
-	}
-
-	@Override
-	public BehaviorTree getTree() {
-		return _tree;
 	}
 
 }

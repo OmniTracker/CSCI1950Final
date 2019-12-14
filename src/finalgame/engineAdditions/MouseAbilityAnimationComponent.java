@@ -10,12 +10,12 @@ public class MouseAbilityAnimationComponent extends AnimateAbilityComponent{
 	
 	protected double _range;
 	protected boolean _showRange;
-	private double _damage;
-	private double _knockback;
+	protected double _damage;
+	protected double _knockback;
 	
 	protected Vec2d _src;
 	protected Vec2d _dir;
-	private Vec2d _activeBulletLoc;
+	protected Vec2d _activeBulletLoc;
 	
 	
 	public MouseAbilityAnimationComponent(GameObject go, MainGamePlay gw,Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc, Vec2d dim,

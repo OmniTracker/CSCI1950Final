@@ -53,6 +53,7 @@ import finalgame.engineAdditions.AnimateGraphicsComponent;
 import finalgame.engineAdditions.BehaviorSystem;
 import finalgame.engineAdditions.CircleAbilityCollisionComponent;
 import finalgame.engineAdditions.CollisionSystem;
+import finalgame.engineAdditions.EnemySystem;
 import finalgame.engineAdditions.FireWaveAbilityComponent;
 import finalgame.engineAdditions.GameObject;
 import finalgame.engineAdditions.GraphicsSystem;
@@ -97,6 +98,7 @@ public class MainGamePlay extends GameWorld {
 	private CollisionSystem _collisionSys;
 	private BehaviorSystem _behaviorSys;
 	private SoundSystem _soundSys;
+	private EnemySystem _enemySys;
 
 	// Game Play Overlay
 	private GamePlayOverlay _gamePlayOverlay;
@@ -145,12 +147,14 @@ public class MainGamePlay extends GameWorld {
 		_collisionSys = new CollisionSystem(this);
 		_behaviorSys = new BehaviorSystem();
 		_soundSys = new SoundSystem(_finalGameWorld);
+		_enemySys = new EnemySystem(this);
 		_systems.add(_tickSys);
 		_systems.add(_graphicsSys);
 		_systems.add(_inputSys);
 		_systems.add(_collisionSys);
 		_systems.add(_behaviorSys);
 		_systems.add(_soundSys);
+		_systems.add(_enemySys);
 	}
 
 	private void loadCharacter() {
@@ -187,7 +191,6 @@ public class MainGamePlay extends GameWorld {
 				_player.addComponent("ABILITY_F", new TeleportAbilityComponent(_player,this, getTeleportImage(), new Vec2d(0,0),
 						new Vec2d(128, 128), new Vec2d(0,0), new Vec2d(0,0), new Vec2d(128, 128),
 						58, 2.5, 2, 200));
-
 				break;
 			case 1:
 				//EZRA
@@ -225,84 +228,27 @@ public class MainGamePlay extends GameWorld {
 
 	}
 
-	private void loadEnemies() {
-		double follow_dist = 5000;
-		GameObject g = new GameObject("ENEMY");
-		AnimateGraphicsComponent animate = new AnimateGraphicsComponent(g, this.getPlayerImage(_selectedCharacter), new Vec2d(54,0), new Vec2d(34,48), 2, new Vec2d(48,48));
-		g.addComponent("DRAW", animate);
-		g.addComponent("ANIMATE", animate);
-		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1000,100), new Vec2d(40,60), 1.0));
-		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
-		g.addComponent("HEALTH", new HealthComponent(g,this, 1000));
-		TestGI gi = new TestGI();
-		BehaviorTree bt = new BehaviorTree(new Selector(),gi, this, g);
-		bt.addBehavior(0,  new Sequencer());
-		bt.addBehavior(1, new NotInRange(_player,follow_dist));
-		bt.addBehavior(1, new MoveTo(_player, follow_dist));
-		bt.addBehavior(0, new AttackEnemy(_player));
-		gi.setLeader(_player);
-		g.addComponent("BEHAVIOR", new AIBehaviorComponent(g,bt));
-		_objects.add(g);
-		this.addToSystems(g);
-
-		g = new GameObject("ENEMY");
-		animate = new AnimateGraphicsComponent(g, this.getPlayerImage(_selectedCharacter), new Vec2d(54,0), new Vec2d(34,48), 2, new Vec2d(48,48));
-		g.addComponent("DRAW", animate);
-		g.addComponent("ANIMATE", animate);
-		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1000,200), new Vec2d(40,60), 1.0));
-		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
-		g.addComponent("HEALTH", new HealthComponent(g,this, 1000));
-		bt = new BehaviorTree(new Selector(),gi, this, g);
-		bt.addBehavior(0,  new Sequencer());
-		bt.addBehavior(1, new NotInRange(_player,follow_dist));
-		bt.addBehavior(1, new MoveTo(_player, follow_dist));
-		bt.addBehavior(0, new AttackEnemy(_player));
-		g.addComponent("BEHAVIOR", new AIBehaviorComponent(g,bt));
-		_objects.add(g);
-		this.addToSystems(g);
-
-		follow_dist = 50000;
-		g = new GameObject("ENEMY");
-		animate = new AnimateGraphicsComponent(g, this.getPlayerImage(_selectedCharacter), new Vec2d(54,0), new Vec2d(34,48), 2, new Vec2d(48,48));
-		g.addComponent("DRAW", animate);
-		g.addComponent("ANIMATE", animate);
-		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1000,300), new Vec2d(40,60), 1.0));
-		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
-		g.addComponent("HEALTH", new HealthComponent(g,this, 1000));
-		bt = new BehaviorTree(new Selector(),gi, this, g);
-		bt.addBehavior(0,  new Sequencer());
-		bt.addBehavior(1, new NotInRange(_player,follow_dist));
-		bt.addBehavior(1, new MoveTo(_player, follow_dist));
-		bt.addBehavior(0, new AttackEnemy(_player));
-		g.addComponent("BEHAVIOR", new AIBehaviorComponent(g,bt));
-		_objects.add(g);
-		this.addToSystems(g);
-
-		g = new GameObject("ENEMY");
-		animate = new AnimateGraphicsComponent(g, this.getPlayerImage(_selectedCharacter), new Vec2d(54,0), new Vec2d(34,48), 2, new Vec2d(48,48));
-		g.addComponent("DRAW", animate);
-		g.addComponent("ANIMATE", animate);
-		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1000,400), new Vec2d(40,60), 1.0));
-		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
-		g.addComponent("HEALTH", new HealthComponent(g,this, 1000));
-		bt = new BehaviorTree(new Selector(),gi, this, g);
-		bt.addBehavior(0,  new Sequencer());
-		bt.addBehavior(1, new NotInRange(_player,follow_dist));
-		bt.addBehavior(1, new MoveTo(_player, follow_dist));
-		bt.addBehavior(0, new AttackEnemy(_player));
-		g.addComponent("BEHAVIOR", new AIBehaviorComponent(g,bt));
-		_objects.add(g);
-		this.addToSystems(g);
-
-		g = new GameObject("END");
-		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(100000,400), new Vec2d(40,60), 1.0));
-		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
-		_objects.add(g);
-		this.addToSystems(g);
+	public void loadEnemies() {
+		
 	}
 
 	public GameObject spawnAbilityHitbox(AnimateAbilityComponent ability) {
 		GameObject hitbox = new GameObject("ABILITY");
+		AbilityCollisionComponent curr = null;
+		if(ability.getHitboxType() == 0) {
+			curr = new CircleAbilityCollisionComponent(hitbox,new CircleShapeDefine(new Vec2d(0,0), 1),ability,1);
+		}
+		else if (ability.getHitboxType() == 1) {
+			curr = new AABAbilityCollisionComponent(hitbox,new AABShapeDefine(new Vec2d(0,0), new Vec2d(0,0)), ability, 1);
+		}
+		hitbox.addComponent("COLLISION", curr);
+		_objects.add(hitbox);
+		this.addToSystems(hitbox);
+		return hitbox;
+	}
+	
+	public GameObject spawnEnemyAbilityHitbox(AnimateAbilityComponent ability) {
+		GameObject hitbox = new GameObject("ENABILITY");
 		AbilityCollisionComponent curr = null;
 		if(ability.getHitboxType() == 0) {
 			curr = new CircleAbilityCollisionComponent(hitbox,new CircleShapeDefine(new Vec2d(0,0), 1),ability,1);
@@ -539,12 +485,14 @@ public class MainGamePlay extends GameWorld {
 			long lastTick = nanosSincePreviousTick%50000000;
 			for(int i = 0; i < n; i++) {
 				this.purge();
+				_enemySys.onTick(0);
 				_tickSys.onTick(50000000);
 				_collisionSys.onTick(50000000);
 				_inputSys.onTick(50000000);
 				_behaviorSys.onTick(50000000);
 			}
 			this.purge();
+			_enemySys.onTick(0);
 			_tickSys.onTick(lastTick);
 			_collisionSys.onTick(lastTick);
 			_inputSys.onTick(lastTick);
@@ -552,6 +500,7 @@ public class MainGamePlay extends GameWorld {
 		}
 		else {
 			this.purge();
+			_enemySys.onTick(0);
 			_tickSys.onTick(nanosSincePreviousTick);
 			_collisionSys.onTick(nanosSincePreviousTick);
 			_inputSys.onTick(nanosSincePreviousTick);
@@ -691,7 +640,7 @@ public class MainGamePlay extends GameWorld {
 		_garbage.clear();
 	}
 
-	private void addToSystems(GameObject go) {
+	public void addToSystems(GameObject go) {
 		for(int i=0; i<_systems.size(); i++) {
 			_systems.get(i).addObject(go);
 		}
@@ -763,7 +712,6 @@ public class MainGamePlay extends GameWorld {
 	public void set_player(GameObject _player) {
 		this._player = _player;
 	}
-
 
 	public int get_highScore() {
 		return _highScore;

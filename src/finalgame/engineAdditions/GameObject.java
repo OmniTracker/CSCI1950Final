@@ -3,7 +3,8 @@ package finalgame.engineAdditions;
 import java.util.HashMap;
 
 import support.Vec2d;
-import support.debugger.support.shapes.AABShapeDefine;
+import support.debugger.collisions.AABShape;
+import support.debugger.collisions.CircleShape;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
 
@@ -30,7 +31,23 @@ public class GameObject {
 		}
 		if(o.hasComponent("COLLISION")) {
 			CollisionComponent oth = (CollisionComponent) o.getComponent("COLLISION");
-			this.addComponent("COLLISION", new AABCollisionComponent(this, (AABShapeDefine)oth._shape));			
+			switch (oth.getType()) {
+			case 0:
+				this.addComponent("COLLISION", new CircleCollisionComponent(this, (CircleShape)oth._shape));
+				break;
+			case 1:
+				this.addComponent("COLLISION", new AABCollisionComponent(this, (AABShape)oth._shape));
+				break;
+			case 2:
+				CircleAbilityCollisionComponent ot = (CircleAbilityCollisionComponent) oth;
+				this.addComponent("COLLISION", new CircleAbilityCollisionComponent(this, (CircleShape)oth._shape, ot._ability, ot._numTargets));
+				break;
+			case 3:
+				AABAbilityCollisionComponent othe = (AABAbilityCollisionComponent) oth;
+				this.addComponent("COLLISION", new AABAbilityCollisionComponent(this, (AABShape)oth._shape, othe._ability, othe._numTargets));
+				break;
+			}
+						
 		}
 	}
 	
@@ -69,6 +86,9 @@ public class GameObject {
 		if(_components.containsKey("ABILITY_CLICK")) {
 			_components.get("ABILITY_CLICK").tick(t);
 		}
+		if(_components.containsKey("ABILITY")) {
+			_components.get("ABILITY").tick(t);
+		}
 	}
 	
 	public void draw(GraphicsContext g, Affine af) {
@@ -90,6 +110,9 @@ public class GameObject {
 		if(_components.containsKey("ABILITY_CLICK")) {
 			_components.get("ABILITY_CLICK").draw(g, af);
 		}
+		if(_components.containsKey("ABILITY")) {
+			_components.get("ABILITY").draw(g, af);
+		}
 	}
 	
 	public String getName() {
@@ -103,6 +126,11 @@ public class GameObject {
 	public Vec2d isColliding(GameObject o) {
 		CollisionComponent curr = (CollisionComponent)(_components.get("COLLISION"));
 		return curr.collide(o);
+	}
+	
+	@Override
+	public String toString() {
+		return _name;
 	}
 	
 }

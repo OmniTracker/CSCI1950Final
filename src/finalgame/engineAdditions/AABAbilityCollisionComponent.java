@@ -37,5 +37,10 @@ public class AABAbilityCollisionComponent extends AbilityCollisionComponent{
 	public Vec2d collideWithPolygon(PolygonShape s1) {
 		return this.colliding(_aab, s1);
 	}
+
+	@Override
+	public int getType() {
+		return 3;
+	}
 	
 }

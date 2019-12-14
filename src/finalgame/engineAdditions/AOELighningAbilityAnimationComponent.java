@@ -43,7 +43,7 @@ public class AOELighningAbilityAnimationComponent extends AnimateAbilityComponen
 				_active = false;
 				_coolingDown = true;
 				_activeCounter = 0;
-				_hp.setInvulnerable(true);
+				_hp.setInvulnerable(false);
 				_input.setMoveMultiplier(1.);
 			}
 		}
