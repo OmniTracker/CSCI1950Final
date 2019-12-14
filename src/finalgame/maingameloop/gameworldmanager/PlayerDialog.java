@@ -160,7 +160,7 @@ public class PlayerDialog extends GameWorld {
 		Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize(); 
 		Vec2d center = origin.plus(size.x/2, size.y/2);
 		double scale = 2.5;
-		g.drawImage( _brownSpecial, center.x - ( 130 * scale) , center.y - ( 100 * scale ) , 260 * scale , 200 * scale);
+		g.drawImage( _brownSpecial, center.x - ( 130 * scale) , center.y - ( 100 * scale ) , 260 * scale , 160 * scale);
 	}
 	private void drawBackground (GraphicsContext g) {
 		Vec2d origin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin(); 
