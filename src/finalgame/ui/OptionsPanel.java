@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -50,7 +51,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 	private String xmlPath = "./resources/xmlResources/.KeyBinding.xml";
 	// High Score XML
 	private HashMap < String, Pair <String,String>> _playerRanking =  new HashMap <String,Pair <String,String> > ();
-	private String highScoreXMLPath = "./resources/xmlResources/HighScore.xml";
+	private String highScoreXMLPath = "./resources/xmlResources/.HighScore.xml";
 	
 	public OptionsPanel(AspectRatioHandler app) {
 		super(app);
@@ -82,7 +83,6 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		// Find a way to 
 		this.drawKeyBinding(g);
 		this.drawApply(g);
-		this.drawHighScores(g);
 	}
 	
 	public void initKeyBindingButtons () {
@@ -264,7 +264,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 			loop++;
 		}	
 	}
-	private void parseHighScores() 
+	public void parseHighScores() 
 	{		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = null;
@@ -288,7 +288,6 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		}
 		document.getDocumentElement().normalize();
 		Element root = document.getDocumentElement();
-		System.out.println(root.getNodeName());
 		NodeList nList = document.getElementsByTagName("highScore");
 		String id; 
 		String name;
@@ -310,6 +309,106 @@ public class OptionsPanel  extends Panel implements EventHandler{
 				}
 			}
 		}
+	}
+	public boolean shouldUpdateHighScores(int score) {
+		int rank = 6;
+		for (Entry<String, Pair<String, String>> entry : _playerRanking.entrySet())  
+		{
+			if (Integer.parseInt(entry.getValue().getValue())<score) {
+				rank = Integer.parseInt(entry.getKey());
+			}
+		}
+		if (rank < 6) {
+			return true;
+		}
+		return false;
+	}
+	public void UpdateHighScores(int score, String name) {
+		int rank = 6;
+		int maxScoreSeen=0;
+		for (Entry<String, Pair<String, String>> entry : _playerRanking.entrySet())  
+		{
+			if (Integer.parseInt(entry.getValue().getValue())<score && score>maxScoreSeen) {
+				rank = Integer.parseInt(entry.getKey());
+				maxScoreSeen=score;
+			}
+		}
+		String prevName = "";
+		String prevScore= "";
+		for (int x = rank; x<6;x++) {
+			Pair<String, String> Values = _playerRanking.get(Integer.toString(x));
+			if (x==rank) {
+				_playerRanking.put(Integer.toString(x), new Pair<String, String>(name,Integer.toString(score)));
+			}else {
+				_playerRanking.put(Integer.toString(x), new Pair<String, String>(prevName,prevScore));
+			}
+			prevName = Values.getKey();
+			prevScore = Values.getValue();
+		}
+		saveUpdatedHighScores();
+	}
+	public void saveUpdatedHighScores() {
+		// Get all score			
+				
+				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder docBuilder = null;
+				try 
+				{
+					docBuilder = factory.newDocumentBuilder();
+				} 
+				catch (ParserConfigurationException e) {
+					e.printStackTrace();
+				}
+				
+				Document doc = docBuilder.newDocument();
+				
+				//General make our root a descriptive name
+				Element root = doc.createElement("HighScore");
+				doc.appendChild(root);
+				
+				int size = _playerRanking.size();
+				
+
+				
+				for (int x = 0; x < size; x++) 
+				{
+					Pair <String,String> pair = _playerRanking.get(Integer.toString(x+1)); 
+
+					Element highScore = doc.createElement("highScore");
+					Attr tag = doc.createAttribute("id");
+					tag.setValue(Integer.toString(x+1));
+					highScore.setAttributeNode(tag); 
+						
+					Element firstName = doc.createElement("firstName");
+					Element score = doc.createElement("score");
+					firstName.setTextContent(pair.getKey());
+					score.setTextContent(pair.getValue());
+
+					
+					root.appendChild(highScore);
+					highScore.appendChild(firstName); 
+					highScore.appendChild(score); 
+				}
+				
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer transformer = null;
+				try 
+				{
+					transformer = transformerFactory.newTransformer();
+				} 
+				catch (TransformerConfigurationException e) {
+					e.printStackTrace();
+				}
+				DOMSource domSource = new DOMSource(doc);
+				StreamResult streamResult = new StreamResult(new File(highScoreXMLPath));
+				try 
+				{
+					transformer.transform(domSource, streamResult);
+				} 
+				catch (TransformerException e) 
+				{
+					e.printStackTrace();
+				}
 	}
 	private HashMap<Integer,KeyBinding > getKeyBindingMap() {
 		return _keyBindingMap;

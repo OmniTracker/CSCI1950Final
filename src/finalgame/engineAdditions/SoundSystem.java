@@ -4,13 +4,17 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
+import javax.sound.midi.Synthesizer;
 import javax.sound.sampled.*;
 
 import finalgame.maingameloop.FinalGameWorld;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class SoundSystem extends GameSystem{
 
@@ -64,31 +68,51 @@ public class SoundSystem extends GameSystem{
 		
 
 
-	    Sequencer sequencer = null;
-		try {
-			Sequence sequence = null;
-			try {
-				sequence = MidiSystem.getSequence(new File("resources/sounds/Cantina.mid"));
-			} catch (InvalidMidiDataException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			sequencer = MidiSystem.getSequencer();
-			sequencer.open();
-		    try {
-				sequencer.setSequence(sequence);
-			} catch (InvalidMidiDataException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		} catch (MidiUnavailableException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//	    Sequencer sequencer = null;
+//		try {
+//			Sequence sequence = null;
+//			try {
+//				sequence = MidiSystem.getSequence(new File("resources/sounds/Cantina.mid"));
+//			} catch (InvalidMidiDataException | IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			sequencer = MidiSystem.getSequencer();
+//			sequencer.open();
+//			if (sequencer instanceof Synthesizer) {
+//			      Synthesizer synthesizer = (Synthesizer) sequencer;
+//			      MidiChannel[] channels = synthesizer.getChannels();
+//			      
+//			      channels[0].controlChange(10, 0);
+//
+//			      // gain is a value between 0 and 1 (loudest)
+//			      double gain = 0.9D;
+////			      for (int i = 0; i < channels.length; i++) {
+////			        channels[i].controlChange(7, 0);
+////			      }
+//			    }
+//		    try {
+//				sequencer.setSequence(sequence);
+//			} catch (InvalidMidiDataException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//
+//		} catch (MidiUnavailableException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	    
+//	    // Start playing
+//	    sequencer.start();
 	    
-	    // Start playing
-	    sequencer.start();
+//		Media song = new Media(new File("resources/sounds/test.wav").toURI().toString());
+//	    
+//	    
+//	    MediaPlayer AudioObj = new MediaPlayer(song);
+//	    AudioObj.play();
+//	    
+//	    AudioObj.setBalance(0);
 	}
 	
 	@Override

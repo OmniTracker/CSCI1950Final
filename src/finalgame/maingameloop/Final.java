@@ -8,6 +8,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 import engine.Application;
 import engine.Screen;
+import finalgame.ui.OptionsPanel;
 
 public class Final extends Screen {
 	private FinalViewport _finalViewport 		= null;
@@ -76,5 +77,7 @@ public class Final extends Screen {
 	@Override
 	public void onShutdown() {
 		_finalGameWorld.onShutdown();
+//		OptionsPanel panel =(OptionsPanel)_finalViewport.getMenuBar().getPanelViews().get(8);
+//		panel.updateHighScores(_finalGameWorld.getMainGamePlay().get_highScore());
 	}
 }

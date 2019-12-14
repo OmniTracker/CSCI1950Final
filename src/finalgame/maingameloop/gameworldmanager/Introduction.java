@@ -127,6 +127,7 @@ public class Introduction extends GameWorld {
 			alphaIncrement = 0.0f;		
 			if (this.getOptionsButton().clicked(e)) 
 			{				
+				this.getOptionsPanel().parseHighScores();
 				this.getOptionsPanel().setShowing(true);
 			} 
 			else if (this.getSelectPlayerButton().clicked(e)) 

@@ -82,7 +82,7 @@ public abstract class Panel extends UIElement {
 	public void onMouseClicked(MouseEvent e) {		
 		if (this.checkPanelCollision(e) == true) {
 			if ( this.getCloseButton().clicked(e)) {
-				this.setShowing(false);				
+				this.setShowing(false);	
 			}
 		}
 	}

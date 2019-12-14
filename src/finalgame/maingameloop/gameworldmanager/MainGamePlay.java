@@ -106,6 +106,8 @@ public class MainGamePlay extends GameWorld {
 
 	//GameObject that represents the current player
 	private GameObject _player;
+	
+	private String highScoreXMLPath = "./resources/xmlResources/.HighScore.xml";
 
 	private Affine _affine;
 
@@ -653,18 +655,18 @@ public class MainGamePlay extends GameWorld {
 	@Override
 	public void onStartup() {}
 
-	private Button getHighScoreTestButton() {
-		return _highScoreTestButton;
-	}
-	private void setHighScoreTestButton(Button _highScoreTestButton) {
-		this._highScoreTestButton = _highScoreTestButton;
-	}
-	private HighScorePanel getHighScorePanel() {
-		return _highScorePanel;
-	}
-	private void setHighScorePanel(HighScorePanel _highScorePanel) {
-		this._highScorePanel = _highScorePanel;
-	}
+//	private Button getHighScoreTestButton() {
+//		return _highScoreTestButton;
+//	}
+//	private void setHighScoreTestButton(Button _highScoreTestButton) {
+//		this._highScoreTestButton = _highScoreTestButton;
+//	}
+//	private HighScorePanel getHighScorePanel() {
+//		return _highScorePanel;
+//	}
+//	private void setHighScorePanel(HighScorePanel _highScorePanel) {
+//		this._highScorePanel = _highScorePanel;
+//	}
 
 	@Override
 	public void tickCollision() {

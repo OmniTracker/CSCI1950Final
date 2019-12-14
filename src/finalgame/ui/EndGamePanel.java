@@ -47,6 +47,7 @@ public class EndGamePanel extends Panel implements EventHandler {
 	public void onStartup() {}
 	public boolean isGameQuit() {
 		return _gameQuit;
+		
 	}
 	public void setGameQuit(boolean _gameQuit) {
 		this._gameQuit = _gameQuit;

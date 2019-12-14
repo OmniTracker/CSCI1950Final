@@ -6,6 +6,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
+
+import java.net.MalformedURLException;
+
 import engine.ui.Button;
 import engine.ui.EngineFonts;
 import engine.ui.MenuBar;
@@ -20,7 +23,8 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 	private Integer INSTRUCTIONS_PANEL_VIEW = 3; 
 	private Integer END_GAME_PANEL_VIEW     = 5; 
 	private Integer OPTIONS_PANEL_VIEW      = 8; 
-	private Integer UPGRADES_PANEL_VIEW     = 9; 
+	private Integer UPGRADES_PANEL_VIEW     = 9;
+	private Integer INPUT_PANEL_VIEW = 10;
 
 
 	private FinalGameWorld _gameWorld;
@@ -100,6 +104,15 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		upgradesPanel.setOrigin(new Vec2d(0,0));
 		upgradesPanel.setBoarderSize(10);
 		this.insertPanel((Integer)UPGRADES_PANEL_VIEW, upgradesPanel);
+		
+		//Input game panel
+		InputPanel inputPanel = new InputPanel( this.getAspectRatio()); 
+		inputPanel.setColor(Color.DARKGRAY);
+		inputPanel.setSecondaryColor(Color.DARKGREEN);
+		inputPanel.setSize( new Vec2d(500,400));	
+		inputPanel.setOrigin(new Vec2d(0,0));
+		inputPanel.setBoarderSize(10);
+		this.insertPanel((Integer)INPUT_PANEL_VIEW, inputPanel);
 	}
 	public void initializeMenuButtons () 
 	{
@@ -173,6 +186,20 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 				UpgradesPanel panel = (UpgradesPanel) this.getPanelViews().get(UPGRADES_PANEL_VIEW);
 				panel.onDraw(g);
 			}
+			else if (this.getContextHolder() == INPUT_PANEL_VIEW) 
+			{
+				if (DEBUG == true)
+				{
+					System.out.println("INPUT HAS CONTEXT \n");
+				}
+				InputPanel panel = (InputPanel) this.getPanelViews().get(INPUT_PANEL_VIEW);
+				try {
+					panel.onDraw(g);
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	private void checkMenuButtonActivation(MouseEvent e) 
@@ -236,6 +263,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 				// Check if the window has been closeduu
 				if ( panel.isShowing() == false)
 				{
+					System.out.println("option close");
 					// Reset Context holder
 					this.setContextHolder(-1);
 					this.setMenuActivated(false);
@@ -251,7 +279,12 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 				if (panel.getOKButton().clicked(e)) 
 				{
 					// Start transition to start screen.
-					_transitionAlpha += 0.01;
+					OptionsPanel opanel = (OptionsPanel) this.getPanelViews().get(OPTIONS_PANEL_VIEW);
+					if (opanel.shouldUpdateHighScores(_gameWorld.getMainGamePlay().get_highScore())) {
+						this.setContextHolder(INPUT_PANEL_VIEW);
+					}else {
+						_transitionAlpha += 0.01;
+					}
 					return;
 				}
 				panel.onMouseClicked(e);
@@ -275,6 +308,17 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 					this.setMenuActivated(false);
 				}
 			}
+			else if (this.getContextHolder() == INPUT_PANEL_VIEW)
+			{
+				InputPanel input = (InputPanel) this.getPanelViews().get(INPUT_PANEL_VIEW);
+				input.onMouseClicked(e);
+				if (input.getOKButton().clicked(e) || input.isShowing()==false) {
+					OptionsPanel opanel = (OptionsPanel) this.getPanelViews().get(OPTIONS_PANEL_VIEW);
+					opanel.UpdateHighScores(_gameWorld.getMainGamePlay().get_highScore(), input.getName());
+					_transitionAlpha+=0.01;
+					return;
+				}
+			}
 		}
 	}
 	public void onKeyPressed(KeyEvent e) 
@@ -286,7 +330,12 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 			{
 				OptionsPanel panel = (OptionsPanel) this.getPanelViews().get(OPTIONS_PANEL_VIEW);
 				panel.onKeyPressed(e);
-			}		
+			}
+			if (this.getContextHolder() == INPUT_PANEL_VIEW)
+			{
+				InputPanel panel = (InputPanel) this.getPanelViews().get(INPUT_PANEL_VIEW);
+				panel.onKeyPressed(e);
+			}
 		}
 		
 		if (e.getCode().toString().equals("U")  && 
