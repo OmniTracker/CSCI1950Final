@@ -223,7 +223,7 @@ public class PlayerDialog extends GameWorld {
 	public static Image getBrownLogo () {
 		Image out = null;
 		try{
-			out =  new Image(new File("resources/backgrounds/BrownFinal2.png").toURI().toURL().toExternalForm());
+			out =  new Image(new File("resources/backgrounds/BrownFinal.png").toURI().toURL().toExternalForm());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
