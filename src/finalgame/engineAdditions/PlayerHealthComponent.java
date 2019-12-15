@@ -82,6 +82,14 @@ public class PlayerHealthComponent extends HealthComponent{
 		}
 	}
 	
+	public boolean isCoolingDown() {
+		return _coolingDown;
+	}
+	
+	public double getCooldown() {
+		return _cooldown;
+	}
+	
 	public double getCurrCooldown() {
 		return _cooldownCounter;
 	}
