@@ -45,6 +45,7 @@ public class AOELighningAbilityAnimationComponent extends AnimateAbilityComponen
 				_activeCounter = 0;
 				_hp.setInvulnerable(false);
 				_input.setMoveMultiplier(1.);
+				this.removeHitBox();
 			}
 		}
 		else if(_coolingDown) {
@@ -52,7 +53,6 @@ public class AOELighningAbilityAnimationComponent extends AnimateAbilityComponen
 			if(_cooldownCounter <= 0) {
 				_cooldownCounter = _cooldown;
 				_coolingDown = false;
-				this.removeHitBox();
 			}
 		}
 	}

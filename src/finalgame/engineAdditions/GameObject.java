@@ -133,4 +133,10 @@ public class GameObject {
 		return _name;
 	}
 	
+	public void remove() {
+		for (String s: _components.keySet()) {
+			_components.get(s).remove();
+		}
+	}
+	
 }

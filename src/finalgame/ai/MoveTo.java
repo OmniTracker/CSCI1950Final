@@ -19,6 +19,7 @@ public class MoveTo extends BTAction {
 	
 	public MoveTo(GameObject target, double up_dist, double low_dist) {
 		upper_dist = up_dist;
+		lower_dist = low_dist;
 		this.target = target;
 	}
 	
@@ -31,7 +32,12 @@ public class MoveTo extends BTAction {
 		_actions.add(new Move(speed,new Vec2d(0,-1)));
 		_actions.add(new Move(speed,new Vec2d(1,0)));
 		_actions.add(new Move(speed,new Vec2d(-1,0)));
-		TransformComponent ttc = (TransformComponent) target.getComponent("TRANSFORM");
+		TransformComponent ttc;
+		try {
+			ttc = (TransformComponent) target.getComponent("TRANSFORM");
+		} catch(NullPointerException e) {
+			return Status.FAILURE;
+		}
 		TransformComponent tc = (TransformComponent) _tree.getObject().getComponent("TRANSFORM");
 		DistanceState start = new DistanceState(null,tc.getLoc(),tc.getDim(), _tree.getWorld(),_tree.getObject());
 		DistanceState goal = new DistanceState(null, ttc.getLoc(), ttc.getDim(), _tree.getWorld(), _tree.getObject());
@@ -41,7 +47,7 @@ public class MoveTo extends BTAction {
 		
 		DistanceState s = (DistanceState) _astar.getNext(true);
 		if (s==null) {
-			return Status.FAILURE;
+			return Status.SUCCESS;
 		}
 		Action action = s.action;
 		

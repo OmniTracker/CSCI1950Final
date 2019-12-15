@@ -6,7 +6,7 @@ import javafx.scene.transform.Affine;
 
 public class AIBehaviorComponent extends Component{
 
-	BehaviorTree _bt;
+	private BehaviorTree _bt;
 	
 	public AIBehaviorComponent(GameObject go, BehaviorTree bt) {
 		super(go);
@@ -20,9 +20,9 @@ public class AIBehaviorComponent extends Component{
 
 	@Override
 	public void draw(GraphicsContext g, Affine af) {
-		// TODO Auto-generated method stub
-		
 	}
 
-	
+	public BehaviorTree getBT() {
+		return _bt;
+	}
 }

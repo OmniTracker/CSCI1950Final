@@ -12,4 +12,7 @@ public abstract class Component {
 		
 	public abstract void tick(long nanosSinceLastTick);
 	public abstract void draw(GraphicsContext g, Affine af);
+	public void remove() {
+		
+	}
 }

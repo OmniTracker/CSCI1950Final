@@ -59,6 +59,10 @@ public class BehaviorTree {
 		
 	}
 	
+	public BTNode getBehavior(int index) {
+		return nodes.get(index);
+	}
+	
 	public GroupInformation getGI() {
 		return gi;
 	}
