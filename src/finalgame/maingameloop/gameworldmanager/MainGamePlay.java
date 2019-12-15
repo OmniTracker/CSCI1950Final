@@ -129,7 +129,7 @@ public class MainGamePlay extends GameWorld {
 		_affine = new Affine();
 
 		// Used to display game view overlay
-		set_gamePlayOverlay(new GamePlayOverlay(app,parent));
+		set_gamePlayOverlay(new GamePlayOverlay(app,parent, this));
 		this.getKeys();
 		get_gamePlayOverlay().setKeyValues(placeHolders);
 	}
@@ -277,6 +277,7 @@ public class MainGamePlay extends GameWorld {
 		temp.setCharacter(this.getPlayerImage(character));
 		this.addSpecificCharacterComponents(character);
 		this.addToSystems(_player);
+		_gamePlayOverlay.getPlayerInfo(_player);
 	}
 
 	public Image getPlayerImage(int character) {

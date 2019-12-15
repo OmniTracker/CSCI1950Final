@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import engine.ai.AStar;
 import engine.ai.Action;
 import engine.ai.BTAction;
-import engine.ai.BehaviorTree;
 import engine.ai.Status;
 import finalgame.engineAdditions.AnimateGraphicsComponent;
 import finalgame.engineAdditions.GameObject;
@@ -16,17 +15,17 @@ public class MoveTo extends BTAction {
 	
 	private double upper_dist;
 	private double lower_dist;
+	private double speed;
 	
-	public MoveTo(GameObject target, double up_dist, double low_dist) {
+	public MoveTo(GameObject target, double up_dist, double low_dist, double speed) {
 		upper_dist = up_dist;
 		lower_dist = low_dist;
 		this.target = target;
+		this.speed = speed;
 	}
 	
 	@Override
-	public Status update(float seconds) {
-		double speed = 10;
-		
+	public Status update(float seconds) {		
 		_actions = new ArrayList<Action>();
 		_actions.add(new Move(speed,new Vec2d(0,1)));
 		_actions.add(new Move(speed,new Vec2d(0,-1)));
@@ -75,6 +74,40 @@ public class MoveTo extends BTAction {
 		if (s.compare(goal)) {
 			return Status.SUCCESS;
 		}
+		
+		s = (DistanceState) _astar.getNext(false);
+		
+		if (s==null) {
+			return Status.SUCCESS;
+		}
+		action = s.action;
+		
+		try {
+			
+			AnimateGraphicsComponent g = (AnimateGraphicsComponent) _tree.getObject().getComponent("ANIMATE");
+			
+			Vec2d d = action.getDir().normalize();
+			if (d.x<0) {
+				g.setAnimate(2);
+			} else if (d.x>0) {
+				g.setAnimate(3);
+			} else if (d.y<0) {
+				g.setAnimate(4);
+			} else if (d.y>0) {
+				g.setAnimate(1);
+			} else {
+				g.setAnimate(0);
+			}
+		} catch (NullPointerException e) {
+			
+		}
+		
+		action.act(_tree.getWorld(), _tree.getObject());
+		if (s.compare(goal)) {
+			return Status.SUCCESS;
+		}
+		
+		
 		return Status.RUNNING;
 	}
 

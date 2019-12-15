@@ -100,6 +100,14 @@ public abstract class AnimateAbilityComponent extends Component{
 		return _cooldownCounter;
 	}
 	
+	public double getCooldown() {
+		return _cooldown;
+	}
+	
+	public boolean isCoolingDown() {
+		return _coolingDown;
+	}
+	
 	public abstract void onHit(GameObject hitObject);
 	
 	public abstract Vec2d getHitBoxDim();
