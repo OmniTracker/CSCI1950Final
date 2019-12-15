@@ -38,14 +38,13 @@ public class GamePlayOverlay extends UIElement {
 	Application _app;
 	FinalGameWorld _parent;
 	AspectRatioHandler _aspect;
-	MainGamePlay _mainGP;
 	String[] placeHolders = new String[8];
 	Image[] buttonImages = new Image[4];
 	PlayerHealthComponent _health;
 	AnimateAbilityComponent[] _abilities = new AnimateAbilityComponent[4];
 	private int character;
 
-	public GamePlayOverlay(Application app, FinalGameWorld parent, MainGamePlay mainGP) {
+	public GamePlayOverlay(Application app, FinalGameWorld parent) {
 		_app = app;
 		_parent = parent;
 		_aspect = _app.getAspectRatioHandler();

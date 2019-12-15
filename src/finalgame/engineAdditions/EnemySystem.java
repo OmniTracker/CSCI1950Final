@@ -53,8 +53,8 @@ public class EnemySystem extends GameSystem {
 		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1000,100), new Vec2d(40,60), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
 		g.addComponent("HEALTH", new HealthComponent(g,_world, 1000));
-		g.addComponent("ABILITY", new EnemyRangedAbilityComponent(g,_world, _world.getBulletImage(), new Vec2d(17,7),
-				new Vec2d(68, 68), new Vec2d(0,0), new Vec2d(15,15), new Vec2d(0, 0),1, 1.0, 0, 300.));
+		g.addComponent("ABILITY", new EnemyRangedAbilityComponent(g,_world, _world.getShurikenImage(), new Vec2d(9,7),
+				new Vec2d(123, 123), new Vec2d(0,0), new Vec2d(15,15), new Vec2d(0, 0),200, 1.0, 0, 300.));
 		g.addComponent("TICK", new TickComponent(g));
 		TestGI gi = new TestGI();
 		BehaviorTree bt = new BehaviorTree(new Selector(),gi,_world, g);
@@ -74,8 +74,8 @@ public class EnemySystem extends GameSystem {
 		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1000,200), new Vec2d(40,60), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
 		g.addComponent("HEALTH", new HealthComponent(g,_world, 1000));
-		g.addComponent("ABILITY", new EnemyRangedAbilityComponent(g,_world, _world.getBulletImage(), new Vec2d(17,7),
-				new Vec2d(68, 68), new Vec2d(0,0), new Vec2d(15,15), new Vec2d(0, 0),1, 1.0, 0, 300.));
+		g.addComponent("ABILITY", new EnemyRangedAbilityComponent(g,_world, _world.getShurikenImage(), new Vec2d(9,7),
+				new Vec2d(123, 123), new Vec2d(0,0), new Vec2d(15,15), new Vec2d(0, 0),200, 1.0, 0, 300.));
 		g.addComponent("TICK", new TickComponent(g));
 		bt = new BehaviorTree(new Selector(),gi,_world, g);
 		bt.addBehavior(0,  new Sequencer());
@@ -96,7 +96,7 @@ public class EnemySystem extends GameSystem {
 			g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1000,300), new Vec2d(40,60), 1.0));
 			g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
 			g.addComponent("HEALTH", new HealthComponent(g,_world, 1000));
-			g.addComponent("ABILITY", new EnemyMeleeAbilityComponent(g,_world, _world.getWeaponImage(), new Vec2d(108,133),
+			g.addComponent("ABILITY", new EnemyMeleeAbilityComponent(g,_world, _world.getWeaponImage(), new Vec2d(108,266),
 					new Vec2d(46, 61), new Vec2d(0,0), new Vec2d(60,60), new Vec2d(0, 0),36, 1, 0, 70.));
 			g.addComponent("TICK", new TickComponent(g));
 			bt = new BehaviorTree(new Selector(),gi,_world, g);
@@ -139,7 +139,7 @@ public class EnemySystem extends GameSystem {
 			g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(800,300), new Vec2d(40,60), 1.0));
 			g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
 			g.addComponent("HEALTH", new HealthComponent(g,_world, 1000));
-			g.addComponent("ABILITY", new EnemyMeleeAbilityComponent(g,_world, _world.getWeaponImage(), new Vec2d(108,133),
+			g.addComponent("ABILITY", new EnemyMeleeAbilityComponent(g,_world, _world.getWeaponImage(), new Vec2d(108,266),
 					new Vec2d(46, 61), new Vec2d(0,0), new Vec2d(60,60), new Vec2d(0, 0),36, 1, 0, 70.));
 			g.addComponent("TICK", new TickComponent(g));
 			bt = new BehaviorTree(new Selector(),gi,_world, g);
@@ -208,8 +208,8 @@ public class EnemySystem extends GameSystem {
 		g.addComponent("TRANSFORM", new TransformComponent(g, ((TransformComponent) boss.getComponent("TRANSFORM")).getLoc().plus(new Vec2d(0,100)), new Vec2d(40,60), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
 		g.addComponent("HEALTH", new HealthComponent(g,_world, 1000));
-		g.addComponent("ABILITY", new EnemyRangedAbilityComponent(g,_world, _world.getBulletImage(), new Vec2d(17,7),
-				new Vec2d(68, 68), new Vec2d(0,0), new Vec2d(15,15), new Vec2d(0, 0),1, 1.0, 0, 300.));
+		g.addComponent("ABILITY", new EnemyRangedAbilityComponent(g,_world, _world.getShurikenImage(), new Vec2d(9,7),
+				new Vec2d(123, 123), new Vec2d(0,0), new Vec2d(15,15), new Vec2d(0, 0),200, 1.0, 0, 300.));
 		g.addComponent("TICK", new TickComponent(g));
 		BehaviorTree bt = new BehaviorTree(new Selector(),gi,_world, g);
 		bt.addBehavior(0,  new Sequencer());
@@ -228,8 +228,8 @@ public class EnemySystem extends GameSystem {
 		g.addComponent("TRANSFORM", new TransformComponent(g, ((TransformComponent) boss.getComponent("TRANSFORM")).getLoc().minus(new Vec2d(0,100)), new Vec2d(40,60), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
 		g.addComponent("HEALTH", new HealthComponent(g,_world, 1000));
-		g.addComponent("ABILITY", new EnemyRangedAbilityComponent(g,_world, _world.getBulletImage(), new Vec2d(17,7),
-				new Vec2d(68, 68), new Vec2d(0,0), new Vec2d(15,15), new Vec2d(0, 0),1, 1.0, 0, 300.));
+		g.addComponent("ABILITY", new EnemyRangedAbilityComponent(g,_world, _world.getShurikenImage(), new Vec2d(9,7),
+				new Vec2d(123, 123), new Vec2d(0,0), new Vec2d(15,15), new Vec2d(0, 0),200, 1.0, 0, 300.));
 		g.addComponent("TICK", new TickComponent(g));
 		bt = new BehaviorTree(new Selector(),gi,_world, g);
 		bt.addBehavior(0,  new Sequencer());
