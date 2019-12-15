@@ -20,6 +20,7 @@ public class TestGI extends GroupInformation {
 		healers = new ArrayList<GameObject>();
 	}
 	
+	@Override
 	public void addObject(GameObject o) {
 		objects.add(o);
 		if (o.getName().contains("HEALER")) {

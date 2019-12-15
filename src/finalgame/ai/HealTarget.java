@@ -2,6 +2,8 @@ package finalgame.ai;
 
 import engine.ai.BTAction;
 import engine.ai.Status;
+import finalgame.engineAdditions.AnimateGraphicsComponent;
+import support.Vec2d;
 
 public class HealTarget extends BTAction {
 

@@ -23,7 +23,7 @@ public class FireWaveAbilityComponent extends AnimateAbilityComponent{
 		super(go,gw, img, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown);
 		_range = range;
 		_offsetDir = new Vec2d(0,-1);
-		_damage = 10;
+		_damage = 20;
 	}
 	
 	public void activateAbility() {

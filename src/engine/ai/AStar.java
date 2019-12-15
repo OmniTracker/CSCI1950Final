@@ -41,11 +41,11 @@ public class AStar {
 				continue;
 			} 
 			front.remove(curr);
-			count++;/*
-			if (count>500) {
+			count++;
+			if (count>1000) {
 				goal_found = true;
 				fin = curr;
-			}*/
+			}
 			if (s.isGoalState(curr)) {
 				goal_found = true;
 				fin = curr;
