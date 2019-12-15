@@ -6,6 +6,20 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.apache.xml.security.encryption.XMLCipher;
+import org.apache.xml.security.utils.EncryptionConstants;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import engine.Application;
 import engine.GameWorld;
 import engine.ui.Button;
@@ -24,6 +38,7 @@ public class Introduction extends GameWorld {
 	public Introduction(Application app, GameWorld parent) {
 		super(app);
 		this.setFinalGameWorld((FinalGameWorld) parent);
+		org.apache.xml.security.Init.init();
 		this.setupGeneralUI();
 	}
 	private void setupGeneralUI () {
@@ -49,6 +64,30 @@ public class Introduction extends GameWorld {
 		selectPlayerButton.setColor( Color.WHITE);
 		selectPlayerButton.setFontName(EngineFonts.getAlc());
 		this.setSelectPlayerButton(selectPlayerButton);
+		
+		
+		
+		
+//		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+//		DocumentBuilder docBuilder = null;
+//		try 
+//		{
+//			docBuilder = factory.newDocumentBuilder();
+//		} 
+//		catch (ParserConfigurationException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		Document doc = docBuilder.newDocument();
+//		SecretKey key = getSecretKey("AES");
+//		Document encryptedDoc = null;
+//		final String algorithmURI = XMLCipher.AES_128;
+//		try {
+//			encryptedDoc = encryptDocument(doc, key,algorithmURI);
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 	}
 	public void drawButtons  (GraphicsContext g) {
 		double yOrigin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin().y + 
@@ -162,4 +201,40 @@ public class Introduction extends GameWorld {
 	private void setOptionsPanel(OptionsPanel _optionsPanel) {
 		this._optionsPanel = _optionsPanel;
 	}
+	
+	
+	public static SecretKey getSecretKey(String algorithm) {
+		 KeyGenerator keyGenerator = null;
+		 try {
+		  keyGenerator = KeyGenerator.getInstance(algorithm);
+		 } catch (NoSuchAlgorithmException e) {
+		  e.printStackTrace();
+		 }
+		 return keyGenerator.generateKey();
+		}
+	
+	public static Document encryptDocument(Document document, SecretKey secretKey, String algorithm) throws Exception {
+		 /* Get Document root element */
+		 Element rootElement = document.getDocumentElement();
+		 String algorithmURI = algorithm;
+		 XMLCipher xmlCipher = XMLCipher.getInstance(algorithmURI);
+
+		 /* Initialize cipher with given secret key and operational mode */
+		 xmlCipher.init(XMLCipher.ENCRYPT_MODE, secretKey);
+
+		 /* Process the contents of document */
+		 xmlCipher.doFinal(document, rootElement, true);
+		 return document;
+		}
+	
+	public static Document decryptDocument(Document document, SecretKey secretKey, String algorithm) throws Exception {
+		 Element encryptedDataElement = (Element) document.getElementsByTagNameNS(EncryptionConstants.EncryptionSpecNS, EncryptionConstants._TAG_ENCRYPTEDDATA).item(0);
+
+		 XMLCipher xmlCipher = XMLCipher.getInstance();
+
+		 xmlCipher.init(XMLCipher.DECRYPT_MODE, secretKey);
+		 xmlCipher.doFinal(document, encryptedDataElement);
+		 return document;
+	}
+	
 }

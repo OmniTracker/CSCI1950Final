@@ -1,10 +1,30 @@
 package finalgame.ui;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+import org.apache.xml.security.encryption.XMLCipher;
+import org.apache.xml.security.utils.EncryptionConstants;
+import org.apache.xml.security.utils.JavaUtils;
+import org.apache.xml.security.utils.XMLUtils;
+
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESedeKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -52,6 +72,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 	// High Score XML
 	private HashMap < String, Pair <String,String>> _playerRanking =  new HashMap <String,Pair <String,String> > ();
 	private String highScoreXMLPath = "./resources/xmlResources/.HighScore.xml";
+	private static String secretPath = "./resources/xmlResources/.key";
 	
 	public OptionsPanel(AspectRatioHandler app) {
 		super(app);
@@ -267,6 +288,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 	public void parseHighScores() 
 	{		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		factory.setNamespaceAware(true);
 		DocumentBuilder builder = null;
 		try
 		{
@@ -276,16 +298,31 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		{
 			e.printStackTrace();
 		}
-		Document document = null;
-		
+		Document endocument = null;
 		try 
 		{
-			document = builder.parse(new File(highScoreXMLPath));
+			endocument = builder.parse(new File(highScoreXMLPath));
 		} 
 		catch (SAXException | IOException e) 
 		{
 			e.printStackTrace();
 		}
+		//get our key from the file
+		SecretKey key= null;
+		try {
+			key = OptionsPanel.loadKeyEncryptionKey(secretPath);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Document document = endocument;
+		try {
+			document = OptionsPanel.decryptDocument(endocument, key, XMLCipher.AES_128);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		document.getDocumentElement().normalize();
 		Element root = document.getDocumentElement();
 		NodeList nList = document.getElementsByTagName("highScore");
@@ -390,6 +427,18 @@ public class OptionsPanel  extends Panel implements EventHandler{
 					highScore.appendChild(score); 
 				}
 				
+				 
+				Document encryptedDoc = null;
+				SecretKey key = OptionsPanel.getSecretKey("AES");
+				OptionsPanel.saveSecretKey(key, secretPath);
+				final String algorithmURI = XMLCipher.AES_128;
+				try {
+					encryptedDoc = encryptDocument(doc, key,algorithmURI);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 				TransformerFactory transformerFactory = TransformerFactory.newInstance();
 				Transformer transformer = null;
 				try 
@@ -399,7 +448,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 				catch (TransformerConfigurationException e) {
 					e.printStackTrace();
 				}
-				DOMSource domSource = new DOMSource(doc);
+				DOMSource domSource = new DOMSource(encryptedDoc);
 				StreamResult streamResult = new StreamResult(new File(highScoreXMLPath));
 				try 
 				{
@@ -410,6 +459,59 @@ public class OptionsPanel  extends Panel implements EventHandler{
 					e.printStackTrace();
 				}
 	}
+	
+	public static SecretKey getSecretKey(String algorithm) {
+		 KeyGenerator keyGenerator = null;
+		 try {
+		  keyGenerator = KeyGenerator.getInstance(algorithm);
+		 } catch (NoSuchAlgorithmException e) {
+		  e.printStackTrace();
+		 }
+		 return keyGenerator.generateKey();
+		}
+	
+	public static void saveSecretKey(SecretKey secretKey, String fileName) {
+		byte[] bytes = secretKey.getEncoded();
+		File file = new File(fileName);
+		try {
+			OutputStream os = new FileOutputStream(file);
+			os.write(bytes);
+			os.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+	
+	public static Document encryptDocument(Document document, SecretKey secretKey, String algorithm) throws Exception {
+		 /* Get Document root element */
+		 Element rootElement = document.getDocumentElement();
+		 String algorithmURI = algorithm;
+		 XMLCipher xmlCipher = XMLCipher.getInstance(algorithmURI);
+
+		 /* Initialize cipher with given secret key and operational mode */
+		 xmlCipher.init(XMLCipher.ENCRYPT_MODE, secretKey);
+
+		 /* Process the contents of document */
+		 xmlCipher.doFinal(document, rootElement, true);
+		 return document;
+		}
+	
+	public static Document decryptDocument(Document document, SecretKey secretKey, String algorithm) throws Exception {
+		 Element encryptedDataElement = (Element) document.getElementsByTagNameNS(EncryptionConstants.EncryptionSpecNS, EncryptionConstants._TAG_ENCRYPTEDDATA).item(0);
+
+		 XMLCipher xmlCipher = XMLCipher.getInstance();
+
+		 xmlCipher.init(XMLCipher.DECRYPT_MODE, secretKey);
+		 xmlCipher.doFinal(document, encryptedDataElement);
+		 return document;
+	}
+	
+	private static SecretKey loadKeyEncryptionKey(final String fileName) throws Exception {
+		byte[] key = Files.readAllBytes(Paths.get(fileName));
+		SecretKey originalKey = new SecretKeySpec(key, 0, key.length, "AES");
+		return originalKey;
+    }
+	
 	private HashMap<Integer,KeyBinding > getKeyBindingMap() {
 		return _keyBindingMap;
 	}
@@ -455,8 +557,5 @@ public class OptionsPanel  extends Panel implements EventHandler{
 	public void onShutdown() {}
 	public void onStartup() {}
 	public void onMousePressed(MouseEvent e) {}
-	//public boolean shouldUpdateHighScores(int get_highScore) {
-		// TODO Auto-generated method stub
-		//return false;
-	//}
+	
 }

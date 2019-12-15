@@ -82,9 +82,6 @@ import finalgame.ui.HighScorePanel;
 public class MainGamePlay extends GameWorld {
 
     //Highscore info
-    private boolean _highScoreTest = true;
-    private HighScorePanel _highScorePanel = null;
-    private Button _highScoreTestButton = null;
     private int _highScore;
 
 	private ArrayList<GameSystem> _systems;
@@ -108,8 +105,6 @@ public class MainGamePlay extends GameWorld {
 
 	//GameObject that represents the current player
 	private GameObject _player;
-	
-	private String highScoreXMLPath = "./resources/xmlResources/.HighScore.xml";
 
 	private Affine _affine;
 
