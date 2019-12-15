@@ -109,7 +109,7 @@ public class MainGamePlay extends GameWorld {
 	private Affine _affine;
 
 	private int _selectedCharacter;
-	private FinalGameWorld _finalGameWorld;
+	private FinalGameWorld _finalGameWorld; 
 
 	private String[] placeHolders = new String[8];
 	private String xmlPath = "./resources/xmlResources/.KeyBinding.xml";
