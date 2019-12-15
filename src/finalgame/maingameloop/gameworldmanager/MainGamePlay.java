@@ -630,7 +630,11 @@ public class MainGamePlay extends GameWorld {
 			for(int j=0; j<_systems.size(); j++) {
 				_systems.get(j).removeObject(_garbage.get(i));
 			}
-			_garbage.get(i).remove();
+			try {
+				_garbage.get(i).remove();
+			} catch(NullPointerException e) {
+			}
+			
 			_objects.remove(_garbage.get(i));
 		}
 		_garbage.clear();
