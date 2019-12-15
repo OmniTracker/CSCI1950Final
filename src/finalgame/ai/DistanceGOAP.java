@@ -45,8 +45,8 @@ public class DistanceGOAP extends GOAP {
 	
 	@Override
 	public boolean isGoalState(GameState s) {
-		if (((DistanceState) s).getLoc().dist2(((DistanceState) _goal).getLoc())<=dist && ((DistanceState) s).getLoc().dist2(((DistanceState) _goal).getLoc())>=lower_dist) {
-			
+		double d = ((DistanceState) s).getLoc().dist2(((DistanceState) _goal).getLoc());
+		if ((d<=dist) && (d>=lower_dist)) {
 			return true;
 		} else {
 			return false;

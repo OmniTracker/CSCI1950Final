@@ -85,7 +85,10 @@ public abstract class AnimateAbilityComponent extends Component{
 	}
 	
 	protected void removeHitBox() {
-		_gw.removeObject(_activeHitboxObj);
+		try {
+			_gw.removeObject(_activeHitboxObj);
+		} catch(NullPointerException e) {
+		}
 	}
 	
 	@Override
@@ -102,4 +105,9 @@ public abstract class AnimateAbilityComponent extends Component{
 	public abstract Vec2d getHitBoxDim();
 	public abstract Vec2d getHitBoxLoc();
 	public abstract int getHitboxType();
+	
+	@Override
+	public void remove() {
+		this.removeHitBox();
+	}
 }

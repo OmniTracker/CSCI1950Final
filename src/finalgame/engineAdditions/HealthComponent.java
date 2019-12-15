@@ -60,6 +60,10 @@ public class HealthComponent extends Component{
 		return _currentHealth;
 	}
 	
+	public double getTotalHealth() {
+		return _maxHealth;
+	}
+	
 	public void death() {
 		_gw.dieObject(_go);
 		System.out.println("OOF, an "+_go.getName()+" just DIED");

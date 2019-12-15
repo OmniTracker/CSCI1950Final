@@ -258,7 +258,7 @@ public class MainGamePlay extends GameWorld {
 	}
 
 	public void dieObject(GameObject go) {
-		if(go.getName().equals("ENEMY")) {
+		if(go.getName().contains("ENEMY")) {
 			set_highScore(get_highScore() + 50);
 			System.out.println("HIGHSCORE IS NOW: " + get_highScore());
 		}
@@ -630,6 +630,7 @@ public class MainGamePlay extends GameWorld {
 			for(int j=0; j<_systems.size(); j++) {
 				_systems.get(j).removeObject(_garbage.get(i));
 			}
+			_garbage.get(i).remove();
 			_objects.remove(_garbage.get(i));
 		}
 		_garbage.clear();

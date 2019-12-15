@@ -39,4 +39,28 @@ public class EnemyMeleeAbilityComponent extends EnemyRangedAbilityComponent{
 	        g.restore(); // back to original state (before rotation)
 		}
 	}
+	
+	@Override
+	public void onHit(GameObject hitObject) {
+		if(hitObject.hasComponent("HEALTH")) {
+			HealthComponent hp = (HealthComponent)hitObject.getComponent("HEALTH");
+			hp.takeDamage(_damage);
+		}
+		if(hitObject.hasComponent("TRANSFORM")) {
+			TransformComponent tc = (TransformComponent)hitObject.getComponent("TRANSFORM");
+			tc.move(_dir.smult(_knockback));
+		}
+	}
+	
+	@Override
+	public Vec2d getHitBoxDim() {
+		return _dim.sdiv(2);
+	}	
+
+
+	@Override
+	public Vec2d getHitBoxLoc() {
+		return _middleSwordLoc;
+	}
+
 }

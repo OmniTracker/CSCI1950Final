@@ -9,18 +9,13 @@ import finalgame.engineAdditions.PlayerHealthComponent;
 
 public class AttackEnemy extends BTAction {
 
-	private BehaviorTree tree;
-	private GameObject target;
-	private int counter = 0;
-
-	public AttackEnemy(GameObject target) {
-		this.target = target;
+	public AttackEnemy() {
 	}
 	
 	@Override
 	public Status update(float seconds) {
 		
-		EnemyRangedAbilityComponent c = (EnemyRangedAbilityComponent) tree.getObject().getComponent("ABILITY");
+		EnemyRangedAbilityComponent c = (EnemyRangedAbilityComponent) _tree.getObject().getComponent("ABILITY");
 		c.activateAbility();
 		
 		return Status.SUCCESS;
@@ -30,13 +25,4 @@ public class AttackEnemy extends BTAction {
 	public void reset() {
 	}
 
-	@Override
-	public void setTree(BehaviorTree tree) {
-		this.tree = tree;
-	}
-
-	@Override
-	public BehaviorTree getTree() {
-		return tree;
-	}
 }

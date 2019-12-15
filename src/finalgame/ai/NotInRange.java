@@ -21,7 +21,13 @@ public class NotInRange implements Condition {
 	
 	@Override
 	public Status update(float seconds) {
-		TransformComponent ttc = (TransformComponent) target.getComponent("TRANSFORM");
+		TransformComponent ttc;
+		try {
+			ttc = (TransformComponent) target.getComponent("TRANSFORM");
+		} catch(NullPointerException e) {
+			return Status.FAILURE;
+		}
+		
 		TransformComponent tc = (TransformComponent) tree.getObject().getComponent("TRANSFORM");
 		
 		if (tc.getLoc().dist2(ttc.getLoc())>=upper_range || tc.getLoc().dist2(ttc.getLoc())<=lower_range) {
