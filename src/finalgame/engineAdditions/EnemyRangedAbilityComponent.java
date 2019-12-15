@@ -10,6 +10,8 @@ import support.Vec2d;
 
 public class EnemyRangedAbilityComponent extends MouseAbilityAnimationComponent{
 
+	GameObject target;
+	
 	MediaPlayer _lzrPlayer;
 	
 	public EnemyRangedAbilityComponent(GameObject go, MainGamePlay gw, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc,
@@ -18,6 +20,7 @@ public class EnemyRangedAbilityComponent extends MouseAbilityAnimationComponent{
 		_damage = 10;
 		_knockback = 0;
 		_lzrPlayer = _gw.get_soundSys().getLzrPlayer();
+		target = _gw.get_player();
 	}
 	
 	@Override
@@ -31,6 +34,7 @@ public class EnemyRangedAbilityComponent extends MouseAbilityAnimationComponent{
 			TransformComponent playerTransform = (TransformComponent) _gw.get_player().getComponent("TRANSFORM");
 			Vec2d playerCenter = playerTransform.getLoc().plus(playerTransform.getDim().sdiv(2));
 			_dir = new Vec2d(playerCenter.x-_src.x, playerCenter.y-_src.y).normalize();
+			_lzrPlayer.seek(Duration.ZERO);
 			this.spawnSound();
 		}
 	}
@@ -68,6 +72,35 @@ public class EnemyRangedAbilityComponent extends MouseAbilityAnimationComponent{
 	}
 	
 	public void spawnSound() {
+		TransformComponent tC =  (TransformComponent) target.getComponent("TRANSFORM");
+		TransformComponent tCo =  (TransformComponent) _go.getComponent("TRANSFORM");
+		Vec2d dif = tC.getLoc().minus(tCo.getLoc());
+		_lzrPlayer.setVolume(.15);
+		double angle = dif.angle()*180/Math.PI;
+		double bal = 0;
+		//System.out.println(angle);
+		if (angle>90 && angle<270) {
+			if (angle<180) {
+				angle = angle-90;
+				bal = angle/90;
+			}else {
+				angle = angle-180;
+				bal = 1-angle/90;
+			}
+			
+			//System.out.println(bal);
+			_lzrPlayer.setBalance(bal);
+		}else {
+			if (angle > 270) {
+				angle=angle-270;
+				bal = -(angle/90);
+			}else {
+				bal=-(1-(angle/90));
+			}
+			
+			//System.out.println(bal);
+			_lzrPlayer.setBalance(bal);
+		}
 		_lzrPlayer.play();
 	}
 	

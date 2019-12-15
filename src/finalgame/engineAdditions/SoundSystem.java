@@ -63,14 +63,8 @@ public class SoundSystem extends GameSystem{
 		}
 	}
 	public void loadPlayers() {
-		Media lzr = new Media(new File("resources/sounds/Laser_Shoot_Long1.wav").toURI().toString());
+		Media lzr = new Media(new File("resources/sounds/Punch.wav").toURI().toString());
 		setLzrPlayer(new MediaPlayer(lzr));
-		lzrPlayer.setOnEndOfMedia(new Runnable() {
-			@Override
-			public void run() {
-				lzrPlayer.seek(Duration.ZERO);
-			}
-		});
 	}
 	public MediaPlayer getLzrPlayer() {
 		return lzrPlayer;

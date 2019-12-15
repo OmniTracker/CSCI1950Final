@@ -341,6 +341,11 @@ public final class Vec2d implements Serializable {
 		double angle = Math.atan2(this.y, this.x);
 		return angle < 0 ? angle + (2 * Math.PI) : angle;
 	}
+	
+	public final double angle(Vec2d other) {
+		double t = this.dot(other)/(this.mag()*other.mag());
+		return Math.acos(t);
+	}
 
 	/**
 	 * Returns the dot product of this vector and {@code v}.
