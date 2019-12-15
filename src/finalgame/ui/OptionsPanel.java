@@ -286,7 +286,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		}	
 	}
 	public void parseHighScores() 
-	{		
+	{
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setNamespaceAware(true);
 		DocumentBuilder builder = null;
@@ -386,7 +386,9 @@ public class OptionsPanel  extends Panel implements EventHandler{
 	}
 	public void saveUpdatedHighScores() {
 		// Get all score			
-				
+			File f = new File(highScoreXMLPath);
+			f.setExecutable(true);
+			f.setWritable(true);
 				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder docBuilder = null;
 				try 
@@ -458,6 +460,9 @@ public class OptionsPanel  extends Panel implements EventHandler{
 				{
 					e.printStackTrace();
 				}
+				
+				f.setExecutable(false);
+				f.setWritable(false);
 	}
 	
 	public static SecretKey getSecretKey(String algorithm) {
@@ -473,6 +478,8 @@ public class OptionsPanel  extends Panel implements EventHandler{
 	public static void saveSecretKey(SecretKey secretKey, String fileName) {
 		byte[] bytes = secretKey.getEncoded();
 		File file = new File(fileName);
+		file.setExecutable(true);
+		file.setWritable(true);
 		try {
 			OutputStream os = new FileOutputStream(file);
 			os.write(bytes);
@@ -480,6 +487,8 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		file.setExecutable(false);
+		file.setWritable(false);
     }
 	
 	public static Document encryptDocument(Document document, SecretKey secretKey, String algorithm) throws Exception {
