@@ -3,16 +3,21 @@ package finalgame.engineAdditions;
 import finalgame.maingameloop.gameworldmanager.MainGamePlay;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.transform.Affine;
+import javafx.util.Duration;
 import support.Vec2d;
 
 public class EnemyRangedAbilityComponent extends MouseAbilityAnimationComponent{
 
+	MediaPlayer _lzrPlayer;
+	
 	public EnemyRangedAbilityComponent(GameObject go, MainGamePlay gw, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc,
 			Vec2d dim, Vec2d animation_increment, int numFrames, double active_time, double cooldown, double range) {
 		super(go, gw, img, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown, range);
 		_damage = 10;
 		_knockback = 0;
+		_lzrPlayer = _gw.get_soundSys().getLzrPlayer();
 	}
 	
 	@Override
@@ -26,6 +31,7 @@ public class EnemyRangedAbilityComponent extends MouseAbilityAnimationComponent{
 			TransformComponent playerTransform = (TransformComponent) _gw.get_player().getComponent("TRANSFORM");
 			Vec2d playerCenter = playerTransform.getLoc().plus(playerTransform.getDim().sdiv(2));
 			_dir = new Vec2d(playerCenter.x-_src.x, playerCenter.y-_src.y).normalize();
+			this.spawnSound();
 		}
 	}
 	
@@ -59,6 +65,10 @@ public class EnemyRangedAbilityComponent extends MouseAbilityAnimationComponent{
 	@Override
 	protected void spawnHitbox() {
 		_activeHitboxObj = _gw.spawnEnemyAbilityHitbox(this);
+	}
+	
+	public void spawnSound() {
+		_lzrPlayer.play();
 	}
 	
 }

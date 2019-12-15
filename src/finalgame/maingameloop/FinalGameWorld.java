@@ -176,10 +176,6 @@ public class FinalGameWorld  extends GameWorld {
 		return __visibleGameWorldEnum;
 	}
 
-//	private void setupSoundSystem() {
-//		_soundSystem = new SoundSystem(this);
-//	}
-
 	public int getCharacterSelection() {
 		return _playerSelection.getCharacterSelection();
 	}

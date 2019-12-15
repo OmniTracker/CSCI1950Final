@@ -141,7 +141,7 @@ public class MainGamePlay extends GameWorld {
 		_inputSys = new PlayerInputSystem();
 		_collisionSys = new CollisionSystem(this);
 		_behaviorSys = new BehaviorSystem();
-		_soundSys = new SoundSystem(_finalGameWorld);
+		_soundSys = new SoundSystem(this);
 		_enemySys = new EnemySystem(this);
 		_systems.add(_tickSys);
 		_systems.add(_graphicsSys);
@@ -715,6 +715,16 @@ public class MainGamePlay extends GameWorld {
 
 	public void set_highScore(int _highScore) {
 		this._highScore = _highScore;
+	}
+
+
+	public SoundSystem get_soundSys() {
+		return _soundSys;
+	}
+
+
+	public void set_soundSys(SoundSystem _soundSys) {
+		this._soundSys = _soundSys;
 	}
 
 }

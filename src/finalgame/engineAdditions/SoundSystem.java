@@ -16,57 +16,72 @@ import javax.sound.midi.Synthesizer;
 import javax.sound.sampled.*;
 
 import finalgame.maingameloop.FinalGameWorld;
+import finalgame.maingameloop.gameworldmanager.MainGamePlay;
+import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 public class SoundSystem extends GameSystem{
-	// to store current position 
-	Long _currentFrame; 
-	Clip _clipMusic; 
-	// current status of clip 
-	String _status; 
-	AudioInputStream _audioInputStreamMusic; 
-	static String _filePathMusic; 
-	File _soundFile;
-	public SoundSystem(FinalGameWorld finalGameWorld) {
-		Runnable runSound = new Runnable() {
-			public void run() {
-				Sequencer sequencer = null;
-				try {
-					Sequence sequence = null;
-					try {
-						sequence = MidiSystem.getSequence(new File("resources/sounds/Avengers.mid"));
-					} catch (InvalidMidiDataException | IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					sequencer = MidiSystem.getSequencer();
-					sequencer.open();
-					try {
-						sequencer.setSequence(sequence);
-					} catch (InvalidMidiDataException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+		
+	private MediaPlayer lzrPlayer;
+	private MainGamePlay _game;
+	
+	public SoundSystem(MainGamePlay game) {
+		_game=game;
+		//final JFXPanel fxPanel = new JFXPanel();
+		this.loadPlayers();
+		String _filePath = "./resources/sounds/test.wav";
+		Clip _clip = null;
+		try {
+			AudioInputStream _audioInputStream = AudioSystem.getAudioInputStream(new File(_filePath).getAbsoluteFile());
 
-
-				} catch (MidiUnavailableException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				// Start playing
-				sequencer.start();
-			}
-		};
+			_clip = AudioSystem.getClip();
+		
+			_clip.open(_audioInputStream);
+		
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		FloatControl volume = (FloatControl)_clip.getControl(FloatControl.Type.MASTER_GAIN);
+		volume.setValue(-20);
+		
+		
+		_clip.loop(Clip.LOOP_CONTINUOUSLY);
+		_clip.start();
+		
+		
+		
+		
 	}
 	@Override
 	public void addObject(GameObject go) {
 		if(go.hasComponent("SOUND")) {
-			this.addObject(go);
+			_objects.add(go);
 		}
 	}
-	public void loadFiles() {
-		_soundFile = new File("resources/sounds/test.wav");
+	public void loadPlayers() {
+		Media lzr = new Media(new File("resources/sounds/Laser_Shoot_Long1.wav").toURI().toString());
+		setLzrPlayer(new MediaPlayer(lzr));
+		lzrPlayer.setOnEndOfMedia(new Runnable() {
+			@Override
+			public void run() {
+				lzrPlayer.seek(Duration.ZERO);
+			}
+		});
 	}
+	public MediaPlayer getLzrPlayer() {
+		return lzrPlayer;
+	}
+	public void setLzrPlayer(MediaPlayer lzrPlayer) {
+		this.lzrPlayer = lzrPlayer;
+	}
+	
+	
+	
+	
+	
 
 }
