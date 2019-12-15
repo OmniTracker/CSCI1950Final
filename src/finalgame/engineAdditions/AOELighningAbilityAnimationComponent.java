@@ -78,7 +78,7 @@ public class AOELighningAbilityAnimationComponent extends AnimateAbilityComponen
 			HealthComponent hp = (HealthComponent)hitObject.getComponent("HEALTH");
 			hp.takeDamage(_damage);
 		}
-		if(hitObject.hasComponent("TRANSFORM")) {
+		if(hitObject.hasComponent("TRANSFORM") && !hitObject.getName().contains("BOSS")) {
 			TransformComponent tc = (TransformComponent)hitObject.getComponent("TRANSFORM");
 			tc.move(new Vec2d(Math.random(), Math.random()).normalize().smult(_shockDistance));
 		}
