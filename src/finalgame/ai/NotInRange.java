@@ -25,10 +25,8 @@ public class NotInRange implements Condition {
 		TransformComponent tc = (TransformComponent) tree.getObject().getComponent("TRANSFORM");
 		
 		if (tc.getLoc().dist2(ttc.getLoc())>=upper_range || tc.getLoc().dist2(ttc.getLoc())<=lower_range) {
-			System.out.println(1);
 			return Status.SUCCESS;
 		} else {
-			System.out.println(0);
 			return Status.FAILURE;
 		}
 	}
