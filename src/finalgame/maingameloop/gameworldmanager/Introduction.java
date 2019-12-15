@@ -165,6 +165,7 @@ public class Introduction extends GameWorld {
 			if (this.getOptionsButton().clicked(e)) 
 			{				
 				this.getOptionsPanel().parseHighScores();
+				this.getOptionsPanel().initKeyBindingButtons();
 				this.getOptionsPanel().setShowing(true);
 			} 
 			else if (this.getSelectPlayerButton().clicked(e)) 
