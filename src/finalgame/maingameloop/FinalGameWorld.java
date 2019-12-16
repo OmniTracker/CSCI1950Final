@@ -23,6 +23,7 @@ public class FinalGameWorld  extends GameWorld {
 	private GameWorld _currentlySelectedScreen;
 	private VisibleGameWorld __visibleGameWorldEnum;
 	private Final _parent;
+	private Application _app;
 	
 	//private SoundSystem _soundSystem;
 	
@@ -44,6 +45,7 @@ public class FinalGameWorld  extends GameWorld {
 		this.changeCurrentScreen(VisibleGameWorld.INTRODUCTION);
 		// Check at what point this is starting
 		this.getFinalGameObjectHandler().initGameCharacters();
+		_app = app;
 	}
 	public void changeCurrentScreen(VisibleGameWorld screen)
 	{
@@ -53,15 +55,24 @@ public class FinalGameWorld  extends GameWorld {
 		}
 		else if (screen == VisibleGameWorld.PLAYERSELECTION)
 		{
-			this.setCurrentlySelectedScreen(this.getPlayerSelection());
+			PlayerSelection ps = new PlayerSelection(_app,this);
+			ps.initScreen();
+			this.setPlayerSelection(ps);
+			this.setCurrentlySelectedScreen(ps);
 		}
 		else if (screen == VisibleGameWorld.PLAYERDIALOG)
 		{
-			this.setCurrentlySelectedScreen(this.getPlayerDialog());
+			PlayerDialog pd = new PlayerDialog(_app, this);
+			this.setPlayerDialog(pd);
+			pd.setCharacterImages(this.getFinalGameObjectHandler().getCharacterImages());
+			this.setCurrentlySelectedScreen(pd);
 		}
 		else if (screen == VisibleGameWorld.MAINGAMEPLAY) {
-			this.setCurrentlySelectedScreen(this.getMainGamePlay());
-			this.getMainGamePlay().setCharacter(this.getCharacterSelection());
+			MainGamePlay g = new MainGamePlay(_app, this);
+			this.setMainGamePlay(g);
+			g.load();
+			this.setCurrentlySelectedScreen(g);
+			g.setCharacter(this.getCharacterSelection());
 		}
 	}
 	public void onTick(long nanosSincePreviousTick) {

@@ -19,7 +19,17 @@ public class Turn extends Action {
 		
 		try {
 			AnimateGraphicsComponent g = (AnimateGraphicsComponent) obj.getComponent("ANIMATE");
-			
+			if (dir.x<0 && Math.abs(dir.x)>Math.abs(dir.y)) {
+				g.setAnimate(2);
+			} else if (dir.x>0 && Math.abs(dir.x)>Math.abs(dir.y)) {
+				g.setAnimate(3);
+			} else if (dir.y<0) {
+				g.setAnimate(4);
+			} else if (dir.y>0) {
+				g.setAnimate(1);
+			} else {
+				g.setAnimate(0);
+			}
 			
 		} catch (NullPointerException e) {
 			

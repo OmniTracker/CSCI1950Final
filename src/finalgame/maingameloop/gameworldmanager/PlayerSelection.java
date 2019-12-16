@@ -282,7 +282,12 @@ public class PlayerSelection extends GameWorld {
 				_nextPlayer = (( _currentPlayer - 1 == -1) ? 3 : _currentPlayer - 1);
 				_inTransition = true;
 			} else if (key.equals("s") || key.equals("S")) {
-				_transitionPercent += 0.05;	
+				if (_currentPlayer==2 || _currentPlayer==1) {
+					return;
+				}
+				direction = NO_DIRECTION;
+				_transitionPercent += 0.05;
+				_inTransition = true;
 			}
 		}
 	}
