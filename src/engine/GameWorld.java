@@ -95,7 +95,7 @@ public class GameWorld {
 	public GameWorld getParent() {
 		return _parent;
 	}
-	public void setParent(GameWorld _parent) {
+	protected void setParent(GameWorld _parent) {
 		this._parent = _parent;
 	}
 	public ArrayList<GameObject> getObjects() {

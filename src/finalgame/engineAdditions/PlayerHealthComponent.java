@@ -105,7 +105,7 @@ public class PlayerHealthComponent extends HealthComponent{
 	@Override
 	public void death() {
 //		_gw.dieObject(_go);
-		
+		System.out.println("dead");
 		FinalGameWorld tw = (FinalGameWorld)_gw.getParent();
 		FinalMenuBar menu = tw.get_parent().getFinalViewport().getMenuBar();
 		OptionsPanel opanel = (OptionsPanel)menu.getPanelViews().get(8);
