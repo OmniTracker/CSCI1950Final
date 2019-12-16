@@ -31,6 +31,10 @@ public abstract class GroupInformation {
 		}
 	}
 	
+	public void addObject(GameObject o) {
+		_group.add(o);
+	}
+	
 	public void removeObject(GameObject obj) {
 		_group.remove(obj);
 	}

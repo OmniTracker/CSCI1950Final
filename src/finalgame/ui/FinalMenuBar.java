@@ -73,24 +73,24 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 	{
 		// Instructions panel
 		InstructionPanel intructionsPanel = new InstructionPanel(this.getAspectRatio());
-		intructionsPanel.setColor(Color.DARKGRAY);
-		intructionsPanel.setSecondaryColor(Color.DARKGREEN);
+		intructionsPanel.setColor(Color.WHITE);
+		intructionsPanel.setSecondaryColor(Color.BLACK);
 		intructionsPanel.setSize( new Vec2d(600,300));
 		intructionsPanel.setOrigin(new Vec2d(0,0));
 		intructionsPanel.setBoarderSize(10);
 		this.insertPanel(INSTRUCTIONS_PANEL_VIEW, intructionsPanel);
 		// Options Panel
 		OptionsPanel optionsPanel = new OptionsPanel( this.getAspectRatio()); 
-		optionsPanel.setColor(Color.DARKGRAY);
-		optionsPanel.setSecondaryColor(Color.DARKGREEN);
+		optionsPanel.setColor(Color.WHITE);
+		optionsPanel.setSecondaryColor(Color.BLACK);
 		optionsPanel.setSize( new Vec2d(1000,600));	
 		optionsPanel.setOrigin(new Vec2d(0,0));
 		optionsPanel.setBoarderSize(10);
 		this.insertPanel((Integer)OPTIONS_PANEL_VIEW, optionsPanel);
 		// End Game Panel
 		EndGamePanel endGamePanel = new EndGamePanel( this.getAspectRatio()); 
-		endGamePanel.setColor(Color.DARKGRAY);
-		endGamePanel.setSecondaryColor(Color.DARKGREEN);
+		endGamePanel.setColor(Color.WHITE);
+		endGamePanel.setSecondaryColor(Color.BLACK);
 		endGamePanel.setSize( new Vec2d(300,200));	
 		endGamePanel.setOrigin(new Vec2d(0,0));
 		endGamePanel.setBoarderSize(10);
@@ -98,8 +98,8 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 
 		// End Game Panel
 		UpgradesPanel upgradesPanel = new UpgradesPanel( this.getAspectRatio()); 
-		upgradesPanel.setColor(Color.DARKGRAY);
-		upgradesPanel.setSecondaryColor(Color.DARKGREEN);
+		upgradesPanel.setColor(Color.WHITE);
+		upgradesPanel.setSecondaryColor(Color.BLACK);
 		upgradesPanel.setSize( new Vec2d(500,400));	
 		upgradesPanel.setOrigin(new Vec2d(0,0));
 		upgradesPanel.setBoarderSize(10);
@@ -107,8 +107,8 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		
 		//Input game panel
 		InputPanel inputPanel = new InputPanel( this.getAspectRatio()); 
-		inputPanel.setColor(Color.DARKGRAY);
-		inputPanel.setSecondaryColor(Color.DARKGREEN);
+		inputPanel.setColor(Color.WHITE);
+		inputPanel.setSecondaryColor(Color.BLACK);
 		inputPanel.setSize( new Vec2d(500,400));	
 		inputPanel.setOrigin(new Vec2d(0,0));
 		inputPanel.setBoarderSize(10);
@@ -122,7 +122,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		instructions.setSize( new Vec2d(100,30));
 		instructions.setColor( Color.WHITE);
 		instructions.setFontName(EngineFonts.getWiz());
-		this.insertButton(instructions.getText(),instructions);		
+		// this.insertButton(instructions.getText(),instructions);		
 		// Options
 		Button options = new Button();
 		options.setText("Options");
@@ -144,10 +144,11 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		upgrades.setSize(new Vec2d(100,30));
 		upgrades.setColor( Color.WHITE);
 		upgrades.setFontName(EngineFonts.getWiz());
-		this.insertButton(upgrades.getText(),upgrades);
+		// this.insertButton(upgrades.getText(),upgrades);
 	}	
 	private void drawPanelView(GraphicsContext g) 
-	{
+	{	
+		g.setGlobalAlpha(0.6);	
 		if (this.isMenuActivated() == true)  
 		{
 			if (this.getContextHolder() == INSTRUCTIONS_PANEL_VIEW) 
@@ -201,6 +202,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 				}
 			}
 		}
+		g.setGlobalAlpha(1.0);
 	}
 	private void checkMenuButtonActivation(MouseEvent e) 
 	{
@@ -244,19 +246,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		} 
 		else 
 		{
-			if (this.getContextHolder() == INSTRUCTIONS_PANEL_VIEW) 
-			{
-				InstructionPanel panel = (InstructionPanel) this.getPanelViews().get(INSTRUCTIONS_PANEL_VIEW);
-				panel.onMouseClicked(e);				
-				// Check if the window has been closed
-				if ( panel.isShowing() == false) 
-				{
-					// Reset Context holders
-					this.setContextHolder(-1);
-					this.setMenuActivated(false);
-				}
-			} 
-			else if (this.getContextHolder() == OPTIONS_PANEL_VIEW) 
+			if (this.getContextHolder() == OPTIONS_PANEL_VIEW) 
 			{	
 				OptionsPanel panel = (OptionsPanel) this.getPanelViews().get(OPTIONS_PANEL_VIEW);
 				panel.onMouseClicked(e);	
@@ -296,18 +286,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 					this.setMenuActivated(false);
 				}
 			}
-			else if (this.getContextHolder() == UPGRADES_PANEL_VIEW) 
-			{	
-				UpgradesPanel panel = (UpgradesPanel) this.getPanelViews().get(UPGRADES_PANEL_VIEW);
-				panel.onMouseClicked(e);	
-				// Check if the window has been closed
-				if ( panel.isShowing() == false)
-				{
-					// Reset Context holder
-					this.setContextHolder(-1);
-					this.setMenuActivated(false);
-				}
-			}
+			
 			else if (this.getContextHolder() == INPUT_PANEL_VIEW)
 			{
 				InputPanel input = (InputPanel) this.getPanelViews().get(INPUT_PANEL_VIEW);

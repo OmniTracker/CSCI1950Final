@@ -37,15 +37,12 @@ public class CollisionSystem extends GameSystem{
 		} else if (go1.getName().contains("PLAYER") && go2.getName().contains("ENEMY")) {
 			TransformComponent m1 = (TransformComponent) go1.getComponent("TRANSFORM");
 			m1.move(mtv.sdiv(1));
-		}
-		else if(go1.getName().equals("ABILITY") && go2.getName().contains("ENEMY")) {
+		} else if(go1.getName().equals("ABILITY") && go2.getName().contains("ENEMY")) {
 			AbilityCollisionComponent curr = (AbilityCollisionComponent) go1.getComponent("COLLISION");
 			curr.hit(go2);
 		} else if (go1.getName().contains("ENEMY") && go2.getName().contains("ENEMY")) {
 			TransformComponent m1 = (TransformComponent) go1.getComponent("TRANSFORM");
-			TransformComponent m2 = (TransformComponent) go2.getComponent("TRANSFORM");
 			m1.move(mtv.sdiv(1));
-			//m2.move(mtv.sdiv(-2));
 		} else if (go1.getName().equals("ENABILITY") && go2.getName().contains("PLAYER")) {
 			AbilityCollisionComponent curr = (AbilityCollisionComponent) go1.getComponent("COLLISION");
 			curr.hit(go2);

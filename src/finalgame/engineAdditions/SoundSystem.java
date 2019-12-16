@@ -28,6 +28,8 @@ public class SoundSystem extends GameSystem{
 	private MainGamePlay _game;
 	
 	public SoundSystem(MainGamePlay game) {
+		
+
 		_game=game;
 		//final JFXPanel fxPanel = new JFXPanel();
 		this.loadPlayers();
@@ -51,7 +53,6 @@ public class SoundSystem extends GameSystem{
 		
 		_clip.loop(Clip.LOOP_CONTINUOUSLY);
 		_clip.start();
-		
 		
 		
 		

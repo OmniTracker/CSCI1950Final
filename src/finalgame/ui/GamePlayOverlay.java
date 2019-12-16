@@ -5,30 +5,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-
-import java.io.IOException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
 import engine.Application;
-import engine.ui.KeyBinding;
+import finalgame.engineAdditions.GameObject;
 import engine.ui.UIElement;
 import engine.utility.AspectRatioHandler;
-import finalgame.engineAdditions.AOELighningAbilityAnimationComponent;
-import finalgame.engineAdditions.FireWaveAbilityComponent;
-import finalgame.engineAdditions.IceBlockAbilityComponent;
-import finalgame.engineAdditions.MeleeMouseAbilityComponent;
-import finalgame.engineAdditions.MouseAbilityAnimationComponent;
+import finalgame.engineAdditions.AnimateAbilityComponent;
 import finalgame.engineAdditions.PlayerHealthComponent;
-import finalgame.engineAdditions.PortalAbilityComponent;
-import finalgame.engineAdditions.ScratchAbilityComponent;
-import finalgame.engineAdditions.TeleportAbilityComponent;
 import finalgame.maingameloop.FinalGameWorld;
 import finalgame.maingameloop.gameworldmanager.MainGamePlay;
 
@@ -38,12 +20,15 @@ public class GamePlayOverlay extends UIElement {
 	AspectRatioHandler _aspect;
 	String[] placeHolders = new String[8];
 	Image[] buttonImages = new Image[4];
+	PlayerHealthComponent _health;
+	AnimateAbilityComponent[] _abilities = new AnimateAbilityComponent[4];
 	private int character;
 
 	public GamePlayOverlay(Application app, FinalGameWorld parent) {
 		_app = app;
 		_parent = parent;
 		_aspect = _app.getAspectRatioHandler();
+		_health = null;
 	}
 
 	public void drawOverlay(GraphicsContext g) {
@@ -51,7 +36,6 @@ public class GamePlayOverlay extends UIElement {
 		this.drawScore(g);
 		this.drawHitPoints(g);
 		this.drawHitPointValues(g);
-		this.drawCoinCount(g);
 		this.drawAbilities(g);
 	}
 
@@ -59,7 +43,12 @@ public class GamePlayOverlay extends UIElement {
 		Vec2d size = _aspect.calculateUpdatedScreenSize();
 		Vec2d origin = _aspect.calculateUpdatedOrigin();
 		Vec2d roundOrigin = origin.plus(20, (size.y - 40));
-		this.labelHelper(g, roundOrigin, "HP: xx / xx");
+		if(_health != null) {
+			this.labelHelper(g, roundOrigin, "HP: "+(int)_health.getHealth()+" / "+(int)_health.getTotalHealth());
+		}
+		else {
+			this.labelHelper(g, roundOrigin, "HP: xx / xx");
+		}
 	}
 
 	private void drawRound(GraphicsContext g) {
@@ -77,14 +66,6 @@ public class GamePlayOverlay extends UIElement {
 		String score = Integer.toString(main.get_highScore());
 		this.labelHelper(g, scoreOrigin, "Score: "+ score);
 	}
-
-	private void drawCoinCount(GraphicsContext g) {
-		Vec2d size = _aspect.calculateUpdatedScreenSize();
-		Vec2d origin = _aspect.calculateUpdatedOrigin();
-		Vec2d roundOrigin = origin.plus(20, (size.y - 80));
-		this.labelHelper(g, roundOrigin, "Coins: xxxx");
-	}
-
 	private void labelHelper(GraphicsContext g, Vec2d roundOrigin, String text) {
 		g.setFill(Color.GRAY);
 		g.fillRoundRect(roundOrigin.x, roundOrigin.y, 180, 35, 5, 5);
@@ -104,10 +85,14 @@ public class GamePlayOverlay extends UIElement {
 		// Draw Health bar max.
 		g.setFill(Color.BLACK);
 		g.fillRoundRect(origin.x + 220, hitpointOrigin.y, heathBarMaxDraw, 30, 20, 20);
-
+		
+		double currHealth = 0;
+		if(_health != null) {
+			currHealth = (_health.getHealth()/_health.getTotalHealth()) * (heathBarMaxDraw-8);
+		}
 		// This is just here as a placeholder
 		g.setFill(Color.AQUA);
-		g.fillRoundRect(origin.x + 225, hitpointOrigin.y + 4, 200, 22, 20, 20);
+		g.fillRoundRect(origin.x + 225, hitpointOrigin.y + 4, currHealth, 22, 20, 20);
 	}
 
 	public void drawAbilities(GraphicsContext g) {
@@ -137,7 +122,14 @@ public class GamePlayOverlay extends UIElement {
 			g.drawImage(buttonImages[0],0,0,32,32,attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);
 			break;
 		}
-		g.setFill(Color.WHITESMOKE);
+		if(_health != null && _health.isCoolingDown()) {
+			g.setFill(Color.rgb(121, 115, 115, 0.4));
+			g.fillRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, (_health.getCurrCooldown()/_health.getCooldown())*boxSize, boxSize);
+			g.setFill(Color.LIGHTCORAL);
+		}
+		else {
+			g.setFill(Color.WHITESMOKE);
+		}
 		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize) + 2,
 				attributesOrigin.y + (boxSize / smallBaxFactor) - 2, (boxSize / smallBaxFactor) - 2,
 				(boxSize / smallBaxFactor) - 2, 10, 10);
@@ -155,8 +147,15 @@ public class GamePlayOverlay extends UIElement {
 			g.drawImage(buttonImages[1], attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
 		case 3:
 			g.drawImage(buttonImages[1], attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+		}		
+		if(_abilities[1] != null && _abilities[1].isCoolingDown()) {
+			g.setFill(Color.rgb(121, 115, 115, 0.4));
+			g.fillRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, (_abilities[1].getCurrCooldown()/_abilities[1].getCooldown())*boxSize, boxSize);
+			g.setFill(Color.LIGHTCORAL);
 		}
-		g.setFill(Color.WHITESMOKE);
+		else {
+			g.setFill(Color.WHITESMOKE);
+		}
 		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize) + 2,
 				attributesOrigin.y + (boxSize / smallBaxFactor) - 2, (boxSize / smallBaxFactor) - 2,
 				(boxSize / smallBaxFactor) - 2, 10, 10);
@@ -174,8 +173,15 @@ public class GamePlayOverlay extends UIElement {
 			g.drawImage(buttonImages[2],576,0,192,192, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
 		case 3:
 			g.drawImage(buttonImages[2],576,0,192,192, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+		}		
+		if(_abilities[2] != null && _abilities[2].isCoolingDown()) {
+			g.setFill(Color.rgb(121, 115, 115, 0.4));
+			g.fillRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, (_abilities[2].getCurrCooldown()/_abilities[2].getCooldown())*boxSize, boxSize);
+			g.setFill(Color.LIGHTCORAL);
 		}
-		g.setFill(Color.WHITESMOKE);
+		else {
+			g.setFill(Color.WHITESMOKE);
+		}
 		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize) + 2,
 				attributesOrigin.y + (boxSize / smallBaxFactor) - 2, (boxSize / smallBaxFactor) - 2,
 				(boxSize / smallBaxFactor) - 2, 10, 10);
@@ -193,8 +199,15 @@ public class GamePlayOverlay extends UIElement {
 			g.drawImage(buttonImages[3],0,0,2100,2000, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
 		case 3:
 			g.drawImage(buttonImages[3],0,0,2100,2000, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+		}		
+		if(_abilities[3] != null && _abilities[3].isCoolingDown()) {
+			g.setFill(Color.rgb(121, 115, 115, 0.4));
+			g.fillRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, (_abilities[3].getCurrCooldown()/_abilities[3].getCooldown())*boxSize, boxSize);
+			g.setFill(Color.LIGHTCORAL);
 		}
-		g.setFill(Color.WHITESMOKE);
+		else {
+			g.setFill(Color.WHITESMOKE);
+		}
 		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize) + 2,
 				attributesOrigin.y + (boxSize / smallBaxFactor) - 2, (boxSize / smallBaxFactor) - 2,
 				(boxSize / smallBaxFactor) - 2, 10, 10);
@@ -216,7 +229,7 @@ public class GamePlayOverlay extends UIElement {
 			buttonImages[1] = MainGamePlay.getTeleportImage();
 			buttonImages[3] = MainGamePlay.getFireWaveImage();
 			buttonImages[2] = MainGamePlay.getIceBlockImage();
-
+			
 			break;
 		case 1:
 			// EZRA
@@ -228,12 +241,18 @@ public class GamePlayOverlay extends UIElement {
 			break;
 		case 3:
 			buttonImages[1] = MainGamePlay.getPortalImage();
-			buttonImages[3] = MainGamePlay.getAOELightningImage();
 			buttonImages[2] = MainGamePlay.getElectricScratchImage();
-			
+			buttonImages[3] = MainGamePlay.getAOELightningImage();
 			break;
 		default:
 			break;
 		}
+	}
+	
+	public void getPlayerInfo(GameObject player) {
+		_health = (PlayerHealthComponent)player.getComponent("HEALTH");
+		_abilities[1] = (AnimateAbilityComponent)player.getComponent("ABILITY_F");
+		_abilities[2] = (AnimateAbilityComponent)player.getComponent("ABILITY_E");
+		_abilities[3] = (AnimateAbilityComponent)player.getComponent("ABILITY_Q");
 	}
 }

@@ -44,8 +44,8 @@ public class Introduction extends GameWorld {
 	private void setupGeneralUI () {
 		// Options Panel
 		OptionsPanel optionsPanel = new OptionsPanel( this.getApplication().getAspectRatioHandler());
-		optionsPanel.setColor(Color.DARKGRAY);
-		optionsPanel.setSecondaryColor(Color.DARKGREEN);
+		optionsPanel.setColor(Color.WHITE);
+		optionsPanel.setSecondaryColor(Color.BLACK);
 		optionsPanel.setSize( new Vec2d(1000,600));
 		optionsPanel.setOrigin(new Vec2d(0,0));
 		optionsPanel.setBoarderSize(10);
@@ -64,30 +64,11 @@ public class Introduction extends GameWorld {
 		selectPlayerButton.setColor( Color.WHITE);
 		selectPlayerButton.setFontName(EngineFonts.getAlc());
 		this.setSelectPlayerButton(selectPlayerButton);
-		
-		
-		
-		
-//		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-//		DocumentBuilder docBuilder = null;
-//		try 
-//		{
-//			docBuilder = factory.newDocumentBuilder();
-//		} 
-//		catch (ParserConfigurationException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		Document doc = docBuilder.newDocument();
-//		SecretKey key = getSecretKey("AES");
-//		Document encryptedDoc = null;
-//		final String algorithmURI = XMLCipher.AES_128;
-//		try {
-//			encryptedDoc = encryptDocument(doc, key,algorithmURI);
-//		} catch (Exception e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
+
+
+
+
+
 	}
 	public void drawButtons  (GraphicsContext g) {
 		double yOrigin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin().y + 
@@ -122,7 +103,9 @@ public class Introduction extends GameWorld {
 	}
 	public void onDraw(GraphicsContext g) {
 		Image intro = this.getFinalGameWorld().getFinalGameObjectHandler().getIntroImage(); 
+
 		Image introBackDrop = this.getFinalGameWorld().getFinalGameObjectHandler().getIntroBackdrop(); 
+
 		Vec2d origin   = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin();
 		Vec2d viewSize = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize(); 
 		if (intro != null) {
@@ -202,40 +185,40 @@ public class Introduction extends GameWorld {
 	private void setOptionsPanel(OptionsPanel _optionsPanel) {
 		this._optionsPanel = _optionsPanel;
 	}
-	
-	
+
+
 	public static SecretKey getSecretKey(String algorithm) {
-		 KeyGenerator keyGenerator = null;
-		 try {
-		  keyGenerator = KeyGenerator.getInstance(algorithm);
-		 } catch (NoSuchAlgorithmException e) {
-		  e.printStackTrace();
-		 }
-		 return keyGenerator.generateKey();
+		KeyGenerator keyGenerator = null;
+		try {
+			keyGenerator = KeyGenerator.getInstance(algorithm);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
 		}
-	
-	public static Document encryptDocument(Document document, SecretKey secretKey, String algorithm) throws Exception {
-		 /* Get Document root element */
-		 Element rootElement = document.getDocumentElement();
-		 String algorithmURI = algorithm;
-		 XMLCipher xmlCipher = XMLCipher.getInstance(algorithmURI);
-
-		 /* Initialize cipher with given secret key and operational mode */
-		 xmlCipher.init(XMLCipher.ENCRYPT_MODE, secretKey);
-
-		 /* Process the contents of document */
-		 xmlCipher.doFinal(document, rootElement, true);
-		 return document;
-		}
-	
-	public static Document decryptDocument(Document document, SecretKey secretKey, String algorithm) throws Exception {
-		 Element encryptedDataElement = (Element) document.getElementsByTagNameNS(EncryptionConstants.EncryptionSpecNS, EncryptionConstants._TAG_ENCRYPTEDDATA).item(0);
-
-		 XMLCipher xmlCipher = XMLCipher.getInstance();
-
-		 xmlCipher.init(XMLCipher.DECRYPT_MODE, secretKey);
-		 xmlCipher.doFinal(document, encryptedDataElement);
-		 return document;
+		return keyGenerator.generateKey();
 	}
-	
+
+	public static Document encryptDocument(Document document, SecretKey secretKey, String algorithm) throws Exception {
+		/* Get Document root element */
+		Element rootElement = document.getDocumentElement();
+		String algorithmURI = algorithm;
+		XMLCipher xmlCipher = XMLCipher.getInstance(algorithmURI);
+
+		/* Initialize cipher with given secret key and operational mode */
+		xmlCipher.init(XMLCipher.ENCRYPT_MODE, secretKey);
+
+		/* Process the contents of document */
+		xmlCipher.doFinal(document, rootElement, true);
+		return document;
+	}
+
+	public static Document decryptDocument(Document document, SecretKey secretKey, String algorithm) throws Exception {
+		Element encryptedDataElement = (Element) document.getElementsByTagNameNS(EncryptionConstants.EncryptionSpecNS, EncryptionConstants._TAG_ENCRYPTEDDATA).item(0);
+
+		XMLCipher xmlCipher = XMLCipher.getInstance();
+
+		xmlCipher.init(XMLCipher.DECRYPT_MODE, secretKey);
+		xmlCipher.doFinal(document, encryptedDataElement);
+		return document;
+	}
+
 }
