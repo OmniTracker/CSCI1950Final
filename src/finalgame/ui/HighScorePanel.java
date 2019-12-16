@@ -215,17 +215,11 @@ public class HighScorePanel extends Panel implements EventHandler {
 			this.setCurrentlyHoldingContext(this.getContextFreeNumber());
 		}
 	}
-	private Integer getCurrentlyHoldingContext() {
-		return _currentlyHoldingContext;
-	}
 	private void setCurrentlyHoldingContext(Integer _currentlyHoldingContext) {
 		this._currentlyHoldingContext = _currentlyHoldingContext;
 	}
 	private Integer getContextFreeNumber() {
 		return _contextFreeNumber;
-	}
-	private void setContextFreeNumber(Integer _contextFreeNumber) {
-		this._contextFreeNumber = _contextFreeNumber;
 	}
 	private KeyBinding getName() {
 		return _name;

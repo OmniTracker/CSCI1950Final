@@ -1,31 +1,22 @@
 package finalgame.ui;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import org.apache.xml.security.encryption.XMLCipher;
 import org.apache.xml.security.utils.EncryptionConstants;
-import org.apache.xml.security.utils.JavaUtils;
-import org.apache.xml.security.utils.XMLUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.DESedeKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -62,8 +53,6 @@ import engine.utility.EventHandler;
 public class OptionsPanel  extends Panel implements EventHandler{
 	// Sound
 	private Slider _masterSlider  = null; 
-	private Slider _soundFXSlider = null;
-	private Slider _musicSlider   = null;
 	// Key Binding XML
 	private HashMap<Integer,KeyBinding > _keyBindingMap = null;
 	private Integer _currentlyHoldingContext;
@@ -79,8 +68,6 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		this.setFontName(EngineFonts.getWiz());
 		// Sound Slider
 		this.setMasterSlider(new Slider("Master" ,-19,123,Color.GREEN,Color.WHITE,400.0,20.0,50.0));
-		this.setSoundFXSlider(new Slider("Sound" ,3,345,Color.GREEN,Color.WHITE,400.0,20.0,50.0));
-		this.setMusicSlider(new Slider("Music"   ,49,92,Color.GREEN,Color.WHITE,400.0,20.0,50.0));
 		// Key Binding
 		this.setKeyBindingMap(new HashMap <Integer,KeyBinding >());
 		this.setCurrentlyHoldingContext(-1);
@@ -158,8 +145,11 @@ public class OptionsPanel  extends Panel implements EventHandler{
 				tname = "Move Down";
 				break;
 			}
-			String name = tname;// + nList.item(x).getAttributes().item(0).getNodeValue();
+			String name = tname; 
+			
+			
 			String val = nList.item(x).getChildNodes().item(0).getNodeName();
+			
 			this.getKeyBindingMap().put(x,  new KeyBinding (name, val, new Vec2d(50,7), Color.GREEN, Color.WHEAT, width,height));
 		}
 	}
@@ -167,34 +157,42 @@ public class OptionsPanel  extends Panel implements EventHandler{
 	private void drawKeyBinding (GraphicsContext g) {
 		Vec2d menuOrigin = this.getOrigin();
 		Vec2d menuSize  = this.getSize(); 
-		Vec2d center = menuOrigin.plus( (menuSize.x / 2), (menuSize.y * 0.1));	
+		Vec2d center = menuOrigin.plus( (menuSize.x / 2), (menuSize.y * 0.2));	
 		g.setFont(Font.font(this.getEngineFont().getFontString(this.getText()), 30 ));
-		g.fillText("Key Bindings", center.x - (menuSize.x * 0.25),  (center.y + (menuSize.y * 0.48)));	
+		g.fillText("Key Bindings", center.x - (menuSize.x * 0.25),  (center.y + (menuSize.y * 0.2)));	
 		g.setTextAlign(TextAlignment.CENTER);
 		// Mid point
 		center = menuOrigin.plus( (menuSize.x / 4), (menuSize.y  / ( 4 / 3.6)));
-		double offsetIncrement = 30;
+		double offsetIncrement = 43;
 		// Start of offset
-		double offset = -190; 
-		for (Entry<Integer, KeyBinding> mapBinding : this.getKeyBindingMap().entrySet()) { 
+		double offset = -310; 
+		for (Entry<Integer, KeyBinding> mapBinding : this.getKeyBindingMap().entrySet()) 
+		{ 
 			mapBinding.getValue().drawKeyBindingStuff(g, center, offset+= offsetIncrement);	
 		}
 	}
-	public void onMouseClicked(MouseEvent e) {
+	public void onMouseClicked(MouseEvent e)
+	{
 		// Check for collision with one of the buttons.
-		for (Entry<Integer, KeyBinding> mapBinding : this.getKeyBindingMap().entrySet()) { 			
-			if (mapBinding.getValue().clicked(e) == true) {
+		for (Entry<Integer, KeyBinding> mapBinding : this.getKeyBindingMap().entrySet()) 
+		{ 			
+			if (mapBinding.getValue().clicked(e) == true) 
+			{
 				System.out.print( "following hit: " + mapBinding.getValue().getControlElementName()  + "\n");
 				this.setCurrentlyHoldingContext(mapBinding.getKey());
 				return;
 			}
 		}
 		this.setCurrentlyHoldingContext(this.getContextFreeNumber());
-		if (this.checkPanelCollision(e) == true) {
-			if ( this.getCloseButton().clicked(e) ) {
+		
+		if (this.checkPanelCollision(e) == true) 
+		{
+			if ( this.getCloseButton().clicked(e) ) 
+			{
 				this.setShowing(false);				
 			}
-			if (this.getApplyButton().clicked(e)) {
+			if (this.getApplyButton().clicked(e)) 
+			{
 				this.saveBindings();
 				
 			}
@@ -253,8 +251,6 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		g.fillText("Sound Control", center.x - (menuSize.x * 0.25),  (center.y + (menuSize.y * 0.08)));	
 		g.setTextAlign(TextAlignment.CENTER);
 		this.getMasterSlider().draw(g, center.plus(  -1 * (menuSize.x * 0.25), (menuSize.y / 2) ),  - 190);
-		this.getSoundFXSlider().draw(g, center.plus( -1 * (menuSize.x * 0.25), (menuSize.y / 2) ),  - 130);
-		this.getMusicSlider().draw(g, center.plus(   -1 * (menuSize.x * 0.25), (menuSize.y / 2) ),  -70);
 	}
 	@SuppressWarnings("static-access")
 	private void drawDivider(GraphicsContext g) {
@@ -277,11 +273,18 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		double offset = 0.14;
 		int loop = 0;
 		g.setFont(Font.font(this.getEngineFont().getFontString(this.getText()), 20 ));
-		
 		for (Entry<String, Pair<String, String>> entry : _playerRanking.entrySet())  
 		{
+			
+			g.setFill(Color.WHITE);
+
+			g.fillRoundRect( center.x + (menuSize.x * 0.10),  (center.y + (menuSize.y * (0.2 + (offset * loop)) )) - 21, 305, 30, 15, 15);		
+			
+			
+			g.setFill(Color.BLACK);
+
 			g.fillText(entry.getKey()  + ".   Player: " + entry.getValue().getKey() + "   Score: " +  entry.getValue().getValue(), 		
-					center.x + (menuSize.x * 0.25),  (center.y + (menuSize.y * (0.2 + (offset * loop)) )));
+					center.x + (menuSize.x * 0.25),  (center.y + (menuSize.y * (0.2 + (offset * loop)) )   ));
 			loop++;
 		}	
 	}
@@ -324,7 +327,6 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		}
 		
 		document.getDocumentElement().normalize();
-		Element root = document.getDocumentElement();
 		NodeList nList = document.getElementsByTagName("highScore");
 		String id; 
 		String name;
@@ -542,18 +544,6 @@ public class OptionsPanel  extends Panel implements EventHandler{
 	private void setMasterSlider(Slider _masterSlider) {
 		this._masterSlider = _masterSlider;
 	}
-	private Slider getSoundFXSlider() {
-		return _soundFXSlider;
-	}
-	private void setSoundFXSlider(Slider _soundFXSlider) {
-		this._soundFXSlider = _soundFXSlider;
-	}
-	private Slider getMusicSlider() {
-		return _musicSlider;
-	}
-	private void setMusicSlider(Slider _musicSlider) {
-		this._musicSlider = _musicSlider;
-	}	
 	public void onTick(long nanosSincePreviousTick) {}
 	public void onKeyReleased(KeyEvent e) {}
 	public void onKeyTyped(KeyEvent e) {}

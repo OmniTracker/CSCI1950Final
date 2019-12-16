@@ -5,32 +5,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-
-import java.io.IOException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
 import engine.Application;
 import finalgame.engineAdditions.GameObject;
-import engine.ui.KeyBinding;
 import engine.ui.UIElement;
 import engine.utility.AspectRatioHandler;
-import finalgame.engineAdditions.AOELighningAbilityAnimationComponent;
 import finalgame.engineAdditions.AnimateAbilityComponent;
-import finalgame.engineAdditions.FireWaveAbilityComponent;
-import finalgame.engineAdditions.IceBlockAbilityComponent;
-import finalgame.engineAdditions.MeleeMouseAbilityComponent;
-import finalgame.engineAdditions.MouseAbilityAnimationComponent;
 import finalgame.engineAdditions.PlayerHealthComponent;
-import finalgame.engineAdditions.PortalAbilityComponent;
-import finalgame.engineAdditions.ScratchAbilityComponent;
-import finalgame.engineAdditions.TeleportAbilityComponent;
 import finalgame.maingameloop.FinalGameWorld;
 import finalgame.maingameloop.gameworldmanager.MainGamePlay;
 
