@@ -86,6 +86,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		optionsPanel.setSize( new Vec2d(1000,600));	
 		optionsPanel.setOrigin(new Vec2d(0,0));
 		optionsPanel.setBoarderSize(10);
+		optionsPanel.initSlider();
 		this.insertPanel((Integer)OPTIONS_PANEL_VIEW, optionsPanel);
 		// End Game Panel
 		EndGamePanel endGamePanel = new EndGamePanel( this.getAspectRatio()); 

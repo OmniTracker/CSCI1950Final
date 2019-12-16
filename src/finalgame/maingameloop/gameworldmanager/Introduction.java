@@ -49,6 +49,7 @@ public class Introduction extends GameWorld {
 		optionsPanel.setSize( new Vec2d(1000,600));
 		optionsPanel.setOrigin(new Vec2d(0,0));
 		optionsPanel.setBoarderSize(10);
+		optionsPanel.initSlider();
 		this.setOptionsPanel(optionsPanel);
 		// Options Button
 		Button optionsButton = new Button(); 

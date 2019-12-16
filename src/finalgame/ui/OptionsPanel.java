@@ -67,7 +67,6 @@ public class OptionsPanel  extends Panel implements EventHandler{
 		super(app);
 		this.setFontName(EngineFonts.getWiz());
 		// Sound Slider
-		this.setMasterSlider(new Slider("Master" ,-19,123,Color.GREEN,Color.WHITE,400.0,20.0,50.0));
 		// Key Binding
 		this.setKeyBindingMap(new HashMap <Integer,KeyBinding >());
 		this.setCurrentlyHoldingContext(-1);
@@ -81,6 +80,12 @@ public class OptionsPanel  extends Panel implements EventHandler{
 			KeyBinding keyBinding = this.getKeyBindingMap().get(this.getCurrentlyHoldingContext()); 
 			keyBinding.alterCurrentKeyBinding(input);			
 		} 
+	}
+	public void initSlider() {
+		Vec2d menuOrigin = this.getOrigin();
+		Vec2d menuSize  = this.getSize(); 
+		Vec2d center = menuOrigin.plus( (menuSize.x / 2), (menuSize.y * 0.1));
+		this.setMasterSlider(new Slider("Master" ,0,150,Color.GREEN,Color.WHITE,400.0,20.0,50.0,center.plus(  -1 * (menuSize.x * 0.25), (menuSize.y / 2)),-190));
 	}
 	public void onDraw(GraphicsContext g) {
 		this.drawRounded(g);
@@ -183,6 +188,9 @@ public class OptionsPanel  extends Panel implements EventHandler{
 				return;
 			}
 		}
+		if (this.getMasterSlider().clicked(e) ==true) {
+			
+		}
 		this.setCurrentlyHoldingContext(this.getContextFreeNumber());
 		
 		if (this.checkPanelCollision(e) == true) 
@@ -194,7 +202,6 @@ public class OptionsPanel  extends Panel implements EventHandler{
 			if (this.getApplyButton().clicked(e)) 
 			{
 				this.saveBindings();
-				
 			}
 		}
 	}
