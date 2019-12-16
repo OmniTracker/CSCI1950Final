@@ -17,6 +17,7 @@ import support.Vec2d;
 public class InputPanel extends Panel implements EventHandler{
 	
 	private String name = "";
+	public boolean showMessage = false;
 
 	protected InputPanel(AspectRatioHandler app) {
 		super(app);
@@ -37,9 +38,14 @@ public class InputPanel extends Panel implements EventHandler{
 		Vec2d center = 	origin.plus( (size.x / 2),(size.y / 2));
 		g.setFill(Color.BLACK);	
 		g.setFont(Font.font(this.getEngineFont().getFontString(this.getText()), 40 ));
-		g.fillText("Enter your name:", center.x, center.y - 20);
+		
 		g.fillText(name, center.x, center.y+20);
 		this.drawYes(g);
+		if (showMessage) {
+			g.fillText("You must enter a non-blank name!", center.x, center.y - 20);
+		}else {
+			g.fillText("Enter your name:", center.x, center.y - 20);
+		}
 	}
 
 	@Override

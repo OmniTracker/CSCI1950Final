@@ -21,6 +21,7 @@ public class PlayerHealthComponent extends HealthComponent{
 	
 	public PlayerHealthComponent(GameObject go, MainGamePlay gw,  double hp, Image img) {
 		super(go,gw, hp);
+		_gw = gw;
 		_cooldown = 30;
 		//default potion strength is 50 hp
 		_potionStrength = 50;
@@ -104,11 +105,16 @@ public class PlayerHealthComponent extends HealthComponent{
 	@Override
 	public void death() {
 //		_gw.dieObject(_go);
+		
 		FinalGameWorld tw = (FinalGameWorld)_gw.getParent();
 		FinalMenuBar menu = tw.get_parent().getFinalViewport().getMenuBar();
 		OptionsPanel opanel = (OptionsPanel)menu.getPanelViews().get(8);
 		if (opanel.shouldUpdateHighScores(_gw.get_highScore())) {
+			menu.setMenuActivated(true);
 			menu.setContextHolder(10);
+		}else {
+			menu.setMenuActivated(true);
+			menu.set_transitionAlpha(.01);
 		}
 	}
 }

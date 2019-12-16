@@ -102,6 +102,7 @@ public class MainGamePlay extends GameWorld {
 	public MainGamePlay(Application app, FinalGameWorld parent) {
 		super(app);
 		_finalGameWorld = parent;
+		this.setParent(parent);
 		_input = new HashMap<String, Double>();
 
 		_systems = new ArrayList<GameSystem>();

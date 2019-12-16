@@ -290,7 +290,12 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 			else if (this.getContextHolder() == INPUT_PANEL_VIEW)
 			{
 				InputPanel input = (InputPanel) this.getPanelViews().get(INPUT_PANEL_VIEW);
-				input.onMouseClicked(e);
+				if (!input.getName().isBlank()) {
+					input.onMouseClicked(e);
+				}else {
+					input.showMessage=true;
+					return;
+				}
 				if (input.getOKButton().clicked(e) || input.isShowing()==false) {
 					OptionsPanel opanel = (OptionsPanel) this.getPanelViews().get(OPTIONS_PANEL_VIEW);
 					opanel.UpdateHighScores(_gameWorld.getMainGamePlay().get_highScore(), input.getName());
@@ -349,5 +354,11 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 	}
 	public void setGameWorld(FinalGameWorld _gameWorld) {
 		this._gameWorld = _gameWorld;
+	}
+	public double get_transitionAlpha() {
+		return _transitionAlpha;
+	}
+	public void set_transitionAlpha(double _transitionAlpha) {
+		this._transitionAlpha = _transitionAlpha;
 	}
 }

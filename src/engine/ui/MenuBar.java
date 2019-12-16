@@ -155,7 +155,7 @@ public abstract class MenuBar extends UIElement {
 	public boolean isMenuActivated() {
 		return _menuActivated;
 	}
-	protected void setMenuActivated(boolean _menuActivated) {
+	public void setMenuActivated(boolean _menuActivated) {
 		this._menuActivated = _menuActivated;
 	}
 
