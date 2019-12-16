@@ -128,7 +128,7 @@ public class MouseAbilityAnimationComponent extends AnimateAbilityComponent{
 			HealthComponent hp = (HealthComponent)hitObject.getComponent("HEALTH");
 			hp.takeDamage(_damage);
 		}
-		if(hitObject.hasComponent("TRANSFORM")) {
+		if(hitObject.hasComponent("TRANSFORM") && !hitObject.getName().contains("BOSS")) {
 			TransformComponent tc = (TransformComponent)hitObject.getComponent("TRANSFORM");
 			tc.move(_dir.smult(_knockback));
 		}

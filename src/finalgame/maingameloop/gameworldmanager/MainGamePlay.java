@@ -129,7 +129,7 @@ public class MainGamePlay extends GameWorld {
 		_affine = new Affine();
 
 		// Used to display game view overlay
-		set_gamePlayOverlay(new GamePlayOverlay(app,parent, this));
+		set_gamePlayOverlay(new GamePlayOverlay(app,parent));
 		this.getKeys();
 		get_gamePlayOverlay().setKeyValues(placeHolders);
 	}
@@ -374,6 +374,16 @@ public class MainGamePlay extends GameWorld {
 		Image out = null;
 		try{
 			out =  new Image(new File("resources/randomFinalImages/RandomAbilities/spritesheet.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
+	public static Image getShurikenImage() {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/Weapons/shuriken.png").toURI().toURL().toExternalForm());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

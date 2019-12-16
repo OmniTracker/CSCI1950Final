@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.transform.Affine;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import support.Vec2d;
 
@@ -47,8 +48,17 @@ public class EnemyRangedAbilityComponent extends MouseAbilityAnimationComponent{
 			Vec2d dirVector = _dir.smult(_range).smult(trajLoc);
 			Vec2d bulletLoc = dirVector.plus(_src);
 			_activeBulletLoc = bulletLoc;
+			double rotationAngle = 360 - _currFrame * 10;
+
+//			g.fillOval(getHitBoxLoc().x-getHitBoxDim().x, getHitBoxLoc().y-getHitBoxDim().x, getHitBoxDim().x*2, getHitBoxDim().x*2);
+			
+			g.save();
+			Rotate r = new Rotate(rotationAngle, bulletLoc.x+_dim.x/2, bulletLoc.y+_dim.y/2);
+	        g.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
 			g.drawImage(_img,_imageLoc.x+(_currFrame%5)*_animationIncrement.x, _imageLoc.y + (_currFrame/5)*_animationIncrement.y, 
 					_imageDim.x, _imageDim.y,bulletLoc.x,bulletLoc.y,_dim.x,_dim.y);
+	        g.restore(); // back to original state (before rotation)
+			
 		}
 	}
 	
