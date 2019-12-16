@@ -114,4 +114,8 @@ public class EnemyRangedAbilityComponent extends MouseAbilityAnimationComponent{
 		_lzrPlayer.play();
 	}
 	
+	public GameObject getTarget() {
+		return target;
+	}
+	
 }

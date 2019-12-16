@@ -125,7 +125,12 @@ public class PlayerInputComponent extends Component{
 	}
 	
 	public double getInput(String s) {
-		return _input.get(s);
+		try {
+			return _input.get(s);
+		} catch(NullPointerException e) {
+			return 0;
+		}
+		
 	}
 	
 	public void setMoveMultiplier(double m) {

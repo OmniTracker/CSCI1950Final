@@ -206,7 +206,30 @@ public class MainGamePlay extends GameWorld {
 	}
 
 	private void loadMap() {
-
+		GameObject g = new GameObject("WALL");
+		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(-1000,-1000), new Vec2d(1000,5000), 1.0));
+		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
+		_objects.add(g);
+		this.addToSystems(g);
+		
+		g = new GameObject("WALL");
+		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(-1000,-1000), new Vec2d(5000,1054), 1.0));
+		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
+		_objects.add(g);
+		this.addToSystems(g);
+		
+		g = new GameObject("WALL");
+		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1154,-1000), new Vec2d(5000,1000), 1.0));
+		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
+		_objects.add(g);
+		this.addToSystems(g);
+		
+		g = new GameObject("WALL");
+		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(-1000,700), new Vec2d(1000,5000), 1.0));
+		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
+		_objects.add(g);
+		this.addToSystems(g);
+		
 	}
 
 	public void loadEnemies() {
