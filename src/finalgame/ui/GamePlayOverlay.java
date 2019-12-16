@@ -36,7 +36,6 @@ public class GamePlayOverlay extends UIElement {
 		this.drawScore(g);
 		this.drawHitPoints(g);
 		this.drawHitPointValues(g);
-		this.drawCoinCount(g);
 		this.drawAbilities(g);
 	}
 
@@ -67,14 +66,6 @@ public class GamePlayOverlay extends UIElement {
 		String score = Integer.toString(main.get_highScore());
 		this.labelHelper(g, scoreOrigin, "Score: "+ score);
 	}
-
-	private void drawCoinCount(GraphicsContext g) {
-		Vec2d size = _aspect.calculateUpdatedScreenSize();
-		Vec2d origin = _aspect.calculateUpdatedOrigin();
-		Vec2d roundOrigin = origin.plus(20, (size.y - 80));
-		this.labelHelper(g, roundOrigin, "Coins: xxxx");
-	}
-
 	private void labelHelper(GraphicsContext g, Vec2d roundOrigin, String text) {
 		g.setFill(Color.GRAY);
 		g.fillRoundRect(roundOrigin.x, roundOrigin.y, 180, 35, 5, 5);

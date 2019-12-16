@@ -122,7 +122,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		instructions.setSize( new Vec2d(100,30));
 		instructions.setColor( Color.WHITE);
 		instructions.setFontName(EngineFonts.getWiz());
-		this.insertButton(instructions.getText(),instructions);		
+		// this.insertButton(instructions.getText(),instructions);		
 		// Options
 		Button options = new Button();
 		options.setText("Options");
@@ -144,7 +144,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		upgrades.setSize(new Vec2d(100,30));
 		upgrades.setColor( Color.WHITE);
 		upgrades.setFontName(EngineFonts.getWiz());
-		this.insertButton(upgrades.getText(),upgrades);
+		// this.insertButton(upgrades.getText(),upgrades);
 	}	
 	private void drawPanelView(GraphicsContext g) 
 	{
@@ -244,19 +244,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		} 
 		else 
 		{
-			if (this.getContextHolder() == INSTRUCTIONS_PANEL_VIEW) 
-			{
-				InstructionPanel panel = (InstructionPanel) this.getPanelViews().get(INSTRUCTIONS_PANEL_VIEW);
-				panel.onMouseClicked(e);				
-				// Check if the window has been closed
-				if ( panel.isShowing() == false) 
-				{
-					// Reset Context holders
-					this.setContextHolder(-1);
-					this.setMenuActivated(false);
-				}
-			} 
-			else if (this.getContextHolder() == OPTIONS_PANEL_VIEW) 
+			if (this.getContextHolder() == OPTIONS_PANEL_VIEW) 
 			{	
 				OptionsPanel panel = (OptionsPanel) this.getPanelViews().get(OPTIONS_PANEL_VIEW);
 				panel.onMouseClicked(e);	
@@ -296,18 +284,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 					this.setMenuActivated(false);
 				}
 			}
-			else if (this.getContextHolder() == UPGRADES_PANEL_VIEW) 
-			{	
-				UpgradesPanel panel = (UpgradesPanel) this.getPanelViews().get(UPGRADES_PANEL_VIEW);
-				panel.onMouseClicked(e);	
-				// Check if the window has been closed
-				if ( panel.isShowing() == false)
-				{
-					// Reset Context holder
-					this.setContextHolder(-1);
-					this.setMenuActivated(false);
-				}
-			}
+			
 			else if (this.getContextHolder() == INPUT_PANEL_VIEW)
 			{
 				InputPanel input = (InputPanel) this.getPanelViews().get(INPUT_PANEL_VIEW);

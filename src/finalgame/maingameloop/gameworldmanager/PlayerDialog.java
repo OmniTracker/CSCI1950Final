@@ -96,8 +96,6 @@ public class PlayerDialog extends GameWorld {
 		g.setGlobalAlpha(1);
 		this.drawMainCharacterAndFuckBoy(g);
 		this.drawDialogViews(g);
-		this.drawDialogTransitionButtons(g);
-
 		Random r = new Random();
 		if (_selectedCharacter == 0) {
 			R = r.nextInt((255 - 0) + 1) + 0;
@@ -119,7 +117,9 @@ public class PlayerDialog extends GameWorld {
 		}
 		g.setFill(Color.rgb(R,G,B));
 		g.fillRect(origin.x, origin.y, size.x, (size.y / 9));
-		g.fillRect(origin.x, origin.y +  (size.y - (size.y / 9)), size.x, (size.y / 9));
+		g.fillRect(origin.x, origin.y +  (size.y - ( (size.y / 9) +  30)), size.x, (size.y / 9) + 40 );
+		this.drawDialogTransitionButtons(g);
+
 
 		if (_selectedCharacter == 0) {
 			R = 255;
@@ -172,74 +172,52 @@ public class PlayerDialog extends GameWorld {
 		Vec2d origin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin(); 
 		Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize();
 		String output = "";
-		String output2 = "";
 		Vec2d boxOrigin; 
 		Vec2d fuckBoy =  new Vec2d(origin.x + (size.x * 0.25), origin.y + (size.y * 0.4)); 
 		Vec2d mainBoy =  new Vec2d(origin.x + (size.x * 0.55), origin.y + (size.y * 0.4)); 
+		
+		g.setTextAlign(TextAlignment.CENTER);
+
 		switch(_dialogSequence) 
 		{
 		case 0:
-
 			boxOrigin = fuckBoy; 
-
-			output = "And I was like"; 
-			output2 = "And I was like"; 
-
-
+			output =  "Is that you " + _selectedPlayersName + " ? \n Alone on Hope St. \n without your friends."; 
 			break;
 		case 1:
-
-
 			boxOrigin = mainBoy; 
-
-			output = "baby, baby, baby oh"; 
-			output2 = "And I was like"; 
-
-
-
+			output = "Wait... What. \n I thought I was \n on my way to\n Baja's"; 
 			break;
 		case 2:
-
 			boxOrigin = fuckBoy; 
-
-			output = "Like baby, baby, baby no"; 
-			output2 = "And I was like"; 
-
-
-
+			output = "You've been in \n Providence for 4 \n years and \n still can't make \n it down the street?"; 
 			break;
 		case 3:
-
 			boxOrigin = mainBoy; 
-
-			output = "I thought you'd always";
-
-			output2 = "And I was like"; 
-
-
-
-
+			output = "IDK. \n I must have \n  gotten lost \n leaving \n the GCB.";
 			break;
 		case 4:
-
 			boxOrigin = fuckBoy; 
-
-			output = "be mine (mine)"; 
-
-			output2 = "And I was like"; 
-
-
-
+			output = "Sorry. I hope you \n understand I \n have to hand \n you over \n to the RISD guys."; 
 			break;
+		case 5:
+			boxOrigin = fuckBoy; 
+			output = "They will pay me \n handsomely. You \n shouldn't have \n insulted James \n paintings."; 
+			break;
+		case 6:
+			boxOrigin = mainBoy; 
+			output = "Go for it!!! \n  I can take down \n a few paint brush \n  Jockeys";
+			break;
+			
 		default:
 			return;
 		}
 
 		g.setGlobalAlpha(0.8);
-		this.labelHelper(g, boxOrigin, output,output2);
+		this.labelHelper(g, boxOrigin, output);
 		g.setGlobalAlpha(1);
 	}
-	private void labelHelper(GraphicsContext g,Vec2d roundOrigin, String text, String text2) {
+	private void labelHelper(GraphicsContext g,Vec2d roundOrigin, String text) {
 		int R = 0, G = 0, B = 0;
 		if (_selectedCharacter == 0) {
 			R = 255;
@@ -259,12 +237,12 @@ public class PlayerDialog extends GameWorld {
 			B = 0;
 		}
 		g.setFill(Color.rgb(R,G,B));
-		g.fillRoundRect(roundOrigin.x , roundOrigin.y, 250, 150, 50 , 50);
+		g.fillRoundRect(roundOrigin.x , roundOrigin.y, 270, 130, 50 , 50);
 		g.setFill(Color.WHITE);
-		g.fillRoundRect(roundOrigin.x + 5, roundOrigin.y + 5, 250 - 10, 150 - 10, 50, 50);
+		g.fillRoundRect(roundOrigin.x + 5, roundOrigin.y + 5, 270 - 10, 130 - 10, 50, 50);
 		g.setFill(Color.BLACK);		
-		g.setFont(Font.font("Ethnocentric", 10 ));	
-		g.fillText(text, roundOrigin.x + 90, roundOrigin.y + 40);
+		g.setFont(Font.font("Ethnocentric", 15 ));	
+		g.fillText(text, roundOrigin.x + 135, roundOrigin.y + 30);
 	}
 	private void drawMainCharacterAndFuckBoy(GraphicsContext g) {
 		Vec2d origin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin(); 
@@ -278,7 +256,7 @@ public class PlayerDialog extends GameWorld {
 		Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize(); 
 		Vec2d center = origin.plus(size.x/2, size.y/2);
 		double scale = 2.5;
-		g.drawImage( _brownSpecial, center.x - ( 130 * scale) , center.y - ( 100 * scale ) , 260 * scale , 160 * scale);
+		g.drawImage( _brownSpecial, center.x - ( 130 * scale) , center.y - ( 100 * scale ) , 260 * scale , 170 * scale);
 	}
 	private void drawBackground (GraphicsContext g) {
 		Vec2d origin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin(); 
@@ -289,9 +267,9 @@ public class PlayerDialog extends GameWorld {
 		double xOrigin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin().x + 
 				(this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize().x * 0.8);
 		double yOrigin1 = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin().y + 
-				(this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize().y * 0.75); 
+				(this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize().y * 0.87); 
 		double yOrigin2 = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin().y + 
-				(this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize().y * 0.80); 	
+				(this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize().y * 0.92); 	
 		this.getNextButton().setOrigin(new Vec2d(xOrigin,yOrigin1));
 		this.getNextButton().drawRounded(g);
 		this.getSkipButton().setOrigin(new Vec2d(xOrigin,yOrigin2));
@@ -310,7 +288,7 @@ public class PlayerDialog extends GameWorld {
 	public void onMouseClicked(MouseEvent e) {
 		if (this.getNextButton().clicked(e)) {
 			_dialogSequence++;
-			if (_dialogSequence == 5) {
+			if (_dialogSequence == 7) {
 				transitionAlpha += 0.05; 
 			}
 		}

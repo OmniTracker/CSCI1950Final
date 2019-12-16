@@ -144,7 +144,7 @@ public class PlayerSelection extends GameWorld {
 		Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize(); 
 		Vec2d center = origin.plus(size.x/2, size.y/2);
 		double scale = 2.5;
-		g.drawImage( _brownSpecial, center.x - ( 120 * scale) , center.y - ( 120 * scale ) , 220 * scale , 140 * scale);
+		g.drawImage( _brownSpecial, center.x - ( 120 * scale) , center.y - ( 150 * scale ) , 220 * scale , 140 * scale);
 	}
 	private void labelHelper(GraphicsContext g,Vec2d roundOrigin, String text, String text2) {
 		g.setFill(Color.rgb(R,G,B));
