@@ -19,7 +19,12 @@ public class FinalGameObjectHandler {
 	public void initGameCharacters () {
 		/****** Main Logo ******/
 		this.setIntroImage( this.getFinalFactory().getMainLogo());
+		
+		
 		this.setIntroBackdrop( this.getFinalFactory().getMainLogoBackDrop() );
+		
+		
+		
 		this.setSelectBackground( this.getFinalFactory().getMainLogoSelete());
 		this.setRightArrow( this.getFinalFactory().getRightArrow());
 		this.setLeftArrow(this.getFinalFactory().getLeftArrow());

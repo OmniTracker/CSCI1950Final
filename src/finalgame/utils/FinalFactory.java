@@ -21,7 +21,20 @@ public class FinalFactory extends Factory {
 		}
 		return out; 
 	}
+	
 	public Image getMainLogoBackDrop () {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/street.gif").toURI().toURL().toExternalForm()); 
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out; 
+	}
+	
+	
+	public Image getMainLogoBackDrop2 () {
 		Image out = null;
 		try{
 			out =  new Image(new File("resources/randomFinalImages/forest.gif").toURI().toURL().toExternalForm()); 
@@ -31,6 +44,7 @@ public class FinalFactory extends Factory {
 		}
 		return out; 
 	}
+	
 	public Image getMainLogoSelete () {
 		Image out = null;
 		try{

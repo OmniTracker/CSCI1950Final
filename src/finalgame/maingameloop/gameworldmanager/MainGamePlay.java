@@ -14,7 +14,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
@@ -22,28 +21,19 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.transform.Affine;
-import javafx.scene.transform.NonInvertibleTransformException;
 import support.Vec2d;
-import support.debugger.collisions.AABShape;
-import support.debugger.support.Vec2f;
+
 import support.debugger.support.shapes.AABShapeDefine;
 import support.debugger.support.shapes.CircleShapeDefine;
 import engine.Application;
 import engine.GameWorld;
-import engine.ai.BehaviorTree;
-import engine.ai.Selector;
-import engine.ai.Sequencer;
-import engine.utility.Factory;
+
 
 import finalgame.maingameloop.FinalGameWorld;
 import finalgame.engineAdditions.GameSystem;
-import finalgame.ai.AttackEnemy;
-import finalgame.ai.MoveTo;
-import finalgame.ai.NotInRange;
-import finalgame.ai.TestGI;
+
 import finalgame.engineAdditions.AABAbilityCollisionComponent;
 import finalgame.engineAdditions.AABCollisionComponent;
-import finalgame.engineAdditions.AIBehaviorComponent;
 import finalgame.engineAdditions.AOELighningAbilityAnimationComponent;
 import finalgame.engineAdditions.AbilityCollisionComponent;
 import finalgame.engineAdditions.AnimateAbilityComponent;
@@ -55,7 +45,6 @@ import finalgame.engineAdditions.EnemySystem;
 import finalgame.engineAdditions.FireWaveAbilityComponent;
 import finalgame.engineAdditions.GameObject;
 import finalgame.engineAdditions.GraphicsSystem;
-import finalgame.engineAdditions.HealthComponent;
 import finalgame.engineAdditions.IceBlockAbilityComponent;
 import finalgame.engineAdditions.MeleeMouseAbilityComponent;
 import finalgame.engineAdditions.MouseAbilityAnimationComponent;
@@ -70,11 +59,9 @@ import finalgame.engineAdditions.TickComponent;
 import finalgame.engineAdditions.TickSystem;
 import finalgame.engineAdditions.TransformComponent;
 
-import javafx.scene.paint.Color;
-import engine.ui.Button;
-import engine.ui.EngineFonts;
+
 import finalgame.ui.GamePlayOverlay;
-import finalgame.ui.HighScorePanel;
+
 
 
 public class MainGamePlay extends GameWorld {

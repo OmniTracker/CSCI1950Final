@@ -182,11 +182,11 @@ public class PlayerDialog extends GameWorld {
 		{
 		case 0:
 			boxOrigin = fuckBoy; 
-			output =  "Is that you " + _selectedPlayersName + " ? \n Alone on Hope St. \n without your friends."; 
+			output =  "Is that you " + _selectedPlayersName + " ? \n Alone on Hope St. \n without your \nfriends this late. \n Bold Move\n LOL"; 
 			break;
 		case 1:
 			boxOrigin = mainBoy; 
-			output = "Wait... What. \n I thought I was \n on my way to\n Baja's"; 
+			output = "Wait... \nWhat??? \n I thought I was \n on my way to\n Baja's"; 
 			break;
 		case 2:
 			boxOrigin = fuckBoy; 
@@ -206,7 +206,7 @@ public class PlayerDialog extends GameWorld {
 			break;
 		case 6:
 			boxOrigin = mainBoy; 
-			output = "Go for it!!! \n  I can take down \n a few paint brush \n  Jockeys";
+			output = "Go for it!!! \n \n I can take down \n a few paint brush \n  Jockeys Anyday";
 			break;
 			
 		default:
@@ -256,7 +256,7 @@ public class PlayerDialog extends GameWorld {
 		Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize(); 
 		Vec2d center = origin.plus(size.x/2, size.y/2);
 		double scale = 2.5;
-		g.drawImage( _brownSpecial, center.x - ( 130 * scale) , center.y - ( 100 * scale ) , 260 * scale , 170 * scale);
+		g.drawImage( _brownSpecial, center.x - ( 130 * scale) , center.y - ( 100 * scale ) , 260 * scale , 175 * scale);
 	}
 	private void drawBackground (GraphicsContext g) {
 		Vec2d origin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin(); 
@@ -329,7 +329,7 @@ public class PlayerDialog extends GameWorld {
 	public static Image getRand () {
 		Image out = null;
 		try{
-			out =  new Image(new File("resources/terrain/newBack.jpg").toURI().toURL().toExternalForm());
+			out =  new Image(new File("resources/randomFinalImages/street.gif").toURI().toURL().toExternalForm());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
