@@ -33,7 +33,7 @@ public class Final extends Screen {
 		this.getFinalViewport().onMouseClicked(e);
 	}
 	public void onStartup() {
-		this.setFinalGameWorld( new FinalGameWorld(this.getApplication()));
+		this.setFinalGameWorld( new FinalGameWorld(this.getApplication(),this));
 		this.setFinalViewport(new FinalViewport(this.getApplication(), 
 				this.getFinalGameWorld(),
 				new Vec2d(0,0), 
@@ -62,16 +62,16 @@ public class Final extends Screen {
 	public void onResize(Vec2d newSize) {
 		this.getFinalViewport().onResize(newSize);
 	}
-	private FinalGameWorld getFinalGameWorld() {
+	public FinalGameWorld getFinalGameWorld() {
 		return _finalGameWorld;
 	}
-	private void setFinalGameWorld(FinalGameWorld _finalGameWorld) {
+	public void setFinalGameWorld(FinalGameWorld _finalGameWorld) {
 		this._finalGameWorld = _finalGameWorld;
 	}
-	private FinalViewport getFinalViewport() {
+	public FinalViewport getFinalViewport() {
 		return _finalViewport;
 	}
-	private void setFinalViewport(FinalViewport _finalViewport) {
+	public void setFinalViewport(FinalViewport _finalViewport) {
 		this._finalViewport = _finalViewport;
 	}
 	@Override

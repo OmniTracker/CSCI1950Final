@@ -1,6 +1,9 @@
 package finalgame.engineAdditions;
 
+import finalgame.maingameloop.FinalGameWorld;
 import finalgame.maingameloop.gameworldmanager.MainGamePlay;
+import finalgame.ui.FinalMenuBar;
+import finalgame.ui.OptionsPanel;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -93,5 +96,11 @@ public class PlayerHealthComponent extends HealthComponent{
 	@Override
 	public void death() {
 //		_gw.dieObject(_go);
+		FinalGameWorld tw = (FinalGameWorld)_gw.getParent();
+		FinalMenuBar menu = tw.get_parent().getFinalViewport().getMenuBar();
+		OptionsPanel opanel = (OptionsPanel)menu.getPanelViews().get(8);
+		if (opanel.shouldUpdateHighScores(_gw.get_highScore())) {
+			menu.setContextHolder(10);
+		}
 	}
 }

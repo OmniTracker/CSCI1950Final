@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import engine.Application;
 import engine.GameWorld;
+import engine.Screen;
 import finalgame.maingameloop.gameworldmanager.*;
 import finalgame.utils.*;
 
@@ -21,6 +22,7 @@ public class FinalGameWorld  extends GameWorld {
 	private FinalGameObjectHandler _finalGameObjectHandler;
 	private GameWorld _currentlySelectedScreen;
 	private VisibleGameWorld __visibleGameWorldEnum;
+	private Final _parent;
 	
 	//private SoundSystem _soundSystem;
 	
@@ -30,8 +32,9 @@ public class FinalGameWorld  extends GameWorld {
 		PLAYERDIALOG,
 		MAINGAMEPLAY
 	}
-	protected FinalGameWorld(Application app) {
+	protected FinalGameWorld(Application app, Final parent) {
 		super(app);
+		set_parent(parent);
 		this.seeShowMenuBar(false);
 		this.setIntroduction(new Introduction(app, this));
 		this.setPlayerSelection(new PlayerSelection(app, this));
@@ -178,5 +181,11 @@ public class FinalGameWorld  extends GameWorld {
 
 	public int getCharacterSelection() {
 		return _playerSelection.getCharacterSelection();
+	}
+	public Final get_parent() {
+		return _parent;
+	}
+	public void set_parent(Final _parent) {
+		this._parent = _parent;
 	}
 }

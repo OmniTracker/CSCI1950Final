@@ -359,10 +359,10 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 	public void onShutdown() {}
 	public void onStartup() {}
 	public void onKeyReleased(KeyEvent e) {}
-	private Integer getContextHolder() {
+	public Integer getContextHolder() {
 		return _contextHolder;
 	}
-	private void setContextHolder(Integer _contextHolder) {
+	public void setContextHolder(Integer _contextHolder) {
 		this._contextHolder = _contextHolder;
 	}
 	private FinalGameWorld getGameWorld() {

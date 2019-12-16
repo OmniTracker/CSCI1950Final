@@ -55,10 +55,13 @@ public class InputPanel extends Panel implements EventHandler{
 		if (e.getCode()!=KeyCode.DELETE && e.getCode()!=KeyCode.BACK_SPACE) {
 			if (input.length()==1) {
 				name = name + input;
+			}else if (e.getCode()==KeyCode.SPACE) {
+				name = name + " ";
 			}
 		}else {
 			name = name.substring(0, name.length()-1);
 		}
+		
 		
 	}
 
