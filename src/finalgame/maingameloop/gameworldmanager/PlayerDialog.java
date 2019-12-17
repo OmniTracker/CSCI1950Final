@@ -108,8 +108,8 @@ public class PlayerDialog extends GameWorld {
 			//B = r.nextInt((255 - 0) + 1) + 0;
 		} else if (_selectedCharacter == 2) {
 			R = 0;
-			G = r.nextInt((255 - 0) + 1) + 0;
-			//B = 0;
+			//G = r.nextInt((255 - 0) + 1) + 0;
+			B = 0;
 		} else if (_selectedCharacter == 3) {
 			//R = r.nextInt((255 - 0) + 1) + 0;
 			G = 0;

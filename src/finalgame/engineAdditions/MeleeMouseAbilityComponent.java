@@ -16,7 +16,7 @@ public class MeleeMouseAbilityComponent extends MouseAbilityAnimationComponent{
 	public MeleeMouseAbilityComponent(GameObject go, MainGamePlay gw, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc,
 			Vec2d dim, Vec2d animation_increment, int numFrames, double active_time, double cooldown, double range) {
 		super(go,gw, img, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown, range);
-		_damage = 50;
+		_damage = 75;
 		_knockback = 50;
 		_middleSwordLoc = new Vec2d(0,0);
 	}

@@ -89,6 +89,10 @@ public class GameObject {
 		if(_components.containsKey("ABILITY")) {
 			_components.get("ABILITY").tick(t);
 		}
+		
+		if(_components.containsKey("ABILITY 2")) {
+			_components.get("ABILITY 2").tick(t);
+		}
 	}
 	
 	public void draw(GraphicsContext g, Affine af) {
@@ -112,6 +116,9 @@ public class GameObject {
 		}
 		if(_components.containsKey("ABILITY")) {
 			_components.get("ABILITY").draw(g, af);
+		}
+		if(_components.containsKey("ABILITY 2")) {
+			_components.get("ABILITY 2").draw(g, af);
 		}
 	}
 	

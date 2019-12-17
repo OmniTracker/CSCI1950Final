@@ -15,7 +15,7 @@ public class FireWaveAbilityComponent extends AnimateAbilityComponent{
 	private double _range;
 	private double _rotation;
 	private int _facing;
-	private double _damage;
+	protected double _damage;
 	
 	
 	public FireWaveAbilityComponent(GameObject go, MainGamePlay gw, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc, Vec2d dim,
