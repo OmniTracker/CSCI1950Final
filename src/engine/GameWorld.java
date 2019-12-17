@@ -15,7 +15,7 @@ public class GameWorld {
 	private WIZDelegateContainer _wizDelegateContainer;
 	private Application _application;
 	private Integer _level;
-	private Vec2d _gameSize;
+	protected Vec2d _gameSize;
 	private Vec2d _origin;
 	private GameWorld _parent;
 	public ArrayList<GameObject> _gameObjects;

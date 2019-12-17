@@ -108,6 +108,10 @@ public abstract class AnimateAbilityComponent extends Component{
 		return _coolingDown;
 	}
 	
+	public boolean isActive() {
+		return _active;
+	}
+	
 	public abstract void onHit(GameObject hitObject);
 	
 	public abstract Vec2d getHitBoxDim();
@@ -118,4 +122,5 @@ public abstract class AnimateAbilityComponent extends Component{
 	public void remove() {
 		this.removeHitBox();
 	}
+	
 }

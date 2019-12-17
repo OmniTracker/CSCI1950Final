@@ -102,19 +102,30 @@ public class PlayerSelection extends GameWorld {
 		g.setFill(Color.rgb(R,G,B));
 		g.fillRect(origin.x, origin.y, xSize / 2, size.y);
 		g.fillRect((origin.x + size.x) - (xSize / 2),origin.y,(xSize / 2), size.y);
-		this.getLeftButton().setShape( new AABShape( new Vec2d(origin.x, origin.y),new Vec2d(xSize / 2, size.y)));
-		this.getRightButton().setShape( new AABShape( new Vec2d((origin.x + size.x) - (xSize / 2), origin.y),new Vec2d(xSize / 2, size.y)));
+		
+		
 		g.setGlobalAlpha(1.0);
 		g.setFill(Color.BLACK);
 		g.fillRect(origin.x, origin.y, size.x, (size.y / 9));
 		g.fillRect(origin.x, origin.y +  (size.y - (size.y / 9)), size.x, (size.y / 9));
-		this.getNextLevelButton().setShape( new AABShape( new Vec2d(origin.x, origin.y +  (size.y - (size.y / 9))), new Vec2d(size.x, (size.y / 9)) ));
+		
+//		this.getLeftButton().setShape( new AABShape( new Vec2d(origin.x, origin.y),new Vec2d(xSize / 2, size.y)));
+//		this.getRightButton().setShape( new AABShape( new Vec2d((origin.x + size.x) - (xSize / 2), origin.y),new Vec2d(xSize / 2, size.y)));		
+//		this.getNextLevelButton().setShape( new AABShape( new Vec2d(origin.x, origin.y +  (size.y - (size.y / 9))), new Vec2d(size.x, (size.y / 9)) ));
+		
 		Vec2d selectionOrigin = origin.plus( size.x - 330,  size.y - 60  );
 		this.labelHelper(g,selectionOrigin, "D = RIGHT", "");
+		this.getLeftButton().setShape( new AABShape( selectionOrigin,new Vec2d(230,100)));
+		
 		selectionOrigin = origin.plus( 150,  size.y - 60  );
 		this.labelHelper(g,selectionOrigin, "A = LEFT", "");
+		this.getRightButton().setShape( new AABShape( selectionOrigin,new Vec2d(230,100)));
+		
 		selectionOrigin = origin.plus( (size.x / 2) - 90,  size.y - 60  );
 		this.labelHelper(g,selectionOrigin, "S = SELECT", "");
+		
+		this.getNextLevelButton().setShape( new AABShape( selectionOrigin, new Vec2d(230,100)));
+		
 		g.setGlobalAlpha(_transitionPercent);
 		g.setFill(Color.BLACK);
 		g.fillRect(origin.x, origin.y, size.x, size.y);

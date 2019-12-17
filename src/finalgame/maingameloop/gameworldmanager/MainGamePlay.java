@@ -91,6 +91,10 @@ public class MainGamePlay extends GameWorld {
 	//GameObject that represents the current player
 	private GameObject _player;
 
+	private GameObject[] _walls = new GameObject[4];
+	private Image _backgroundImage;
+	private Vec2d _backgroundImageDim;
+	
 	private Affine _affine;
 
 	private int _selectedCharacter;
@@ -118,6 +122,7 @@ public class MainGamePlay extends GameWorld {
 		set_gamePlayOverlay(new GamePlayOverlay(app,parent));
 		this.getKeys();
 		get_gamePlayOverlay().setKeyValues(placeHolders);
+		_backgroundImageDim = app.getAspectRatioHandler().calculateUpdatedScreenSize();
 	}
 
 
@@ -176,8 +181,8 @@ public class MainGamePlay extends GameWorld {
 			case 1:
 				//EZRA
 				_player.addComponent("HEALTH", new PlayerHealthComponent(_player,this, 200, getHealImage()));
-				_player.addComponent("ABILITY_CLICK", new MeleeMouseAbilityComponent(_player,this, getWeaponImage(), new Vec2d(108,133),
-						new Vec2d(46, 61), new Vec2d(0,0), new Vec2d(60,60), new Vec2d(0, 0),36, 1, 0, 70.));
+				_player.addComponent("ABILITY_CLICK", new MeleeMouseAbilityComponent(_player,this, getWeaponImage(), new Vec2d(108,16),
+						new Vec2d(46, 61), new Vec2d(0,0), new Vec2d(80,80), new Vec2d(0, 0),36, 1, 0, 80.));
 				_player.addComponent("ABILITY_E", new ScratchAbilityComponent(_player,this, getElectricScratchImage(), new Vec2d(0,0),
 						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(50,50), new Vec2d(192, 192),
 						11, 1, 2));
@@ -231,31 +236,42 @@ public class MainGamePlay extends GameWorld {
 
 	private void loadMap() {
 		GameObject g = new GameObject("WALL");
-		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(-1000,-1000), new Vec2d(1000,5000), 1.0));
+		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(-5000,-1000), new Vec2d(5000,5000), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
 		_objects.add(g);
 		this.addToSystems(g);
-		
+		_walls[0] = g;
 		g = new GameObject("WALL");
-		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(-1000,-1000), new Vec2d(5000,1054), 1.0));
+		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(-1000,-4950), new Vec2d(5000,5000), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
 		_objects.add(g);
 		this.addToSystems(g);
-		
+		_walls[1] = g;
 		g = new GameObject("WALL");
-		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1154,0), new Vec2d(5000,1000), 1.0));
+		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1154,-1000), new Vec2d(5000,5000), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
 		_objects.add(g);
 		this.addToSystems(g);
-		
+		_walls[2] = g;
 		g = new GameObject("WALL");
-		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(0,650), new Vec2d(5000,5000), 1.0));
+		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(-1000,650), new Vec2d(5000,5000), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
 		_objects.add(g);
 		this.addToSystems(g);
+		_walls[3] = g;
 		
 	}
-
+	
+	private void repositionWalls(Vec2d newSize) {
+		TransformComponent currWall = (TransformComponent)_walls[2].getComponent("TRANSFORM");
+		currWall.setLoc(new Vec2d(newSize.x, currWall.getLoc().y));
+		currWall = (TransformComponent)_walls[3].getComponent("TRANSFORM");
+		currWall.setLoc(new Vec2d(currWall.getLoc().x, newSize.y-50));
+		
+		_backgroundImageDim = newSize;
+	}
+	
+	
 	public void loadEnemies() {
 		
 	}
@@ -310,6 +326,7 @@ public class MainGamePlay extends GameWorld {
 		temp.setCharacter(this.getPlayerImage(character));
 		this.addSpecificCharacterComponents(character);
 		this.addToSystems(_player);
+		_backgroundImage = getBackgroundImage();
 		_gamePlayOverlay.getPlayerInfo(_player);
 	}
 
@@ -513,7 +530,18 @@ public class MainGamePlay extends GameWorld {
 		}
 		return out;
 	}
-
+	
+	public static Image getBackgroundImage() {
+		Image out = null;
+		try{
+			out =  new Image(new File("resources/randomFinalImages/background.png").toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
+	}
+	
 	@Override
 	public void onTick(long nanosSincePreviousTick) {
 //		System.out.print("Main Game Play \n");
@@ -564,7 +592,10 @@ public class MainGamePlay extends GameWorld {
 //        {
 //            this.getHighScorePanel().onDraw(g);
 //        }
-
+		if(_backgroundImage != null) {
+			g.drawImage(_backgroundImage, 0, 0, _backgroundImageDim.x, _backgroundImageDim.y);
+		}
+		
 		_affine = g.getTransform();
 		//Draw some border for the game to look nice
 
@@ -637,7 +668,9 @@ public class MainGamePlay extends GameWorld {
 	@Override
 	public void onFocusChanged(boolean newVal) {}
 	@Override
-	public void onResize(Vec2d newSize) {}
+	public void onResize(Vec2d newSize) {
+		this.repositionWalls(newSize);
+	}
 	@Override
 	public void onShutdown() {}
 	@Override

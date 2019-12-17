@@ -38,7 +38,7 @@ public class GamePlayOverlay extends UIElement {
 		this.drawHitPointValues(g);
 		this.drawAbilities(g);
 	}
-
+	
 	private void drawHitPointValues(GraphicsContext g) {
 		Vec2d size = _aspect.calculateUpdatedScreenSize();
 		Vec2d origin = _aspect.calculateUpdatedOrigin();
@@ -107,8 +107,11 @@ public class GamePlayOverlay extends UIElement {
 		int incrementSize = 85;
 		int smallBaxFactor = 2;
 		// This is literally a black box of code.
+		g.setFill(Color.WHITE);
+		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize, 10, 10);
 		g.setFill(Color.RED);
 		g.strokeRoundRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize, 10, 10);
+		
 		switch(character) {
 		case 0:
 			g.drawImage(buttonImages[0],0,0,32,32,attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);
@@ -131,14 +134,20 @@ public class GamePlayOverlay extends UIElement {
 		else {
 			g.setFill(Color.WHITESMOKE);
 		}
+		
 		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize) + 2,
 				attributesOrigin.y + (boxSize / smallBaxFactor) - 2, (boxSize / smallBaxFactor) - 2,
 				(boxSize / smallBaxFactor) - 2, 10, 10);
 		g.setFill(Color.BLACK);
 		g.fillText(placeHolders[0], attributesOrigin.x + (increment++ * incrementSize) + (boxSize / 4),
 				attributesOrigin.y + (boxSize / smallBaxFactor) + ((boxSize / 3) + 4));
+		
+		g.setFill(Color.WHITE);
+		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize, 10, 10);
+		
 		g.setFill(Color.PURPLE);
 		g.strokeRoundRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize, 10, 10);
+		
 		switch(character) {
 		case 0:
 			g.drawImage(buttonImages[1],768,512,128,128, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
@@ -154,6 +163,11 @@ public class GamePlayOverlay extends UIElement {
 			g.fillRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, (_abilities[1].getCurrCooldown()/_abilities[1].getCooldown())*boxSize, boxSize);
 			g.setFill(Color.LIGHTCORAL);
 		}
+		else if(_abilities[1] != null && _abilities[1].isActive()) {
+			g.setFill(Color.rgb(121, 115, 115, 0.4));
+			g.fillRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);
+			g.setFill(Color.LIGHTCORAL);
+		}
 		else {
 			g.setFill(Color.WHITESMOKE);
 		}
@@ -163,8 +177,12 @@ public class GamePlayOverlay extends UIElement {
 		g.setFill(Color.BLACK);
 		g.fillText(placeHolders[1], attributesOrigin.x + (increment++ * incrementSize) + (boxSize / 4),
 				attributesOrigin.y + (boxSize / smallBaxFactor) + ((boxSize / 3) + 4));
+		
+		g.setFill(Color.WHITE);
+		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize, 10, 10);
 		g.setFill(Color.GREEN);
 		g.strokeRoundRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize, 10, 10);
+		
 		switch(character) {
 		case 0:
 			g.drawImage(buttonImages[2],576,0,192,192, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
@@ -180,6 +198,11 @@ public class GamePlayOverlay extends UIElement {
 			g.fillRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, (_abilities[2].getCurrCooldown()/_abilities[2].getCooldown())*boxSize, boxSize);
 			g.setFill(Color.LIGHTCORAL);
 		}
+		else if(_abilities[2] != null && _abilities[2].isActive()) {
+			g.setFill(Color.rgb(121, 115, 115, 0.4));
+			g.fillRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);
+			g.setFill(Color.LIGHTCORAL);
+		}
 		else {
 			g.setFill(Color.WHITESMOKE);
 		}
@@ -189,8 +212,12 @@ public class GamePlayOverlay extends UIElement {
 		g.setFill(Color.BLACK);
 		g.fillText(placeHolders[2], attributesOrigin.x + (increment++ * incrementSize) + (boxSize / 4),
 				attributesOrigin.y + (boxSize / smallBaxFactor) + ((boxSize / 3) + 4));
+
+		g.setFill(Color.WHITE);
+		g.fillRoundRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize, 10, 10);
 		g.setFill(Color.PINK);
 		g.strokeRoundRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize, 10, 10);
+		
 		switch(character) {
 		case 0:
 			g.drawImage(buttonImages[3],0,0,728,892, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
@@ -204,6 +231,11 @@ public class GamePlayOverlay extends UIElement {
 		if(_abilities[3] != null && _abilities[3].isCoolingDown()) {
 			g.setFill(Color.rgb(121, 115, 115, 0.4));
 			g.fillRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, (_abilities[3].getCurrCooldown()/_abilities[3].getCooldown())*boxSize, boxSize);
+			g.setFill(Color.LIGHTCORAL);
+		}
+		else if(_abilities[3] != null && _abilities[3].isActive()) {
+			g.setFill(Color.rgb(121, 115, 115, 0.4));
+			g.fillRect(attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);
 			g.setFill(Color.LIGHTCORAL);
 		}
 		else {
