@@ -16,7 +16,7 @@ public class ScratchAbilityComponent extends AnimateAbilityComponent{
 	public ScratchAbilityComponent(GameObject go, MainGamePlay gw, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc, Vec2d dim, Vec2d animation_increment,
 			int numFrames, double active_time, double cooldown) {
 		super(go, gw, img, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown);
-		_damage = 40;
+		_damage = 400;
 		_knockback = 200;
 		_hitSpawned = false;
 	}

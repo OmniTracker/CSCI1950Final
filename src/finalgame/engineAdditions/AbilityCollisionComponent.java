@@ -16,5 +16,9 @@ public abstract class AbilityCollisionComponent extends CollisionComponent{
 	public void hit(GameObject go) {
 		_ability.onHit(go);
 	}
+	
+	public void removeHitBox() {
+		_ability.removeHitBox();
+	}
 
 }

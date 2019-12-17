@@ -12,10 +12,10 @@ public class EnemyMeleeAbilityComponent extends EnemyRangedAbilityComponent{
 	protected Vec2d _middleSwordLoc;
 	
 	public EnemyMeleeAbilityComponent(GameObject go, MainGamePlay gw, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc,
-			Vec2d dim, Vec2d animation_increment, int numFrames, double active_time, double cooldown, double range) {
-		super(go, gw, img, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown, range);
+			Vec2d dim, Vec2d animation_increment, int numFrames, double active_time, double cooldown, double range, double damage) {
+		super(go, gw, img, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown, range, damage);
 
-		_damage = 20;
+		_damage = damage;
 		_knockback = 30;
 		_middleSwordLoc = new Vec2d(0,0);
 		

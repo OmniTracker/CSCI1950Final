@@ -6,7 +6,7 @@ import finalgame.engineAdditions.EnemySystem;
 
 public class SpawnMinions extends BTAction {
 
-	private int cooldown = 125;
+	private int cooldown = 150;
 	private EnemySystem es;
 	
 	public SpawnMinions(EnemySystem es) {

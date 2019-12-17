@@ -16,7 +16,7 @@ public class EnemySystem extends GameSystem {
 		super();
 		_world = p;
 		level = 0;
-		factory = new EnemyFactory(_world);
+		factory = new EnemyFactory(_world, this);
 	}
 
 	@Override
@@ -39,9 +39,8 @@ public class EnemySystem extends GameSystem {
 			
 			
 			level++;
-			if (level>3) {
+			if (level%4==0) {
 				this.createBoss();
-				level = 0;
 			} else {
 				this.createEnemies();
 			}
@@ -55,12 +54,12 @@ public class EnemySystem extends GameSystem {
 		factory.createArcher(spawnZoneLoc, spawnZoneSize, gi);
 		factory.createArcher(spawnZoneLoc, spawnZoneSize, gi);
 		
-		if (level>1) {
+		if (level%4>1) {
 			factory.createMelee(spawnZoneLoc, spawnZoneSize, gi);
 			factory.createHealer(spawnZoneLoc, spawnZoneSize, gi);
 		}
 		
-		if (level>2) {
+		if (level%4>2) {
 			factory.createMelee(spawnZoneLoc, spawnZoneSize, gi);
 			factory.createHealer(spawnZoneLoc, spawnZoneSize, gi);
 		}
@@ -75,5 +74,9 @@ public class EnemySystem extends GameSystem {
 		factory.createArcher(((TransformComponent) boss.getComponent("TRANSFORM")).getLoc().minus(new Vec2d(0,100)), new Vec2d(0,0), gi);
 		factory.createHealer(((TransformComponent) boss.getComponent("TRANSFORM")).getLoc().plus(new Vec2d(100,0)), new Vec2d(0,0), gi);
 		factory.createMelee(((TransformComponent) boss.getComponent("TRANSFORM")).getLoc().minus(new Vec2d(100,0)), new Vec2d(0,0), gi);
+	}
+	
+	public int getRound() {
+		return level;
 	}
 }

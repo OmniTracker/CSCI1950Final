@@ -98,20 +98,20 @@ public class PlayerDialog extends GameWorld {
 		this.drawDialogViews(g);
 		Random r = new Random();
 		if (_selectedCharacter == 0) {
-			R = r.nextInt((255 - 0) + 1) + 0;
+			//R = r.nextInt((255 - 0) + 1) + 0;
 			G = 20;
 			B = 147;
 		}  
 		else if (_selectedCharacter == 1) {
 			R = 0;
 			G = 0;
-			B = r.nextInt((255 - 0) + 1) + 0;
+			//B = r.nextInt((255 - 0) + 1) + 0;
 		} else if (_selectedCharacter == 2) {
 			R = 0;
 			G = r.nextInt((255 - 0) + 1) + 0;
-			B = 0;
+			//B = 0;
 		} else if (_selectedCharacter == 3) {
-			R = r.nextInt((255 - 0) + 1) + 0;
+			//R = r.nextInt((255 - 0) + 1) + 0;
 			G = 0;
 			B = 0;
 		}

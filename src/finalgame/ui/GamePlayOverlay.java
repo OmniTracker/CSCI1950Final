@@ -55,7 +55,8 @@ public class GamePlayOverlay extends UIElement {
 		Vec2d size = _aspect.calculateUpdatedScreenSize();
 		Vec2d origin = _aspect.calculateUpdatedOrigin();
 		Vec2d roundOrigin = origin.plus(size.x - 200, 50);
-		this.labelHelper(g, roundOrigin, "Round: ###");
+		int round = _parent.getMainGamePlay().getRound();
+		this.labelHelper(g, roundOrigin, "Round: " + String.valueOf(round));
 	}
 
 	private void drawScore(GraphicsContext g) {

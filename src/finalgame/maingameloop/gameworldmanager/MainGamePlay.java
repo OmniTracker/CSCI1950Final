@@ -161,7 +161,7 @@ public class MainGamePlay extends GameWorld {
 		switch(character) {
 			case 0:
 				//LYLA
-				_player.addComponent("HEALTH", new PlayerHealthComponent(_player,this, 100, getHealImage()));
+				_player.addComponent("HEALTH", new PlayerHealthComponent(_player,this, 150, getHealImage()));
 				_player.addComponent("ABILITY_CLICK", new MeleeMouseAbilityComponent(_player,this, getWeaponImage(), new Vec2d(108,133),
 						new Vec2d(46, 61), new Vec2d(0,0), new Vec2d(60,60), new Vec2d(0, 0),36, 1, 0, 70.));
 				_player.addComponent("ABILITY_Q", new FireWaveAbilityComponent(_player,this, getFireWaveImage(), new Vec2d(42,0),
@@ -175,19 +175,43 @@ public class MainGamePlay extends GameWorld {
 				break;
 			case 1:
 				//EZRA
-//				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 150, getHealImage()));
+				_player.addComponent("HEALTH", new PlayerHealthComponent(_player,this, 200, getHealImage()));
+				_player.addComponent("ABILITY_CLICK", new MeleeMouseAbilityComponent(_player,this, getWeaponImage(), new Vec2d(108,133),
+						new Vec2d(46, 61), new Vec2d(0,0), new Vec2d(60,60), new Vec2d(0, 0),36, 1, 0, 70.));
+				_player.addComponent("ABILITY_E", new ScratchAbilityComponent(_player,this, getElectricScratchImage(), new Vec2d(0,0),
+						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(50,50), new Vec2d(192, 192),
+						11, 1, 2));
+				_player.addComponent("ABILITY_F", new PortalAbilityComponent(_player,this, getPortalImage(),getPortalImage2(), new Vec2d(290,90),
+						new Vec2d(600, 450), new Vec2d(0,0), new Vec2d(60,45), new Vec2d(0,0),
+						1, 1, 2));
+				_player.addComponent("ABILITY_Q", new IceBlockAbilityComponent(_player,this, getIceBlockImage(), new Vec2d(0,0),
+						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(75,75), new Vec2d(192, 192),25, 5, 4));
+				
 				break;
 			case 2:
 				//SAM
-//				_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 125, getHealImage()));
+				_player.addComponent("HEALTH", new PlayerHealthComponent(_player,this, 100, getHealImage()));
+				_player.addComponent("ABILITY_CLICK", new MouseAbilityAnimationComponent(_player,this, getBulletImage(), new Vec2d(17,7),
+						new Vec2d(68, 68), new Vec2d(0,0), new Vec2d(15,15), new Vec2d(0, 0),1, 1.0, 0, 300.));
+				
+				_player.addComponent("ABILITY_F", new TeleportAbilityComponent(_player,this, getTeleportImage(), new Vec2d(0,0),
+						new Vec2d(128, 128), new Vec2d(0,0), new Vec2d(0,0), new Vec2d(128, 128),
+						58, 2.5, 2, 200));
+				
+				_player.addComponent("ABILITY_Q", new FireWaveAbilityComponent(_player,this, getFireWaveImage(), new Vec2d(42,0),
+						new Vec2d(591, 892), new Vec2d(0,0), new Vec2d(40,150), new Vec2d(721, 0),60, 2, 0, 700.));
+				
+				_player.addComponent("ABILITY_E", new AOELighningAbilityAnimationComponent(_player,this, getAOELightningImage(), new Vec2d(0,0),
+						new Vec2d(2000, 2000), new Vec2d(0,0), new Vec2d(200,200), new Vec2d(2000, 2000),
+						3, 2.5, 10));
 				break;
 			case 3:
 				//ARCHY
-				_player.addComponent("HEALTH", new PlayerHealthComponent(_player,this, 200,getHealImage()));
+				_player.addComponent("HEALTH", new PlayerHealthComponent(_player,this, 175,getHealImage()));
 
 				_player.addComponent("ABILITY_Q", new AOELighningAbilityAnimationComponent(_player,this, getAOELightningImage(), new Vec2d(0,0),
 						new Vec2d(2000, 2000), new Vec2d(0,0), new Vec2d(200,200), new Vec2d(2000, 2000),
-						3, 2.5, 2));
+						3, 2.5, 10));
 
 				_player.addComponent("ABILITY_E", new ScratchAbilityComponent(_player,this, getElectricScratchImage(), new Vec2d(0,0),
 						new Vec2d(192, 192), new Vec2d(0,0), new Vec2d(50,50), new Vec2d(192, 192),
@@ -219,13 +243,13 @@ public class MainGamePlay extends GameWorld {
 		this.addToSystems(g);
 		
 		g = new GameObject("WALL");
-		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1154,-1000), new Vec2d(5000,1000), 1.0));
+		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(1154,0), new Vec2d(5000,1000), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
 		_objects.add(g);
 		this.addToSystems(g);
 		
 		g = new GameObject("WALL");
-		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(-1000,700), new Vec2d(1000,5000), 1.0));
+		g.addComponent("TRANSFORM", new TransformComponent(g, new Vec2d(0,650), new Vec2d(5000,5000), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
 		_objects.add(g);
 		this.addToSystems(g);
@@ -750,6 +774,10 @@ public class MainGamePlay extends GameWorld {
 
 	public void set_soundSys(SoundSystem _soundSys) {
 		this._soundSys = _soundSys;
+	}
+	
+	public int getRound() {
+		return _enemySys.getRound();
 	}
 
 }

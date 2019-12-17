@@ -20,9 +20,11 @@ public class EnemyFactory {
 
 	private MainGamePlay _world;
 	private Random rng = new Random();
+	private EnemySystem _es;
 	
-	public EnemyFactory(MainGamePlay w) {
+	public EnemyFactory(MainGamePlay w, EnemySystem es) {
 		_world = w;
+		_es = es;
 	}
 	
 	public GameObject createArcher(Vec2d spawnLoc, Vec2d spawnSize, GroupInformation gi) {
@@ -37,9 +39,9 @@ public class EnemyFactory {
 		g.addComponent("ANIMATE", animate);
 		g.addComponent("TRANSFORM", new TransformComponent(g, spawn, new Vec2d(40,60), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
-		g.addComponent("HEALTH", new HealthComponent(g,_world, 1000));
+		g.addComponent("HEALTH", new HealthComponent(g,_world, 1000 + _es.getRound()*10));
 		g.addComponent("ABILITY", new EnemyRangedAbilityComponent(g,_world, MainGamePlay.getShurikenImage(), new Vec2d(9,7),
-				new Vec2d(123, 123), new Vec2d(0,0), new Vec2d(15,15), new Vec2d(0, 0),200, 1.0, 0, 300.));
+				new Vec2d(123, 123), new Vec2d(0,0), new Vec2d(15,15), new Vec2d(0, 0),200, 1.0, 0, 300., 10));
 		g.addComponent("TICK", new TickComponent(g));
 		BehaviorTree bt = new BehaviorTree(new Selector(),gi,_world, g);
 		bt.addBehavior(0,  new Sequencer());
@@ -64,9 +66,9 @@ public class EnemyFactory {
 		g.addComponent("ANIMATE", animate);
 		g.addComponent("TRANSFORM", new TransformComponent(g, spawn, new Vec2d(40,60), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
-		g.addComponent("HEALTH", new HealthComponent(g,_world, 1000));
+		g.addComponent("HEALTH", new HealthComponent(g,_world, 1000 + _es.getRound()*10));
 		g.addComponent("ABILITY", new EnemyMeleeAbilityComponent(g,_world, MainGamePlay.getWeaponImage(), new Vec2d(108,266),
-				new Vec2d(46, 61), new Vec2d(0,0), new Vec2d(60,60), new Vec2d(0, 0),36, 1, 0, 70.));
+				new Vec2d(46, 61), new Vec2d(0,0), new Vec2d(60,60), new Vec2d(0, 0),36, 1, 0, 70., 20));
 		g.addComponent("TICK", new TickComponent(g));
 		BehaviorTree bt = new BehaviorTree(new Selector(),gi,_world, g);
 		bt.addBehavior(0,  new Sequencer());
@@ -92,7 +94,7 @@ public class EnemyFactory {
 		g.addComponent("ANIMATE", animate);
 		g.addComponent("TRANSFORM", new TransformComponent(g, spawn, new Vec2d(40,60), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
-		g.addComponent("HEALTH", new HealthComponent(g,_world, 1000));
+		g.addComponent("HEALTH", new HealthComponent(g,_world, 1000 + _es.getRound()*10));
 		g.addComponent("TICK", new TickComponent(g));
 		BehaviorTree bt = new BehaviorTree(new Selector(),gi,_world, g);
 		bt.addBehavior(0,  new Sequencer());
@@ -120,9 +122,9 @@ public class EnemyFactory {
 		g.addComponent("ANIMATE", animate);
 		g.addComponent("TRANSFORM", new TransformComponent(g, spawn, new Vec2d(80,120), 1.0));
 		g.addComponent("COLLISION", new AABCollisionComponent(g, new AABShapeDefine(new Vec2d(5.,5.),new Vec2d(10.,10.))));
-		g.addComponent("HEALTH", new HealthComponent(g,_world, 10000));
+		g.addComponent("HEALTH", new HealthComponent(g,_world, 10000 + _es.getRound()*20));
 		g.addComponent("ABILITY", new EnemyMeleeAbilityComponent(g,_world, MainGamePlay.getWeaponImage(), new Vec2d(108,133),
-				new Vec2d(46, 61), new Vec2d(0,0), new Vec2d(60,60), new Vec2d(0, 0),36, 1, 0, 100.));
+				new Vec2d(46, 61), new Vec2d(0,0), new Vec2d(60,60), new Vec2d(0, 0),36, 1, 0, 100., 25));
 		g.addComponent("TICK", new TickComponent(g));
 		BehaviorTree bt = new BehaviorTree(new Selector(),gi,_world, g);
 		bt.addBehavior(0, new SpawnMinions(es));

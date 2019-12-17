@@ -16,9 +16,9 @@ public class EnemyRangedAbilityComponent extends MouseAbilityAnimationComponent{
 	MediaPlayer _lzrPlayer;
 	
 	public EnemyRangedAbilityComponent(GameObject go, MainGamePlay gw, Image img, Vec2d imgLoc, Vec2d imgDim, Vec2d loc,
-			Vec2d dim, Vec2d animation_increment, int numFrames, double active_time, double cooldown, double range) {
+			Vec2d dim, Vec2d animation_increment, int numFrames, double active_time, double cooldown, double range, double damage) {
 		super(go, gw, img, imgLoc, imgDim, loc, dim, animation_increment, numFrames, active_time, cooldown, range);
-		_damage = 10;
+		_damage = damage;
 		_knockback = 0;
 		_lzrPlayer = _gw.get_soundSys().getLzrPlayer();
 		target = _gw.get_player();

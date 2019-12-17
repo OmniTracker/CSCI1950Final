@@ -27,8 +27,8 @@ public class MouseAbilityAnimationComponent extends AnimateAbilityComponent{
 		_src = null;
 		_dir = null;
 		_activeBulletLoc = new Vec2d(0,0);
-		_damage = 20;
-		_knockback = 5;
+		_damage = 10;
+		_knockback = 2.5;
 	}
 	
 	
