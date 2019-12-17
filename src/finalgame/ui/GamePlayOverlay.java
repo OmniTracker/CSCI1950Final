@@ -145,7 +145,7 @@ public class GamePlayOverlay extends UIElement {
 		case 1:
 			g.drawImage(buttonImages[1], attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
 		case 2:
-			g.drawImage(buttonImages[1], attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+			g.drawImage(buttonImages[1],768,512,128,128, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
 		case 3:
 			g.drawImage(buttonImages[1], attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
 		}		
@@ -171,7 +171,7 @@ public class GamePlayOverlay extends UIElement {
 		case 1:
 			g.drawImage(buttonImages[2],576,0,192,192, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
 		case 2:
-			g.drawImage(buttonImages[2],576,0,192,192, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+			g.drawImage(buttonImages[2],0,0,2100,2000, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
 		case 3:
 			g.drawImage(buttonImages[2],576,0,192,192, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
 		}		
@@ -195,9 +195,9 @@ public class GamePlayOverlay extends UIElement {
 		case 0:
 			g.drawImage(buttonImages[3],0,0,728,892, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
 		case 1:
-			g.drawImage(buttonImages[3],0,0,2100,2000, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+			g.drawImage(buttonImages[3],576,0,192,192, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
 		case 2:
-			g.drawImage(buttonImages[3],0,0,2100,2000, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
+			g.drawImage(buttonImages[3],0,0,728,892, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
 		case 3:
 			g.drawImage(buttonImages[3],0,0,2100,2000, attributesOrigin.x + (increment * incrementSize), attributesOrigin.y, boxSize, boxSize);			break;
 		}		
@@ -234,10 +234,16 @@ public class GamePlayOverlay extends UIElement {
 			break;
 		case 1:
 			// EZRA
+			buttonImages[1] = MainGamePlay.getPortalImage();
+			buttonImages[2] = MainGamePlay.getElectricScratchImage();
+			buttonImages[3] = MainGamePlay.getIceBlockImage();
 //		_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 150, getHealImage()));
 			break;
 		case 2:
 			// SAM
+			buttonImages[1] = MainGamePlay.getTeleportImage();
+			buttonImages[2] = MainGamePlay.getAOELightningImage();
+			buttonImages[3] = MainGamePlay.getFireWaveImage();
 //		_player.addComponent("HEALTH", new PlayerHealthComponent(_player, 125, getHealImage()));
 			break;
 		case 3:

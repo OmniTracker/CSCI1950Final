@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -143,6 +144,12 @@ public class PlayerSelection extends GameWorld {
 			g.fillText(this.getCharacterSelector().get(_currentPlayer), textOrigin.x, textOrigin.y + (((size.y / 2) * (1.3)) ));				
 		}
 	}
+	
+//	public void onMouseClicked(MouseEvent e) {
+//		if () {
+//			this.getCurrentlySelectedScreen().onMouseClicked(e);
+//		}
+//	}
 	private void drawBrownSpecial(GraphicsContext g) {
 		Vec2d origin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin(); 
 		Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize(); 
