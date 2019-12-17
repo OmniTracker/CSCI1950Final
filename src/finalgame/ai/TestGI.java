@@ -49,7 +49,7 @@ public class TestGI extends GroupInformation {
 			}
 		}
 		if (highest == 0) {
-			toHeal = objects.get(0);
+			toHeal = null;
 		}
 		for (GameObject h: healers) {
 			AIBehaviorComponent ai = (AIBehaviorComponent) h.getComponent("BEHAVIOR");
@@ -59,9 +59,7 @@ public class TestGI extends GroupInformation {
 			} catch(NullPointerException e) {
 				
 			}
-			
 		}
-		
 	}
 	
 	public GameObject getHeal() {
