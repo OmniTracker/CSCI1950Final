@@ -59,10 +59,8 @@ public class InputPanel extends Panel implements EventHandler{
 		
 		String input = e.getCode().toString();
 		if (e.getCode()!=KeyCode.DELETE && e.getCode()!=KeyCode.BACK_SPACE) {
-			if (input.length()==1) {
+			if (input.length()==1 && name.length()<5) {
 				name = name + input;
-			}else if (e.getCode()==KeyCode.SPACE) {
-				name = name + " ";
 			}
 		}else {
 			name = name.substring(0, name.length()-1);
