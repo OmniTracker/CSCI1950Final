@@ -144,7 +144,7 @@ public class FinalGameWorld  extends GameWorld {
 			this.getCurrentlySelectedScreen().onResize(newSize);
 		}
 	}
-	private Introduction getIntroduction() {
+	public Introduction getIntroduction() {
 		return _introduction;
 	}
 	private void setIntroduction(Introduction _introduction) {

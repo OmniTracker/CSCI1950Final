@@ -80,7 +80,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 		intructionsPanel.setBoarderSize(10);
 		this.insertPanel(INSTRUCTIONS_PANEL_VIEW, intructionsPanel);
 		// Options Panel
-		OptionsPanel optionsPanel = new OptionsPanel( this.getAspectRatio()); 
+		OptionsPanel optionsPanel = new OptionsPanel( this.getAspectRatio(),this); 
 		optionsPanel.setColor(Color.WHITE);
 		optionsPanel.setSecondaryColor(Color.BLACK);
 		optionsPanel.setSize( new Vec2d(1000,600));	
@@ -350,7 +350,7 @@ public class FinalMenuBar extends MenuBar implements EventHandler{
 	public void setContextHolder(Integer _contextHolder) {
 		this._contextHolder = _contextHolder;
 	}
-	private FinalGameWorld getGameWorld() {
+	public FinalGameWorld getGameWorld() {
 		return _gameWorld;
 	}
 	public void setGameWorld(FinalGameWorld _gameWorld) {

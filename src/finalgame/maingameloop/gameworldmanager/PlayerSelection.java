@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -145,11 +146,17 @@ public class PlayerSelection extends GameWorld {
 		}
 	}
 	
-//	public void onMouseClicked(MouseEvent e) {
-//		if () {
-//			this.getCurrentlySelectedScreen().onMouseClicked(e);
-//		}
-//	}
+	public void onMouseClicked(MouseEvent e) {
+		if (this.getLeftButton().clicked(e)) {
+			this.rotateCharacters(KeyCode.A);
+		}
+		if (this.getRightButton().clicked(e)) {
+			this.rotateCharacters(KeyCode.D);
+		}
+		if (this.getNextLevelButton().clicked(e)) {
+			this.rotateCharacters(KeyCode.S);
+		}
+	}
 	private void drawBrownSpecial(GraphicsContext g) {
 		Vec2d origin = this.getApplication().getAspectRatioHandler().calculateUpdatedOrigin(); 
 		Vec2d size = this.getApplication().getAspectRatioHandler().calculateUpdatedScreenSize(); 
@@ -279,6 +286,25 @@ public class PlayerSelection extends GameWorld {
 	}
 	private void rotateCharacters(KeyEvent e) {
 		String key = e.getText().toString(); 	
+		if (_inTransition == false) {
+			if ( key.equals("d") || key.equals("D"))  {
+				direction = RIGHT_DIRECTION;
+				_nextPlayer = (( _currentPlayer + 1 == 4)  ? 0 : _currentPlayer + 1);
+				_inTransition = true;
+			}  else if ( key.equals("a") || key.equals("A")) {
+				direction = LEFT_DIRECTION;
+				_nextPlayer = (( _currentPlayer - 1 == -1) ? 3 : _currentPlayer - 1);
+				_inTransition = true;
+			} else if (key.equals("s") || key.equals("S")) {
+				direction = NO_DIRECTION;
+				_transitionPercent += 0.05;
+				_inTransition = true;
+			}
+		}
+	}
+	private void rotateCharacters(KeyCode e) {
+		String key = e.toString(); 
+		System.out.println(key);
 		if (_inTransition == false) {
 			if ( key.equals("d") || key.equals("D"))  {
 				direction = RIGHT_DIRECTION;

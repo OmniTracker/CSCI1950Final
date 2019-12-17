@@ -26,6 +26,7 @@ public class SoundSystem extends GameSystem{
 		
 	private MediaPlayer lzrPlayer;
 	private MainGamePlay _game;
+	Clip _clip;
 	
 	public SoundSystem(MainGamePlay game) {
 		
@@ -34,7 +35,7 @@ public class SoundSystem extends GameSystem{
 		//final JFXPanel fxPanel = new JFXPanel();
 		this.loadPlayers();
 		String _filePath = "./resources/sounds/test.wav";
-		Clip _clip = null;
+		_clip = null;
 		try {
 			AudioInputStream _audioInputStream = AudioSystem.getAudioInputStream(new File(_filePath).getAbsoluteFile());
 
@@ -76,7 +77,12 @@ public class SoundSystem extends GameSystem{
 	
 	
 	
-	
+	public void setVolume(double perc) {
+		FloatControl volume = (FloatControl)_clip.getControl(FloatControl.Type.MASTER_GAIN);
+		double diff = volume.getMaximum()-volume.getMinimum();
+		double gain = (diff*perc)+volume.getMinimum();
+		volume.setValue((float)gain);
+	}
 	
 
 }

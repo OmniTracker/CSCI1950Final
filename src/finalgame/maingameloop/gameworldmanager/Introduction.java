@@ -26,6 +26,7 @@ import engine.ui.Button;
 import engine.ui.EngineFonts;
 import finalgame.maingameloop.FinalGameWorld;
 import finalgame.maingameloop.FinalGameWorld.VisibleGameWorld;
+import finalgame.ui.FinalMenuBar;
 import finalgame.ui.OptionsPanel;
 
 public class Introduction extends GameWorld {
@@ -35,15 +36,17 @@ public class Introduction extends GameWorld {
 	private FinalGameWorld _finalGameWorld;
 	private double _transitionAlpha = 0.0;
 	private float alphaIncrement = 0.0f;
+	private FinalMenuBar _menu;
 	public Introduction(Application app, GameWorld parent) {
 		super(app);
 		this.setFinalGameWorld((FinalGameWorld) parent);
 		org.apache.xml.security.Init.init();
-		this.setupGeneralUI();
+		//this.setupGeneralUI();
 	}
-	private void setupGeneralUI () {
+	public void setupGeneralUI () {
 		// Options Panel
-		OptionsPanel optionsPanel = new OptionsPanel( this.getApplication().getAspectRatioHandler());
+		//System.out.println(_menu);
+		OptionsPanel optionsPanel = new OptionsPanel( this.getApplication().getAspectRatioHandler(),_menu);
 		optionsPanel.setColor(Color.WHITE);
 		optionsPanel.setSecondaryColor(Color.BLACK);
 		optionsPanel.setSize( new Vec2d(1000,600));
@@ -220,6 +223,13 @@ public class Introduction extends GameWorld {
 		xmlCipher.init(XMLCipher.DECRYPT_MODE, secretKey);
 		xmlCipher.doFinal(document, encryptedDataElement);
 		return document;
+	}
+	public FinalMenuBar get_menu() {
+		return _menu;
+	}
+	public void set_menu(FinalMenuBar _menu) {
+		System.out.println(_menu);
+		this._menu = _menu;
 	}
 
 }

@@ -62,9 +62,11 @@ public class OptionsPanel  extends Panel implements EventHandler{
 	private HashMap < String, Pair <String,String>> _playerRanking =  new HashMap <String,Pair <String,String> > ();
 	private String highScoreXMLPath = "./resources/xmlResources/.HighScore.xml";
 	private static String secretPath = "./resources/xmlResources/.key";
+	private FinalMenuBar fmb;
 	
-	public OptionsPanel(AspectRatioHandler app) {
+	public OptionsPanel(AspectRatioHandler app, FinalMenuBar fb) {
 		super(app);
+		fmb=fb;
 		this.setFontName(EngineFonts.getWiz());
 		// Sound Slider
 		// Key Binding
@@ -189,7 +191,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 			}
 		}
 		if (this.getMasterSlider().clicked(e) ==true) {
-			
+			fmb.getGameWorld().getMainGamePlay().get_soundSys().setVolume(getMasterSlider().getCurrentPercentage());
 		}
 		this.setCurrentlyHoldingContext(this.getContextFreeNumber());
 		
@@ -545,7 +547,7 @@ public class OptionsPanel  extends Panel implements EventHandler{
 	private Integer getContextFreeNumber() {
 		return _contextFreeNumber;
 	}
-	private Slider getMasterSlider() {
+	public Slider getMasterSlider() {
 		return _masterSlider;
 	}
 	private void setMasterSlider(Slider _masterSlider) {

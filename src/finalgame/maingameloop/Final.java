@@ -37,8 +37,9 @@ public class Final extends Screen {
 				this.getFinalGameWorld(),
 				new Vec2d(0,0), 
 				new Vec2d(0,0)));
-
 		this.getFinalViewport().onStartup();
+		this._finalGameWorld.getIntroduction().set_menu(_finalViewport.getMenuBar());
+		this._finalGameWorld.getIntroduction().setupGeneralUI();
 	}
 	public void onKeyReleased(KeyEvent e) {
 		this.getFinalViewport().onKeyReleased(e);	

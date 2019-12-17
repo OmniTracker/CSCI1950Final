@@ -70,8 +70,12 @@ public class Slider extends  UIElement {
 	public boolean isColliding(AABShape s1, Vec2d s2) {
 		boolean isCol = pointRect(s2.x,s2.y, s1.getTopLeft().x,  s1.getTopLeft().y, s1.getSize().x, s1.getSize().y); 
 		if (isCol) {
-			
 			_slidingUnit.setCenter(new Vec2d(s2.x,_slidingUnit.getCenter().y));
+			double min = _slidingUnitCollider.getTopLeft().x;
+			double max = _slidingUnitCollider.getTopLeft().x+_slidingUnitCollider.getSize().x;
+			double diff = max-min;
+			double smalldif = s2.x-min;
+			this.setCurrentPercentage(smalldif/diff);
 		}
 		return (isCol);
 	}
@@ -120,8 +124,11 @@ public class Slider extends  UIElement {
 	private void setHeight(double _height) {
 		this._height = _height;
 	}
-	private void setCurrentPercentage(double _currentPercentage) {
+	public void setCurrentPercentage(double _currentPercentage) {
 		this._currentPercentage = _currentPercentage;
+	}
+	public double getCurrentPercentage() {
+		return _currentPercentage;
 	}
 	private void setSliderStart(Vec2d v) {
 		if (_sliderStart==null) {
