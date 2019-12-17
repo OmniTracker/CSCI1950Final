@@ -12,6 +12,7 @@ public class HealthComponent extends Component{
 	protected double _maxHealth;
 	protected boolean _showHealthBar;
 	protected MainGamePlay _gw;
+	protected boolean _dead = false;
 	
 	public HealthComponent(GameObject go, MainGamePlay gw, double hp) {
 		super(go);
@@ -38,7 +39,6 @@ public class HealthComponent extends Component{
 	
 	@Override
 	public void tick(long nanosSinceLastTick) {
-		
 	}
 
 	@Override
@@ -65,9 +65,13 @@ public class HealthComponent extends Component{
 	}
 	
 	public void death() {
-		_gw.dieObject(_go);
-		System.out.println("OOF, an "+_go.getName()+" just DIED");
-		_gw.removeObject(_go);
+		if (!_dead) {
+			_gw.dieObject(_go);
+			System.out.println("OOF, an "+_go.getName()+" just DIED");
+			_gw.removeObject(_go);
+			_dead = true;
+		}
+			
 	}
 
 }

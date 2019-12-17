@@ -37,7 +37,6 @@ public class EnemySystem extends GameSystem {
 				spawnZoneSize = new Vec2d(100,400);
 			}
 			
-			
 			level++;
 			if (level%4==0) {
 				this.createBoss();
