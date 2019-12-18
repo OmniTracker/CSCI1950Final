@@ -60,11 +60,14 @@ public class MeleeMouseAbilityComponent extends MouseAbilityAnimationComponent{
 			HealthComponent hp = (HealthComponent)hitObject.getComponent("HEALTH");
 			hp.takeDamage(_damage);
 		}
-		if(hitObject.hasComponent("TRANSFORM") && !hitObject.getName().contains("BOSS")) {
+		if(hitObject.hasComponent("TRANSFORM")) {
 			TransformComponent tc = (TransformComponent)hitObject.getComponent("TRANSFORM");
 			Vec2d dir = tc.getLoc().minus(((TransformComponent)_go.getComponent("TRANSFORM")).getLoc()).normalize();
-			tc.move(dir.smult(_knockback));
-			
+			if (hitObject.getName().contains("BOSS")) {
+				tc.move(dir.smult(_knockback/2));
+			} else {
+				tc.move(dir.smult(_knockback));
+			}
 		}
 	}
 	

@@ -37,7 +37,7 @@ public class EnemySystem extends GameSystem {
 				spawnZoneSize = new Vec2d(100,400);
 			}
 			
-			level++;
+			//level++;
 			if (level%4==0) {
 				this.createBoss();
 			} else {
@@ -69,10 +69,10 @@ public class EnemySystem extends GameSystem {
 	}
 	
 	public void createMinions(GroupInformation gi, GameObject boss) {
-		factory.createArcher(((TransformComponent) boss.getComponent("TRANSFORM")).getLoc().plus(new Vec2d(0,100)), new Vec2d(0,0), gi);
-		factory.createArcher(((TransformComponent) boss.getComponent("TRANSFORM")).getLoc().minus(new Vec2d(0,100)), new Vec2d(0,0), gi);
-		factory.createHealer(((TransformComponent) boss.getComponent("TRANSFORM")).getLoc().plus(new Vec2d(100,0)), new Vec2d(0,0), gi);
-		factory.createMelee(((TransformComponent) boss.getComponent("TRANSFORM")).getLoc().minus(new Vec2d(100,0)), new Vec2d(0,0), gi);
+		factory.createArcher(((TransformComponent) boss.getComponent("TRANSFORM")).getLoc().plus(new Vec2d(100,100)), new Vec2d(0,0), gi);
+		factory.createArcher(((TransformComponent) boss.getComponent("TRANSFORM")).getLoc().minus(new Vec2d(100,100)), new Vec2d(0,0), gi);
+		factory.createHealer(((TransformComponent) boss.getComponent("TRANSFORM")).getLoc().plus(new Vec2d(100,-100)), new Vec2d(0,0), gi);
+		factory.createMelee(((TransformComponent) boss.getComponent("TRANSFORM")).getLoc().minus(new Vec2d(100,-100)), new Vec2d(0,0), gi);
 	}
 	
 	public int getRound() {

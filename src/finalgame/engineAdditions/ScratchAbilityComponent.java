@@ -93,20 +93,24 @@ public class ScratchAbilityComponent extends AnimateAbilityComponent{
 			HealthComponent hp = (HealthComponent)hitObject.getComponent("HEALTH");
 			hp.takeDamage(_damage);
 		}
-		if(hitObject.hasComponent("TRANSFORM") && !hitObject.getName().contains("BOSS")) {
+		if(hitObject.hasComponent("TRANSFORM")) {
 			TransformComponent tc = (TransformComponent)hitObject.getComponent("TRANSFORM");
+			double knockback = _knockback;
+			if (hitObject.getName().contains("BOSS")) {
+				knockback = _knockback/8;
+			}
 			switch (_facing) {
 				case 4:
-					tc.move(new Vec2d(0,-1).smult(_knockback));
+					tc.move(new Vec2d(0,-1).smult(knockback));
 					break;
 				case 2:
-					tc.move(new Vec2d(-1,0).smult(_knockback));
+					tc.move(new Vec2d(-1,0).smult(knockback));
 					break;
 				case 1:
-					tc.move(new Vec2d(0,1).smult(_knockback));
+					tc.move(new Vec2d(0,1).smult(knockback));
 					break;
 				case 3:
-					tc.move(new Vec2d(1,0).smult(_knockback));
+					tc.move(new Vec2d(1,0).smult(knockback));
 					break;
 				default:
 					break;

@@ -290,7 +290,6 @@ public class PlayerSelection extends GameWorld {
 		try{
 			out =  new Image(new File("resources/backgrounds/BrownFinal.png").toURI().toURL().toExternalForm());
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return out;
@@ -315,7 +314,6 @@ public class PlayerSelection extends GameWorld {
 	}
 	private void rotateCharacters(KeyCode e) {
 		String key = e.toString(); 
-		System.out.println(key);
 		if (_inTransition == false) {
 			if ( key.equals("d") || key.equals("D"))  {
 				direction = RIGHT_DIRECTION;

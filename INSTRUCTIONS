@@ -1,10 +1,5 @@
-- Use the arrow keys to move the player.
-
-- There are two level. Flames and StarLord.
-
-- You need to collect all the three keys in order to move on to the next level.
-
-- Each level has two startup characters and one dynamically generated characters. 
-
-
-	
+Press the Select Character Button to choose a character to play with or press the Options button to adjust the settings.
+The Select Character button will bring a screen to choose the character. After choosing a character, there will be a dialog
+sequence that can be skipped. 
+Each character can move and has 4 abilities (1 movement ability, 1 heal ability, and 2 offensive/defensive abilities). The
+keybindings can be adjusted as needed. Fight off as many waves as possible!

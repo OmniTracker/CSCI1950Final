@@ -133,8 +133,8 @@ public class EnemyFactory {
 		bt.addBehavior(0, new SpawnMinions(es));
 		bt.addBehavior(0, new FireWave(_world.get_player()));
 		bt.addBehavior(0,  new Sequencer());
-		bt.addBehavior(3, new NotInRange(_world.get_player(),7500,0));
-		bt.addBehavior(3, new MoveTo(_world.get_player(), 7500,0, 8));
+		bt.addBehavior(3, new NotInRange(_world.get_player(),10000,0));
+		bt.addBehavior(3, new MoveTo(_world.get_player(), 10000,0, 8));
 		bt.addBehavior(0, new MeleeAttackEnemy(_world.get_player()));
 		g.addComponent("BEHAVIOR", new AIBehaviorComponent(g,bt));
 		_world.getObjects().add(g);
